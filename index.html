@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halalkartet — halal spisesteder i Oslo</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --emerald:    #0E3D2C;
+  --emerald-2:  #164A37;
+  --emerald-3:  #1C5642;
+  --gold:       #C8A253;
+  --gold-soft:  #DCC28A;
+  --ivory:      #F2ECDE;
+  --ivory-dim:  #9DB3A5;
+  --hairline:   rgba(200,162,83,.22);
+  --hairline-2: rgba(255,255,255,.08);
+  --ink:        #1B2620;
+  --ink-soft:   #5f6b63;
+  --paper:      #F7F2E7;
+  --cert:       #2E7D4F;
+  --self:       #D98A1F;
+  --owned:      #8A8F98;
+  --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
+  --shadow-sm:  0 2px 10px rgba(9,28,20,.16);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+#map { position: absolute; inset: 0; background: #eae4d6; z-index: 1; }
+
+/* Refined Leaflet controls */
+.leaflet-control-zoom a { background: #fff !important; color: var(--emerald) !important; border: 0 !important; box-shadow: var(--shadow-sm); font-weight: 600; }
+.leaflet-control-zoom { border: 0 !important; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.leaflet-control-attribution { background: rgba(255,255,255,.8) !important; font-size: 10px; }
+
+/* Panel */
+.panel {
+  position: absolute; top: 0; left: 0; bottom: 0; width: 366px; z-index: 1000;
+  background: linear-gradient(180deg, #0E3D2C 0%, #0A2F21 100%); color: var(--ivory); box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column;
+  transition: transform .32s cubic-bezier(.4,0,.2,1);
+}
+.panel.collapsed { transform: translateX(-100%); }
+
+.panel-head { padding: 22px 22px 18px; border-bottom: 1px solid var(--hairline); }
+.head-top { display: flex; align-items: center; gap: 13px; }
+.brand-mark { font-family: 'Amiri', serif; font-weight: 700; font-size: 33px; line-height: 1; flex: none; direction: rtl; padding: 2px 2px 0; background: linear-gradient(155deg, #EAD59B 0%, var(--gold) 55%, #A97F32 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.brand-text { flex: 1; padding-left: 13px; border-left: 1px solid var(--hairline); }
+.brand-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0; line-height: .98; letter-spacing: .01em; color: var(--ivory); }
+.brand-text span { font-size: 10px; text-transform: uppercase; letter-spacing: .22em; color: var(--gold-soft); font-weight: 600; }
+.collapse-btn { border: 0; background: none; color: var(--ivory-dim); cursor: pointer; padding: 6px; border-radius: 50%; display: grid; place-items: center; flex: none; transition: color .15s, background .15s; }
+.collapse-btn:hover { background: var(--emerald-2); color: var(--ivory); }
+
+.search-wrap { position: relative; margin-top: 18px; }
+.search-wrap > svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ivory-dim); pointer-events: none; }
+.search { width: 100%; padding: 11px 13px 11px 39px; border: 1px solid var(--hairline-2); border-radius: 10px; font: inherit; font-size: 14px; color: var(--ivory); background: rgba(255,255,255,.05); transition: border-color .18s, box-shadow .18s, background .18s; }
+.search::placeholder { color: var(--ivory-dim); }
+.search:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,.08); box-shadow: 0 0 0 3px rgba(200,162,83,.16); }
+.mini-filters { display: flex; gap: 9px; margin-top: 10px; }
+.mini-filters select { flex: 1; min-width: 0; padding: 9px 11px; font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ivory); border: 1px solid var(--hairline-2); border-radius: 9px; background-color: rgba(255,255,255,.05); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239DB3A5' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+.mini-filters select:focus { outline: none; border-color: var(--gold); }
+.mini-filters option { color: #1B2620; }
+.filter-status { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; font-size: 12px; color: var(--ivory-dim); }
+.reset { border: 0; background: none; color: var(--gold-soft); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; padding: 2px; }
+.reset:hover { color: var(--gold); text-decoration: underline; }
+.reset:disabled { color: var(--emerald-3); cursor: default; text-decoration: none; }
+
+.layers-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--gold-soft); padding: 18px 22px 8px; }
+.layers { flex: 1; overflow-y: auto; padding: 0 12px 18px; }
+.layers::-webkit-scrollbar { width: 8px; }
+.layers::-webkit-scrollbar-thumb { background: var(--emerald-3); border-radius: 8px; }
+
+.layer { border-radius: 11px; margin-bottom: 2px; }
+.layer + .layer { border-top: 1px solid var(--hairline-2); }
+.layer-head { display: flex; align-items: center; gap: 12px; padding: 12px 10px; cursor: pointer; border-radius: 9px; transition: background .15s; }
+.layer-head:hover { background: var(--emerald-2); }
+.layer-check { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid rgba(255,255,255,.28); flex: none; display: grid; place-items: center; cursor: pointer; background: transparent; transition: background .15s, border-color .15s; }
+.layer-check svg { opacity: 0; }
+.layer-check.on { border-color: transparent; }
+.layer-check.on svg { opacity: 1; }
+.layer-check.on[data-s="verifisert"] { background: var(--cert); }
+.layer-check.on[data-s="verifisert"] svg { stroke: #fff; }
+.layer-check.on[data-s="delvis"] { background: var(--self); }
+.layer-check.on[data-s="delvis"] svg { stroke: #fff; }
+.layer-check.on[data-s="uavklart"] { background: var(--owned); }
+.layer-check.on[data-s="uavklart"] svg { stroke: #fff; }
+.layer-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+.layer-name { flex: 1; font-size: 14px; font-weight: 600; color: var(--ivory); }
+.layer-count { font-size: 12px; color: var(--ivory-dim); font-variant-numeric: tabular-nums; font-weight: 600; }
+.layer-chev { color: var(--ivory-dim); transition: transform .2s; flex: none; }
+.layer.collapsed .layer-chev { transform: rotate(-90deg); }
+.layer.off .layer-name, .layer.off .layer-count { color: var(--emerald-3); }
+.layer.off .layer-dot { opacity: .35; }
+
+.layer-items { padding: 2px 0 8px; }
+.layer.collapsed .layer-items { display: none; }
+.item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 9px; padding: 9px 12px 9px 36px; cursor: pointer; position: relative; font: inherit; transition: background .15s; }
+.item:hover { background: var(--emerald-2); }
+.item.active { background: rgba(200,162,83,.14); box-shadow: inset 2px 0 0 var(--gold); }
+.item::before { content: ""; position: absolute; left: 16px; top: 14px; width: 7px; height: 7px; border-radius: 50%; }
+.item[data-s="verifisert"]::before { background: var(--cert); }
+.item[data-s="delvis"]::before { background: var(--self); }
+.item[data-s="uavklart"]::before { background: var(--owned); }
+.item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
+.item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; }
+.item-meta .price { font-weight: 600; color: var(--gold-soft); }
+.layer-empty { font-size: 12.5px; color: var(--ivory-dim); font-style: italic; padding: 4px 12px 8px 36px; }
+
+.no-results { text-align: center; color: var(--ivory-dim); padding: 32px 18px; font-size: 13.5px; }
+.no-results b { display: block; color: var(--ivory); font-size: 15px; margin-bottom: 5px; font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+
+.reopen { position: absolute; top: 14px; left: 14px; z-index: 999; background: var(--emerald); color: var(--ivory); border: 1px solid var(--hairline); border-radius: 11px; box-shadow: var(--shadow-lg); padding: 11px 15px; cursor: pointer; display: none; align-items: center; gap: 9px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+.reopen svg { color: var(--gold); }
+body.panel-collapsed .reopen { display: flex; }
+.reopen:hover { background: var(--emerald-2); }
+
+/* Pins — refined circular markers */
+.pin { width: 17px; height: 17px; border-radius: 50%; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.pin.big { width: 24px; height: 24px; box-shadow: 0 0 0 4px rgba(200,162,83,.45), 0 2px 8px rgba(0,0,0,.42); }
+.pin-verifisert { background: var(--cert); }
+.pin-delvis { background: var(--self); }
+.pin-uavklart { background: var(--owned); }
+
+/* Popup */
+.leaflet-popup-content-wrapper { border-radius: 13px; box-shadow: var(--shadow-lg); background: var(--paper); }
+.leaflet-popup-tip { background: var(--paper); }
+.leaflet-popup-content { margin: 15px 17px; font-family: 'Manrope', sans-serif; }
+.pop-name { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; margin: 0 0 2px; color: var(--ink); line-height: 1.05; }
+.pop-meta { font-size: 12px; color: var(--ink-soft); margin: 0 0 9px; letter-spacing: .02em; }
+.pop-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
+.pop-badge .dotc { width: 7px; height: 7px; border-radius: 50%; }
+.pop-badge[data-s="verifisert"] { background: #E4F1E9; color: #1f6340; }
+.pop-badge[data-s="verifisert"] .dotc { background: var(--cert); }
+.pop-badge[data-s="delvis"] { background: #F6ECD8; color: #8a5c10; }
+.pop-badge[data-s="delvis"] .dotc { background: var(--self); }
+.pop-badge[data-s="uavklart"] { background: #ECEDEF; color: #4a5057; }
+.pop-badge[data-s="uavklart"] .dotc { background: var(--owned); }
+.pop-desc { font-size: 13px; margin: 0 0 9px; line-height: 1.45; color: var(--ink); }
+.pop-verify { font-size: 12px; color: var(--ink-soft); font-style: italic; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--gold); }
+.pop-row { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0; display: flex; gap: 8px; }
+.pop-row svg { flex: none; margin-top: 1px; }
+
+.map-overlay { position: absolute; inset: 0; z-index: 1200; display: grid; place-items: center; background: #eceae4; padding: 24px; }
+.map-overlay .box { max-width: 440px; text-align: center; background: var(--paper); border-radius: 16px; padding: 32px 30px; box-shadow: var(--shadow-lg); }
+.map-overlay h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.map-overlay p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 9px; }
+.map-overlay code { background: #eae3d3; padding: 3px 8px; border-radius: 6px; font-size: 13px; display: inline-block; color: var(--emerald); }
+
+@media (max-width: 720px) {
+  .panel { width: 100%; max-width: 100%; }
+  body:not(.panel-collapsed) #map { visibility: hidden; }
+  .reopen span { display: none; }
+  .reopen { padding: 12px; }
+}
+
+/* Near-me button */
+.nearme { position: absolute; z-index: 999; right: 12px; bottom: 26px; background: var(--emerald); color: var(--ivory); border: 1px solid var(--hairline); border-radius: 24px; box-shadow: var(--shadow-lg); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; }
+.nearme svg { color: var(--gold); }
+.nearme:hover { background: var(--emerald-2); }
+.nearme.loading { opacity: .6; pointer-events: none; }
+.userloc { width: 16px; height: 16px; border-radius: 50%; background: #2b7fff; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(43,127,255,.25), 0 1px 4px rgba(0,0,0,.4); }
+.item-meta .dist { color: var(--gold-soft); font-weight: 700; }
+
+/* Panel footer links */
+.panel-foot { padding: 13px 16px 16px; border-top: 1px solid var(--hairline-2); display: flex; flex-wrap: wrap; gap: 7px 15px; }
+.panel-foot a { color: var(--ivory-dim); font-size: 11.5px; font-weight: 600; text-decoration: none; cursor: pointer; letter-spacing: .01em; }
+.panel-foot a:hover { color: var(--gold-soft); }
+
+/* Info modal */
+.info-scrim { position: fixed; inset: 0; z-index: 2000; background: rgba(9,24,17,.55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.info-scrim.open { display: flex; }
+.info-card { background: var(--paper); color: var(--ink); width: 100%; max-width: 640px; max-height: 86vh; border-radius: 18px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; overflow: hidden; }
+.info-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: linear-gradient(180deg, #0E3D2C, #0B3324); }
+.info-brand { font-family: 'Amiri', serif; font-weight: 700; font-size: 22px; direction: rtl; flex: none; background: linear-gradient(155deg, #EAD59B, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.info-tabs { flex: 1; display: flex; gap: 3px; overflow-x: auto; scrollbar-width: none; }
+.info-tabs::-webkit-scrollbar { display: none; }
+.info-tab { border: 0; background: none; color: var(--ivory-dim); font: inherit; font-size: 12.5px; font-weight: 600; padding: 7px 11px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.info-tab:hover { color: var(--ivory); }
+.info-tab.active { background: rgba(200,162,83,.16); color: var(--gold-soft); }
+.info-close { border: 0; background: none; color: var(--ivory-dim); font-size: 24px; line-height: 1; cursor: pointer; flex: none; padding: 0 4px; }
+.info-close:hover { color: var(--ivory); }
+.info-body { padding: 22px 24px 26px; overflow-y: auto; }
+.info-section { display: none; }
+.info-section.active { display: block; }
+.info-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.info-section h3 { font-size: 13.5px; font-weight: 700; margin: 17px 0 4px; color: var(--ink); }
+.info-section p { font-size: 14px; line-height: 1.62; color: #3c4640; margin: 0 0 11px; }
+.info-section a { color: var(--cert); font-weight: 600; }
+.info-section .muted { font-size: 12px; color: var(--ink-soft); }
+.info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+@media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<button class="nearme" id="nearme" aria-label="Finn steder nær meg">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+  <span>Nær meg</span>
+</button>
+
+<button class="reopen" id="reopen" aria-label="Vis panel">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  <span>Steder</span>
+</button>
+
+<aside class="panel" id="panel">
+  <div class="panel-head">
+    <div class="head-top">
+      <div class="brand-mark">حلال</div>
+      <div class="brand-text">
+        <h1>Halalkartet</h1>
+        <span>Oslo</span>
+      </div>
+      <button class="collapse-btn" id="collapse" aria-label="Skjul panel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+    </div>
+
+    <div class="search-wrap">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" class="search" type="search" placeholder="Søk etter navn eller kjøkken…" aria-label="Søk">
+    </div>
+    <div class="mini-filters">
+      <select id="fBydel" aria-label="Filtrer på bydel"><option value="">Alle bydeler</option></select>
+      <select id="fCuisine" aria-label="Filtrer på kjøkken"><option value="">Alle kjøkken</option></select>
+    </div>
+    <div class="filter-status">
+      <span id="resultCount">Laster…</span>
+      <button class="reset" id="reset" disabled>Nullstill</button>
+    </div>
+  </div>
+
+  <div class="layers-label">Halal-status</div>
+  <div class="layers" id="layers"></div>
+
+  <div class="panel-foot">
+    <a data-info="om">Om oss</a>
+    <a data-info="kontakt">Kontakt oss</a>
+    <a data-info="personvern">Personvern</a>
+    <a data-info="vilkar">Vilkår</a>
+    <a data-info="faq">FAQ</a>
+  </div>
+</aside>
+
+<div class="info-scrim" id="infoScrim">
+  <div class="info-card" role="dialog" aria-modal="true" aria-label="Informasjon">
+    <div class="info-head">
+      <span class="info-brand">حلال</span>
+      <div class="info-tabs">
+        <button class="info-tab active" data-tab="om">Om oss</button>
+        <button class="info-tab" data-tab="kontakt">Kontakt</button>
+        <button class="info-tab" data-tab="personvern">Personvern</button>
+        <button class="info-tab" data-tab="vilkar">Vilkår</button>
+        <button class="info-tab" data-tab="faq">FAQ</button>
+      </div>
+      <button class="info-close" id="infoClose" aria-label="Lukk">×</button>
+    </div>
+    <div class="info-body" id="infoBody">
+      <section class="info-section active" data-section="om">
+        <h2>Om oss</h2>
+        <p>Halalkartet er et uavhengig, kuratert kart over halal-spisesteder i Oslo. Målet er enkelt: å gjøre det trygt og lett å finne et sted å spise – enten du er ute med venner og trenger noe i nærheten, eller vil oppdage nye og spennende steder.</p>
+        <p>Hvert sted er merket med halal-status, så du vet hva du får:</p>
+        <p><span class="info-badge" style="background:#2E7D4F"></span><b>Verifisert</b> – bekreftet 100 % halal.<br>
+           <span class="info-badge" style="background:#D98A1F"></span><b>Delvis</b> – deler av menyen er ikke halal.<br>
+           <span class="info-badge" style="background:#8A8F98"></span><b>Uavklart</b> – ikke bekreftet ennå.</p>
+        <p>Vi startet i Oslo og utvider gradvis. Prosjektet drives av matglede og fellesskap – tips og rettelser settes stor pris på.</p>
+      </section>
+      <section class="info-section" data-section="kontakt">
+        <h2>Kontakt oss</h2>
+        <p>Har du et tips om et sted, en rettelse, eller vil melde inn en ny restaurant? Vi hører gjerne fra deg.</p>
+        <p>E-post: <a href="mailto:kontakt@halalkartet.no">kontakt@halalkartet.no</a></p>
+        <p>Vi leser alle henvendelser og oppdaterer kartet fortløpende. Takk for at du bidrar til å gjøre Halalkartet bedre.</p>
+      </section>
+      <section class="info-section" data-section="personvern">
+        <h2>Personvernregler</h2>
+        <p>Halalkartet er laget for å respektere personvernet ditt.</p>
+        <h3>Ingen konto, ingen sporing</h3>
+        <p>Du trenger ikke å registrere deg, og vi bruker verken sporingscookies eller reklame.</p>
+        <h3>Posisjon («Nær meg»)</h3>
+        <p>Hvis du trykker «Nær meg», ber nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes kun i nettleseren din der og da. Den lagres ikke og sendes ikke til oss.</p>
+        <h3>Kart og hosting</h3>
+        <p>Kartdata leveres av OpenStreetMap og CARTO. Disse tjenestene kan motta tekniske opplysninger som IP-adresse for å levere kartet og drifte siden, i henhold til deres egne personvernvilkår.</p>
+        <p class="muted">Spørsmål? Kontakt oss på <a href="mailto:kontakt@halalkartet.no">kontakt@halalkartet.no</a></p>
+        <p class="muted">Sist oppdatert: August 2026.</p>
+      </section>
+      <section class="info-section" data-section="vilkar">
+        <h2>Vilkår og betingelser</h2>
+        <p>Halalkartet tilbys som en gratis informasjonstjeneste, «som den er».</p>
+        <p>Vi gjør vårt beste for at informasjonen skal være korrekt, men kan ikke garantere at halal-status, åpningstider, adresser eller andre detaljer til enhver tid er oppdaterte eller feilfrie. Dette gjelder særlig steder merket «Uavklart» eller «Delvis».</p>
+        <p>Halal er til sist ditt eget ansvar. Ved tvil bør du bekrefte direkte med stedet før du spiser. Bruk av kartet skjer på eget ansvar, og vi er ikke ansvarlige for eventuelle feil eller mangler.</p>
+        <p>Innhold og funksjoner kan endres uten varsel. Ved å bruke Halalkartet aksepterer du disse vilkårene.</p>
+        <p class="muted">Sist oppdatert: august 2026.</p>
+      </section>
+      <section class="info-section" data-section="faq">
+        <h2>Ofte stilte spørsmål</h2>
+        <h3>Hva betyr fargene?</h3>
+        <p>Grønn = verifisert 100 % halal. Alt i menyen er halal!<p>
+        <p>Oransje = delvis halal (deler av menyen er ikke halal).
+        <P>Grå = uavklart (ikke bekreftet ennå).</p>
+        <h3>Hvordan vet dere at et sted er halal?</h3>
+        <p>Steder merkes ut fra egen sjekk. For eksempel synlig sertifikat, bekreftelse fra personalet, eller at stedet er godt kjent for å være halal.<p>
+        <p>«Uavklart» betyr at vi ennå ikke har bekreftet det.</p>
+        <h3>Kan jeg foreslå et sted eller melde en feil?</h3>
+        <p>Ja! Send oss en e-post til <a href="mailto:kontakt@halalkartet.no">kontakt@halalkartet.no</a>. Vi setter stor pris på tips.</p>
+        <h3>Dekker dere hele Norge?</h3>
+        <p>Vi starter i Oslo og utvider gradvis til flere byer.</p>
+        <h3>Koster det noe?</h3>
+        <p>Nei, Halalkartet er helt gratis.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const STATUS_ORDER = ['verifisert', 'delvis', 'uavklart'];
+const STATUS = {
+  'verifisert': { label: 'Verifisert halal', color: '#2E7D4F', pin: 'pin-verifisert' },
+  'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis'     },
+  'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart'   }
+};
+const priceLabel = p => 'kr'.repeat(p);
+const el = id => document.getElementById(id);
+
+const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([59.9139, 10.7522], 13.5);
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 20, subdomains: 'abcd'
+}).addTo(map);
+
+let HALAL_SPOTS = [];
+const markers = {};
+let activeId = null;
+let userLoc = null, userMarker = null;
+const layerOn = { 'verifisert': true, 'delvis': true, 'uavklart': true };
+const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': false };
+const byId = id => HALAL_SPOTS.find(s => s.id === id);
+
+(async function boot() {
+  try {
+    const res = await fetch('spots.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    HALAL_SPOTS = await res.json();
+    if (!Array.isArray(HALAL_SPOTS) || !HALAL_SPOTS.length) throw new Error('tomt');
+  } catch (e) { showLoadError(); return; }
+  initApp();
+})();
+
+function showLoadError() {
+  el('resultCount').textContent = 'Ingen data';
+  const overlay = document.createElement('div');
+  overlay.className = 'map-overlay';
+  overlay.innerHTML =
+    '<div class="box"><h2>Kartet venter på data</h2>' +
+    '<p>Appen fant ikke <code>spots.json</code>. Det skjer bare når du åpner filen rett fra disk — nettlesere blokkerer lokal filhenting.</p>' +
+    '<p>Kjør en liten server i prosjektmappen:</p><p><code>python3 -m http.server</code></p>' +
+    '<p>Gå så til <code>http://localhost:8000</code>. Publisert side fungerer uten noe ekstra.</p></div>';
+  el('map').appendChild(overlay);
+}
+
+function initApp() {
+  [...new Set(HALAL_SPOTS.map(s => s.bydel))].sort().forEach(b => el('fBydel').add(new Option(b, b)));
+  [...new Set(HALAL_SPOTS.flatMap(s => s.cuisines))].sort().forEach(c => el('fCuisine').add(new Option(c, c)));
+
+  HALAL_SPOTS.forEach(s => {
+    const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) })
+      .bindPopup(popupHtml(s), { closeButton: true });
+    m.on('click', () => setActive(s.id, false));
+    m.on('popupclose', () => { if (activeId === s.id) setActive(null); });
+    markers[s.id] = m;
+  });
+
+  [el('search'), el('fBydel'), el('fCuisine')].forEach(x => x.addEventListener('input', render));
+  el('reset').addEventListener('click', () => {
+    el('search').value = ''; el('fBydel').value = ''; el('fCuisine').value = ''; render();
+  });
+  el('collapse').addEventListener('click', () => togglePanel(true));
+  el('reopen').addEventListener('click', () => togglePanel(false));
+  wireNearMe();
+  wireInfo();
+  if (window.innerWidth <= 720) togglePanel(true);
+
+  render();
+}
+
+function togglePanel(collapse) {
+  el('panel').classList.toggle('collapsed', collapse);
+  document.body.classList.toggle('panel-collapsed', collapse);
+  setTimeout(() => map.invalidateSize(), 320);
+}
+
+function makeIcon(status, big) {
+  return L.divIcon({
+    className: '', iconSize: big ? [23,23] : [17,17], iconAnchor: big ? [11,11] : [8,8],
+    popupAnchor: [0,-11], html: '<div class="pin ' + STATUS[status].pin + (big ? ' big' : '') + '"></div>'
+  });
+}
+function iconRow(kind, text) {
+  const icons = {
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    pin: '<path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    phone: '<path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>'
+  };
+  return '<div class="pop-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f6b63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + icons[kind] + '</svg><span>' + text + '</span></div>';
+}
+function popupHtml(s) {
+  const rows = [];
+  if (s.hours) rows.push(iconRow('clock', s.hours));
+  rows.push(iconRow('pin', s.address + ' · ' + s.bydel));
+  if (s.phone) rows.push(iconRow('phone', s.phone));
+  if (s.website) rows.push('<div class="pop-row"><a href="' + s.website + '" target="_blank" rel="noopener" style="color:#0E3D2C;font-weight:600;text-decoration:none">Nettside ↗</a></div>');
+  return '<div class="pop-name">' + s.name + '</div>' +
+    '<div class="pop-meta">' + s.cuisines.join(' · ') + ' &nbsp;·&nbsp; ' + priceLabel(s.price) + '</div>' +
+    '<div class="pop-badge" data-s="' + s.halalStatus + '"><span class="dotc"></span>' + STATUS[s.halalStatus].label + '</div>' +
+    '<div class="pop-desc">' + s.description + '</div>' +
+    (s.verification ? '<div class="pop-verify">' + s.verification + '</div>' : '') +
+    rows.join('');
+}
+
+function currentFilters() {
+  return { q: el('search').value.trim().toLowerCase(), bydel: el('fBydel').value, cuisine: el('fCuisine').value };
+}
+function passes(s, f) {
+  if (f.bydel && s.bydel !== f.bydel) return false;
+  if (f.cuisine && !s.cuisines.includes(f.cuisine)) return false;
+  if (f.q) {
+    const hay = (s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel).toLowerCase();
+    if (!hay.includes(f.q)) return false;
+  }
+  return true;
+}
+
+function render() {
+  const f = currentFilters();
+  const filtered = HALAL_SPOTS.filter(s => passes(s, f));
+
+  HALAL_SPOTS.forEach(s => {
+    const show = filtered.includes(s) && layerOn[s.halalStatus];
+    if (show && !map.hasLayer(markers[s.id])) markers[s.id].addTo(map);
+    if (!show && map.hasLayer(markers[s.id])) map.removeLayer(markers[s.id]);
+  });
+
+  const box = el('layers');
+  box.innerHTML = '';
+  const anyFilter = f.q || f.bydel || f.cuisine;
+
+  if (filtered.length === 0) {
+    box.innerHTML = '<div class="no-results"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
+  } else {
+    STATUS_ORDER.forEach(st => {
+      let items = filtered.filter(s => s.halalStatus === st);
+      if (userLoc) items = items.slice().sort((a, b) => dist(a) - dist(b));
+      const layer = document.createElement('div');
+      layer.className = 'layer' + (layerCollapsed[st] ? ' collapsed' : '') + (layerOn[st] ? '' : ' off');
+
+      const head = document.createElement('div');
+      head.className = 'layer-head';
+      head.innerHTML =
+        '<span class="layer-check ' + (layerOn[st] ? 'on' : '') + '" data-s="' + st + '" role="checkbox" aria-checked="' + layerOn[st] + '" tabindex="0">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+        '</span>' +
+        '<span class="layer-dot" style="background:' + STATUS[st].color + '"></span>' +
+        '<span class="layer-name">' + STATUS[st].label + '</span>' +
+        '<span class="layer-count">' + items.length + '</span>' +
+        '<svg class="layer-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+
+      const check = head.querySelector('.layer-check');
+      const toggleLayer = e => { e.stopPropagation(); layerOn[st] = !layerOn[st]; render(); };
+      check.addEventListener('click', toggleLayer);
+      check.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLayer(e); } });
+      head.addEventListener('click', () => { layerCollapsed[st] = !layerCollapsed[st]; render(); });
+
+      layer.appendChild(head);
+
+      const list = document.createElement('div');
+      list.className = 'layer-items';
+      if (items.length === 0) {
+        list.innerHTML = '<div class="layer-empty">Ingen steder her ennå.</div>';
+      } else {
+        items.forEach(s => list.appendChild(itemEl(s)));
+      }
+      layer.appendChild(list);
+      box.appendChild(layer);
+    });
+  }
+
+  const visibleCount = filtered.filter(s => layerOn[s.halalStatus]).length;
+  el('resultCount').textContent = visibleCount + ' av ' + HALAL_SPOTS.length + ' steder';
+  el('reset').disabled = !anyFilter;
+}
+
+function itemEl(s) {
+  const b = document.createElement('button');
+  b.className = 'item' + (s.id === activeId ? ' active' : '');
+  b.dataset.s = s.halalStatus; b.dataset.id = s.id;
+  b.innerHTML =
+    '<div class="item-name">' + s.name + '</div>' +
+    '<div class="item-meta">' + (userLoc ? '<span class="dist">' + fmtDist(dist(s)) + '</span> · ' : '') + s.bydel + ' · ' + s.cuisines.join(', ') + ' · <span class="price">' + priceLabel(s.price) + '</span></div>';
+  b.addEventListener('click', () => setActive(s.id, true));
+  return b;
+}
+
+function setActive(id, fromList) {
+  if (activeId && markers[activeId]) markers[activeId].setIcon(makeIcon(byId(activeId).halalStatus, false));
+  activeId = id;
+  document.querySelectorAll('.item').forEach(c => c.classList.toggle('active', c.dataset.id === id));
+  if (id) {
+    const s = byId(id);
+    markers[id].setIcon(makeIcon(s.halalStatus, true));
+    if (fromList) {
+      if (window.innerWidth <= 720) togglePanel(true);
+      map.flyTo([s.lat, s.lng], 15, { duration: .6 });
+      markers[id].openPopup();
+    }
+  }
+}
+
+/* ---- geolocation: near me ---- */
+function haversine(la1, lo1, la2, lo2) {
+  const R = 6371, toR = x => x * Math.PI / 180;
+  const dLa = toR(la2 - la1), dLo = toR(lo2 - lo1);
+  const a = Math.sin(dLa/2)**2 + Math.cos(toR(la1)) * Math.cos(toR(la2)) * Math.sin(dLo/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+function dist(s) { return userLoc ? haversine(userLoc.lat, userLoc.lng, s.lat, s.lng) : 0; }
+function fmtDist(km) { return km < 1 ? Math.round(km * 1000) + ' m' : km.toFixed(1) + ' km'; }
+function wireNearMe() { el('nearme').addEventListener('click', locateUser); }
+function locateUser() {
+  const btn = el('nearme');
+  if (!navigator.geolocation) { alert('Nettleseren din støtter ikke posisjon.'); return; }
+  btn.classList.add('loading');
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    if (userMarker) map.removeLayer(userMarker);
+    userMarker = L.marker([userLoc.lat, userLoc.lng], {
+      icon: L.divIcon({ className: '', html: '<div class="userloc"></div>', iconSize: [16,16], iconAnchor: [8,8] }),
+      zIndexOffset: 1000
+    }).addTo(map);
+    map.flyTo([userLoc.lat, userLoc.lng], 14.5, { duration: .6 });
+    btn.classList.remove('loading');
+    if (window.innerWidth <= 720) togglePanel(true);
+    render();
+  }, () => {
+    btn.classList.remove('loading');
+    alert('Fant ikke posisjonen din. Sjekk at nettleseren har fått tilgang til posisjon.');
+  }, { enableHighAccuracy: true, timeout: 10000 });
+}
+
+/* ---- info modal ---- */
+function wireInfo() {
+  document.querySelectorAll('[data-info]').forEach(a =>
+    a.addEventListener('click', e => { e.preventDefault(); openInfo(a.dataset.info); }));
+  document.querySelectorAll('.info-tab').forEach(t =>
+    t.addEventListener('click', () => showInfo(t.dataset.tab)));
+  el('infoClose').addEventListener('click', closeInfo);
+  el('infoScrim').addEventListener('click', e => { if (e.target === el('infoScrim')) closeInfo(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfo(); });
+}
+function openInfo(section) { el('infoScrim').classList.add('open'); showInfo(section); }
+function closeInfo() { el('infoScrim').classList.remove('open'); }
+function showInfo(section) {
+  document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
+  document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
+  el('infoBody').scrollTop = 0;
+}
+</script>
+</body>
+</html>

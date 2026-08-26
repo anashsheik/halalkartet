@@ -1,0 +1,1496 @@
+[
+ {
+  "id": "gazakjokken",
+  "name": "Gazakjøkken",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Møllergata 10, Oslo",
+  "lat": 59.914463,
+  "lng": 10.7470942,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Falafel"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "mr-bowl-storgata",
+  "name": "Mr. Bowl Storgata",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Storgata 17, Oslo",
+  "lat": 59.9137557,
+  "lng": 10.7498851,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "zam-zam-avd-hasle",
+  "name": "Zam Zam avd HASLE",
+  "description": "",
+  "bydel": "Hasle",
+  "address": "Hovinveien 39, Oslo",
+  "lat": 59.9198946,
+  "lng": 10.7913278,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Takeaway"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "mehfel-restaurant",
+  "name": "Mehfel restaurant",
+  "description": "Klassisk indisk mat i flotte omgivelser.",
+  "bydel": "Sentrum",
+  "address": "Kirkegata 15, Oslo",
+  "lat": 59.9103032,
+  "lng": 10.7435666,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "safari-restaurant-oslo",
+  "name": "Safari Restaurant Oslo",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Motzfeldts gate 7, 0187 Oslo",
+  "lat": 59.914093,
+  "lng": 10.7632166,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Halal"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "alshahba-restaurant-oslo",
+  "name": "Alshahba Restaurant Oslo",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønlandsleiret 37, Oslo",
+  "lat": 59.9110746,
+  "lng": 10.7668704,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "shah-s-halal-food-oslo",
+  "name": "Shah's Halal Food - Oslo",
+  "description": "",
+  "bydel": "Stovner",
+  "address": "Stovner Senter 3, Oslo",
+  "lat": 59.9618135,
+  "lng": 10.9233817,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "sultan-gronland-oslo-food-sweets",
+  "name": "Sultan Grønland Oslo food & sweets",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønlandsleiret 16B, Oslo",
+  "lat": 59.9123407,
+  "lng": 10.7653533,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Midtøsten"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 03"
+ },
+ {
+  "id": "alibaba-turkish-grill-steak",
+  "name": "Alibaba Turkish Grill & Steak",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 6A, Oslo",
+  "lat": 59.9191861,
+  "lng": 10.7633571,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "simply-tasty",
+  "name": "Simply Tasty",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Vulkan 5, Oslo",
+  "lat": 59.922185,
+  "lng": 10.7520269,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 20"
+ },
+ {
+  "id": "mediterranean-grill",
+  "name": "Mediterranean Grill",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Torggata 34, Oslo",
+  "lat": 59.9172643,
+  "lng": 10.7535635,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 04"
+ },
+ {
+  "id": "istanbul-kebab-restaurant-avd-trondheims",
+  "name": "Istanbul Kebab/Restaurant avd. Trondheimsveien",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 13, Oslo",
+  "lat": 59.919193,
+  "lng": 10.7643854,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "yalla-habibi-grill-restaurant-bar",
+  "name": "Yalla habibi Grill Restaurant bar",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 14, Oslo",
+  "lat": 59.9195989,
+  "lng": 10.7648225,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "khanateria",
+  "name": "Khanateria",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Torggata 30, Oslo",
+  "lat": 59.9170016,
+  "lng": 10.7531046,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "burger-shack",
+  "name": "Burger Shack",
+  "description": "",
+  "bydel": "St. Hanshaugen",
+  "address": "Waldemar Thranes gate 63, Oslo",
+  "lat": 59.9276448,
+  "lng": 10.7489461,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hamburger"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:45"
+ },
+ {
+  "id": "saray-restaurant",
+  "name": "Saray restaurant",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 10, Oslo",
+  "lat": 59.9197558,
+  "lng": 10.7635425,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "lahori-dera-tandoori",
+  "name": "Lahori Dera Tandoori",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Norbygata 56, Oslo",
+  "lat": 59.9130137,
+  "lng": 10.7655942,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "khushi-indian-cuisine-oslo",
+  "name": "Khushi Indian Cuisine - Oslo",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Seilduksgata 5c, Oslo",
+  "lat": 59.9254238,
+  "lng": 10.7569925,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "new-delhi-restaurant",
+  "name": "New Delhi Restaurant",
+  "description": "Restaurant med tradisjonell indisk mat.",
+  "bydel": "Sentrum",
+  "address": "Tjuvholmen allé 2, Oslo",
+  "lat": 59.9089744,
+  "lng": 10.723378,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "anatolia",
+  "name": "Anatolia",
+  "description": "",
+  "bydel": "Økern",
+  "address": "Økernveien 9, Oslo",
+  "lat": 59.9146312,
+  "lng": 10.7759688,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "masala-politics",
+  "name": "Masala Politics",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Karl Johans gt. 13, Oslo",
+  "lat": 59.9124739,
+  "lng": 10.7446479,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "habibi-restaurant-og-kafe",
+  "name": "Habibi restaurant og kafé",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Møllergata 10, Oslo",
+  "lat": 59.9143638,
+  "lng": 10.7469584,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "saray-restaurant-gronland",
+  "name": "Saray Restaurant Grønland",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønland 5, Oslo",
+  "lat": 59.9130556,
+  "lng": 10.7597222,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "ricksha-pakistani-street-food",
+  "name": "Ricksha Pakistani Street food",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Kjeld Stubs gate 3, Oslo",
+  "lat": 59.9126569,
+  "lng": 10.7355775,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "dil-se-indian-kitchen-n-bar-oslo",
+  "name": "Dil Se Indian kitchen N Bar Oslo",
+  "description": "",
+  "bydel": "Løren",
+  "address": "Lørenveien 64 d, Oslo",
+  "lat": 59.9292614,
+  "lng": 10.7980515,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "registan-restaurant",
+  "name": "Registan Restaurant",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønlandsleiret 79, Oslo",
+  "lat": 59.9092238,
+  "lng": 10.7682488,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Usbekisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "tasty-thai-gronland",
+  "name": "Tasty Thai Grønland",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønland 12B, Oslo",
+  "lat": 59.9131854,
+  "lng": 10.7604482,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21:30"
+ },
+ {
+  "id": "indian-street-food-co",
+  "name": "Indian Street Food & Co",
+  "description": "",
+  "bydel": "Sørenga",
+  "address": "Sørengkaia 7, Oslo",
+  "lat": 59.9040236,
+  "lng": 10.7561158,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "kebabish-original",
+  "name": "Kebabish Original",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Breigata 12, Oslo",
+  "lat": 59.9138553,
+  "lng": 10.7622184,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "kammis-grill-frogner",
+  "name": "Kammis Grill Frogner",
+  "description": "",
+  "bydel": "Frogner",
+  "address": "Frognerveien 9b, Oslo",
+  "lat": 59.9163858,
+  "lng": 10.7157018,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "village-tandoori",
+  "name": "Village Tandoori",
+  "description": "",
+  "bydel": "Frogner",
+  "address": "Bygdøy allé 65, Oslo",
+  "lat": 59.9189547,
+  "lng": 10.7026785,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "sushi-special-as",
+  "name": "Sushi Special AS",
+  "description": "",
+  "bydel": "Sagene",
+  "address": "Bergensgata 4, Oslo",
+  "lat": 59.9401216,
+  "lng": 10.7589519,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Sushi"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "roots-restaurant",
+  "name": "Roots Restaurant",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Grensen 10, Oslo",
+  "lat": 59.9134829,
+  "lng": 10.7432116,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Middelhavsk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "halal-toyen-burger",
+  "name": "Halal Tøyen Burger",
+  "description": "",
+  "bydel": "Tøyen",
+  "address": "Jens Bjelkes gate 82, Oslo",
+  "lat": 59.9125255,
+  "lng": 10.7745513,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hurtigmat"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "chowk-indian-restaurant",
+  "name": "Chowk Indian Restaurant",
+  "description": "",
+  "bydel": "Økern",
+  "address": "Økernveien 9, Oslo",
+  "lat": 59.9147157,
+  "lng": 10.7760574,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "1947-gandhi-indisk-restaurant",
+  "name": "1947 Gandhi Indisk Restaurant",
+  "description": "Indisk restaurant med tradisjonell mat.",
+  "bydel": "Majorstuen",
+  "address": "Majorstuveien 41A, Oslo",
+  "lat": 59.928082,
+  "lng": 10.7156409,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "mandi-house-restaurant-oslo",
+  "name": "Mandi House Restaurant Oslo",
+  "description": "Jemenittisk restaurant (mandi).",
+  "bydel": "Grønland",
+  "address": "Tøyengata 29, Oslo",
+  "lat": 59.9142087,
+  "lng": 10.7680423,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Arabisk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "new-beirut-kebab",
+  "name": "New Beirut kebab",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Møllergata 8, Oslo",
+  "lat": 59.9141362,
+  "lng": 10.7468876,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Kebab"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "hot-temper",
+  "name": "Hot Temper",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Nordre gate 24, Oslo",
+  "lat": 59.9211603,
+  "lng": 10.758499,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Kylling"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stengt nå"
+ },
+ {
+  "id": "pele-pele",
+  "name": "Pele Pele",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Smalgangen 31, Oslo",
+  "lat": 59.9122048,
+  "lng": 10.7603045,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Kylling"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "chaiwala",
+  "name": "Chaiwala",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Smalgangen 14, Oslo",
+  "lat": 59.9123946,
+  "lng": 10.760334,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stengt nå"
+ },
+ {
+  "id": "feniqia",
+  "name": "Feniqia",
+  "description": "",
+  "bydel": "Bjørvika",
+  "address": "Rostockgata 66, Oslo",
+  "lat": 59.9061514,
+  "lng": 10.7606192,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Libanesisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "175-c-k-fried",
+  "name": "175°C K-fried",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Vulkan, Oslo",
+  "lat": 59.9225201,
+  "lng": 10.7519057,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Koreansk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21:30"
+ },
+ {
+  "id": "gate-of-india",
+  "name": "Gate of India",
+  "description": "",
+  "bydel": "Frogner",
+  "address": "Bogstadveien 66A, Oslo",
+  "lat": 59.9286678,
+  "lng": 10.7155393,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "otsu-sushi-poke-bowl",
+  "name": "Otsu sushi & poke bowl",
+  "description": "",
+  "bydel": "Sagene",
+  "address": "Maridalsveien 154B, Oslo",
+  "lat": 59.9376755,
+  "lng": 10.7561237,
+  "halalStatus": "delvis",
+  "verification": "Delvis halal – deler av menyen er ikke halal.",
+  "cuisines": [
+   "Sushi"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "azadi-restaurant",
+  "name": "Azadi Restaurant",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Mandalls gate 2P, Oslo",
+  "lat": 59.912257,
+  "lng": 10.763879,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Midtøsten"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "istanbul-kebab-avd-gronland",
+  "name": "Istanbul Kebab avd Grønland",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønland 14, Oslo",
+  "lat": 59.913063,
+  "lng": 10.7612391,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "mantra-by-mr-india",
+  "name": "Mantra by Mr India",
+  "description": "Stilig sted med vin og indiske retter.",
+  "bydel": "Sentrum",
+  "address": "Dronningens gt. 19, Oslo",
+  "lat": 59.9110739,
+  "lng": 10.7466746,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21:30"
+ },
+ {
+  "id": "l-oasis-restaurant",
+  "name": "L'OASIS RESTAURANT",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 14 a, Oslo",
+  "lat": 59.9196552,
+  "lng": 10.7647706,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Pizza"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "the-greasy-house",
+  "name": "The Greasy House",
+  "description": "",
+  "bydel": "Sagene",
+  "address": "Arendalsgata 14, Oslo",
+  "lat": 59.9378605,
+  "lng": 10.7546939,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hamburger"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23:45"
+ },
+ {
+  "id": "listen-to-delhi",
+  "name": "Listen to Delhi",
+  "description": "",
+  "bydel": "Frogner",
+  "address": "Frognerveien 1A, Oslo",
+  "lat": 59.9152589,
+  "lng": 10.7176701,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "tasty-thai-bislett",
+  "name": "Tasty Thai Bislett",
+  "description": "Klassisk thaimat i uformelle omgivelser.",
+  "bydel": "Bislett",
+  "address": "Thereses gate 51E, Oslo",
+  "lat": 59.926012,
+  "lng": 10.7305283,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Thai"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21:30"
+ },
+ {
+  "id": "der-peppern-gror",
+  "name": "Der Peppern Gror",
+  "description": "Uformelt sted for indiske spesialiteter.",
+  "bydel": "Sentrum",
+  "address": "Fridtjof Nansens plass 7, Oslo",
+  "lat": 59.9124275,
+  "lng": 10.7351495,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "kos-kos-restaurant",
+  "name": "Kos Kos Restaurant",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Grensen 10, Oslo",
+  "lat": 59.9134829,
+  "lng": 10.7432115,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Libanesisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "la-villa-restaurant",
+  "name": "La Villa Restaurant",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Tøyengata 2, Oslo",
+  "lat": 59.9126553,
+  "lng": 10.7637035,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Tyrkisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "punjab-tandoori",
+  "name": "Punjab Tandoori",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønland 24, Oslo",
+  "lat": 59.9129677,
+  "lng": 10.7619495,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Punjabi"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "jaipur-indisk-restaurant",
+  "name": "Jaipur Indisk Restaurant",
+  "description": "Indisk restaurant med tradisjonell mat.",
+  "bydel": "Sentrum",
+  "address": "Karl Johans gt. 18C, Oslo",
+  "lat": 59.9126911,
+  "lng": 10.7417146,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22:30"
+ },
+ {
+  "id": "dr-crunchy-oslo-fried-chicken",
+  "name": "Dr. Crunchy Oslo Fried Chicken",
+  "description": "",
+  "bydel": "St. Hanshaugen",
+  "address": "Waldemar Thranes gate 63, Oslo",
+  "lat": 59.9277584,
+  "lng": 10.7490842,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Hurtigmat"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23:30"
+ },
+ {
+  "id": "american-burgers",
+  "name": "American burgers",
+  "description": "",
+  "bydel": "Frogner",
+  "address": "Hegdehaugsveien 32b, Oslo",
+  "lat": 59.9220391,
+  "lng": 10.7265697,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hamburger"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 01:30"
+ },
+ {
+  "id": "dayax-restaurent",
+  "name": "Dayax Restaurent",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Platous gt. 2C, Oslo",
+  "lat": 59.913106,
+  "lng": 10.7667391,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "royal-tandoori",
+  "name": "Royal Tandoori",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Pilestredet 63D, Oslo",
+  "lat": 59.9241905,
+  "lng": 10.7310743,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "pascal-greek-grill",
+  "name": "Pascal Greek & Grill",
+  "description": "",
+  "bydel": "Kjelsås",
+  "address": "Kjelsåsveien 18, Oslo",
+  "lat": 59.9442797,
+  "lng": 10.7863393,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Gresk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stengt nå"
+ },
+ {
+  "id": "valerenga-halal-burger",
+  "name": "Vålerenga Halal Burger",
+  "description": "",
+  "bydel": "Vålerenga",
+  "address": "Strømsveien 25A, Oslo",
+  "lat": 59.9086746,
+  "lng": 10.7870328,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hurtigmat"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "tandoori-curry-corner",
+  "name": "Tandoori Curry Corner",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Grønland 22, Oslo",
+  "lat": 59.9129637,
+  "lng": 10.7617648,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "damaskus-huset-restaurant",
+  "name": "Damaskus Huset restaurant",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 12, Oslo",
+  "lat": 59.9194951,
+  "lng": 10.7645103,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Syrisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "jonk-gronland",
+  "name": "JØNK Grønland",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Smalgangen 43, Oslo",
+  "lat": 59.9124912,
+  "lng": 10.7616621,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hamburger"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "kod-oslo",
+  "name": "KöD Oslo",
+  "description": "Elegant restaurant for biff og vin.",
+  "bydel": "Sentrum",
+  "address": "Tollbugata 15, Oslo",
+  "lat": 59.910431,
+  "lng": 10.7445836,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "oslo-street-food",
+  "name": "Oslo Street Food",
+  "description": "Trendy matområde med global mat og DJ-er.",
+  "bydel": "Sentrum",
+  "address": "Torggata 16b, Oslo",
+  "lat": 59.915909,
+  "lng": 10.7508451,
+  "halalStatus": "delvis",
+  "verification": "Delvis halal – deler av menyen er ikke halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "theka-indian-street-food-bar",
+  "name": "Theka - Indian Street Food & Bar",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Olaf Ryes plass 10, Oslo",
+  "lat": 59.9235218,
+  "lng": 10.7580681,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "punjabi-masala-rosenhoff",
+  "name": "Punjabi Masala - Rosenhoff",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 154, Oslo",
+  "lat": 59.9289422,
+  "lng": 10.7773444,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "aften-pizza-grill",
+  "name": "Aften Pizza & Grill",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Storgata 39, Oslo",
+  "lat": 59.9150766,
+  "lng": 10.7545541,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Pizza"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "crispy-clubs",
+  "name": "Crispy Clubs",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Storgata 32, Oslo",
+  "lat": 59.9143632,
+  "lng": 10.7534684,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Kylling"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 20"
+ },
+ {
+  "id": "waaberi-restaurant-oslo",
+  "name": "Waaberi restaurant Oslo",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Platous gt. 6, Oslo",
+  "lat": 59.9124127,
+  "lng": 10.7664275,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Østafrikansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21:15"
+ },
+ {
+  "id": "ekte-thaimat",
+  "name": "EKTE THAIMAT",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Thorvald Meyers gate 64, Oslo",
+  "lat": 59.9213746,
+  "lng": 10.7599479,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Takeaway"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "san-remo-pizza-grill",
+  "name": "San Remo pizza & grill",
+  "description": "",
+  "bydel": "Torshov",
+  "address": "Torshovgata 7, Oslo",
+  "lat": 59.9336756,
+  "lng": 10.7638522,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 00"
+ },
+ {
+  "id": "french-tacos-burgers-avenue-torshov",
+  "name": "French Tacos & Burgers Avenue - Torshov",
+  "description": "",
+  "bydel": "Torshov",
+  "address": "Torshovgata 1, Oslo",
+  "lat": 59.9340065,
+  "lng": 10.7619235,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Restaurant"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 23"
+ },
+ {
+  "id": "gangnam-korean-restaurant",
+  "name": "Gangnam Korean Restaurant",
+  "description": "Restaurant med tradisjonell koreansk mat.",
+  "bydel": "Sentrum",
+  "address": "Munkedamsveien 59, Oslo",
+  "lat": 59.9111706,
+  "lng": 10.720909,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Koreansk"
+  ],
+  "price": 3,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "new-anarkali",
+  "name": "New Anarkali",
+  "description": "Restaurant med nordindiske spesialiteter.",
+  "bydel": "Grünerløkka",
+  "address": "Thorvald Meyers gate 76, Oslo",
+  "lat": 59.9192586,
+  "lng": 10.7596266,
+  "halalStatus": "uavklart",
+  "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+  "cuisines": [
+   "Indisk"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Stengt nå"
+ },
+ {
+  "id": "king-falafel",
+  "name": "King Falafel",
+  "description": "",
+  "bydel": "Sentrum",
+  "address": "Brugata 1, Oslo",
+  "lat": 59.9144887,
+  "lng": 10.7537409,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Vegansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 22"
+ },
+ {
+  "id": "shawarma-house",
+  "name": "Shawarma house",
+  "description": "",
+  "bydel": "Grønland",
+  "address": "Smalgangen 1, Oslo",
+  "lat": 59.9124214,
+  "lng": 10.758934,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Kebab"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 21"
+ },
+ {
+  "id": "kebab-hot",
+  "name": "Kebab Hot",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Trondheimsveien 159, Oslo",
+  "lat": 59.9313216,
+  "lng": 10.7786177,
+  "halalStatus": "delvis",
+  "verification": "Delvis halal – deler av menyen er ikke halal.",
+  "cuisines": [
+   "Pakistansk"
+  ],
+  "price": 1,
+  "phone": null,
+  "website": null,
+  "hours": "Stenger kl. 03"
+ },
+ {
+  "id": "namsum-thaimat-halal",
+  "name": "Namsum Thaimat (Halal)",
+  "description": "",
+  "bydel": "Hasle",
+  "address": "Hovinveien 39, Oslo",
+  "lat": 59.9199623,
+  "lng": 10.7910591,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Takeaway"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Midlertidig stengt"
+ },
+ {
+  "id": "digg-burger-lokka-by-jack-donnys",
+  "name": "DIGG BURGER Løkka by JACK DONNYs",
+  "description": "",
+  "bydel": "Grünerløkka",
+  "address": "Thorvald Meyers gate 78 C, Oslo",
+  "lat": 59.9187783,
+  "lng": 10.7597068,
+  "halalStatus": "verifisert",
+  "verification": "Verifisert 100% halal.",
+  "cuisines": [
+   "Hamburger"
+  ],
+  "price": 2,
+  "phone": null,
+  "website": null,
+  "hours": "Midlertidig stengt"
+ }
+]
