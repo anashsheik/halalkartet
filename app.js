@@ -14,7 +14,7 @@ L.control.zoom({ position: 'topright' }).addTo(map);
 // Vil du ha et renere kart der restaurantene far all oppmerksomheten og
 // butikker og bygninger tones ned, bruk Stadia Alidade Smooth. Registrer
 // domenet ditt gratis pa stadiamaps.com og sett PREMIUM_MAP = true under.
-const PREMIUM_MAP = true;
+const PREMIUM_MAP = false;
 if (PREMIUM_MAP) {
   L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap', maxZoom: 20
@@ -96,6 +96,7 @@ function initApp() {
   wireNearMe();
   wireInfo();
   wireContactForm();
+  el('feedback').addEventListener('click', function () { openInfo('kontakt'); });
   if (window.innerWidth <= 720) togglePanel(true);
 
   render();

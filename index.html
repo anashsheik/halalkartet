@@ -166,6 +166,9 @@ body.panel-collapsed .reopen { display: flex; }
 .nearme svg { color: var(--gold); }
 .nearme:hover { background: var(--emerald-2); }
 .nearme.loading { opacity: .6; pointer-events: none; }
+.feedback { position: absolute; z-index: 999; right: 12px; bottom: 74px; background: var(--emerald); color: var(--ivory); border: 1px solid var(--hairline); border-radius: 24px; box-shadow: var(--shadow-lg); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; }
+.feedback svg { color: var(--gold); }
+.feedback:hover { background: var(--emerald-2); }
 .userloc { width: 16px; height: 16px; border-radius: 50%; background: #2b7fff; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(43,127,255,.25), 0 1px 4px rgba(0,0,0,.4); }
 .item-meta .dist { color: var(--gold-soft); font-weight: 700; }
 
@@ -229,6 +232,11 @@ body.panel-collapsed .reopen { display: flex; }
 <button class="nearme" id="nearme" aria-label="Finn steder nær meg">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
   <span>Nær meg</span>
+</button>
+
+<button class="feedback" id="feedback" aria-label="Send oss en tilbakemelding">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3a8.38 8.38 0 0 1 8.5 8.5z"/></svg>
+  <span>Gi oss tips!</span>
 </button>
 
 <button class="reopen" id="reopen" aria-label="Vis panel">
