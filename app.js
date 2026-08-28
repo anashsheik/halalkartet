@@ -25,6 +25,21 @@ const layerOn = { 'verifisert': true, 'delvis': true, 'uavklart': true };
 const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': false };
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
+/* ---- Anonym hendelsessporing ----
+   Virker automatisk med Plausible, Fathom eller Umami så snart du limer inn
+   scriptet deres i <head>. Ingen cookies og ingen personopplysninger sendes –
+   kun navnet på handlingen (+ evt. hvilken restaurant/bydel). Er ingen
+   leverandor lastet, gjor funksjonen ingenting.
+   NB: Cloudflare Web Analytics stotter ikke egne hendelser – vil du se disse i
+   statistikken, velg Plausible, Fathom eller Umami. */
+function track(name, props) {
+  try {
+    if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
+    else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name, props || {});
+    else if (window.fathom && typeof window.fathom.trackEvent === 'function') window.fathom.trackEvent(name);
+  } catch (e) { /* sporing skal aldri kunne knekke siden */ }
+}
+
 (async function boot() {
   try {
     const res = await fetch('spots.json', { cache: 'no-store' });
@@ -60,6 +75,8 @@ function initApp() {
   });
 
   [el('search'), el('fBydel'), el('fCuisine')].forEach(x => x.addEventListener('input', render));
+  el('fBydel').addEventListener('change', () => { if (el('fBydel').value) track('filter_bydel', { bydel: el('fBydel').value }); });
+  el('fCuisine').addEventListener('change', () => { if (el('fCuisine').value) track('filter_kjokken', { kjokken: el('fCuisine').value }); });
   el('reset').addEventListener('click', () => {
     el('search').value = ''; el('fBydel').value = ''; el('fCuisine').value = ''; render();
   });
@@ -195,6 +212,7 @@ function setActive(id, fromList) {
   document.querySelectorAll('.item').forEach(c => c.classList.toggle('active', c.dataset.id === id));
   if (id) {
     const s = byId(id);
+    track('restaurant_klikk', { navn: s.name, bydel: s.bydel, status: s.halalStatus });
     markers[id].setIcon(makeIcon(s.halalStatus, true));
     if (fromList) {
       if (window.innerWidth <= 720) togglePanel(true);
@@ -216,6 +234,7 @@ function fmtDist(km) { return km < 1 ? Math.round(km * 1000) + ' m' : km.toFixed
 function wireNearMe() { el('nearme').addEventListener('click', locateUser); }
 function locateUser() {
   const btn = el('nearme');
+  track('naer_meg');
   if (!navigator.geolocation) { alert('Nettleseren din støtter ikke posisjon.'); return; }
   btn.classList.add('loading');
   navigator.geolocation.getCurrentPosition(pos => {
@@ -231,6 +250,7 @@ function locateUser() {
     render();
   }, () => {
     btn.classList.remove('loading');
+    track('naer_meg_avslag');
     alert('Fant ikke posisjonen din. Sjekk at nettleseren har fått tilgang til posisjon.');
   }, { enableHighAccuracy: true, timeout: 10000 });
 }
@@ -245,7 +265,7 @@ function wireInfo() {
   el('infoScrim').addEventListener('click', e => { if (e.target === el('infoScrim')) closeInfo(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfo(); });
 }
-function openInfo(section) { el('infoScrim').classList.add('open'); showInfo(section); }
+function openInfo(section) { track('apnet_side', { side: section }); el('infoScrim').classList.add('open'); showInfo(section); }
 function closeInfo() { el('infoScrim').classList.remove('open'); }
 function showInfo(section) {
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
