@@ -211,6 +211,7 @@ body.panel-collapsed .reopen { display: flex; }
 .kf-send:hover { background: #0b3324; }
 .kf-send:disabled { opacity: .6; cursor: default; }
 .kf-ok { margin-top: 8px; padding: 13px 15px; background: #E4F1E9; color: #1f6340; border-radius: 10px; font-size: 14px; font-weight: 600; }
+.kf-err { margin: -7px 0 12px; color: #b3261e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
 .info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
 
@@ -236,7 +237,7 @@ body.panel-collapsed .reopen { display: flex; }
 
 <button class="feedback" id="feedback" aria-label="Send oss en tilbakemelding">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3a8.38 8.38 0 0 1 8.5 8.5z"/></svg>
-  <span>Gi oss tips!</span>
+  <span>Si ifra</span>
 </button>
 
 <button class="reopen" id="reopen" aria-label="Vis panel">
@@ -319,9 +320,10 @@ body.panel-collapsed .reopen { display: flex; }
           <label class="kf-field">Hvor kommer du fra? By eller bydel <span class="kf-opt">frivillig</span>
             <input type="text" name="sted">
           </label>
-          <label class="kf-field">Telefon eller e-post <span class="kf-req">påkrevd</span>
-            <input type="text" name="kontakt" required>
+          <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+            <input type="text" name="kontakt" id="kfKontakt" autocomplete="email">
           </label>
+          <p class="kf-err" id="kfKontaktErr" hidden>Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.</p>
           <label class="kf-field">Meldingen din <span class="kf-req">påkrevd</span>
             <textarea name="melding" rows="4" required></textarea>
           </label>

@@ -292,6 +292,18 @@ function wireContactForm() {
   if (!f) return;
   f.addEventListener('submit', function (e) {
     e.preventDefault();
+    // Kontaktfeltet er frivillig, men hvis det er fylt ut må det være en
+    // gyldig e-post (én @ og et punktum etter) eller et telefonnummer.
+    const kEl = el('kfKontakt');
+    const errEl = el('kfKontaktErr');
+    if (errEl) errEl.hidden = true;
+    if (kEl && kEl.value.trim()) {
+      const v = kEl.value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      const phoneOk = /^[+()\d\s-]{6,}$/.test(v);
+      const ok = v.indexOf('@') !== -1 ? emailOk : phoneOk;
+      if (!ok) { if (errEl) errEl.hidden = false; kEl.focus(); return; }
+    }
     const btn = f.querySelector('.kf-send');
     const body = new URLSearchParams(new FormData(f)).toString();
     btn.disabled = true; btn.textContent = 'Sender';
@@ -299,7 +311,8 @@ function wireContactForm() {
       .then(function (r) {
         if (!r.ok) throw new Error('feil');
         track('kontakt_sendt');
-        f.hidden = true;
+        f.reset();
+        btn.disabled = false; btn.textContent = 'Send inn';
         el('kontaktOk').hidden = false;
       })
       .catch(function () {
