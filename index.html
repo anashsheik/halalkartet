@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halalkartet — halal spisesteder i Oslo</title>
+<title>Halalkartet · Finn halal mat i Oslo</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,7 +122,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 body.panel-collapsed .reopen { display: flex; }
 .reopen:hover { background: var(--emerald-2); }
 
-/* Pins — refined circular markers */
+/* Markører */
 .pin { width: 17px; height: 17px; border-radius: 50%; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 .pin.big { width: 24px; height: 24px; box-shadow: 0 0 0 4px rgba(200,162,83,.45), 0 2px 8px rgba(0,0,0,.42); }
 .pin-verifisert { background: var(--cert); }
@@ -195,6 +195,19 @@ body.panel-collapsed .reopen { display: flex; }
 .info-section p { font-size: 14px; line-height: 1.62; color: #3c4640; margin: 0 0 11px; }
 .info-section a { color: var(--cert); font-weight: 600; }
 .info-section .muted { font-size: 12px; color: var(--ink-soft); }
+.info-badge { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+.kf { margin-top: 2px; }
+.kf-hp { position: absolute; left: -9999px; }
+.kf-field { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 13px; }
+.kf-field input, .kf-field textarea { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; font: inherit; font-size: 14px; font-weight: 400; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; box-sizing: border-box; }
+.kf-field textarea { resize: vertical; min-height: 92px; }
+.kf-field input:focus, .kf-field textarea:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
+.kf-opt { font-weight: 500; color: var(--ink-soft); font-size: 11px; }
+.kf-req { font-weight: 600; color: #a86412; font-size: 11px; }
+.kf-send { margin-top: 2px; padding: 11px 22px; font: inherit; font-weight: 700; font-size: 13.5px; color: #fff; background: #0E3D2C; border: 0; border-radius: 10px; cursor: pointer; }
+.kf-send:hover { background: #0b3324; }
+.kf-send:disabled { opacity: .6; cursor: default; }
+.kf-ok { margin-top: 8px; padding: 13px 15px; background: #E4F1E9; color: #1f6340; border-radius: 10px; font-size: 14px; font-weight: 600; }
 .info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
 
@@ -208,7 +221,7 @@ body.panel-collapsed .reopen { display: flex; }
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#0E3D2C">
   <!-- Besøksteller: lim inn beacon-scriptet fra din analytics-leverandør her
-       (f.eks. Cloudflare Web Analytics – uten cookies, ingen samtykke-popup).
+       (f.eks. Cloudflare Web Analytics, uten cookies og uten samtykkebanner).
        Bruker du en annen leverandør, legg domenet til i Content-Security-Policy i _headers. -->
 </head>
 <body>
@@ -280,52 +293,71 @@ body.panel-collapsed .reopen { display: flex; }
     <div class="info-body" id="infoBody">
       <section class="info-section active" data-section="om">
         <h2>Om oss</h2>
-        <p>Halalkartet er et uavhengig, kuratert kart over halal-spisesteder i Oslo. Målet er enkelt: å gjøre det trygt og lett å finne et sted å spise – enten du er ute med venner og trenger noe i nærheten, eller vil oppdage nye og spennende steder.</p>
-        <p>Hvert sted er merket med halal-status, så du vet hva du får:</p>
-        <p><span class="info-badge" style="background:#2E7D4F"></span><b>Verifisert</b> – bekreftet 100 % halal.<br>
-           <span class="info-badge" style="background:#D98A1F"></span><b>Delvis</b> – deler av menyen er ikke halal.<br>
-           <span class="info-badge" style="background:#8A8F98"></span><b>Uavklart</b> – ikke bekreftet ennå.</p>
-        <p>Vi startet i Oslo og utvider gradvis. Prosjektet drives av matglede og fellesskap – tips og rettelser settes stor pris på.</p>
+        <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat i Oslo. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
+        <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
+        <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
+           <span class="info-badge" style="background:#D98A1F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
+           <span class="info-badge" style="background:#8A8F98"></span> Grå betyr at halalstatusen ikke er bekreftet ennå.</p>
+        <p>Vi begynner i Oslo og legger til flere steder etter hvert, og på sikt flere byer. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
       </section>
       <section class="info-section" data-section="kontakt">
         <h2>Kontakt oss</h2>
-        <p>Har du et tips om et sted, en rettelse, eller vil melde inn en ny restaurant? Vi hører gjerne fra deg.</p>
-        <p>E-post: <a href="mailto:kontakt@halalkartet.no">kontakt@halalkartet.no</a></p>
-        <p>Vi leser alle henvendelser og oppdaterer kartet fortløpende. Takk for at du bidrar til å gjøre Halalkartet bedre.</p>
+        <p>Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.</p>
+        <p>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
+        <form name="tilbakemelding" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="kontaktForm" class="kf">
+          <input type="hidden" name="form-name" value="tilbakemelding">
+          <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+          <label class="kf-field">Navn <span class="kf-opt">frivillig</span>
+            <input type="text" name="navn" autocomplete="name">
+          </label>
+          <label class="kf-field">Hvor kommer du fra? By eller bydel <span class="kf-opt">frivillig</span>
+            <input type="text" name="sted">
+          </label>
+          <label class="kf-field">Telefon eller e-post <span class="kf-req">påkrevd</span>
+            <input type="text" name="kontakt" required>
+          </label>
+          <label class="kf-field">Meldingen din <span class="kf-req">påkrevd</span>
+            <textarea name="melding" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="kf-send">Send inn</button>
+        </form>
+        <p class="kf-ok" id="kontaktOk" hidden>Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.</p>
       </section>
       <section class="info-section" data-section="personvern">
-        <h2>Personvernregler</h2>
-        <p>Halalkartet er laget for å respektere personvernet ditt.</p>
-        <h3>Ingen konto, ingen sporing</h3>
-        <p>Du trenger ikke å registrere deg, og vi bruker verken sporingscookies eller reklame.</p>
+        <h2>Personvern</h2>
+        <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
+        <h3>Ingen konto og ingen sporing</h3>
+        <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
         <h3>Besøksstatistikk</h3>
-        <p>Vi bruker personvennlig, informasjonskapsel-fri besøksstatistikk for å telle hvor mange som besøker siden. Tellingen er anonym og samlet – vi lager ingen profil av deg, og det settes ingen sporingscookies.</p>
-        <h3>Posisjon («Nær meg»)</h3>
-        <p>Hvis du trykker «Nær meg», ber nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes kun i nettleseren din der og da – den lagres ikke og sendes ikke til oss.</p>
-        <h3>Kart og hosting</h3>
-        <p>Kartdata leveres av OpenStreetMap og CARTO, og nettsiden hostes av Netlify. Disse tjenestene kan motta tekniske opplysninger som IP-adresse for å levere kartet og drifte siden, i henhold til deres egne personvernvilkår.</p>
-        <p class="muted">Sist oppdatert: august 2026. Spørsmål? Kontakt oss på kontakt@halalkartet.no.</p>
+        <p>Vi teller hvor mange som besøker siden med en personvennlig løsning som ikke bruker informasjonskapsler. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
+        <h3>Posisjon</h3>
+        <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
+        <h3>Skjemaet på kontaktsiden</h3>
+        <p>Sender du inn skjemaet, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Innsendingen håndteres av Netlify, som drifter siden. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+        <h3>Kart og drift</h3>
+        <p>Kartet lastes fra OpenStreetMap, og siden driftes av Netlify. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
+        <p class="muted">Sist oppdatert august 2026.</p>
       </section>
       <section class="info-section" data-section="vilkar">
         <h2>Vilkår og betingelser</h2>
-        <p>Halalkartet tilbys som en gratis informasjonstjeneste, «som den er».</p>
-        <p>Vi gjør vårt beste for at informasjonen skal være korrekt, men kan ikke garantere at halal-status, åpningstider, adresser eller andre detaljer til enhver tid er oppdaterte eller feilfrie. Dette gjelder særlig steder merket «Uavklart» eller «Delvis».</p>
-        <p>Halal er til sist ditt eget ansvar. Ved tvil bør du bekrefte direkte med stedet før du spiser. Bruk av kartet skjer på eget ansvar, og vi er ikke ansvarlige for eventuelle feil eller mangler.</p>
-        <p>Innhold og funksjoner kan endres uten varsel. Ved å bruke Halalkartet aksepterer du disse vilkårene.</p>
-        <p class="muted">Sist oppdatert: august 2026.</p>
+        <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
+        <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
+        <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
+        <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
+        <p class="muted">Sist oppdatert august 2026.</p>
       </section>
       <section class="info-section" data-section="faq">
         <h2>Ofte stilte spørsmål</h2>
-        <h3>Hva betyr fargene?</h3>
-        <p>Grønn = verifisert 100 % halal. Oransje = delvis halal (deler av menyen er ikke halal). Grå = uavklart (ikke bekreftet ennå).</p>
+        <h3>Hva betyr fargene på kartet?</h3>
+        <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå.</p>
         <h3>Hvordan vet dere at et sted er halal?</h3>
-        <p>Steder merkes ut fra egen sjekk – for eksempel synlig sertifikat, bekreftelse fra personalet, eller at stedet er godt kjent for å være halal. «Uavklart» betyr at vi ennå ikke har bekreftet det.</p>
-        <h3>Kan jeg foreslå et sted eller melde en feil?</h3>
-        <p>Ja! Send oss en e-post via «Kontakt oss». Vi setter stor pris på tips.</p>
+        <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+        <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
+        <p>Ja, og det setter vi stor pris på. Bruk skjemaet på kontaktsiden, så ser vi på det.</p>
         <h3>Dekker dere hele Norge?</h3>
-        <p>Vi starter i Oslo og utvider gradvis til flere byer.</p>
+        <p>Vi begynner i Oslo og utvider til flere byer etter hvert.</p>
         <h3>Koster det noe?</h3>
-        <p>Nei, Halalkartet er helt gratis.</p>
+        <p>Nei, Halalkartet er helt gratis å bruke.</p>
       </section>
     </div>
   </div>

@@ -9,10 +9,21 @@ const el = id => document.getElementById(id);
 
 const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([59.9139, 10.7522], 13.5);
 L.control.zoom({ position: 'topright' }).addTo(map);
-// Gratis kartfliser uten API-nøkkel (OpenStreetMap Standard).
-// Vil du ha det rene «Voyager»-utseendet tilbake? Skaff en gratis CARTO-nøkkel på
-// https://carto.com/basemaps/apikey og bytt linjen under med denne (sett inn nøkkelen):
-// L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=DIN_NOKKEL', { attribution: '&copy; OpenStreetMap, &copy; CARTO', subdomains: 'abcd', maxZoom: 20 }).addTo(map);
+// --- Kartlag ---
+// Standard er OpenStreetMap (gratis, ingen nokkel, virker med en gang).
+// Vil du ha et renere kart der restaurantene far all oppmerksomheten og
+// butikker og bygninger tones ned, bruk Stadia Alidade Smooth. Registrer
+// domenet ditt gratis pa stadiamaps.com og sett PREMIUM_MAP = true under.
+const PREMIUM_MAP = false;
+if (PREMIUM_MAP) {
+  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap', maxZoom: 20
+  }).addTo(map);
+} else {
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap-bidragsytere', maxZoom: 19
+  }).addTo(map);
+}
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap-bidragsytere', maxZoom: 19
 }).addTo(map);
@@ -84,6 +95,7 @@ function initApp() {
   el('reopen').addEventListener('click', () => togglePanel(false));
   wireNearMe();
   wireInfo();
+  wireContactForm();
   if (window.innerWidth <= 720) togglePanel(true);
 
   render();
@@ -271,4 +283,27 @@ function showInfo(section) {
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
   document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
   el('infoBody').scrollTop = 0;
+}
+
+/* ---- kontaktskjema (Netlify Forms, sendes uten sideomlasting) ---- */
+function wireContactForm() {
+  const f = document.getElementById('kontaktForm');
+  if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = f.querySelector('.kf-send');
+    const body = new URLSearchParams(new FormData(f)).toString();
+    btn.disabled = true; btn.textContent = 'Sender';
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+      .then(function (r) {
+        if (!r.ok) throw new Error('feil');
+        track('kontakt_sendt');
+        f.hidden = true;
+        el('kontaktOk').hidden = false;
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = 'Send inn';
+        alert('Beklager, noe gikk galt. Prov igjen om litt.');
+      });
+  });
 }
