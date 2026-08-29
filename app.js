@@ -4,7 +4,7 @@ const STATUS = {
   'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis'     },
   'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart'   }
 };
-const priceLabel = p => 'kr'.repeat(p);
+const priceLabel = p => '$'.repeat(p);
 const el = id => document.getElementById(id);
 
 const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([59.9139, 10.7522], 13.5);
@@ -296,7 +296,7 @@ function wireContactForm() {
     if (errEl) errEl.hidden = true;
     if (kEl && kEl.value.trim()) {
       const v = kEl.value.trim();
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      const emailOk = /^[a-zA-Z0-9_%+-]+(?:\.[a-zA-Z0-9_%+-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/.test(v);
       const phoneOk = /^[+()\d\s-]{6,}$/.test(v);
       const ok = v.indexOf('@') !== -1 ? emailOk : phoneOk;
       if (!ok) { if (errEl) errEl.hidden = false; kEl.focus(); return; }

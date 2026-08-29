@@ -53,7 +53,7 @@ Every entry in `spots.json` is one object with these fields.
 | `halalStatus`  | enum            | yes      | One of `verifisert`, `delvis`, `uavklart`. Sets the pin color. |
 | `verification` | string          | no       | Plain-language note on *how* halal status was confirmed. Shown in the popup. |
 | `cuisines`     | array of string | yes      | e.g. `["Tyrkisk", "Kebab"]`. Powers the cuisine filter. |
-| `price`        | number          | yes      | `1` = rimelig, `2` = middels, `3` = dyrere. |
+| `price`        | number          | yes      | `1` = rimelig, `2` = middels, `3` = dyrere. Vises som `$`, `$$`, `$$$`. |
 | `phone`        | string or null  | no       | |
 | `website`      | string or null  | no       | Full `https://` URL. |
 | `hours`        | string or null  | no       | Free text, e.g. `11–23 hver dag`. |
