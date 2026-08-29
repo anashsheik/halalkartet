@@ -39,9 +39,13 @@ const PREMIUM_MAP = true;
 if (PREMIUM_MAP) {
   L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; OpenStreetMap-bidragsytere',
-    maxZoom: 20,
-    // Gir @2x-fliser pa skjermer med hoy pikseltetthet – {r} over fylles av denne.
-    detectRetina: true
+    // {r} over blir til @2x av seg selv pa skjermer med hoy pikseltetthet.
+    // Ikke sett detectRetina her: Leaflet fyller {r} fra Browser.retina
+    // uansett, og detectRetina ville i tillegg halvert flisstorrelsen og
+    // okt zoomOffset – altsa fire ganger sa mange flisforesporsler pa feil
+    // zoomniva.
+    minZoom: 0,
+    maxZoom: 20
   }).addTo(map);
 } else {
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
