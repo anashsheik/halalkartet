@@ -40,6 +40,12 @@ function fmtClock(mins) {
   const h = Math.floor(mins / 60) % 24, m = mins % 60;
   return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
 }
+/* Hel time skrives kort ("kl 23", "kl 03"), ellers med minutter ("kl 22:45"). */
+function fmtClose(mins) {
+  const h = Math.floor(mins / 60) % 24, m = mins % 60;
+  const hh = (h < 10 ? '0' : '') + h;
+  return m ? 'kl ' + hh + ':' + (m < 10 ? '0' : '') + m : 'kl ' + hh;
+}
 /* "Stenger kl. 23" og "Stenger kl. 22:45" -> minutter etter midnatt. */
 function clockMinutes(text) {
   const m = /kl\.?\s*(\d{1,2})(?::(\d{2}))?/i.exec(text || '') || /^(\d{1,2}):(\d{2})$/.exec(text || '');
@@ -54,7 +60,7 @@ const NIGHT_CUTOFF = 6 * 60; // stengetid for kl. 06 horer til natt til neste da
 function openState(s) {
   const raw = s.hours || '';
   if (/midlertidig stengt/i.test(raw)) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Midlertidig stengt' };
-  if (/stengt/i.test(raw)) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt nå' };
+  if (/stengt/i.test(raw)) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt' };
 
   const close = clockMinutes(raw);
   if (close === null) return { state: 'unknown', cls: 'os-unknown', short: '', label: raw };
@@ -65,16 +71,19 @@ function openState(s) {
   // apent for det faktisk har apnet. Uten feltet kjenner vi bare stengetiden.
   const open = s.opens ? clockMinutes(s.opens) : null;
   if (open !== null && now < open && !(close < NIGHT_CUTOFF && now < close)) {
-    return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Åpner ' + fmtClock(open) };
+    return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Åpner ' + fmtClose(open) };
   }
 
   let end = close;
   if (close < NIGHT_CUTOFF && now >= NIGHT_CUTOFF) end += 24 * 60;
   const left = end - now;
 
-  if (left <= 0) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt nå' };
-  if (left < 60) return { state: 'soon', cls: 'os-soon', short: left + ' min', label: 'Stenger om ' + left + ' min' };
-  return { state: 'open', cls: 'os-open', short: 'Åpent', label: 'Åpent til ' + fmtClock(close) };
+  // Den siste timen for stengetid regnes som "snart": kl. 22:00 mot stenging
+  // kl. 23 er noyaktig 60 minutter, og skal vaere gult.
+  if (left <= 0) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt' };
+  if (left <= 60) return { state: 'soon', cls: 'os-soon', short: 'Stenger snart', label: 'Stenger snart' };
+  const t = 'Stenger ' + fmtClose(close);
+  return { state: 'open', cls: 'os-open', short: t, label: t };
 }
 
 /* ---- Utvalgte steder ----
@@ -143,7 +152,9 @@ let activeId = null;
 let userLoc = null, userMarker = null;
 let lastFocus = null;
 const layerOn = { 'verifisert': true, 'delvis': true, 'uavklart': true };
-const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': false };
+// Uavklart starter sammenslatt: besokende skal mote de bekreftede stedene
+// forst, men kan folde ut gruppen selv.
+const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': true };
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 /* ---- Anonym hendelsessporing ----
@@ -207,13 +218,14 @@ function initApp() {
     markers[s.id] = m;
   });
 
-  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fSort'].forEach(id => {
+  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fSort'].forEach(id => {
     const x = el(id);
     if (x) x.addEventListener('input', render);
   });
   el('fBydel').addEventListener('change', () => { if (el('fBydel').value) track('filter_bydel', { bydel: el('fBydel').value }); });
   el('fCuisine').addEventListener('change', () => { if (el('fCuisine').value) track('filter_kjokken', { kjokken: el('fCuisine').value }); });
   if (el('fPrice')) el('fPrice').addEventListener('change', () => { if (el('fPrice').value) track('filter_pris', { pris: el('fPrice').value }); });
+  if (el('fOpen')) el('fOpen').addEventListener('change', () => { if (el('fOpen').value) track('filter_apent', { status: el('fOpen').value }); });
   if (el('fSort')) el('fSort').addEventListener('change', () => {
     const v = el('fSort').value;
     if (v) track('sortering', { modus: v });
@@ -223,6 +235,7 @@ function initApp() {
   el('reset').addEventListener('click', () => {
     el('search').value = ''; el('fBydel').value = ''; el('fCuisine').value = '';
     if (el('fPrice')) el('fPrice').value = '';
+    if (el('fOpen')) el('fOpen').value = '';
     if (el('fSort')) el('fSort').value = '';
     render();
     el('search').focus();
@@ -310,6 +323,7 @@ function currentFilters() {
     bydel: el('fBydel').value,
     cuisine: el('fCuisine').value,
     price: el('fPrice') ? el('fPrice').value : '',
+    open: el('fOpen') ? el('fOpen').value : '',
     sort: el('fSort') ? el('fSort').value : ''
   };
 }
@@ -317,6 +331,9 @@ function passes(s, f) {
   if (f.bydel && s.bydel !== f.bydel) return false;
   if (f.cuisine && !s.cuisines.includes(f.cuisine)) return false;
   if (f.price && String(s.price) !== f.price) return false;
+  // Steder uten lesbart klokkeslett har state "unknown" og faller ut av
+  // alle apningsfiltre – vi vet rett og slett ikke om de er apne.
+  if (f.open && openState(s).state !== f.open) return false;
   if (f.q) {
     // Adressen er med, slik at "Grønland 5" eller "Torggata" gir treff.
     const hay = (s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '')).toLowerCase();
@@ -348,7 +365,7 @@ function render() {
 
   const box = el('layers');
   box.innerHTML = '';
-  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.sort);
+  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.open || f.sort);
 
   if (filtered.length === 0) {
     box.innerHTML = '<div class="no-results"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
@@ -419,9 +436,11 @@ function itemEl(s) {
   meta.push('<span class="price">' + priceLabel(s.price) + '</span>');
   const st = openState(s);
   b.innerHTML =
-    '<div class="item-name">' + esc(s.name) +
-      (st.short ? '<span class="chip-os ' + st.cls + '">' + esc(st.short) + '</span>' : '') + '</div>' +
-    '<div class="item-meta">' + meta.join(' · ') + '</div>';
+    '<div class="item-name">' + esc(s.name) + '</div>' +
+    '<div class="item-meta">' +
+      '<span class="item-meta-txt">' + meta.join(' · ') + '</span>' +
+      (st.short ? '<span class="os ' + st.cls + '">' + esc(st.short) + '</span>' : '') +
+    '</div>';
   b.addEventListener('click', () => setActive(s.id, true));
   return b;
 }
@@ -498,10 +517,10 @@ function showHighlights(auto) {
 
   clearTimeout(hiliteTimer);
   box.classList.remove('counting');
-  if (!auto) return;
 
-  // Stolinjen teller ned de fem sekundene. Vi lukker pa animationend, slik at
-  // et musepeker-stopp (CSS pauser animasjonen) ogsa utsetter lukkingen.
+  // Nedtellingen gjelder ogsa nar boksen apnes med knappen. Stolinjen viser
+  // de fem sekundene, og vi lukker pa animationend – da utsetter et
+  // musepeker-stopp (CSS pauser animasjonen) ogsa lukkingen.
   if (reduceMotion) {
     hiliteTimer = setTimeout(function () { hideHighlights(); }, 5000);
   } else {
@@ -524,7 +543,6 @@ function wireHighlights() {
   el('hiliteBtn').addEventListener('click', function () {
     if (box.classList.contains('open')) hideHighlights(); else showHighlights(false);
   });
-  el('hiliteClose').addEventListener('click', hideHighlights);
   el('hiliteLukk').addEventListener('click', hideHighlights);
   const bar = el('hiliteBar');
   if (bar) bar.addEventListener('animationend', function () { hideHighlights(); });
@@ -540,13 +558,13 @@ function refreshOpenStates() {
     const s = byId(b.dataset.id);
     if (!s) return;
     const st = openState(s);
-    let chip = b.querySelector('.chip-os');
+    let chip = b.querySelector('.item-meta .os');
     if (!st.short) { if (chip) chip.remove(); return; }
     if (!chip) {
       chip = document.createElement('span');
-      b.querySelector('.item-name').appendChild(chip);
+      b.querySelector('.item-meta').appendChild(chip);
     }
-    chip.className = 'chip-os ' + st.cls;
+    chip.className = 'os ' + st.cls;
     chip.textContent = st.short;
   });
   if (el('hilite') && el('hilite').classList.contains('open')) renderHighlights();

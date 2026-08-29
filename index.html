@@ -81,8 +81,9 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .search-hint { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 10.5px; font-weight: 700; color: var(--ivory-dim); border: 1px solid var(--hairline-2); border-radius: 5px; padding: 1px 6px; pointer-events: none; }
 .search:focus ~ .search-hint, .search:not(:placeholder-shown) ~ .search-hint { opacity: 0; }
 
-/* To rader a to filtre – fire kontroller far plass uten a bli trange. */
+/* Fire filtre i to rader, sortering pa egen linje under. */
 .mini-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 10px; }
+.mini-filters .span2 { grid-column: 1 / -1; }
 .mini-filters select { width: 100%; min-width: 0; padding: 9px 11px; font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ivory); border: 1px solid var(--hairline-2); border-radius: 9px; background-color: rgba(255,255,255,.05); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239DB3A5' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; transition: border-color .18s, background .18s; }
 .mini-filters select:hover { background-color: rgba(255,255,255,.08); }
 .mini-filters select:focus { outline: none; border-color: var(--gold); }
@@ -132,13 +133,16 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .item[data-s="delvis"]::before { background: var(--self); }
 .item[data-s="uavklart"]::before { background: var(--owned); }
 .item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
-.item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; }
+/* Statusen star ytterst pa metalinja, ikke ved navnet – da far
+   "Stenger kl 23" plass uten a presse lange restaurantnavn. */
+.item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; display: flex; align-items: baseline; gap: 8px; }
+.item-meta-txt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .item-meta .price { font-weight: 700; color: var(--gold-soft); letter-spacing: .04em; }
-/* Åpningsstatus i lista: rød stengt, gul under én time, grønn ellers. */
-.chip-os { display: inline-block; margin-left: 7px; padding: 1px 7px; border-radius: 20px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.08); vertical-align: middle; white-space: nowrap; }
-.chip-os.os-open { color: var(--open-p); }
-.chip-os.os-soon { color: var(--soon-p); background: rgba(232,183,92,.14); }
-.chip-os.os-closed { color: var(--closed-p); background: rgba(240,137,124,.14); }
+/* Åpningsstatus: rød stengt, gul siste time, grønn ellers. */
+.item-meta .os { flex: none; font-weight: 700; white-space: nowrap; }
+.os-open { color: var(--open-p); }
+.os-soon { color: var(--soon-p); }
+.os-closed { color: var(--closed-p); }
 .layer-empty { font-size: 12.5px; color: var(--ivory-dim); font-style: italic; padding: 4px 12px 8px 36px; }
 
 .no-results { text-align: center; color: var(--ivory-dim); padding: 32px 18px; font-size: 13.5px; }
@@ -193,36 +197,34 @@ body.panel-collapsed .reopen { display: flex; }
 /* Utvalgte steder: flytende kort nede til venstre, motsatt side av
    Nær meg og Si ifra. Ligger over kartet, ikke som en modal, slik at
    den kan forsvinne av seg selv uten å stjele oppmerksomheten. */
-.hilite { position: absolute; z-index: 1001; left: 378px; bottom: 78px; width: 332px; max-width: calc(100vw - 24px); background: var(--paper); border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .26s, transform .26s, left .32s cubic-bezier(.4,0,.2,1); }
-.hilite.open { opacity: 1; transform: none; pointer-events: auto; }
-body.panel-collapsed .hilite { left: 12px; }
+.hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: var(--paper); border-radius: 18px; box-shadow: var(--shadow-lg); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s, transform .24s; }
+.hilite.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 .hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
 .hilite.counting .hilite-bar { animation: hbar 5s linear forwards; }
 /* Peker brukeren på boksen, stopper nedtellingen – og dermed lukkingen. */
 .hilite:hover .hilite-bar, .hilite:focus-within .hilite-bar { animation-play-state: paused; }
 @keyframes hbar { to { transform: scaleX(0); } }
-.hilite-head { display: flex; align-items: flex-start; gap: 10px; padding: 15px 16px 10px; }
-.hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
-.hilite-head p { margin: 3px 0 0; font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
-.hilite-close { border: 0; background: none; color: var(--ink-soft); font-size: 22px; line-height: 1; cursor: pointer; padding: 0 2px; flex: none; border-radius: 6px; }
-.hilite-close:hover { color: var(--ink); }
-.hilite-list { padding: 0 8px; max-height: 46vh; overflow-y: auto; }
-.hrow { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 9px 8px; cursor: pointer; font: inherit; transition: background .15s; }
+.hilite-head { padding: 18px 20px 12px; }
+.hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
+.hilite-head p { margin: 4px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+.hilite-list { padding: 0 10px; max-height: 52vh; overflow-y: auto; }
+.hrow { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 10px 10px; cursor: pointer; font: inherit; transition: background .15s; }
 .hrow:hover { background: #EFE8D6; }
 .hdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .hdot[data-s="verifisert"] { background: var(--cert); }
 .hdot[data-s="delvis"] { background: var(--self); }
 .hdot[data-s="uavklart"] { background: var(--owned); }
 .hmain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.hname { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
-.hmeta { font-size: 11px; color: var(--ink-soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hrow .os { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; flex: none; white-space: nowrap; }
+.hname { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.hmeta { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* I boksen står vi mot lys papirbakgrunn, så de mette fargene brukes her. */
+.hrow .os { font-size: 11px; font-weight: 700; flex: none; white-space: nowrap; }
 .hrow .os-open { color: var(--open); }
 .hrow .os-soon { color: var(--soon); }
 .hrow .os-closed { color: var(--closed); }
-.hilite-foot { padding: 8px 16px 15px; }
-.hilite-lukk { width: 100%; padding: 10px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
-.hilite-lukk:hover { background: #EFE8D6; }
+.hilite-foot { padding: 10px 20px 18px; }
+.hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+.hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
 
 .hilite-btn { position: absolute; z-index: 999; left: 378px; bottom: 26px; background: var(--emerald); color: var(--ivory); border: 1px solid var(--hairline); border-radius: 24px; box-shadow: var(--shadow-lg); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .15s, left .32s cubic-bezier(.4,0,.2,1); }
 .hilite-btn svg { color: var(--gold); }
@@ -253,8 +255,6 @@ body.panel-collapsed .hilite-btn { left: 12px; }
   .reopen { padding: 12px; }
   .search-hint { display: none; }
   .toast { bottom: 90px; }
-  /* Kortet legger seg over begge knapperadene i stedet for ved siden av. */
-  .hilite { left: 12px; right: 12px; width: auto; max-width: none; bottom: 126px; }
   .hilite-btn span { display: none; }
   .hilite-btn { padding: 12px; }
 }
@@ -349,11 +349,8 @@ body.panel-collapsed .hilite-btn { left: 12px; }
 <div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" hidden>
   <div class="hilite-bar" id="hiliteBar"></div>
   <div class="hilite-head">
-    <div>
-      <h2>Utvalgte steder</h2>
-      <p id="hiliteSub">Fem steder å prøve nå.</p>
-    </div>
-    <button class="hilite-close" id="hiliteClose" aria-label="Lukk">×</button>
+    <h2>Utvalgte steder</h2>
+    <p id="hiliteSub">Fem steder å prøve nå.</p>
   </div>
   <div class="hilite-list" id="hiliteList"></div>
   <div class="hilite-foot">
@@ -393,7 +390,13 @@ body.panel-collapsed .hilite-btn { left: 12px; }
         <option value="2">$$ · Middels</option>
         <option value="3">$$$ · Dyrere</option>
       </select>
-      <select id="fSort" aria-label="Sorter listen">
+      <select id="fOpen" aria-label="Filtrer på åpningstid">
+        <option value="">Alle åpningstider</option>
+        <option value="open">Åpent nå</option>
+        <option value="soon">Stenger snart</option>
+        <option value="closed">Stengt</option>
+      </select>
+      <select id="fSort" class="span2" aria-label="Sorter listen">
         <option value="">Sorter etter</option>
         <option value="avstand">Nærmest meg</option>
         <option value="navn">Navn A–Å</option>
