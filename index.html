@@ -28,6 +28,14 @@
   --cert:       #2E7D4F;
   --self:       #D98A1F;
   --owned:      #8A8F98;
+  /* Åpningsstatus. Lyse varianter brukes mot det mørke panelet,
+     de mette mot lys papirbakgrunn i popup og boks. */
+  --open:       #1F6340;
+  --soon:       #8A5C10;
+  --closed:     #B3261E;
+  --open-p:     #6FCB95;
+  --soon-p:     #E8B75C;
+  --closed-p:   #F0897C;
   --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
   --shadow-sm:  0 2px 10px rgba(9,28,20,.16);
   --focus:      0 0 0 3px rgba(200,162,83,.45);
@@ -126,7 +134,11 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
 .item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; }
 .item-meta .price { font-weight: 700; color: var(--gold-soft); letter-spacing: .04em; }
-.chip-closed { display: inline-block; margin-left: 7px; padding: 1px 7px; border-radius: 20px; font-size: 9.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; background: rgba(255,255,255,.10); color: var(--ivory-dim); vertical-align: middle; }
+/* Åpningsstatus i lista: rød stengt, gul under én time, grønn ellers. */
+.chip-os { display: inline-block; margin-left: 7px; padding: 1px 7px; border-radius: 20px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.08); vertical-align: middle; white-space: nowrap; }
+.chip-os.os-open { color: var(--open-p); }
+.chip-os.os-soon { color: var(--soon-p); background: rgba(232,183,92,.14); }
+.chip-os.os-closed { color: var(--closed-p); background: rgba(240,137,124,.14); }
 .layer-empty { font-size: 12.5px; color: var(--ivory-dim); font-style: italic; padding: 4px 12px 8px 36px; }
 
 .no-results { text-align: center; color: var(--ivory-dim); padding: 32px 18px; font-size: 13.5px; }
@@ -173,7 +185,49 @@ body.panel-collapsed .reopen { display: flex; }
 .pop-row svg { flex: none; margin-top: 1px; }
 .pop-link { color: var(--emerald); font-weight: 600; text-decoration: none; }
 .pop-link:hover { text-decoration: underline; }
-.pop-closed { display: inline-block; margin-left: 5px; padding: 1px 6px; border-radius: 20px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: #ECEDEF; color: #4a5057; }
+.pop-row .os { font-weight: 700; }
+.pop-row .os-open { color: var(--open); }
+.pop-row .os-soon { color: var(--soon); }
+.pop-row .os-closed { color: var(--closed); }
+
+/* Utvalgte steder: flytende kort nede til venstre, motsatt side av
+   Nær meg og Si ifra. Ligger over kartet, ikke som en modal, slik at
+   den kan forsvinne av seg selv uten å stjele oppmerksomheten. */
+.hilite { position: absolute; z-index: 1001; left: 378px; bottom: 78px; width: 332px; max-width: calc(100vw - 24px); background: var(--paper); border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .26s, transform .26s, left .32s cubic-bezier(.4,0,.2,1); }
+.hilite.open { opacity: 1; transform: none; pointer-events: auto; }
+body.panel-collapsed .hilite { left: 12px; }
+.hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
+.hilite.counting .hilite-bar { animation: hbar 5s linear forwards; }
+/* Peker brukeren på boksen, stopper nedtellingen – og dermed lukkingen. */
+.hilite:hover .hilite-bar, .hilite:focus-within .hilite-bar { animation-play-state: paused; }
+@keyframes hbar { to { transform: scaleX(0); } }
+.hilite-head { display: flex; align-items: flex-start; gap: 10px; padding: 15px 16px 10px; }
+.hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
+.hilite-head p { margin: 3px 0 0; font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
+.hilite-close { border: 0; background: none; color: var(--ink-soft); font-size: 22px; line-height: 1; cursor: pointer; padding: 0 2px; flex: none; border-radius: 6px; }
+.hilite-close:hover { color: var(--ink); }
+.hilite-list { padding: 0 8px; max-height: 46vh; overflow-y: auto; }
+.hrow { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 9px 8px; cursor: pointer; font: inherit; transition: background .15s; }
+.hrow:hover { background: #EFE8D6; }
+.hdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.hdot[data-s="verifisert"] { background: var(--cert); }
+.hdot[data-s="delvis"] { background: var(--self); }
+.hdot[data-s="uavklart"] { background: var(--owned); }
+.hmain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hname { font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.hmeta { font-size: 11px; color: var(--ink-soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hrow .os { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; flex: none; white-space: nowrap; }
+.hrow .os-open { color: var(--open); }
+.hrow .os-soon { color: var(--soon); }
+.hrow .os-closed { color: var(--closed); }
+.hilite-foot { padding: 8px 16px 15px; }
+.hilite-lukk { width: 100%; padding: 10px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.hilite-lukk:hover { background: #EFE8D6; }
+
+.hilite-btn { position: absolute; z-index: 999; left: 378px; bottom: 26px; background: var(--emerald); color: var(--ivory); border: 1px solid var(--hairline); border-radius: 24px; box-shadow: var(--shadow-lg); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .15s, left .32s cubic-bezier(.4,0,.2,1); }
+.hilite-btn svg { color: var(--gold); }
+.hilite-btn:hover { background: var(--emerald-2); }
+body.panel-collapsed .hilite-btn { left: 12px; }
 
 /* Handlingsknapper: veibeskrivelse er den vanligste neste handlingen. */
 .pop-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 11px; border-top: 1px solid rgba(27,38,32,.10); }
@@ -199,6 +253,10 @@ body.panel-collapsed .reopen { display: flex; }
   .reopen { padding: 12px; }
   .search-hint { display: none; }
   .toast { bottom: 90px; }
+  /* Kortet legger seg over begge knapperadene i stedet for ved siden av. */
+  .hilite { left: 12px; right: 12px; width: auto; max-width: none; bottom: 126px; }
+  .hilite-btn span { display: none; }
+  .hilite-btn { padding: 12px; }
 }
 
 /* Near-me button */
@@ -282,6 +340,26 @@ body.panel-collapsed .reopen { display: flex; }
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3a8.38 8.38 0 0 1 8.5 8.5z"/></svg>
   <span>Si ifra</span>
 </button>
+
+<button class="hilite-btn" id="hiliteBtn" aria-label="Vis utvalgte steder">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.4 5.3 5.6.6-4.2 3.9 1.2 5.6L12 15.6 6.9 18.4l1.2-5.6L4 8.9l5.6-.6z"/></svg>
+  <span>Utvalgte</span>
+</button>
+
+<div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" hidden>
+  <div class="hilite-bar" id="hiliteBar"></div>
+  <div class="hilite-head">
+    <div>
+      <h2>Utvalgte steder</h2>
+      <p id="hiliteSub">Fem steder å prøve nå.</p>
+    </div>
+    <button class="hilite-close" id="hiliteClose" aria-label="Lukk">×</button>
+  </div>
+  <div class="hilite-list" id="hiliteList"></div>
+  <div class="hilite-foot">
+    <button class="hilite-lukk" id="hiliteLukk" type="button">Lukk</button>
+  </div>
+</div>
 
 <button class="reopen" id="reopen" aria-label="Vis panel">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -424,6 +502,11 @@ body.panel-collapsed .reopen { display: flex; }
         <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
         <h3>Hva betyr dollartegnene?</h3>
         <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå i panelet til venstre.</p>
+        <h3>Hvor pålitelige er åpningstidene?</h3>
+        <p>Klokkeslettene følger norsk tid uansett hvor du selv befinner deg. Grønt betyr åpent, gult at det stenger om under en time, og rødt at det er stengt.</p>
+        <p>Vær oppmerksom på at vi foreløpig bare har registrert når stedene <em>stenger</em>, ikke når de åpner. Tidlig på dagen kan et sted derfor vises som åpent selv om det ikke har åpnet ennå. Ring gjerne først hvis du er ute i god tid.</p>
+        <h3>Hva er «Utvalgte steder»?</h3>
+        <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
         <h3>Kan jeg dele et sted med noen?</h3>
         <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
         <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>

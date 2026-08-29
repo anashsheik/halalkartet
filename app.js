@@ -23,9 +23,93 @@ function safeUrl(u) {
   } catch (e) { return null; }
 }
 
-/* hours er fritekst ("Stenger kl. 23", "Stengt na", "Midlertidig stengt").
-   Vi flagger bare de tydelig stengte variantene - "Stenger" treffer ikke. */
-const isClosed = s => /stengt/i.test(s.hours || '');
+/* ---- Apningstid ----
+   Norge har én tidssone for hele landet, men den veksler mellom vinter- og
+   sommertid. Vi spor derfor aldri brukerens egen klokke: Intl gir oss
+   veggklokka i Oslo, og handterer overgangen selv. */
+function osloNow() {
+  const p = {};
+  new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Oslo', hour12: false,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit'
+  }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+  return { y: +p.year, m: +p.month, d: +p.day, min: (+p.hour % 24) * 60 + (+p.minute) };
+}
+function fmtClock(mins) {
+  const h = Math.floor(mins / 60) % 24, m = mins % 60;
+  return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+}
+/* "Stenger kl. 23" og "Stenger kl. 22:45" -> minutter etter midnatt. */
+function clockMinutes(text) {
+  const m = /kl\.?\s*(\d{1,2})(?::(\d{2}))?/i.exec(text || '') || /^(\d{1,2}):(\d{2})$/.exec(text || '');
+  if (!m) return null;
+  const h = +m[1], mi = m[2] ? +m[2] : 0;
+  if (h > 23 || mi > 59) return null;
+  return h * 60 + mi;
+}
+const NIGHT_CUTOFF = 6 * 60; // stengetid for kl. 06 horer til natt til neste dag
+
+/* Returnerer apen/stenger snart/stengt, med tekst til bade liste og popup. */
+function openState(s) {
+  const raw = s.hours || '';
+  if (/midlertidig stengt/i.test(raw)) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Midlertidig stengt' };
+  if (/stengt/i.test(raw)) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt nå' };
+
+  const close = clockMinutes(raw);
+  if (close === null) return { state: 'unknown', cls: 'os-unknown', short: '', label: raw };
+
+  const now = osloNow().min;
+
+  // Valgfritt felt: har stedet "opens": "11:00", slutter vi a pasta at det er
+  // apent for det faktisk har apnet. Uten feltet kjenner vi bare stengetiden.
+  const open = s.opens ? clockMinutes(s.opens) : null;
+  if (open !== null && now < open && !(close < NIGHT_CUTOFF && now < close)) {
+    return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Åpner ' + fmtClock(open) };
+  }
+
+  let end = close;
+  if (close < NIGHT_CUTOFF && now >= NIGHT_CUTOFF) end += 24 * 60;
+  const left = end - now;
+
+  if (left <= 0) return { state: 'closed', cls: 'os-closed', short: 'Stengt', label: 'Stengt nå' };
+  if (left < 60) return { state: 'soon', cls: 'os-soon', short: left + ' min', label: 'Stenger om ' + left + ' min' };
+  return { state: 'open', cls: 'os-open', short: 'Åpent', label: 'Åpent til ' + fmtClock(close) };
+}
+
+/* ---- Utvalgte steder ----
+   Fem steder om gangen, byttet ut hver femte dag. Utvalget er utledet av
+   datoen, ikke tilfeldig per bruker, sa alle ser det samme. Rekkefolgen
+   stokkes med fast fro én gang, og vinduet flytter seg fem plasser per
+   periode. 5 og 83 har ingen felles faktor, sa alle steder far tur. */
+const ROTATION_DAYS = 5;
+const HIGHLIGHT_COUNT = 5;
+const HIGHLIGHT_SEED = 20260829;
+
+function seededOrder(list) {
+  const a = list.slice();
+  let s = HIGHLIGHT_SEED >>> 0;
+  const rnd = function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1)), t = a[i];
+    a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function osloDayNumber() {
+  const n = osloNow();
+  return Math.floor(Date.UTC(n.y, n.m - 1, n.d) / 86400000);
+}
+function daysUntilRotation() { return ROTATION_DAYS - (osloDayNumber() % ROTATION_DAYS); }
+function currentHighlights() {
+  if (!HALAL_SPOTS.length) return [];
+  const pool = seededOrder(HALAL_SPOTS);
+  const n = Math.min(HIGHLIGHT_COUNT, pool.length);
+  const start = (Math.floor(osloDayNumber() / ROTATION_DAYS) * n) % pool.length;
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(pool[(start + i) % pool.length]);
+  return out;
+}
 
 const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([59.9139, 10.7522], 13.5);
 L.control.zoom({ position: 'topright' }).addTo(map);
@@ -150,11 +234,19 @@ function initApp() {
   wireContactForm();
   wirePopupActions();
   wireShortcuts();
+  wireHighlights();
   el('feedback').addEventListener('click', function () { openInfo('kontakt'); });
   if (window.innerWidth <= 720) togglePanel(true);
 
   render();
-  applyHash();
+  const deepLinked = applyHash();
+
+  // Apner brukeren en delt lenke, er det stedet de kom for – da skal ikke
+  // boksen legge seg over popupen.
+  if (!deepLinked) setTimeout(function () { showHighlights(true); }, 600);
+
+  // Ett minutt er fint nok: "stenger om 45 min" trenger ikke sekundpresisjon.
+  setInterval(refreshOpenStates, 60000);
 }
 
 function togglePanel(collapse) {
@@ -184,8 +276,8 @@ function iconRow(kind, inner) {
 function popupHtml(s) {
   const rows = [];
   if (s.hours) {
-    rows.push(iconRow('clock', '<span>' + esc(s.hours) +
-      (isClosed(s) ? ' <span class="pop-closed">Stengt</span>' : '') + '</span>'));
+    const st = openState(s);
+    rows.push(iconRow('clock', '<span class="os ' + st.cls + '">' + esc(st.label) + '</span>'));
   }
   rows.push(iconRow('pin', '<span>' + esc(s.address) + ' · ' + esc(s.bydel) + '</span>'));
   if (s.phone) {
@@ -325,9 +417,10 @@ function itemEl(s) {
   meta.push(esc(s.bydel));
   meta.push(esc(s.cuisines.join(', ')));
   meta.push('<span class="price">' + priceLabel(s.price) + '</span>');
+  const st = openState(s);
   b.innerHTML =
     '<div class="item-name">' + esc(s.name) +
-      (isClosed(s) ? '<span class="chip-closed">Stengt</span>' : '') + '</div>' +
+      (st.short ? '<span class="chip-os ' + st.cls + '">' + esc(st.short) + '</span>' : '') + '</div>' +
     '<div class="item-meta">' + meta.join(' · ') + '</div>';
   b.addEventListener('click', () => setActive(s.id, true));
   return b;
@@ -360,8 +453,107 @@ function setActive(id, fromList) {
 /* Apner stedet en delt lenke peker pa (halalkartet.no/#safari-restaurant-oslo). */
 function applyHash() {
   let id = '';
-  try { id = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { return; }
-  if (id && byId(id)) setActive(id, true);
+  try { id = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { return false; }
+  if (id && byId(id)) { setActive(id, true); return true; }
+  return false;
+}
+
+/* ---- Utvalgte steder: boks + knapp ---- */
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let hiliteTimer = null;
+
+function renderHighlights() {
+  const list = el('hiliteList');
+  if (!list) return;
+  list.innerHTML = '';
+  currentHighlights().forEach(function (s) {
+    const st = openState(s);
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'hrow';
+    b.innerHTML =
+      '<span class="hdot" data-s="' + esc(s.halalStatus) + '"></span>' +
+      '<span class="hmain">' +
+        '<span class="hname">' + esc(s.name) + '</span>' +
+        '<span class="hmeta">' + esc(s.bydel) + ' · ' + esc(s.cuisines.join(', ')) + ' · ' + priceLabel(s.price) + '</span>' +
+      '</span>' +
+      (st.short ? '<span class="os ' + st.cls + '">' + esc(st.short) + '</span>' : '');
+    b.addEventListener('click', function () { hideHighlights(); setActive(s.id, true); });
+    list.appendChild(b);
+  });
+  const sub = el('hiliteSub');
+  if (sub) {
+    const d = daysUntilRotation();
+    sub.textContent = 'Fem steder å prøve nå. Nytt utvalg ' + (d === 1 ? 'i morgen' : 'om ' + d + ' dager') + '.';
+  }
+}
+
+function showHighlights(auto) {
+  const box = el('hilite');
+  if (!box) return;
+  renderHighlights();
+  box.hidden = false;
+  box.classList.add('open');
+  track('utvalgte_apnet', { hvordan: auto ? 'automatisk' : 'knapp' });
+
+  clearTimeout(hiliteTimer);
+  box.classList.remove('counting');
+  if (!auto) return;
+
+  // Stolinjen teller ned de fem sekundene. Vi lukker pa animationend, slik at
+  // et musepeker-stopp (CSS pauser animasjonen) ogsa utsetter lukkingen.
+  if (reduceMotion) {
+    hiliteTimer = setTimeout(function () { hideHighlights(); }, 5000);
+  } else {
+    void box.offsetWidth; // start animasjonen pa nytt
+    box.classList.add('counting');
+  }
+}
+
+function hideHighlights() {
+  const box = el('hilite');
+  if (!box || !box.classList.contains('open')) return;
+  clearTimeout(hiliteTimer);
+  box.classList.remove('open', 'counting');
+  setTimeout(function () { if (!box.classList.contains('open')) box.hidden = true; }, 260);
+}
+
+function wireHighlights() {
+  const box = el('hilite');
+  if (!box) return;
+  el('hiliteBtn').addEventListener('click', function () {
+    if (box.classList.contains('open')) hideHighlights(); else showHighlights(false);
+  });
+  el('hiliteClose').addEventListener('click', hideHighlights);
+  el('hiliteLukk').addEventListener('click', hideHighlights);
+  const bar = el('hiliteBar');
+  if (bar) bar.addEventListener('animationend', function () { hideHighlights(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && box.classList.contains('open')) hideHighlights();
+  });
+}
+
+/* Statusene eldes mens siden star apen. Vi oppdaterer bare merkelappene,
+   ikke hele lista, sa verken rulling eller fokus gar tapt. */
+function refreshOpenStates() {
+  document.querySelectorAll('.item').forEach(function (b) {
+    const s = byId(b.dataset.id);
+    if (!s) return;
+    const st = openState(s);
+    let chip = b.querySelector('.chip-os');
+    if (!st.short) { if (chip) chip.remove(); return; }
+    if (!chip) {
+      chip = document.createElement('span');
+      b.querySelector('.item-name').appendChild(chip);
+    }
+    chip.className = 'chip-os ' + st.cls;
+    chip.textContent = st.short;
+  });
+  if (el('hilite') && el('hilite').classList.contains('open')) renderHighlights();
+  if (activeId && markers[activeId]) {
+    const s = byId(activeId);
+    if (s && markers[activeId].isPopupOpen()) markers[activeId].setPopupContent(popupHtml(s));
+  }
 }
 
 /* ---- dele-knapp i popup ---- */
