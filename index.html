@@ -50,6 +50,12 @@
   /* Lyset som fanges i kanten er det som skiller glass fra en uskarp boks. */
   --rim:        inset 0 1px 0 rgba(255,255,255,.14);
   --rim-light:  inset 0 1px 0 rgba(255,255,255,.7);
+  /* Bevegelseskurver. Innebygde ease-funksjoner er for svake til UI, og
+     Material-kurven (.4,0,.2,1) er den alle gjetter seg til – disse er
+     hentet fra etablerte kilder, ikke funnet på. */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --shadow-panel: 0 24px 64px rgba(6,20,14,.40);
   --shadow-float: 0 18px 46px rgba(6,20,14,.32);
   --shadow-pill:  0 6px 22px rgba(6,20,14,.30);
@@ -77,16 +83,16 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
   border-right: 1px solid rgba(200,162,83,.14);
   color: var(--ivory); box-shadow: var(--shadow-panel), var(--rim);
   display: flex; flex-direction: column;
-  transition: transform .32s cubic-bezier(.4,0,.2,1);
+  transition: transform .32s var(--ease-drawer);
 }
 .panel.collapsed { transform: translateX(-100%); }
 
 .panel-head { padding: 22px 22px 18px; border-bottom: 1px solid var(--hairline); }
 .head-top { display: flex; align-items: center; gap: 13px; }
-/* Merket får et langsomt lysstrøk over gullet, som metall som fanger lys.
-   Sju sekunder og lav kontrast: det skal merkes, ikke stjele blikket.
-   Slås av under prefers-reduced-motion lenger nede. */
-.brand-mark { font-family: 'Amiri', serif; font-weight: 700; font-size: 33px; line-height: 1; flex: none; direction: rtl; padding: 2px 2px 0; background: linear-gradient(115deg, #A97F32 0%, var(--gold) 28%, #F6E9C4 46%, var(--gold) 64%, #A97F32 100%); background-size: 280% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: sheen 7s ease-in-out infinite; }
+/* Merket får ett lysstrøk over gullet når du kommer, som metall som fanger
+   lys – og så er det stille. En evig løkke ville vært pynt i utkanten av
+   synsfeltet på en app man åpner for å finne mat raskt. */
+.brand-mark { font-family: 'Amiri', serif; font-weight: 700; font-size: 33px; line-height: 1; flex: none; direction: rtl; padding: 2px 2px 0; background: linear-gradient(115deg, #A97F32 0%, var(--gold) 28%, #F6E9C4 46%, var(--gold) 64%, #A97F32 100%); background-size: 280% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: sheen 2.4s var(--ease-in-out) .35s 1 both; }
 @keyframes sheen { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
 .brand-text { flex: 1; padding-left: 13px; border-left: 1px solid var(--hairline); }
 .brand-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0; line-height: .98; letter-spacing: .01em; color: var(--ivory); }
@@ -139,7 +145,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .layer-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
 .layer-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ivory); }
 .layer-count { font-size: 12px; color: var(--ivory-dim); font-variant-numeric: tabular-nums; font-weight: 600; }
-.layer-chev { color: var(--ivory-dim); transition: transform .2s; flex: none; }
+.layer-chev { color: var(--ivory-dim); transition: transform .2s var(--ease-in-out); flex: none; }
 .layer.collapsed .layer-chev { transform: rotate(-90deg); }
 .layer.off .layer-name, .layer.off .layer-count { color: var(--emerald-3); }
 .layer.off .layer-dot { opacity: .35; }
@@ -171,7 +177,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 
 /* Skjelett mens spots.json lastes – bedre enn en tom flate. */
 .sk { padding: 4px 10px; }
-.sk-row { height: 40px; border-radius: 9px; margin-bottom: 9px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.10), rgba(255,255,255,.04)); background-size: 200% 100%; animation: sk 1.3s ease-in-out infinite; }
+.sk-row { height: 40px; border-radius: 9px; margin-bottom: 9px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.10), rgba(255,255,255,.04)); background-size: 200% 100%; animation: sk 1.3s linear infinite; }
 .sk-row:nth-child(2) { animation-delay: .1s; }
 .sk-row:nth-child(3) { animation-delay: .2s; }
 .sk-row:nth-child(4) { animation-delay: .3s; }
@@ -218,7 +224,7 @@ body.panel-collapsed .reopen { display: flex; }
 /* Utvalgte steder: flytende kort nede til venstre, motsatt side av
    Nær meg og Si ifra. Ligger over kartet, ikke som en modal, slik at
    den kan forsvinne av seg selv uten å stjele oppmerksomheten. */
-.hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: rgba(247,242,231,.90); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s, transform .24s; }
+.hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: rgba(247,242,231,.90); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s var(--ease-out), transform .24s var(--ease-out); }
 .hilite.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 .hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
 .hilite.counting .hilite-bar { animation: hbar 5s linear forwards; }
@@ -247,10 +253,10 @@ body.panel-collapsed .reopen { display: flex; }
 .hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
 .hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
 
-.hilite-btn { position: absolute; z-index: 999; left: 378px; bottom: 26px; background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s, left .32s cubic-bezier(.4,0,.2,1); }
+.hilite-btn { position: absolute; z-index: 999; left: 12px; bottom: 26px; transform: translateX(366px); background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
 .hilite-btn svg { color: var(--gold); }
 .hilite-btn:hover { background: rgba(22,74,55,.84); }
-body.panel-collapsed .hilite-btn { left: 12px; }
+body.panel-collapsed .hilite-btn { transform: none; }
 
 /* Handlingsknapper: veibeskrivelse er den vanligste neste handlingen. */
 .pop-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 11px; border-top: 1px solid rgba(27,38,32,.10); }
@@ -266,7 +272,7 @@ body.panel-collapsed .hilite-btn { left: 12px; }
 .map-overlay code { background: #eae3d3; padding: 3px 8px; border-radius: 6px; font-size: 13px; display: inline-block; color: var(--emerald); }
 
 /* Kort bekreftelse (kopiert lenke, avvist posisjon) – erstatter alert(). */
-.toast { position: fixed; left: 50%; bottom: 28px; z-index: 3000; transform: translate(-50%, 14px); background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 24px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; max-width: calc(100vw - 36px); text-align: center; transition: opacity .2s, transform .2s; }
+.toast { position: fixed; left: 50%; bottom: 28px; z-index: 3000; transform: translate(-50%, 14px); background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 24px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; max-width: calc(100vw - 36px); text-align: center; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 720px) {
@@ -277,12 +283,17 @@ body.panel-collapsed .hilite-btn { left: 12px; }
   .search-hint { display: none; }
   .toast { bottom: 90px; }
   .hilite-btn span { display: none; }
-  .hilite-btn { padding: 12px; }
+  /* Panelet dekker hele skjermen her, så knappen skal ikke forskyves med
+     panelbredden – 366 px ut på en 390 px skjerm gir horisontal overflyt. */
+  .hilite-btn { padding: 12px; transform: none; }
+  .hilite-btn:active { transform: translateY(1px); }
 }
 
 /* Near-me button */
 .nearme { position: absolute; z-index: 999; right: 12px; bottom: 26px; background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
-.nearme:active, .feedback:active, .hilite-btn:active, .reopen:active { transform: translateY(1px); }
+.nearme:active, .feedback:active, .reopen:active { transform: translateY(1px); }
+.hilite-btn:active { transform: translateX(366px) translateY(1px); }
+body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .nearme svg { color: var(--gold); }
 .nearme:hover { background: rgba(22,74,55,.84); }
 .nearme.loading { opacity: .6; pointer-events: none; }
@@ -337,7 +348,13 @@ body.panel-collapsed .hilite-btn { left: 12px; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  /* Færre og mildere, ikke null. Toningen blir igjen – den forklarer at noe
+     dukket opp – mens forflytning, skalering og løkker fjernes. */
+  .panel, .layer-chev, .hilite-btn { transition: none; }
+  .hilite, .hilite.open { transform: translate(-50%, -50%); transition: opacity .2s var(--ease-out); }
+  .toast, .toast.show { transform: translate(-50%, 0); transition: opacity .2s var(--ease-out); }
+  .nearme:active, .feedback:active, .reopen:active { transform: none; }
+  .brand-mark, .sk-row, .nearme.loading svg, .hilite.counting .hilite-bar { animation: none; }
 }
 
 /* Uten backdrop-filter ville de gjennomsiktige flatene stått rett på kartet
