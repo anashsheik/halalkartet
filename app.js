@@ -83,20 +83,29 @@ function track(name, props) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     HALAL_SPOTS = await res.json();
     if (!Array.isArray(HALAL_SPOTS) || !HALAL_SPOTS.length) throw new Error('tomt');
-  } catch (e) { showLoadError(); return; }
+  } catch (e) { showLoadError(e); return; }
   initApp();
 })();
 
-function showLoadError() {
+function showLoadError(err) {
   el('resultCount').textContent = 'Ingen data';
-  el('layers').innerHTML = '';
+  // Skriv arsaken i konsollen – uten den star man igjen med en tilsynelatende
+  // blank side og ingen pekepinn pa hva som feilet.
+  if (err && window.console) console.error('Halalkartet: klarte ikke å laste spots.json –', err);
+  // Meldingen legges bade i lista og over kartet. Pa mobil skjuler CSS-en
+  // kartet sa lenge panelet er apent, sa et overlay alene ville vart usynlig.
+  el('layers').innerHTML =
+    '<div class="no-results"><b>Fant ikke dataene</b>' +
+    'Kartet fikk ikke lastet <code>spots.json</code>. Prøv å laste siden på nytt.</div>';
+  if (window.innerWidth <= 720) togglePanel(true);
   const overlay = document.createElement('div');
   overlay.className = 'map-overlay';
   overlay.innerHTML =
     '<div class="box"><h2>Kartet venter på data</h2>' +
-    '<p>Appen fant ikke <code>spots.json</code>. Det skjer bare når du åpner filen rett fra disk — nettlesere blokkerer lokal filhenting.</p>' +
-    '<p>Kjør en liten server i prosjektmappen:</p><p><code>python3 -m http.server</code></p>' +
-    '<p>Gå så til <code>http://localhost:8000</code>. Publisert side fungerer uten noe ekstra.</p></div>';
+    '<p>Appen fikk ikke lastet <code>spots.json</code>. Prøv å laste siden på nytt — hjelper ikke det, står det en teknisk årsak i nettleserkonsollen.</p>' +
+    '<p>Utvikler du lokalt, husk at filen må serveres over http. Nettlesere blokkerer henting av lokale filer:</p>' +
+    '<p><code>python3 -m http.server</code></p>' +
+    '<p>Gå så til <code>http://localhost:8000</code>.</p></div>';
   el('map').appendChild(overlay);
 }
 
