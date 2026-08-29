@@ -33,7 +33,7 @@
   --open:       #1F6340;
   --soon:       #8A5C10;
   --closed:     #B3261E;
-  --open-p:     #6FCB95;
+  --open-p:     #86EFAC;
   --soon-p:     #E8B75C;
   --closed-p:   #F0897C;
   --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
@@ -227,7 +227,7 @@ body.panel-collapsed .reopen { display: flex; }
 .hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: rgba(247,242,231,.90); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s var(--ease-out), transform .24s var(--ease-out); }
 .hilite.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
 .hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
-.hilite.counting .hilite-bar { animation: hbar 5s linear forwards; }
+.hilite.counting .hilite-bar { animation: hbar 3s linear forwards; }
 /* Peker brukeren på boksen, stopper nedtellingen – og dermed lukkingen. */
 .hilite:hover .hilite-bar, .hilite:focus-within .hilite-bar { animation-play-state: paused; }
 @keyframes hbar { to { transform: scaleX(0); } }

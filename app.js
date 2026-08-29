@@ -146,6 +146,14 @@ if (PREMIUM_MAP) {
   }).addTo(map);
 }
 
+/* Et kart som flyr av gårde er nettopp det som gir ubehag ved vestibulær
+   sensitivitet. Da hopper vi rett dit i stedet. */
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function goTo(lat, lng, zoom) {
+  if (reduceMotion) map.setView([lat, lng], zoom);
+  else map.flyTo([lat, lng], zoom, { duration: .6 });
+}
+
 let HALAL_SPOTS = [];
 const markers = {};
 let activeId = null;
@@ -461,7 +469,7 @@ function setActive(id, fromList) {
     if (location.hash !== '#' + id) history.replaceState(null, '', '#' + encodeURIComponent(id));
     if (fromList) {
       if (window.innerWidth <= 720) togglePanel(true);
-      map.flyTo([s.lat, s.lng], 15, { duration: .6 });
+      goTo(s.lat, s.lng, 15);
       markers[id].openPopup();
     }
   } else if (location.hash) {
@@ -478,7 +486,6 @@ function applyHash() {
 }
 
 /* ---- Utvalgte steder: boks + knapp ---- */
-const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let hiliteTimer = null;
 
 function renderHighlights() {
@@ -519,10 +526,10 @@ function showHighlights(auto) {
   box.classList.remove('counting');
 
   // Nedtellingen gjelder ogsa nar boksen apnes med knappen. Stolinjen viser
-  // de fem sekundene, og vi lukker pa animationend – da utsetter et
+  // de tre sekundene, og vi lukker pa animationend – da utsetter et
   // musepeker-stopp (CSS pauser animasjonen) ogsa lukkingen.
   if (reduceMotion) {
-    hiliteTimer = setTimeout(function () { hideHighlights(); }, 5000);
+    hiliteTimer = setTimeout(function () { hideHighlights(); }, 3000);
   } else {
     void box.offsetWidth; // start animasjonen pa nytt
     box.classList.add('counting');
@@ -650,7 +657,7 @@ function locateUser() {
       icon: L.divIcon({ className: '', html: '<div class="userloc"></div>', iconSize: [16,16], iconAnchor: [8,8] }),
       zIndexOffset: 1000
     }).addTo(map);
-    map.flyTo([userLoc.lat, userLoc.lng], 14.5, { duration: .6 });
+    goTo(userLoc.lat, userLoc.lng, 14.5);
     btn.classList.remove('loading');
     if (el('fSort') && !el('fSort').value) el('fSort').value = 'avstand';
     if (window.innerWidth <= 720) togglePanel(true);
