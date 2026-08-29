@@ -6,7 +6,8 @@ colored by halal status.
 
 ```
 halal-oslo/
-├── index.html   ← the app (map, filters, list). You rarely touch this.
+├── index.html   ← markup + styling for the app (map, filters, list). You rarely touch this.
+├── app.js       ← the app logic (rendering, filters, search, geolocation). You rarely touch this.
 ├── spots.json   ← the data. This is what you edit and grow.
 └── README.md    ← this file.
 ```
@@ -49,7 +50,7 @@ Every entry in `spots.json` is one object with these fields.
 | `address`      | string          | yes      | Street address + postcode. |
 | `lat`          | number          | yes      | Latitude, decimal degrees (see geocoding below). |
 | `lng`          | number          | yes      | Longitude, decimal degrees. |
-| `halalStatus`  | enum            | yes      | One of `sertifisert`, `selverklært`, `muslimsk-eid`. Sets the pin color. |
+| `halalStatus`  | enum            | yes      | One of `verifisert`, `delvis`, `uavklart`. Sets the pin color. |
 | `verification` | string          | no       | Plain-language note on *how* halal status was confirmed. Shown in the popup. |
 | `cuisines`     | array of string | yes      | e.g. `["Tyrkisk", "Kebab"]`. Powers the cuisine filter. |
 | `price`        | number          | yes      | `1` = rimelig, `2` = middels, `3` = dyrere. |
@@ -71,17 +72,17 @@ The one thing this app must get right is **trust**. A user needs to know not jus
 that a place claims to be halal, but *how strong that claim is*. That's why the
 status is a three-level field, not a yes/no — and why the pin color matches it.
 
-| Value          | Pin    | Means | Set it when… |
-|----------------|--------|-------|--------------|
-| `sertifisert`  | green  | Formally certified by a recognized body. | A halal certificate is on file / displayed. |
-| `selverklært`  | amber  | Self-declared: halal "by practice." | Staff give verbal assurance or a halal sign is shown, but there's no certificate. |
-| `muslimsk-eid` | blue   | Muslim-owned, halal status not formally verified. | The place is Muslim-owned but you couldn't confirm certification or get a clear staff statement. |
+| Value        | Pin   | Means | Set it when… |
+|--------------|-------|-------|--------------|
+| `verifisert` | green | Confirmed 100% halal. | A halal certificate is on file / displayed, or you're otherwise confident the whole menu is halal. |
+| `delvis`     | amber | Partially halal: part of the menu isn't. | The kitchen serves both halal and non-halal dishes (e.g. halal meat but non-halal alcohol-based items, or only some proteins are halal). |
+| `uavklart`   | grey  | Not yet confirmed. | You couldn't confirm halal status one way or the other — staff assurance was unclear, or you haven't checked yet. |
 
 This mirrors how the largest global halal directory (Zabihah) grades listings —
 "certificate on file" vs. "halal sign visible" vs. "verbal assurance from staff" —
 so users coming from that world will find it familiar.
 
-### Who certifies halal in Norway (for the `sertifisert` tier)
+### Who certifies halal in Norway (for the `verifisert` tier)
 
 - **Halal Kontroll (Halal Control Norway)** — the main independent certifier that
   inspects restaurants and food producers against a halal standard.
@@ -92,15 +93,15 @@ so users coming from that world will find it familiar.
   labelling but does **not** run halal certification — don't treat a clean
   Mattilsynet record as a halal signal.
 
-Only mark a spot `sertifisert` if you can point to one of the first two.
+Only mark a spot `verifisert` if you can point to one of the first two.
 
 ### A note on honesty
 
-The listings currently in `spots.json` are **placeholder examples** (that's what the
-"Demodata" badge in the header is for). They are not verified halal listings — the
-names, addresses, and coordinates exist only to make the app render. Delete them all
-before launch and replace them with entries you've actually verified. Publishing an
-unverified place as certified is the one mistake this project can't afford.
+`spots.json` holds real Oslo listings, not placeholder data — treat every edit
+accordingly. Before adding or changing an entry, decide its `halalStatus` using the
+table above and back it with a `verification` note. When in doubt, downgrade the
+tier rather than overstate it. Publishing an unverified place as `verifisert` is the
+one mistake this project can't afford.
 
 ---
 

@@ -24,9 +24,6 @@ if (PREMIUM_MAP) {
     attribution: '&copy; OpenStreetMap-bidragsytere', maxZoom: 19
   }).addTo(map);
 }
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap-bidragsytere', maxZoom: 19
-}).addTo(map);
 
 let HALAL_SPOTS = [];
 const markers = {};
