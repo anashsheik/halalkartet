@@ -90,7 +90,10 @@ function openState(s) {
    Fem steder om gangen, byttet ut hver femte dag. Utvalget er utledet av
    datoen, ikke tilfeldig per bruker, sa alle ser det samme. Rekkefolgen
    stokkes med fast fro én gang, og vinduet flytter seg fem plasser per
-   periode. 5 og 83 har ingen felles faktor, sa alle steder far tur. */
+   periode.
+
+   Bare bekreftede steder er med: a fremheve et sted vi ikke har sjekket
+   er a gi det en anbefaling det ikke har fortjent. */
 const ROTATION_DAYS = 5;
 const HIGHLIGHT_COUNT = 5;
 const HIGHLIGHT_SEED = 20260829;
@@ -110,9 +113,13 @@ function osloDayNumber() {
   return Math.floor(Date.UTC(n.y, n.m - 1, n.d) / 86400000);
 }
 function daysUntilRotation() { return ROTATION_DAYS - (osloDayNumber() % ROTATION_DAYS); }
+function highlightPool() {
+  return HALAL_SPOTS.filter(function (s) { return s.halalStatus === 'verifisert'; });
+}
 function currentHighlights() {
-  if (!HALAL_SPOTS.length) return [];
-  const pool = seededOrder(HALAL_SPOTS);
+  const bekreftet = highlightPool();
+  if (!bekreftet.length) return [];
+  const pool = seededOrder(bekreftet);
   const n = Math.min(HIGHLIGHT_COUNT, pool.length);
   const start = (Math.floor(osloDayNumber() / ROTATION_DAYS) * n) % pool.length;
   const out = [];
@@ -253,9 +260,10 @@ function initApp() {
   wireNearMe();
   wireInfo();
   wireContactForm();
+  wireTipsForm();
   wirePopupActions();
   wireShortcuts();
-  wireHighlights();
+  wireSheets();
   el('feedback').addEventListener('click', function () { openInfo('kontakt'); });
   if (window.innerWidth <= 720) togglePanel(true);
 
@@ -263,8 +271,9 @@ function initApp() {
   const deepLinked = applyHash();
 
   // Apner brukeren en delt lenke, er det stedet de kom for – da skal ikke
-  // boksen legge seg over popupen.
-  if (!deepLinked) setTimeout(function () { showHighlights(true); }, 600);
+  // kortet legge seg over popupen. I oppstartsfasen er det tipsboksen som
+  // moter besokende; Utvalgte apnes med sin egen knapp.
+  if (!deepLinked) setTimeout(function () { openSheet('tips', true); }, 600);
 
   // Ett minutt er fint nok: "stenger om 45 min" trenger ikke sekundpresisjon.
   setInterval(refreshOpenStates, 60000);
@@ -316,6 +325,8 @@ function popupHtml(s) {
     '<div class="pop-badge" data-s="' + esc(s.halalStatus) + '"><span class="dotc"></span>' + STATUS[s.halalStatus].label + '</div>' +
     (s.description ? '<div class="pop-desc">' + esc(s.description) + '</div>' : '') +
     (s.verification ? '<div class="pop-verify">' + esc(s.verification) + '</div>' : '') +
+    // Alkohol som drikke diskvalifiserer ikke maten, men det skal sta.
+    (s.alcohol ? '<div class="pop-note">Serverer halal mat, men også alkoholholdig drikke.</div>' : '') +
     rows.join('') +
     '<div class="pop-actions">' +
       '<a class="pop-act primary" href="' + dir + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' +
@@ -485,8 +496,15 @@ function applyHash() {
   return false;
 }
 
-/* ---- Utvalgte steder: boks + knapp ---- */
-let hiliteTimer = null;
+/* ---- Kortene midt i skjermen ----
+   To kort deler oppforsel: vis, tell ned, lukk. Nedtellingen drives av
+   stolinjas animasjon, sa et musepeker-stopp (CSS pauser den) ogsa utsetter
+   lukkingen. Varigheten star i CSS per kort. */
+const SHEETS = {
+  tips:   { box: 'tips',   bar: 'tipsBar',   lukk: 'tipsLukk',   knapp: 'tipsBtn',   ms: 3000, hendelse: 'tips_apnet' },
+  hilite: { box: 'hilite', bar: 'hiliteBar', lukk: 'hiliteLukk', knapp: 'hiliteBtn', ms: 3000, hendelse: 'utvalgte_apnet', foer: renderHighlights }
+};
+const sheetTimer = {};
 
 function renderHighlights() {
   const list = el('hiliteList');
@@ -504,57 +522,76 @@ function renderHighlights() {
         '<span class="hmeta">' + esc(s.bydel) + ' · ' + esc(s.cuisines.join(', ')) + ' · ' + priceLabel(s.price) + '</span>' +
       '</span>' +
       (st.short ? '<span class="os ' + st.cls + '">' + esc(st.short) + '</span>' : '');
-    b.addEventListener('click', function () { hideHighlights(); setActive(s.id, true); });
+    b.addEventListener('click', function () { closeSheet('hilite'); setActive(s.id, true); });
     list.appendChild(b);
   });
   const sub = el('hiliteSub');
   if (sub) {
     const d = daysUntilRotation();
-    sub.textContent = 'Fem steder å prøve nå. Nytt utvalg ' + (d === 1 ? 'i morgen' : 'om ' + d + ' dager') + '.';
+    sub.textContent = 'Fem steder vi har bekreftet som helt halal. Nytt utvalg ' +
+      (d === 1 ? 'i morgen' : 'om ' + d + ' dager') + '.';
   }
 }
 
-function showHighlights(auto) {
-  const box = el('hilite');
+function openSheet(key, auto) {
+  const cfg = SHEETS[key], box = el(cfg.box);
   if (!box) return;
-  renderHighlights();
+  // Bare ett kort om gangen midt i skjermen.
+  Object.keys(SHEETS).forEach(function (k) { if (k !== key) closeSheet(k); });
+  if (cfg.foer) cfg.foer();
   box.hidden = false;
   box.classList.add('open');
-  track('utvalgte_apnet', { hvordan: auto ? 'automatisk' : 'knapp' });
+  track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
+  startCountdown(key);
+}
 
-  clearTimeout(hiliteTimer);
+function startCountdown(key) {
+  const cfg = SHEETS[key], box = el(cfg.box);
+  clearTimeout(sheetTimer[key]);
   box.classList.remove('counting');
-
-  // Nedtellingen gjelder ogsa nar boksen apnes med knappen. Stolinjen viser
-  // de tre sekundene, og vi lukker pa animationend – da utsetter et
-  // musepeker-stopp (CSS pauser animasjonen) ogsa lukkingen.
   if (reduceMotion) {
-    hiliteTimer = setTimeout(function () { hideHighlights(); }, 3000);
+    sheetTimer[key] = setTimeout(function () { closeSheet(key); }, cfg.ms);
   } else {
     void box.offsetWidth; // start animasjonen pa nytt
     box.classList.add('counting');
   }
 }
 
-function hideHighlights() {
-  const box = el('hilite');
+/* Begynner noen a fylle ut skjemaet, stopper nedtellingen helt. Et kort som
+   forsvinner midt i utfyllingen er verre enn ett som blir staende. */
+function stopCountdown(key) {
+  const box = el(SHEETS[key].box);
+  clearTimeout(sheetTimer[key]);
+  if (box) box.classList.remove('counting');
+}
+
+function closeSheet(key) {
+  const cfg = SHEETS[key], box = el(cfg.box);
   if (!box || !box.classList.contains('open')) return;
-  clearTimeout(hiliteTimer);
+  clearTimeout(sheetTimer[key]);
   box.classList.remove('open', 'counting');
   setTimeout(function () { if (!box.classList.contains('open')) box.hidden = true; }, 260);
 }
 
-function wireHighlights() {
-  const box = el('hilite');
-  if (!box) return;
-  el('hiliteBtn').addEventListener('click', function () {
-    if (box.classList.contains('open')) hideHighlights(); else showHighlights(false);
+function wireSheets() {
+  Object.keys(SHEETS).forEach(function (key) {
+    const cfg = SHEETS[key], box = el(cfg.box);
+    if (!box) return;
+    const knapp = el(cfg.knapp);
+    if (knapp) knapp.addEventListener('click', function () {
+      if (box.classList.contains('open')) closeSheet(key); else openSheet(key, false);
+    });
+    const lukk = el(cfg.lukk);
+    if (lukk) lukk.addEventListener('click', function () { closeSheet(key); });
+    const bar = el(cfg.bar);
+    if (bar) bar.addEventListener('animationend', function () { closeSheet(key); });
+    ['focusin', 'input'].forEach(function (ev) {
+      box.addEventListener(ev, function () { stopCountdown(key); });
+    });
   });
-  el('hiliteLukk').addEventListener('click', hideHighlights);
-  const bar = el('hiliteBar');
-  if (bar) bar.addEventListener('animationend', function () { hideHighlights(); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && box.classList.contains('open')) hideHighlights();
+    if (e.key !== 'Escape') return;
+    Object.keys(SHEETS).forEach(function (k) { closeSheet(k); });
   });
 }
 
@@ -715,7 +752,39 @@ function trapFocus(e) {
   else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
 }
 
-/* ---- kontaktskjema (Netlify Forms, sendes uten sideomlasting) ---- */
+/* ---- Netlify Forms, sendt uten sideomlasting ----
+   Begge skjemaene postes urlencodet til /, som er det Netlify forventer. */
+function sendNetlifyForm(f, btn, onOk) {
+  const opprinnelig = btn.textContent;
+  const body = new URLSearchParams(new FormData(f)).toString();
+  btn.disabled = true; btn.textContent = 'Sender';
+  fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+    .then(function (r) {
+      if (!r.ok) throw new Error('feil');
+      f.reset();
+      onOk();
+    })
+    .catch(function () { toast('Beklager, noe gikk galt. Prøv igjen om litt.'); })
+    .then(function () { btn.disabled = false; btn.textContent = opprinnelig; });
+}
+
+/* ---- tipsskjema: besokende foreslar en restaurant ---- */
+function wireTipsForm() {
+  const f = el('tipsForm');
+  if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    stopCountdown('tips');
+    sendNetlifyForm(f, el('tipsSend'), function () {
+      track('tips_sendt');
+      el('tipsForm').hidden = true;
+      el('tipsSend').hidden = true;
+      el('tipsOk').hidden = false;
+    });
+  });
+}
+
+/* ---- kontaktskjema ---- */
 function wireContactForm() {
   const f = document.getElementById('kontaktForm');
   if (!f) return;
@@ -733,20 +802,9 @@ function wireContactForm() {
       const ok = v.indexOf('@') !== -1 ? emailOk : phoneOk;
       if (!ok) { if (errEl) errEl.hidden = false; kEl.focus(); return; }
     }
-    const btn = f.querySelector('.kf-send');
-    const body = new URLSearchParams(new FormData(f)).toString();
-    btn.disabled = true; btn.textContent = 'Sender';
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
-      .then(function (r) {
-        if (!r.ok) throw new Error('feil');
-        track('kontakt_sendt');
-        f.reset();
-        btn.disabled = false; btn.textContent = 'Send inn';
-        el('kontaktOk').hidden = false;
-      })
-      .catch(function () {
-        btn.disabled = false; btn.textContent = 'Send inn';
-        toast('Beklager, noe gikk galt. Prøv igjen om litt.');
-      });
+    sendNetlifyForm(f, f.querySelector('.kf-send'), function () {
+      track('kontakt_sendt');
+      el('kontaktOk').hidden = false;
+    });
   });
 }

@@ -33,7 +33,7 @@
   --open:       #1F6340;
   --soon:       #8A5C10;
   --closed:     #B3261E;
-  --open-p:     #86EFAC;
+  --open-p:     #5CE894;
   --soon-p:     #E8B75C;
   --closed-p:   #F0897C;
   --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
@@ -211,6 +211,7 @@ body.panel-collapsed .reopen { display: flex; }
 .pop-badge[data-s="uavklart"] { background: #ECEDEF; color: #4a5057; }
 .pop-badge[data-s="uavklart"] .dotc { background: var(--owned); }
 .pop-desc { font-size: 13px; margin: 0 0 9px; line-height: 1.45; color: var(--ink); }
+.pop-note { font-size: 12px; color: var(--soon); font-weight: 600; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--self); }
 .pop-verify { font-size: 12px; color: var(--ink-soft); font-style: italic; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--gold); }
 .pop-row { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0; display: flex; gap: 8px; align-items: flex-start; }
 .pop-row svg { flex: none; margin-top: 1px; }
@@ -253,6 +254,32 @@ body.panel-collapsed .reopen { display: flex; }
 .hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
 .hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
 
+/* Tipsknappen står over Utvalgte, samme kolonne nede til venstre. */
+.tips-btn { position: absolute; z-index: 999; left: 12px; bottom: 74px; transform: translateX(366px); background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
+.tips-btn svg { color: var(--gold); }
+.tips-btn:hover { background: rgba(22,74,55,.84); }
+.tips-btn:active { transform: translateX(366px) translateY(1px); }
+body.panel-collapsed .tips-btn { transform: none; }
+body.panel-collapsed .tips-btn:active { transform: translateY(1px); }
+
+/* Tipsboksen deler utseende med Utvalgte, men rommer et skjema. */
+.tips { width: 412px; max-height: 88vh; display: flex; flex-direction: column; }
+/* Bare varigheten overstyres. Bruker vi «animation:»-kortformen her,
+   nullstiller den animation-play-state til running og opphever pausen
+   ved hover, siden denne regelen står etter den. */
+.tips.counting .hilite-bar { animation-duration: 5s; }
+.tips-lead { margin: 0; padding: 11px 20px; background: rgba(200,162,83,.16); border-bottom: 1px solid rgba(200,162,83,.28); font-size: 12.5px; line-height: 1.5; color: #6b551d; }
+.tips-lead strong { color: var(--ink); font-weight: 700; }
+.tips-lead, .tips .hilite-head, .tips .hilite-foot, .tips .hilite-bar { flex: none; }
+.tips-body { padding: 0 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.tips .kf-field { font-size: 12.5px; margin-bottom: 11px; }
+.tips .kf-field input, .tips .kf-field textarea, .tips .kf-select { font-size: 13.5px; padding: 9px 11px; }
+.kf-select { display: block; width: 100%; margin-top: 6px; font: inherit; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235f6b63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; padding-right: 30px; }
+.kf-select:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
+.tips-foot { display: flex; flex-direction: column; gap: 8px; }
+.tips-send { width: 100%; }
+.tips-rules { margin: 13px 0 4px; padding: 11px 13px; background: rgba(200,162,83,.12); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
+
 .hilite-btn { position: absolute; z-index: 999; left: 12px; bottom: 26px; transform: translateX(366px); background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
 .hilite-btn svg { color: var(--gold); }
 .hilite-btn:hover { background: rgba(22,74,55,.84); }
@@ -287,6 +314,14 @@ body.panel-collapsed .hilite-btn { transform: none; }
      panelbredden – 366 px ut på en 390 px skjerm gir horisontal overflyt. */
   .hilite-btn { padding: 12px; transform: none; }
   .hilite-btn:active { transform: translateY(1px); }
+  .tips-btn { transform: none; }
+  .tips-btn:active { transform: translateY(1px); }
+  .tips { width: auto; max-height: 90vh; }
+  .tips-lead { padding: 9px 18px; font-size: 12px; }
+  .tips .hilite-head { padding: 13px 18px 9px; }
+  .tips .hilite-head h2 { font-size: 20px; }
+  .tips-body { padding: 0 18px; }
+  .tips .hilite-foot { padding: 10px 18px 14px; }
 }
 
 /* Near-me button */
@@ -389,6 +424,54 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <span>Si ifra</span>
 </button>
 
+<button class="tips-btn" id="tipsBtn" aria-label="Tips oss om en restaurant">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  <span>Tips oss</span>
+</button>
+
+<div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
+  <div class="hilite-bar" id="tipsBar"></div>
+  <p class="tips-lead">Vi ønsker oss aller mest steder <strong>utenfor Oslo og de store byene</strong> — det er der kartet er tommest.</p>
+  <div class="hilite-head">
+    <h2>Kjenner du et sted?</h2>
+    <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
+  </div>
+  <div class="tips-body">
+    <form name="restauranttips" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="tipsForm" class="kf">
+      <input type="hidden" name="form-name" value="restauranttips">
+      <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+      <label class="kf-field">Restaurantens navn <span class="kf-req">påkrevd</span>
+        <input type="text" name="restaurant" required autocomplete="off">
+      </label>
+      <label class="kf-field">Adresse eller by/bydel <span class="kf-opt">frivillig</span>
+        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Drammen, Trondheim eller Storgata 17">
+      </label>
+      <label class="kf-field">Hva vet du om stedet? <span class="kf-req">påkrevd</span>
+        <select name="vurdering" class="kf-select" required>
+          <option value="">Velg ett</option>
+          <option>Helt halal</option>
+          <option>Halal mat, men serverer alkohol som drikke</option>
+          <option>Delvis halal – deler av menyen er ikke halal</option>
+          <option>Serverer svinekjøtt</option>
+          <option>Usikker – vil gjerne at dere sjekker</option>
+        </select>
+      </label>
+      <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet sa det, du spiser der ofte …"></textarea>
+      </label>
+      <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+        <input type="text" name="kontakt" autocomplete="email">
+      </label>
+    </form>
+    <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
+    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen i det hele tatt. Og et sted teller ikke som halal bare fordi det har vegetar- eller veganretter — det har omtrent alle restauranter.</p>
+  </div>
+  <div class="hilite-foot tips-foot">
+    <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
+    <button class="hilite-lukk" id="tipsLukk" type="button">Lukk</button>
+  </div>
+</div>
+
 <button class="hilite-btn" id="hiliteBtn" aria-label="Vis utvalgte steder">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.4 5.3 5.6.6-4.2 3.9 1.2 5.6L12 15.6 6.9 18.4l1.2-5.6L4 8.9l5.6-.6z"/></svg>
   <span>Utvalgte</span>
@@ -398,7 +481,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <div class="hilite-bar" id="hiliteBar"></div>
   <div class="hilite-head">
     <h2>Utvalgte steder</h2>
-    <p id="hiliteSub">Fem steder å prøve nå.</p>
+    <p id="hiliteSub">Fem steder vi har bekreftet som helt halal.</p>
   </div>
   <div class="hilite-list" id="hiliteList"></div>
   <div class="hilite-foot">
@@ -561,7 +644,11 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <h3>Kan jeg dele et sted med noen?</h3>
         <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
         <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
-        <p>Ja, og det setter vi stor pris på. Bruk skjemaet på kontaktsiden, så ser vi på det.</p>
+        <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> nede til venstre på kartet, eller bruk skjemaet på kontaktsiden.</p>
+        <h3>Hvilke steder kommer med på kartet?</h3>
+        <p>Serverer stedet svinekjøtt, kommer det ikke med — uansett hvor mye annet på menyen som er halal. Der går grensen vår, og den gjør vi ingen unntak fra.</p>
+        <p>Serverer de alkohol å drikke, men ikke bruker det i maten, kan stedet merkes halal. Da står det en tydelig merknad i kortet om at de serverer halal mat, men også alkoholholdig drikke, så du kan bestemme selv.</p>
+        <p>Er bare deler av menyen halal, merkes stedet oransje som delvis halal.</p>
         <h3>Dekker dere hele Norge?</h3>
         <p>Vi begynner i Oslo og utvider til flere byer etter hvert.</p>
         <h3>Koster det noe?</h3>
