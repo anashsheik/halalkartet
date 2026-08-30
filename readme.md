@@ -6,7 +6,8 @@ colored by halal status.
 
 ```
 halal-oslo/
-├── index.html   ← the app (map, filters, list). You rarely touch this.
+├── index.html   ← markup + styling for the app (map, filters, list). You rarely touch this.
+├── app.js       ← the app logic (rendering, filters, search, geolocation). You rarely touch this.
 ├── spots.json   ← the data. This is what you edit and grow.
 └── README.md    ← this file.
 ```
@@ -45,17 +46,19 @@ Every entry in `spots.json` is one object with these fields.
 | `id`           | string          | yes      | Unique, url-safe slug, e.g. `gronland-kebab`. Never reuse. |
 | `name`         | string          | yes      | Display name. |
 | `description`  | string          | yes      | One short sentence. |
-| `bydel`        | string          | yes      | Oslo district / area, e.g. `Grønland`, `Grünerløkka`. Powers the district filter. |
+| `bydel`        | string          | yes      | Area label. An Oslo district (`Grønland`, `Grünerløkka`) or, outside Oslo, the town (`Drammen`, `Strømmen`, `Trondheim`). Powers the area filter. |
 | `address`      | string          | yes      | Street address + postcode. |
 | `lat`          | number          | yes      | Latitude, decimal degrees (see geocoding below). |
 | `lng`          | number          | yes      | Longitude, decimal degrees. |
-| `halalStatus`  | enum            | yes      | One of `sertifisert`, `selverklært`, `muslimsk-eid`. Sets the pin color. |
+| `halalStatus`  | enum            | yes      | One of `verifisert`, `delvis`, `uavklart`. Sets the pin color. |
 | `verification` | string          | no       | Plain-language note on *how* halal status was confirmed. Shown in the popup. |
 | `cuisines`     | array of string | yes      | e.g. `["Tyrkisk", "Kebab"]`. Powers the cuisine filter. |
-| `price`        | number          | yes      | `1` = rimelig, `2` = middels, `3` = dyrere. |
+| `price`        | number          | yes      | `1` = rimelig, `2` = middels, `3` = dyrere. Vises som `$`, `$$`, `$$$`. |
 | `phone`        | string or null  | no       | |
 | `website`      | string or null  | no       | Full `https://` URL. |
-| `hours`        | string or null  | no       | Free text, e.g. `11–23 hver dag`. |
+| `hours`        | string or null  | no       | Closing time as free text, e.g. `Stenger kl. 23`, `Stengt nå`, `Midlertidig stengt`. Parsed into the open/closing-soon/closed badge. |
+| `opens`        | string          | no       | Opening time, `HH:MM`. Without it the app only knows when a place *closes*, so at 08:00 it will still say "Stenger kl 23" for somewhere that opens at 11. Add it and the badge reads "Åpner kl 11" instead. |
+| `alcohol`      | boolean         | no       | Set to `true` only when you know the place serves alcoholic **drinks** while the food itself is halal. Adds a note to the popup and is what the alcohol filter matches on. Leave the field out otherwise — a missing field means "no known alcohol service", not "confirmed dry". Alcohol *in the food* is not this field; that makes a place `delvis`. |
 | `lastVerified` | string (date)   | no       | `YYYY-MM-DD`. When you last confirmed the halal status. Very important — see below. |
 
 ### Adding a spot
@@ -71,17 +74,17 @@ The one thing this app must get right is **trust**. A user needs to know not jus
 that a place claims to be halal, but *how strong that claim is*. That's why the
 status is a three-level field, not a yes/no — and why the pin color matches it.
 
-| Value          | Pin    | Means | Set it when… |
-|----------------|--------|-------|--------------|
-| `sertifisert`  | green  | Formally certified by a recognized body. | A halal certificate is on file / displayed. |
-| `selverklært`  | amber  | Self-declared: halal "by practice." | Staff give verbal assurance or a halal sign is shown, but there's no certificate. |
-| `muslimsk-eid` | blue   | Muslim-owned, halal status not formally verified. | The place is Muslim-owned but you couldn't confirm certification or get a clear staff statement. |
+| Value        | Pin   | Means | Set it when… |
+|--------------|-------|-------|--------------|
+| `verifisert` | green | Confirmed 100% halal. | A halal certificate is on file / displayed, or you're otherwise confident the whole menu is halal. |
+| `delvis`     | amber | Partially halal: part of the menu isn't. | The kitchen serves both halal and non-halal dishes (e.g. halal meat but non-halal alcohol-based items, or only some proteins are halal). |
+| `uavklart`   | grey  | Not yet confirmed. | You couldn't confirm halal status one way or the other — staff assurance was unclear, or you haven't checked yet. |
 
 This mirrors how the largest global halal directory (Zabihah) grades listings —
 "certificate on file" vs. "halal sign visible" vs. "verbal assurance from staff" —
 so users coming from that world will find it familiar.
 
-### Who certifies halal in Norway (for the `sertifisert` tier)
+### Who certifies halal in Norway (for the `verifisert` tier)
 
 - **Halal Kontroll (Halal Control Norway)** — the main independent certifier that
   inspects restaurants and food producers against a halal standard.
@@ -92,15 +95,15 @@ so users coming from that world will find it familiar.
   labelling but does **not** run halal certification — don't treat a clean
   Mattilsynet record as a halal signal.
 
-Only mark a spot `sertifisert` if you can point to one of the first two.
+Only mark a spot `verifisert` if you can point to one of the first two.
 
 ### A note on honesty
 
-The listings currently in `spots.json` are **placeholder examples** (that's what the
-"Demodata" badge in the header is for). They are not verified halal listings — the
-names, addresses, and coordinates exist only to make the app render. Delete them all
-before launch and replace them with entries you've actually verified. Publishing an
-unverified place as certified is the one mistake this project can't afford.
+`spots.json` holds real Oslo listings, not placeholder data — treat every edit
+accordingly. Before adding or changing an entry, decide its `halalStatus` using the
+table above and back it with a `verification` note. When in doubt, downgrade the
+tier rather than overstate it. Publishing an unverified place as `verifisert` is the
+one mistake this project can't afford.
 
 ---
 

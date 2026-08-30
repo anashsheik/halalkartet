@@ -4,7 +4,7 @@ const STATUS = {
   'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis'     },
   'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart'   }
 };
-const priceLabel = p => '$'.repeat(p);
+const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + '</span>';
 const el = id => document.getElementById(id);
 
 /* All tekst fra spots.json settes inn via innerHTML. Escaping her gjor at et
@@ -233,7 +233,7 @@ function initApp() {
     markers[s.id] = m;
   });
 
-  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fSort'].forEach(id => {
+  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlcohol', 'fSort'].forEach(id => {
     const x = el(id);
     if (x) x.addEventListener('input', render);
   });
@@ -241,6 +241,7 @@ function initApp() {
   el('fCuisine').addEventListener('change', () => { if (el('fCuisine').value) track('filter_kjokken', { kjokken: el('fCuisine').value }); });
   if (el('fPrice')) el('fPrice').addEventListener('change', () => { if (el('fPrice').value) track('filter_pris', { pris: el('fPrice').value }); });
   if (el('fOpen')) el('fOpen').addEventListener('change', () => { if (el('fOpen').value) track('filter_apent', { status: el('fOpen').value }); });
+  if (el('fAlcohol')) el('fAlcohol').addEventListener('change', () => { if (el('fAlcohol').value) track('filter_alkohol', { alkohol: el('fAlcohol').value }); });
   if (el('fSort')) el('fSort').addEventListener('change', () => {
     const v = el('fSort').value;
     if (v) track('sortering', { modus: v });
@@ -251,6 +252,7 @@ function initApp() {
     el('search').value = ''; el('fBydel').value = ''; el('fCuisine').value = '';
     if (el('fPrice')) el('fPrice').value = '';
     if (el('fOpen')) el('fOpen').value = '';
+    if (el('fAlcohol')) el('fAlcohol').value = '';
     if (el('fSort')) el('fSort').value = '';
     render();
     el('search').focus();
@@ -318,7 +320,11 @@ function popupHtml(s) {
     rows.push(iconRow('globe', '<a class="pop-link" href="' + esc(site) + '" target="_blank" rel="noopener">Nettside ↗</a>'));
   }
 
-  const dir = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(s.lat + ',' + s.lng);
+  // Navn + adresse gir Google noe å kjenne igjen, så ruten ender ved inngangen
+  // og ikke på et punkt midt i kvartalet. Mangler adressen, faller vi tilbake
+  // på koordinatene – de er alltid der.
+  const dir = 'https://www.google.com/maps/dir/?api=1&destination=' +
+    encodeURIComponent(s.address ? s.name + ', ' + s.address : s.lat + ',' + s.lng);
 
   return '<div class="pop-name">' + esc(s.name) + '</div>' +
     '<div class="pop-meta">' + esc(s.cuisines.join(' · ')) + ' &nbsp;·&nbsp; ' + priceLabel(s.price) + '</div>' +
@@ -343,6 +349,7 @@ function currentFilters() {
     cuisine: el('fCuisine').value,
     price: el('fPrice') ? el('fPrice').value : '',
     open: el('fOpen') ? el('fOpen').value : '',
+    alcohol: el('fAlcohol') ? el('fAlcohol').value : '',
     sort: el('fSort') ? el('fSort').value : ''
   };
 }
@@ -353,6 +360,10 @@ function passes(s, f) {
   // Steder uten lesbart klokkeslett har state "unknown" og faller ut av
   // alle apningsfiltre – vi vet rett og slett ikke om de er apne.
   if (f.open && openState(s).state !== f.open) return false;
+  // «nei» betyr «ingen kjent alkoholservering». Feltet settes kun når vi vet
+  // at stedet skjenker, så et sted uten feltet havner her.
+  if (f.alcohol === 'ja' && !s.alcohol) return false;
+  if (f.alcohol === 'nei' && s.alcohol) return false;
   if (f.q) {
     // Adressen er med, slik at "Grønland 5" eller "Torggata" gir treff.
     const hay = (s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '')).toLowerCase();
@@ -384,7 +395,7 @@ function render() {
 
   const box = el('layers');
   box.innerHTML = '';
-  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.open || f.sort);
+  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.open || f.alcohol || f.sort);
 
   if (filtered.length === 0) {
     box.innerHTML = '<div class="no-results"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
@@ -452,7 +463,7 @@ function itemEl(s) {
   if (userLoc) meta.push('<span class="dist">' + fmtDist(dist(s)) + '</span>');
   meta.push(esc(s.bydel));
   meta.push(esc(s.cuisines.join(', ')));
-  meta.push('<span class="price">' + priceLabel(s.price) + '</span>');
+  meta.push(priceLabel(s.price));
   const st = openState(s);
   b.innerHTML =
     '<div class="item-name">' + esc(s.name) + '</div>' +
@@ -501,7 +512,7 @@ function applyHash() {
    stolinjas animasjon, sa et musepeker-stopp (CSS pauser den) ogsa utsetter
    lukkingen. Varigheten star i CSS per kort. */
 const SHEETS = {
-  tips:   { box: 'tips',   bar: 'tipsBar',   lukk: 'tipsLukk',   knapp: 'tipsBtn',   ms: 3000, hendelse: 'tips_apnet' },
+  tips:   { box: 'tips',   bar: 'tipsBar',   lukk: 'tipsLukk',   knapp: 'tipsBtn',   ms: 5000, hendelse: 'tips_apnet' },
   hilite: { box: 'hilite', bar: 'hiliteBar', lukk: 'hiliteLukk', knapp: 'hiliteBtn', ms: 3000, hendelse: 'utvalgte_apnet', foer: renderHighlights }
 };
 const sheetTimer = {};

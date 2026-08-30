@@ -36,6 +36,12 @@
   --open-p:     #5CE894;
   --soon-p:     #E8B75C;
   --closed-p:   #F0897C;
+  /* Pilleknappene over kartet. Den gamle tonen var så mørk at glasset trakk
+     den mot grått over lyse fliser; denne er mettet nok til å lese som grønn. */
+  --pill:       rgba(17,90,64,.86);
+  --pill-hover: rgba(24,112,80,.92);
+  --pill-solid: #115A40;
+  --pill-solid-2: #187050;
   --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
   --shadow-sm:  0 2px 10px rgba(9,28,20,.16);
   --focus:      0 0 0 3px rgba(200,162,83,.45);
@@ -164,7 +170,15 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
    "Stenger kl 23" plass uten a presse lange restaurantnavn. */
 .item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; display: flex; align-items: baseline; gap: 8px; }
 .item-meta-txt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.item-meta .price { font-weight: 700; color: var(--gold-soft); letter-spacing: .04em; }
+.price { font-weight: 700; letter-spacing: .04em; }
+/* $ rimelig, $$ middels, $$$ dyrere. Samme tre farger som apningsstatusen,
+   i lys variant mot det morke panelet og mettet variant mot lyst papir. */
+.item-meta .pris-1 { color: var(--open-p); }
+.item-meta .pris-2 { color: var(--soon-p); }
+.item-meta .pris-3 { color: var(--closed-p); }
+.pop-meta .pris-1, .hmeta .pris-1 { color: var(--open); }
+.pop-meta .pris-2, .hmeta .pris-2 { color: var(--soon); }
+.pop-meta .pris-3, .hmeta .pris-3 { color: var(--closed); }
 /* Åpningsstatus: rød stengt, gul siste time, grønn ellers. */
 .item-meta .os { flex: none; font-weight: 700; white-space: nowrap; }
 .os-open { color: var(--open-p); }
@@ -183,10 +197,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .sk-row:nth-child(4) { animation-delay: .3s; }
 @keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-.reopen { position: absolute; top: 14px; left: 14px; z-index: 999; background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 13px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 15px; cursor: pointer; display: none; align-items: center; gap: 9px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em; transition: background .18s, transform .18s; }
+.reopen { position: absolute; top: 14px; left: 14px; z-index: 999; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 13px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 15px; cursor: pointer; display: none; align-items: center; gap: 9px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em; transition: background .18s, transform .18s; }
 .reopen svg { color: var(--gold); }
 body.panel-collapsed .reopen { display: flex; }
-.reopen:hover { background: rgba(22,74,55,.84); }
+.reopen:hover { background: var(--pill-hover); }
 
 /* Markører */
 .pin { width: 17px; height: 17px; border-radius: 50%; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.45); }
@@ -255,9 +269,9 @@ body.panel-collapsed .reopen { display: flex; }
 .hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
 
 /* Tipsknappen står over Utvalgte, samme kolonne nede til venstre. */
-.tips-btn { position: absolute; z-index: 999; left: 12px; bottom: 74px; transform: translateX(366px); background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
+.tips-btn { position: absolute; z-index: 999; left: 12px; bottom: 74px; transform: translateX(366px); background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
 .tips-btn svg { color: var(--gold); }
-.tips-btn:hover { background: rgba(22,74,55,.84); }
+.tips-btn:hover { background: var(--pill-hover); }
 .tips-btn:active { transform: translateX(366px) translateY(1px); }
 body.panel-collapsed .tips-btn { transform: none; }
 body.panel-collapsed .tips-btn:active { transform: translateY(1px); }
@@ -280,9 +294,9 @@ body.panel-collapsed .tips-btn:active { transform: translateY(1px); }
 .tips-send { width: 100%; }
 .tips-rules { margin: 13px 0 4px; padding: 11px 13px; background: rgba(200,162,83,.12); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
 
-.hilite-btn { position: absolute; z-index: 999; left: 12px; bottom: 26px; transform: translateX(366px); background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
+.hilite-btn { position: absolute; z-index: 999; left: 12px; bottom: 26px; transform: translateX(366px); background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
 .hilite-btn svg { color: var(--gold); }
-.hilite-btn:hover { background: rgba(22,74,55,.84); }
+.hilite-btn:hover { background: var(--pill-hover); }
 body.panel-collapsed .hilite-btn { transform: none; }
 
 /* Handlingsknapper: veibeskrivelse er den vanligste neste handlingen. */
@@ -325,18 +339,18 @@ body.panel-collapsed .hilite-btn { transform: none; }
 }
 
 /* Near-me button */
-.nearme { position: absolute; z-index: 999; right: 12px; bottom: 26px; background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
+.nearme { position: absolute; z-index: 999; right: 12px; bottom: 26px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
 .nearme:active, .feedback:active, .reopen:active { transform: translateY(1px); }
 .hilite-btn:active { transform: translateX(366px) translateY(1px); }
 body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .nearme svg { color: var(--gold); }
-.nearme:hover { background: rgba(22,74,55,.84); }
+.nearme:hover { background: var(--pill-hover); }
 .nearme.loading { opacity: .6; pointer-events: none; }
 .nearme.loading svg { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.feedback { position: absolute; z-index: 999; right: 12px; bottom: 74px; background: rgba(14,61,44,.74); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
+.feedback { position: absolute; z-index: 999; right: 12px; bottom: 74px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
 .feedback svg { color: var(--gold); }
-.feedback:hover { background: rgba(22,74,55,.84); }
+.feedback:hover { background: var(--pill-hover); }
 .userloc { width: 16px; height: 16px; border-radius: 50%; background: #2b7fff; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(43,127,255,.25), 0 1px 4px rgba(0,0,0,.4); }
 .item-meta .dist { color: var(--gold-soft); font-weight: 700; }
 
@@ -396,8 +410,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
    og gitt dårlig kontrast. Da faller vi tilbake til hele farger. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .panel { background: linear-gradient(180deg, #0E3D2C 0%, #0A2F21 100%); }
-  .nearme, .feedback, .hilite-btn, .reopen { background: var(--emerald); }
-  .nearme:hover, .feedback:hover, .hilite-btn:hover, .reopen:hover { background: var(--emerald-2); }
+  .nearme, .feedback, .hilite-btn, .reopen { background: var(--pill-solid); }
+  .nearme:hover, .feedback:hover, .hilite-btn:hover, .reopen:hover { background: var(--pill-solid-2); }
   .leaflet-popup-content-wrapper, .leaflet-popup-tip, .hilite, .info-card { background: var(--paper); }
 }
 </style>
@@ -431,7 +445,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 
 <div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
   <div class="hilite-bar" id="tipsBar"></div>
-  <p class="tips-lead">Vi ønsker oss aller mest steder <strong>utenfor Oslo og de store byene</strong> — det er der kartet er tommest.</p>
+  <p class="tips-lead">Vi ønsker oss aller mest steder <strong>utenfor </strong> Oslo og de store byene Det er viktigst for oss å fylle kartet i storbyene.</p>
   <div class="hilite-head">
     <h2>Kjenner du et sted?</h2>
     <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
@@ -444,7 +458,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <input type="text" name="restaurant" required autocomplete="off">
       </label>
       <label class="kf-field">Adresse eller by/bydel <span class="kf-opt">frivillig</span>
-        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Drammen, Trondheim eller Storgata 17">
+        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17">
       </label>
       <label class="kf-field">Hva vet du om stedet? <span class="kf-req">påkrevd</span>
         <select name="vurdering" class="kf-select" required>
@@ -457,14 +471,14 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         </select>
       </label>
       <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
-        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet sa det, du spiser der ofte …"></textarea>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller spiser du der ofte .…"></textarea>
       </label>
       <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
         <input type="text" name="kontakt" autocomplete="email">
       </label>
     </form>
     <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
-    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen i det hele tatt. Og et sted teller ikke som halal bare fordi det har vegetar- eller veganretter — det har omtrent alle restauranter.</p>
+    <p class="tips-rules">Vennligst ikke send oss verken steder som ikke har noe halal på menyen eller vegetar restauranter.</p>
   </div>
   <div class="hilite-foot tips-foot">
     <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
@@ -481,7 +495,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <div class="hilite-bar" id="hiliteBar"></div>
   <div class="hilite-head">
     <h2>Utvalgte steder</h2>
-    <p id="hiliteSub">Fem steder vi har bekreftet som helt halal.</p>
+    <p id="hiliteSub">Fem utvalgte steder som vi mener du burde prøve.</p>
   </div>
   <div class="hilite-list" id="hiliteList"></div>
   <div class="hilite-foot">
@@ -513,7 +527,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
       <span class="search-hint" aria-hidden="true">/</span>
     </div>
     <div class="mini-filters">
-      <select id="fBydel" aria-label="Filtrer på bydel"><option value="">Alle bydeler</option></select>
+      <select id="fBydel" aria-label="Filtrer på område"><option value="">Alle områder</option></select>
       <select id="fCuisine" aria-label="Filtrer på kjøkken"><option value="">Alle kjøkken</option></select>
       <select id="fPrice" aria-label="Filtrer på prisnivå">
         <option value="">Alle priser</option>
@@ -526,6 +540,11 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <option value="open">Åpent nå</option>
         <option value="soon">Stenger snart</option>
         <option value="closed">Stengt</option>
+      </select>
+      <select id="fAlcohol" class="span2" aria-label="Filtrer på alkoholservering">
+        <option value="">Alkohol: alle steder</option>
+        <option value="ja">Halal mat, serverer alkohol</option>
+        <option value="nei">Serverer ikke alkohol</option>
       </select>
       <select id="fSort" class="span2" aria-label="Sorter listen">
         <option value="">Sorter etter</option>
