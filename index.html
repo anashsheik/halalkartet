@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics. Oppsettet ligger i analytics.js: CSP-en tillater ikke
+     inline-skript, sa konfigurasjonen kan ikke sta her. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8NT96KQTVS');
-</script>
+<script src="analytics.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -454,7 +449,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 
 <div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
   <div class="hilite-bar" id="tipsBar"></div>
-  <p class="tips-lead">Vi ønsker oss aller mest steder <strong>utenfor </strong> Oslo og de store byene Det er viktigst for oss å fylle kartet i storbyene.</p>
+  <p class="tips-lead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong> — det er der flest leter.</p>
   <div class="hilite-head">
     <h2>Kjenner du et sted?</h2>
     <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
@@ -480,14 +475,14 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         </select>
       </label>
       <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
-        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller spiser du der ofte .…"></textarea>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …"></textarea>
       </label>
       <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
         <input type="text" name="kontakt" autocomplete="email">
       </label>
     </form>
     <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
-    <p class="tips-rules">Vennligst ikke send oss verken steder som ikke har noe halal på menyen eller vegetar restauranter.</p>
+    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
   </div>
   <div class="hilite-foot tips-foot">
     <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
@@ -637,7 +632,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <h3>Ingen konto og ingen sporing</h3>
         <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
         <h3>Besøksstatistikk</h3>
-        <p>Vi teller hvor mange som besøker siden med en personvennlig løsning som ikke bruker informasjonskapsler. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
+        <p>Vi teller hvor mange som besøker siden med Google Analytics, satt opp uten informasjonskapsler og med anonymisert IP-adresse. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
         <h3>Posisjon</h3>
         <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
         <h3>Veibeskrivelse</h3>

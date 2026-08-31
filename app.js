@@ -173,15 +173,18 @@ const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': true 
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 /* ---- Anonym hendelsessporing ----
-   Virker automatisk med Plausible, Fathom eller Umami så snart du limer inn
-   scriptet deres i <head>. Ingen cookies og ingen personopplysninger sendes –
-   kun navnet på handlingen (+ evt. hvilken restaurant/bydel). Er ingen
-   leverandor lastet, gjor funksjonen ingenting.
-   NB: Cloudflare Web Analytics stotter ikke egne hendelser – vil du se disse i
-   statistikken, velg Plausible, Fathom eller Umami. */
+   Sender navnet på handlingen (+ evt. hvilken restaurant, bydel eller filter)
+   til Google Analytics. Ingen personopplysninger, og oppsettet i analytics.js
+   ber gtag droppe cookiene. Er ingen leverandor lastet – for eksempel fordi
+   noen kjorer annonseblokkering – gjor funksjonen ingenting.
+   Plausible, Fathom og Umami star igjen som alternativer: bytter du tilbake,
+   virker hendelsene uten at noe her ma endres. Husk da a apne for domenet
+   deres i script-src og connect-src i _headers. */
 function track(name, props) {
   try {
-    if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
+    // GA4 tar egendefinerte parametere som et flatt objekt, ikke nostet.
+    if (typeof window.gtag === 'function') window.gtag('event', name, props || {});
+    else if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
     else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name, props || {});
     else if (window.fathom && typeof window.fathom.trackEvent === 'function') window.fathom.trackEvent(name);
   } catch (e) { /* sporing skal aldri kunne knekke siden */ }
