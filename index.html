@@ -335,7 +335,19 @@ body.panel-collapsed .tips-btn:active { transform: translateY(1px); }
 .tips-lead { margin: 0; padding: 11px 20px; background: rgba(200,162,83,.16); border-bottom: 1px solid rgba(200,162,83,.28); font-size: 12.5px; line-height: 1.5; color: #6b551d; }
 .tips-lead strong { color: var(--ink); font-weight: 700; }
 .tips-lead, .tips .hilite-head, .tips .hilite-foot, .tips .hilite-bar { flex: none; }
-.tips-body { padding: 0 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+/* Kroppen ruller, men et rent kutt midt i et felt ser ut som en feil. Kantene
+   tones ned der det finnes mer, og hintet forsvinner når du er ved enden.
+   overscroll-behavior hindrer at rullingen forplanter seg til kartet under. */
+.tips-body { padding: 0 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; position: relative; }
+.tips-scroll { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
+.tips-scroll::before, .tips-scroll::after { content: ""; position: absolute; left: 0; right: 0; height: 26px; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .18s var(--ease-out); }
+.tips-scroll::before { top: 0; background: linear-gradient(rgba(247,242,231,.96), rgba(247,242,231,0)); }
+.tips-scroll::after { bottom: 0; background: linear-gradient(rgba(247,242,231,0), rgba(247,242,231,.96)); }
+.tips-scroll[data-topp="ja"]::before { opacity: 1; }
+.tips-scroll[data-bunn="ja"]::after { opacity: 1; }
+/* Pilen sier at det er mer under, ikke bare at kanten er myk. */
+.tips-mer { position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); z-index: 3; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--emerald); color: var(--ivory); box-shadow: 0 2px 8px rgba(9,28,20,.28); pointer-events: none; opacity: 0; transition: opacity .18s var(--ease-out); }
+.tips-scroll[data-bunn="ja"] .tips-mer { opacity: 1; }
 .tips .kf-field { font-size: 12.5px; margin-bottom: 11px; }
 .tips .kf-field input, .tips .kf-field textarea, .tips .kf-select { font-size: 13.5px; padding: 9px 11px; }
 .kf-select { display: block; width: 100%; margin-top: 6px; font: inherit; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235f6b63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; padding-right: 30px; }
@@ -414,12 +426,23 @@ body.panel-collapsed .hilite-btn { transform: none; }
   .hilite-btn:active { transform: translateY(1px); }
   .tips-btn { transform: none; }
   .tips-btn:active { transform: translateY(1px); }
-  .tips { width: auto; max-height: 90vh; }
-  .tips-lead { padding: 9px 18px; font-size: 12px; }
-  .tips .hilite-head { padding: 13px 18px 9px; }
-  .tips .hilite-head h2 { font-size: 20px; }
+  /* Rammen rundt skjemaet spiste over halve boksen. Den er strammet inn her
+     slik at feltene får plassen. dvh, ikke vh: Safaris linjer glir inn og ut,
+     og med vh blir boksen høyere enn det som faktisk vises. */
+  .tips { max-height: 88vh; max-height: 88dvh; }
+  .tips-lead { padding: 7px 18px; font-size: 11.5px; line-height: 1.4; }
+  .tips .hilite-head { padding: 10px 18px 6px; }
+  .tips .hilite-head h2 { font-size: 18px; }
+  .tips .hilite-head p { font-size: 11.5px; line-height: 1.4; margin-top: 3px; }
   .tips-body { padding: 0 18px; }
-  .tips .hilite-foot { padding: 10px 18px 14px; }
+  .tips .hilite-foot { padding: 9px 18px 12px; }
+  /* Ved siden av hverandre, med hovedhandlingen til høyre. */
+  .tips-foot { flex-direction: row-reverse; gap: 9px; align-items: stretch; }
+  /* 13px loddrett gir 44 px hoyde – minstemalet for en tommel. Med 11px ble de
+     40 px, som er i minste laget nar man star og skriver med en hand. */
+  .tips-foot .kf-send { flex: 1 1 auto; width: auto; margin-top: 0; padding: 13px 22px; }
+  .tips-foot .hilite-lukk { flex: 0 0 auto; width: auto; padding: 13px 22px; }
+  .kf-field { margin-bottom: 9px; }
 }
 
 /* Near-me button */
@@ -479,6 +502,12 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .kf-err { margin: -7px 0 12px; color: #b3261e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
 .info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
+/* Under 700 px hoyde er hver linje dyr. Introsetningen er kontekst, ikke
+   instruksjon, sa den ryker for feltene gjor det. */
+@media (max-height: 700px) and (max-width: 720px) {
+  .tips .hilite-head p { display: none; }
+  .tips-lead { padding: 6px 18px; font-size: 11px; }
+}
 
 /* Flyteknappene over bunnarket. Denne blokken må stå etter .nearme og
    .feedback lenger oppe: lik spesifisitet, og da vinner den siste regelen. */
@@ -547,7 +576,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
     <h2>Kjenner du et sted?</h2>
     <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
   </div>
-  <div class="tips-body">
+  <div class="tips-scroll">
+  <div class="tips-body" id="tipsBody">
     <form name="restauranttips" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="tipsForm" class="kf">
       <input type="hidden" name="form-name" value="restauranttips">
       <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
@@ -576,6 +606,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
     </form>
     <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
     <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
+  </div>
+  <span class="tips-mer" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
   </div>
   <div class="hilite-foot tips-foot">
     <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>

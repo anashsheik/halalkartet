@@ -294,6 +294,7 @@ function initApp() {
   el('collapse').addEventListener('click', () => togglePanel(true));
   el('reopen').addEventListener('click', () => togglePanel(false));
   wireSheet();
+  wireTipsHint();
   wireNearMe();
   wireInfo();
   wireContactForm();
@@ -716,6 +717,8 @@ function openSheet(key, auto) {
   if (cfg.foer) cfg.foer();
   box.hidden = false;
   box.classList.add('open');
+  // Hoydene er 0 mens boksen er skjult, sa hintet ma regnes ut etter at den vises.
+  if (key === 'tips') requestAnimationFrame(oppdaterTipsHint);
   track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
   startCountdown(key);
 }
@@ -944,6 +947,26 @@ function sendNetlifyForm(f, btn, onOk) {
 }
 
 /* ---- tipsskjema: besokende foreslar en restaurant ---- */
+/* Setter flagg for om det finnes mer over eller under i tipsskjemaet, slik at
+   kantene kan tones og pila vises. Kjores ved rulling, ved apning og nar
+   vinduet endrer storrelse - alle tre kan endre hvor mye som far plass. */
+function oppdaterTipsHint() {
+  const kropp = el('tipsBody');
+  if (!kropp) return;
+  const wrap = kropp.parentElement;
+  const rest = kropp.scrollHeight - kropp.clientHeight;
+  wrap.dataset.topp = kropp.scrollTop > 6 ? 'ja' : 'nei';
+  wrap.dataset.bunn = (rest > 6 && kropp.scrollTop < rest - 6) ? 'ja' : 'nei';
+}
+
+function wireTipsHint() {
+  const kropp = el('tipsBody');
+  if (!kropp) return;
+  kropp.addEventListener('scroll', oppdaterTipsHint, { passive: true });
+  window.addEventListener('resize', oppdaterTipsHint);
+  oppdaterTipsHint();
+}
+
 function wireTipsForm() {
   const f = el('tipsForm');
   if (!f) return;
