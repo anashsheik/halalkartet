@@ -1,8 +1,15 @@
 const STATUS_ORDER = ['verifisert', 'delvis', 'uavklart'];
+/* Nivaet ligger i form og tegn, ikke bare farge. Gronn og gul pin pa et lyst
+   kart er nesten samme flekk for en fargeblind bruker - og det er nettopp den
+   forskjellen hele siden handler om. Sirkel/avkuttet/firkant med ✓ ◐ ? holder
+   selv om fargen faller bort. */
 const STATUS = {
-  'verifisert': { label: 'Verifisert halal', color: '#2E7D4F', pin: 'pin-verifisert' },
-  'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis'     },
-  'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart'   }
+  'verifisert': { label: 'Verifisert halal', color: '#2E7D4F', pin: 'pin-verifisert',
+                  shape: '50%',             glyph: '✓', kort: 'Verifisert' },
+  'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis',
+                  shape: '50% 50% 50% 5px', glyph: '◐', kort: 'Delvis'     },
+  'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart',
+                  shape: '5px',             glyph: '?', kort: 'Uavklart'   }
 };
 const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + '</span>';
 const el = id => document.getElementById(id);
@@ -166,22 +173,42 @@ const markers = {};
 let activeId = null;
 let userLoc = null, userMarker = null;
 let lastFocus = null;
+/* ---- Strenghet ----
+   Ett valg i stedet for tre avkrysningsbokser. Trinnet bestemmer hvor mye
+   usikkerhet du godtar, og bade kartet og listen folger med. Standard er
+   apent: vi skjuler ikke noe for folk som ikke har valgt. */
+const STRICT_STEPS = [
+  { label: 'Kun verifisert', tillat: ['verifisert'],
+    note: 'Bare steder vi har bekreftet som helt halal.' },
+  { label: '+ delvis',       tillat: ['verifisert', 'delvis'],
+    note: 'Også steder der bare deler av menyen er halal.' },
+  { label: '+ uavklart',     tillat: ['verifisert', 'delvis', 'uavklart'],
+    note: 'Alt vi kjenner til, inkludert steder vi ikke har rukket å sjekke.' }
+];
+let strict = 2;
 const layerOn = { 'verifisert': true, 'delvis': true, 'uavklart': true };
+function applyStrict() {
+  const t = STRICT_STEPS[strict].tillat;
+  STATUS_ORDER.forEach(st => { layerOn[st] = t.indexOf(st) >= 0; });
+}
 // Uavklart starter sammenslatt: besokende skal mote de bekreftede stedene
 // forst, men kan folde ut gruppen selv.
 const layerCollapsed = { 'verifisert': false, 'delvis': false, 'uavklart': true };
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 /* ---- Anonym hendelsessporing ----
-   Virker automatisk med Plausible, Fathom eller Umami så snart du limer inn
-   scriptet deres i <head>. Ingen cookies og ingen personopplysninger sendes –
-   kun navnet på handlingen (+ evt. hvilken restaurant/bydel). Er ingen
-   leverandor lastet, gjor funksjonen ingenting.
-   NB: Cloudflare Web Analytics stotter ikke egne hendelser – vil du se disse i
-   statistikken, velg Plausible, Fathom eller Umami. */
+   Sender navnet på handlingen (+ evt. hvilken restaurant, bydel eller filter)
+   til Google Analytics. Ingen personopplysninger, og oppsettet i analytics.js
+   ber gtag droppe cookiene. Er ingen leverandor lastet – for eksempel fordi
+   noen kjorer annonseblokkering – gjor funksjonen ingenting.
+   Plausible, Fathom og Umami star igjen som alternativer: bytter du tilbake,
+   virker hendelsene uten at noe her ma endres. Husk da a apne for domenet
+   deres i script-src og connect-src i _headers. */
 function track(name, props) {
   try {
-    if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
+    // GA4 tar egendefinerte parametere som et flatt objekt, ikke nostet.
+    if (typeof window.gtag === 'function') window.gtag('event', name, props || {});
+    else if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
     else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name, props || {});
     else if (window.fathom && typeof window.fathom.trackEvent === 'function') window.fathom.trackEvent(name);
   } catch (e) { /* sporing skal aldri kunne knekke siden */ }
@@ -254,6 +281,7 @@ function initApp() {
     if (el('fOpen')) el('fOpen').value = '';
     if (el('fAlcohol')) el('fAlcohol').value = '';
     if (el('fSort')) el('fSort').value = '';
+    strict = 2; applyStrict();
     render();
     el('search').focus();
   });
@@ -288,9 +316,12 @@ function togglePanel(collapse) {
 }
 
 function makeIcon(status, big) {
+  const st = STATUS[status];
   return L.divIcon({
     className: '', iconSize: big ? [23,23] : [17,17], iconAnchor: big ? [11,11] : [8,8],
-    popupAnchor: [0,-11], html: '<div class="pin ' + STATUS[status].pin + (big ? ' big' : '') + '"></div>'
+    popupAnchor: [0,-13],
+    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape +
+          '"><span aria-hidden="true">' + st.glyph + '</span></div>'
   });
 }
 
@@ -303,6 +334,63 @@ const POP_ICONS = {
 function iconRow(kind, inner) {
   return '<div class="pop-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f6b63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
     POP_ICONS[kind] + '</svg>' + inner + '</div>';
+}
+
+/* ---- Verifisering ----
+   Vi sertifiserer ikke selv. Kortet skal derfor vise hvem som sa hva og nar,
+   ikke bare en pastand. Feltet er en liste, slik at et sted kan ha bade et
+   sertifikat og en eierbekreftelse med hver sin dato. Eldre data der
+   verification var en enkelt streng vises fortsatt. */
+const BEVIS = {
+  bekreftet: { merke: '✓', kls: 'v-ok'   },
+  delvis:    { merke: '◐', kls: 'v-mid'  },
+  uavklart:  { merke: '?', kls: 'v-open' }
+};
+const MND = ['januar','februar','mars','april','mai','juni',
+             'juli','august','september','oktober','november','desember'];
+function fmtDato(iso) {
+  const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  return d ? (+d[3]) + '. ' + MND[+d[2] - 1] + ' ' + d[1] : '';
+}
+function dagerSiden(iso) {
+  const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  if (!d) return null;
+  const da = Date.UTC(+d[1], +d[2] - 1, +d[3]);
+  const n = osloNow();
+  return Math.floor((Date.UTC(n.y, n.m - 1, n.d) - da) / 86400000);
+}
+function verifiseringHtml(s) {
+  const liste = Array.isArray(s.verification) ? s.verification
+    : (s.verification ? [{ type: 'uavklart', tekst: s.verification }] : []);
+  if (!liste.length) return '';
+  const rader = liste.map(function (v) {
+    const b = BEVIS[v.type] || BEVIS.uavklart;
+    const naar = v.dato ? fmtDato(v.dato) : '';
+    return '<div class="v-row">' +
+      '<span class="v-mark ' + b.kls + '" aria-hidden="true">' + b.merke + '</span>' +
+      '<span class="v-txt">' + esc(v.tekst || '') +
+        (v.kilde ? '<span class="v-src">' + esc(v.kilde) + '</span>' : '') + '</span>' +
+      (naar ? '<span class="v-when">' + esc(naar) + '</span>' : '') +
+    '</div>';
+  }).join('');
+
+  // Ferskheten er det viktigste tallet pa hele kortet: en gronn pin som ble
+  // sjekket for to ar siden er ikke verdt mye. Star det ingen dato, sier vi
+  // det rett ut i stedet for a la fravaeret se ut som noe positivt.
+  const d = dagerSiden(s.lastVerified);
+  let fersk;
+  if (d === null) {
+    fersk = '<span class="v-age v-open">Ikke bekreftet med dato ennå</span>';
+  } else if (d > 180) {
+    fersk = '<span class="v-age v-mid">Sist bekreftet ' + fmtDato(s.lastVerified) +
+            ' — det er over et halvår siden</span>';
+  } else {
+    fersk = '<span class="v-age v-ok">Sist bekreftet ' + fmtDato(s.lastVerified) + '</span>';
+  }
+  return '<div class="pop-verify">' + rader +
+    '<div class="v-foot">' + fersk +
+    '<span class="v-disc">Halalkartet sertifiserer ikke selv. Vi viser kilden, datoen og hvem som sa det.</span>' +
+    '</div></div>';
 }
 
 function popupHtml(s) {
@@ -328,9 +416,11 @@ function popupHtml(s) {
 
   return '<div class="pop-name">' + esc(s.name) + '</div>' +
     '<div class="pop-meta">' + esc(s.cuisines.join(' · ')) + ' &nbsp;·&nbsp; ' + priceLabel(s.price) + '</div>' +
-    '<div class="pop-badge" data-s="' + esc(s.halalStatus) + '"><span class="dotc"></span>' + STATUS[s.halalStatus].label + '</div>' +
+    '<div class="pop-badge" data-s="' + esc(s.halalStatus) + '"><span class="dotc" aria-hidden="true" style="border-radius:' +
+      STATUS[s.halalStatus].shape + '">' + STATUS[s.halalStatus].glyph + '</span>' +
+      STATUS[s.halalStatus].label + '</div>' +
     (s.description ? '<div class="pop-desc">' + esc(s.description) + '</div>' : '') +
-    (s.verification ? '<div class="pop-verify">' + esc(s.verification) + '</div>' : '') +
+    verifiseringHtml(s) +
     // Alkohol som drikke diskvalifiserer ikke maten, men det skal sta.
     (s.alcohol ? '<div class="pop-note">Serverer halal mat, men også alkoholholdig drikke.</div>' : '') +
     rows.join('') +
@@ -393,47 +483,37 @@ function render() {
     if (!show && map.hasLayer(markers[s.id])) map.removeLayer(markers[s.id]);
   });
 
+  renderStrict(filtered);
+
   const box = el('layers');
   box.innerHTML = '';
-  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.open || f.alcohol || f.sort);
+  const anyFilter = !!(f.q || f.bydel || f.cuisine || f.price || f.open || f.alcohol || f.sort || strict < 2);
 
   if (filtered.length === 0) {
     box.innerHTML = '<div class="no-results"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
   } else {
-    STATUS_ORDER.forEach(st => {
+    STATUS_ORDER.filter(st => layerOn[st]).forEach(st => {
       const items = sortItems(filtered.filter(s => s.halalStatus === st), f.sort);
       const layer = document.createElement('div');
       layer.className = 'layer' + (layerCollapsed[st] ? ' collapsed' : '') + (layerOn[st] ? '' : ' off');
 
-      // Checkbox (vis/skjul på kartet) og head (fold ut/inn) er to separate
-      // kontroller, ikke nostede – begge kan nås med tastatur.
+      // Avkrysningsboksen er borte: strenghetsskiven over eier na hva som vises
+      // pa kartet. Overskriften folder bare gruppen ut og inn.
       const row = document.createElement('div');
       row.className = 'layer-row';
-
-      const check = document.createElement('span');
-      check.className = 'layer-check' + (layerOn[st] ? ' on' : '');
-      check.dataset.s = st;
-      check.setAttribute('role', 'checkbox');
-      check.setAttribute('aria-checked', String(layerOn[st]));
-      check.setAttribute('aria-label', 'Vis ' + STATUS[st].label + ' på kartet');
-      check.tabIndex = 0;
-      check.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-      const toggleLayer = e => { e.preventDefault(); e.stopPropagation(); layerOn[st] = !layerOn[st]; render(); };
-      check.addEventListener('click', toggleLayer);
-      check.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') toggleLayer(e); });
 
       const head = document.createElement('button');
       head.type = 'button';
       head.className = 'layer-head';
       head.setAttribute('aria-expanded', String(!layerCollapsed[st]));
       head.innerHTML =
-        '<span class="layer-dot" style="background:' + STATUS[st].color + '"></span>' +
+        '<span class="layer-dot" aria-hidden="true" style="background:' + STATUS[st].color +
+          ';border-radius:' + STATUS[st].shape + '">' + STATUS[st].glyph + '</span>' +
         '<span class="layer-name">' + STATUS[st].label + '</span>' +
         '<span class="layer-count">' + items.length + '</span>' +
         '<svg class="layer-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
       head.addEventListener('click', () => { layerCollapsed[st] = !layerCollapsed[st]; render(); });
 
-      row.appendChild(check);
       row.appendChild(head);
       layer.appendChild(row);
 
@@ -454,6 +534,32 @@ function render() {
   el('reset').disabled = !anyFilter;
 }
 
+/* Skiven tegnes pa nytt ved hver render, slik at tellingen folger sokefeltet
+   og de andre filtrene og ikke bare det totale antallet. */
+function renderStrict(filtered) {
+  const wrap = el('strict');
+  if (!wrap) return;
+  const passer = filtered.filter(s => layerOn[s.halalStatus]).length;
+  const steps = STRICT_STEPS.map(function (steg, i) {
+    const paa = i <= strict, valgt = i === strict;
+    return '<button type="button" class="strict-step' + (paa ? ' on' : '') + (valgt ? ' sel' : '') +
+      '" role="radio" aria-checked="' + valgt + '" data-i="' + i + '">' +
+      '<span class="strict-bar"></span><span class="strict-label">' + steg.label + '</span></button>';
+  }).join('');
+  wrap.innerHTML =
+    '<div class="strict-head"><b>' + passer + '</b> av ' + filtered.length + ' steder passer</div>' +
+    '<div class="strict-steps" role="radiogroup" aria-label="Hvor strengt">' + steps + '</div>' +
+    '<p class="strict-note">' + STRICT_STEPS[strict].note + '</p>';
+  wrap.querySelectorAll('.strict-step').forEach(function (b) {
+    b.addEventListener('click', function () {
+      strict = +b.dataset.i;
+      applyStrict();
+      track('strenghet', { trinn: STRICT_STEPS[strict].label });
+      render();
+    });
+  });
+}
+
 function itemEl(s) {
   const b = document.createElement('button');
   b.type = 'button';
@@ -465,7 +571,10 @@ function itemEl(s) {
   meta.push(esc(s.cuisines.join(', ')));
   meta.push(priceLabel(s.price));
   const st = openState(s);
+  const merke = STATUS[s.halalStatus];
   b.innerHTML =
+    '<span class="item-mark" aria-hidden="true" style="border-radius:' + merke.shape + '">' +
+      merke.glyph + '</span>' +
     '<div class="item-name">' + esc(s.name) + '</div>' +
     '<div class="item-meta">' +
       '<span class="item-meta-txt">' + meta.join(' · ') + '</span>' +

@@ -1,11 +1,13 @@
 ## Sikkerhetsheadere for hele nettstedet. Netlify leser denne filen automatisk.
 ## Ligger den i roten av mappen du publiserer, gjelder den alle sider.
-## Analytics-domenene under er ferdig tillatt for Plausible, Fathom, Umami og
-## Cloudflare. Bruker du bare én, kan du gjerne fjerne de andre for en strammere policy.
+## Analytics er Google Analytics 4. De andre leverandørene er tatt ut av policyen
+## siden de ikke er i bruk lenger – jo færre domener som slipper til, jo bedre.
+## Merk: script-src har bevisst ikke 'unsafe-inline'. Derfor ligger gtag-oppsettet
+## i analytics.js og ikke som en <script>-blokk i index.html.
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://static.cloudflareinsights.com https://plausible.io https://cdn.usefathom.com https://cloud.umami.is; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://tiles.stadiamaps.com https://*.basemaps.cartocdn.com https://cdnjs.cloudflare.com; connect-src 'self' https://cloudflareinsights.com https://plausible.io https://cdn.usefathom.com https://cloud.umami.is https://api-gateway.umami.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://tiles.stadiamaps.com https://*.basemaps.cartocdn.com https://cdnjs.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'

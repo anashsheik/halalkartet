@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics. Oppsettet ligger i analytics.js: CSP-en tillater ikke
+     inline-skript, sa konfigurasjonen kan ikke sta her. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8NT96KQTVS');
-</script>
+<script src="analytics.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,17 +143,21 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .layer-row { display: flex; align-items: center; gap: 12px; padding-left: 10px; border-radius: 9px; }
 .layer-row:hover { background: var(--emerald-2); }
 .layer-head { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 12px 10px; cursor: pointer; border: 0; background: none; font: inherit; color: inherit; text-align: left; border-radius: 9px; }
-.layer-check { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid rgba(255,255,255,.28); flex: none; display: grid; place-items: center; cursor: pointer; background: transparent; transition: background .15s, border-color .15s; }
-.layer-check svg { opacity: 0; }
-.layer-check.on { border-color: transparent; }
-.layer-check.on svg { opacity: 1; }
-.layer-check.on[data-s="verifisert"] { background: var(--cert); }
-.layer-check.on[data-s="verifisert"] svg { stroke: #fff; }
-.layer-check.on[data-s="delvis"] { background: var(--self); }
-.layer-check.on[data-s="delvis"] svg { stroke: #fff; }
-.layer-check.on[data-s="uavklart"] { background: var(--owned); }
-.layer-check.on[data-s="uavklart"] svg { stroke: #fff; }
-.layer-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+/* ---- Strenghetsskiven ----
+   Ett valg i stedet for tre bokser. Stolpene fylles opp til trinnet du står
+   på, så retningen «strengere ← → romsligere» leses uten å tolke tekst. */
+.strict { padding: 16px 22px 0; }
+.strict-head { font-size: 12.5px; color: var(--ivory-dim); margin-bottom: 9px; font-variant-numeric: tabular-nums; }
+.strict-head b { color: var(--ivory); font-size: 15px; font-weight: 700; }
+.strict-steps { display: flex; gap: 6px; }
+.strict-step { flex: 1; min-width: 0; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; display: flex; flex-direction: column; gap: 7px; text-align: left; }
+.strict-bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.13); transition: background .18s var(--ease-out); }
+.strict-step.on .strict-bar { background: var(--gold); }
+.strict-label { font-size: 11.5px; font-weight: 600; color: var(--ivory-dim); line-height: 1.25; transition: color .18s; }
+.strict-step.sel .strict-label { color: var(--ivory); }
+.strict-step:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+.strict-note { font-size: 11.5px; color: var(--ivory-dim); margin: 9px 0 0; line-height: 1.4; }
+.layer-dot { width: 15px; height: 15px; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); display: grid; place-items: center; font-size: 8.5px; font-weight: 700; color: #0B1712; line-height: 1; }
 .layer-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ivory); }
 .layer-count { font-size: 12px; color: var(--ivory-dim); font-variant-numeric: tabular-nums; font-weight: 600; }
 .layer-chev { color: var(--ivory-dim); transition: transform .2s var(--ease-in-out); flex: none; }
@@ -171,10 +170,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 9px; padding: 9px 12px 9px 36px; cursor: pointer; position: relative; font: inherit; transition: background .15s; }
 .item:hover { background: var(--emerald-2); }
 .item.active { background: rgba(200,162,83,.14); box-shadow: inset 2px 0 0 var(--gold); }
-.item::before { content: ""; position: absolute; left: 16px; top: 14px; width: 7px; height: 7px; border-radius: 50%; }
-.item[data-s="verifisert"]::before { background: var(--cert); }
-.item[data-s="delvis"]::before { background: var(--self); }
-.item[data-s="uavklart"]::before { background: var(--owned); }
+.item-mark { position: absolute; left: 12px; top: 10px; width: 15px; height: 15px; display: grid; place-items: center; font-size: 8.5px; font-weight: 700; color: #0B1712; line-height: 1; }
+.item[data-s="verifisert"] .item-mark { background: var(--open-p); }
+.item[data-s="delvis"] .item-mark { background: var(--soon-p); }
+.item[data-s="uavklart"] .item-mark { background: #C3CCC6; }
 .item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
 /* Statusen star ytterst pa metalinja, ikke ved navnet – da far
    "Stenger kl 23" plass uten a presse lange restaurantnavn. */
@@ -213,8 +212,16 @@ body.panel-collapsed .reopen { display: flex; }
 .reopen:hover { background: var(--pill-hover); }
 
 /* Markører */
-.pin { width: 17px; height: 17px; border-radius: 50%; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.45); }
+/* border-radius settes per nivå fra JS (STATUS[…].shape) – sirkel, avkuttet
+   firkant, firkant. Tegnet inni gjør at nivået leses uten farge i det hele tatt. */
+.pin { width: 17px; height: 17px; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.45); display: grid; place-items: center; }
+.pin span { font-size: 9px; line-height: 1; font-weight: 700; }
+/* Tegnfargen følger pinnen: hvitt bærer bare på den mørke grønne. */
+.pin-verifisert span { color: #fff; }
+.pin-delvis span     { color: #3A2708; }
+.pin-uavklart span   { color: #14201A; }
 .pin.big { width: 24px; height: 24px; box-shadow: 0 0 0 4px rgba(200,162,83,.45), 0 0 0 9px rgba(200,162,83,.16), 0 2px 8px rgba(0,0,0,.42), inset 0 2px 3px rgba(255,255,255,.45); }
+.pin.big span { font-size: 12px; }
 .pin-verifisert { background: var(--cert); }
 .pin-delvis { background: var(--self); }
 .pin-uavklart { background: var(--owned); }
@@ -227,7 +234,10 @@ body.panel-collapsed .reopen { display: flex; }
 .pop-meta { font-size: 12px; color: var(--ink-soft); margin: 0 0 9px; letter-spacing: .02em; }
 .pop-meta, .item-meta { font-variant-numeric: tabular-nums; }
 .pop-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
-.pop-badge .dotc { width: 7px; height: 7px; border-radius: 50%; }
+.pop-badge .dotc { width: 14px; height: 14px; flex: none; display: grid; place-items: center; font-size: 8.5px; font-weight: 700; line-height: 1; }
+.pop-badge[data-s="verifisert"] .dotc { color: #fff; }
+.pop-badge[data-s="delvis"] .dotc     { color: #3A2708; }
+.pop-badge[data-s="uavklart"] .dotc   { color: #14201A; }
 .pop-badge[data-s="verifisert"] { background: #E4F1E9; color: #1f6340; }
 .pop-badge[data-s="verifisert"] .dotc { background: var(--cert); }
 .pop-badge[data-s="delvis"] { background: #F6ECD8; color: #8a5c10; }
@@ -236,7 +246,24 @@ body.panel-collapsed .reopen { display: flex; }
 .pop-badge[data-s="uavklart"] .dotc { background: var(--owned); }
 .pop-desc { font-size: 13px; margin: 0 0 9px; line-height: 1.45; color: var(--ink); }
 .pop-note { font-size: 12px; color: var(--soon); font-weight: 600; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--self); }
-.pop-verify { font-size: 12px; color: var(--ink-soft); font-style: italic; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--gold); }
+/* ---- Verifisering i kortet ----
+   Én rad per bevis: merke, hva som er sagt (og av hvem), og når. Under står
+   ferskheten, som er det tallet som avgjør om resten er verdt noe. */
+.pop-verify { margin: 0 0 11px; padding: 9px 0 0; border-top: 1px solid rgba(27,38,32,.1); }
+.v-row { display: flex; gap: 9px; align-items: flex-start; padding: 5px 0; }
+.v-mark { width: 17px; height: 17px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 9.5px; font-weight: 700; line-height: 1; color: #fff; margin-top: 1px; }
+.v-ok  { background: var(--open); }
+.v-mid { background: var(--soon); }
+.v-open { background: #6E7A73; }
+.v-txt { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--ink); }
+.v-src { display: block; font-size: 11.5px; color: var(--ink-soft); margin-top: 1px; }
+.v-when { flex: none; font-size: 11px; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; font-variant-numeric: tabular-nums; }
+.v-foot { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(27,38,32,.08); }
+.v-age { display: block; font-size: 11.5px; font-weight: 600; }
+.v-age.v-ok { background: none; color: var(--open); }
+.v-age.v-mid { background: none; color: var(--soon); }
+.v-age.v-open { background: none; color: #56635C; }
+.v-disc { display: block; font-size: 11px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
 .pop-row { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0; display: flex; gap: 8px; align-items: flex-start; }
 .pop-row svg { flex: none; margin-top: 1px; }
 .pop-link { color: var(--emerald); font-weight: 600; text-decoration: none; }
@@ -454,7 +481,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 
 <div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
   <div class="hilite-bar" id="tipsBar"></div>
-  <p class="tips-lead">Vi ønsker oss aller mest steder <strong>utenfor </strong> Oslo og de store byene Det er viktigst for oss å fylle kartet i storbyene.</p>
+  <p class="tips-lead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong> — det er der flest leter.</p>
   <div class="hilite-head">
     <h2>Kjenner du et sted?</h2>
     <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
@@ -480,14 +507,14 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         </select>
       </label>
       <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
-        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller spiser du der ofte .…"></textarea>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …"></textarea>
       </label>
       <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
         <input type="text" name="kontakt" autocomplete="email">
       </label>
     </form>
     <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
-    <p class="tips-rules">Vennligst ikke send oss verken steder som ikke har noe halal på menyen eller vegetar restauranter.</p>
+    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
   </div>
   <div class="hilite-foot tips-foot">
     <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
@@ -568,6 +595,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
     </div>
   </div>
 
+  <div class="strict" id="strict"></div>
+
   <div class="layers-label">Halal-status</div>
   <div class="layers" id="layers">
     <div class="sk" aria-hidden="true">
@@ -635,9 +664,10 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <h2>Personvern</h2>
         <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
         <h3>Ingen konto og ingen sporing</h3>
+        <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå — og da sier kortet det.</p>
         <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
         <h3>Besøksstatistikk</h3>
-        <p>Vi teller hvor mange som besøker siden med en personvennlig løsning som ikke bruker informasjonskapsler. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
+        <p>Vi teller hvor mange som besøker siden med Google Analytics, satt opp uten informasjonskapsler og med anonymisert IP-adresse. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
         <h3>Posisjon</h3>
         <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
         <h3>Veibeskrivelse</h3>
