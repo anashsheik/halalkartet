@@ -1,18 +1,18 @@
 const STATUS_ORDER = ['verifisert', 'delvis', 'uavklart'];
-/* Nivaet ligger i form og tegn, ikke bare farge. Gronn og gul pin pa et lyst
-   kart er nesten samme flekk for en fargeblind bruker - og det er nettopp den
-   forskjellen hele siden handler om. Sirkel/avkuttet/firkant med ✓ ◐ ? holder
-   selv om fargen faller bort. */
+/* Gronn for halal, oransje for delvis, rod for uavklart. Formen folger med -
+   sirkel, avkuttet firkant, firkant - slik at nivaet fortsatt kan leses av en
+   som ikke skiller fargene. */
 const STATUS = {
   'verifisert': { label: 'Verifisert halal', color: '#2E7D4F', pin: 'pin-verifisert',
-                  shape: '50%',             glyph: '✓', kort: 'Verifisert' },
-  'delvis':     { label: 'Delvis halal',     color: '#D98A1F', pin: 'pin-delvis',
-                  shape: '50% 50% 50% 5px', glyph: '◐', kort: 'Delvis'     },
-  'uavklart':   { label: 'Uavklart',         color: '#8A8F98', pin: 'pin-uavklart',
-                  shape: '5px',             glyph: '?', kort: 'Uavklart'   }
+                  shape: '50%',             kort: 'Verifisert' },
+  'delvis':     { label: 'Delvis halal',     color: '#D9600F', pin: 'pin-delvis',
+                  shape: '50% 50% 50% 5px', kort: 'Delvis'     },
+  'uavklart':   { label: 'Uavklart',         color: '#C62828', pin: 'pin-uavklart',
+                  shape: '5px',             kort: 'Uavklart'   }
 };
 const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + '</span>';
 const el = id => document.getElementById(id);
+const erMobil = () => window.innerWidth <= 720;
 
 /* All tekst fra spots.json settes inn via innerHTML. Escaping her gjor at et
    restaurantnavn med <, & eller " ikke kan bryte ut av markupen. */
@@ -254,7 +254,13 @@ function initApp() {
 
   HALAL_SPOTS.forEach(s => {
     const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) })
-      .bindPopup(popupHtml(s), { closeButton: true, minWidth: 236, maxWidth: 300 });
+      // autoPanPaddingBottomRight holder kortet klar av bunnarket pa mobil;
+      // uten den apner popupen bak arket og ser ut som ingenting skjedde.
+      .bindPopup(popupHtml(s), {
+        closeButton: true, minWidth: 236, maxWidth: 300,
+        autoPanPaddingTopLeft: L.point(12, 64),
+        autoPanPaddingBottomRight: L.point(12, erMobil() ? 336 : 24)
+      });
     m.on('click', () => setActive(s.id, false));
     m.on('popupclose', () => { if (activeId === s.id) setActive(null); });
     markers[s.id] = m;
@@ -287,6 +293,7 @@ function initApp() {
   });
   el('collapse').addEventListener('click', () => togglePanel(true));
   el('reopen').addEventListener('click', () => togglePanel(false));
+  wireSheet();
   wireNearMe();
   wireInfo();
   wireContactForm();
@@ -312,7 +319,58 @@ function initApp() {
 function togglePanel(collapse) {
   el('panel').classList.toggle('collapsed', collapse);
   document.body.classList.toggle('panel-collapsed', collapse);
+  const g = el('sheetGrab');
+  if (g) g.setAttribute('aria-expanded', String(!collapse));
   setTimeout(() => map.invalidateSize(), 320);
+}
+
+/* ---- Bunnarket pa mobil ----
+   Handtaket kan bade trykkes og dras. Under draget folger arket fingeren via
+   en ren transform, sa ingenting regnes om per ramme; ved slipp bestemmer
+   retning og lengde hvor det snapper. */
+function wireSheet() {
+  const hank = el("sheetGrab"), panel = el("panel");
+  if (!hank || !panel) return;
+  let y0 = null, dy = 0, start = false, flyttet = false;
+
+  const hoyde = () => panel.getBoundingClientRect().height;
+  const hvile = () => hoyde() - parseFloat(getComputedStyle(document.documentElement)
+    .getPropertyValue('--peek') || '322');
+
+  hank.addEventListener('pointerdown', function (e) {
+    if (!erMobil()) return;
+    y0 = e.clientY; dy = 0; start = true; flyttet = false;
+    panel.style.transition = 'none';
+    hank.setPointerCapture(e.pointerId);
+  });
+  hank.addEventListener('pointermove', function (e) {
+    if (!start) return;
+    dy = e.clientY - y0;
+    if (Math.abs(dy) > 3) flyttet = true;
+    const basis = panel.classList.contains('collapsed') ? hvile() : 0;
+    // Litt motstand utenfor endepunktene, slik at arket ikke kan dras vekk.
+    const y = Math.max(-24, Math.min(hvile() + 24, basis + dy));
+    panel.style.transform = 'translateY(' + y + 'px)';
+  });
+  const slipp = function (e) {
+    if (!start) return;
+    start = false;
+    panel.style.transition = '';
+    panel.style.transform = '';
+    if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
+    if (!flyttet) { togglePanel(!panel.classList.contains('collapsed')); return; }
+    // Over 60 px avgjor retningen; kortere drag faller tilbake dit det kom fra.
+    if (dy < -60) togglePanel(false);
+    else if (dy > 60) togglePanel(true);
+  };
+  hank.addEventListener('pointerup', slipp);
+  hank.addEventListener('pointercancel', slipp);
+  hank.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePanel(!panel.classList.contains('collapsed'));
+    }
+  });
 }
 
 function makeIcon(status, big) {
@@ -320,8 +378,7 @@ function makeIcon(status, big) {
   return L.divIcon({
     className: '', iconSize: big ? [23,23] : [17,17], iconAnchor: big ? [11,11] : [8,8],
     popupAnchor: [0,-13],
-    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape +
-          '"><span aria-hidden="true">' + st.glyph + '</span></div>'
+    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape + '"></div>'
   });
 }
 
@@ -342,9 +399,9 @@ function iconRow(kind, inner) {
    sertifikat og en eierbekreftelse med hver sin dato. Eldre data der
    verification var en enkelt streng vises fortsatt. */
 const BEVIS = {
-  bekreftet: { merke: '✓', kls: 'v-ok'   },
-  delvis:    { merke: '◐', kls: 'v-mid'  },
-  uavklart:  { merke: '?', kls: 'v-open' }
+  bekreftet: { kls: 'v-ok',   form: '50%'             },
+  delvis:    { kls: 'v-mid',  form: '50% 50% 50% 4px' },
+  uavklart:  { kls: 'v-open', form: '3px'             }
 };
 const MND = ['januar','februar','mars','april','mai','juni',
              'juli','august','september','oktober','november','desember'];
@@ -367,7 +424,7 @@ function verifiseringHtml(s) {
     const b = BEVIS[v.type] || BEVIS.uavklart;
     const naar = v.dato ? fmtDato(v.dato) : '';
     return '<div class="v-row">' +
-      '<span class="v-mark ' + b.kls + '" aria-hidden="true">' + b.merke + '</span>' +
+      '<span class="v-mark ' + b.kls + '" aria-hidden="true" style="border-radius:' + b.form + '"></span>' +
       '<span class="v-txt">' + esc(v.tekst || '') +
         (v.kilde ? '<span class="v-src">' + esc(v.kilde) + '</span>' : '') + '</span>' +
       (naar ? '<span class="v-when">' + esc(naar) + '</span>' : '') +
@@ -417,8 +474,7 @@ function popupHtml(s) {
   return '<div class="pop-name">' + esc(s.name) + '</div>' +
     '<div class="pop-meta">' + esc(s.cuisines.join(' · ')) + ' &nbsp;·&nbsp; ' + priceLabel(s.price) + '</div>' +
     '<div class="pop-badge" data-s="' + esc(s.halalStatus) + '"><span class="dotc" aria-hidden="true" style="border-radius:' +
-      STATUS[s.halalStatus].shape + '">' + STATUS[s.halalStatus].glyph + '</span>' +
-      STATUS[s.halalStatus].label + '</div>' +
+      STATUS[s.halalStatus].shape + '"></span>' + STATUS[s.halalStatus].label + '</div>' +
     (s.description ? '<div class="pop-desc">' + esc(s.description) + '</div>' : '') +
     verifiseringHtml(s) +
     // Alkohol som drikke diskvalifiserer ikke maten, men det skal sta.
@@ -496,6 +552,7 @@ function render() {
       const items = sortItems(filtered.filter(s => s.halalStatus === st), f.sort);
       const layer = document.createElement('div');
       layer.className = 'layer' + (layerCollapsed[st] ? ' collapsed' : '') + (layerOn[st] ? '' : ' off');
+      layer.dataset.s = st;
 
       // Avkrysningsboksen er borte: strenghetsskiven over eier na hva som vises
       // pa kartet. Overskriften folder bare gruppen ut og inn.
@@ -507,8 +564,7 @@ function render() {
       head.className = 'layer-head';
       head.setAttribute('aria-expanded', String(!layerCollapsed[st]));
       head.innerHTML =
-        '<span class="layer-dot" aria-hidden="true" style="background:' + STATUS[st].color +
-          ';border-radius:' + STATUS[st].shape + '">' + STATUS[st].glyph + '</span>' +
+        '<span class="layer-dot" aria-hidden="true" style="border-radius:' + STATUS[st].shape + '"></span>' +
         '<span class="layer-name">' + STATUS[st].label + '</span>' +
         '<span class="layer-count">' + items.length + '</span>' +
         '<svg class="layer-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
@@ -571,10 +627,9 @@ function itemEl(s) {
   meta.push(esc(s.cuisines.join(', ')));
   meta.push(priceLabel(s.price));
   const st = openState(s);
-  const merke = STATUS[s.halalStatus];
   b.innerHTML =
-    '<span class="item-mark" aria-hidden="true" style="border-radius:' + merke.shape + '">' +
-      merke.glyph + '</span>' +
+    '<span class="item-mark" aria-hidden="true" style="border-radius:' +
+      STATUS[s.halalStatus].shape + '"></span>' +
     '<div class="item-name">' + esc(s.name) + '</div>' +
     '<div class="item-meta">' +
       '<span class="item-meta-txt">' + meta.join(' · ') + '</span>' +

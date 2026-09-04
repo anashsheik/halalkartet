@@ -30,9 +30,14 @@
   --ink:        #1B2620;
   --ink-soft:   #5f6b63;
   --paper:      #F7F2E7;
+  /* Halal-status: grønn, oransje, rød. De mettede brukes mot lyst underlag
+     (kartpins, popup), de lyse mot det mørke panelet. */
   --cert:       #2E7D4F;
-  --self:       #D98A1F;
-  --owned:      #8A8F98;
+  --self:       #D9600F;
+  --owned:      #C62828;
+  --cert-p:     #5CE894;
+  --self-p:     #FFA94D;
+  --owned-p:    #FF8A80;
   /* Åpningsstatus. Lyse varianter brukes mot det mørke panelet,
      de mette mot lys papirbakgrunn i popup og boks. */
   --open:       #1F6340;
@@ -72,7 +77,9 @@
   --shadow-pill:  0 6px 22px rgba(6,20,14,.30);
 }
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
+/* overflow pa html i tillegg til body: bunnarket er forskjovet med transform,
+   og uten dette rapporterer dokumentet en hoyde storre enn skjermen. */
+html, body { height: 100%; margin: 0; overflow: hidden; }
 body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; overflow: hidden; }
 
 /* Ett synlig fokusuttrykk for hele appen, slik at tastaturbrukere
@@ -97,6 +104,17 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
   transition: transform .32s var(--ease-drawer);
 }
 .panel.collapsed { transform: translateX(-100%); }
+
+/* Draghåndtaket og merket over kartet finnes bare på mobil; på skrivebordet
+   står panelet til venstre og trenger ingen av delene. */
+.sheet-grab { display: none; width: 100%; background: none; border: 0; padding: 9px 0 4px; cursor: grab; touch-action: none; }
+.sheet-grab span { display: block; width: 42px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.26); margin: 0 auto; transition: background .15s; }
+.sheet-grab:active { cursor: grabbing; }
+.sheet-grab:active span, .sheet-grab:hover span { background: rgba(255,255,255,.42); }
+.sheet-grab:focus-visible span { background: var(--gold); }
+.brand-chip { display: none; position: absolute; top: 12px; left: 12px; z-index: 998; align-items: center; gap: 8px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 20px; padding: 7px 14px 7px 11px; box-shadow: var(--shadow-pill), var(--rim); font-size: 12.5px; font-weight: 700; letter-spacing: .01em; }
+.brand-chip span { font-family: 'Amiri', serif; font-size: 17px; line-height: 1; direction: rtl; color: var(--gold); }
+.lbl-narrow { display: none; }
 
 .panel-head { padding: 22px 22px 18px; border-bottom: 1px solid var(--hairline); }
 .head-top { display: flex; align-items: center; gap: 13px; }
@@ -157,7 +175,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .strict-step.sel .strict-label { color: var(--ivory); }
 .strict-step:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
 .strict-note { font-size: 11.5px; color: var(--ivory-dim); margin: 9px 0 0; line-height: 1.4; }
-.layer-dot { width: 15px; height: 15px; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); display: grid; place-items: center; font-size: 8.5px; font-weight: 700; color: #0B1712; line-height: 1; }
+.layer-dot { width: 12px; height: 12px; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+.layer[data-s="verifisert"] .layer-dot { background: var(--cert-p); }
+.layer[data-s="delvis"] .layer-dot { background: var(--self-p); }
+.layer[data-s="uavklart"] .layer-dot { background: var(--owned-p); }
 .layer-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ivory); }
 .layer-count { font-size: 12px; color: var(--ivory-dim); font-variant-numeric: tabular-nums; font-weight: 600; }
 .layer-chev { color: var(--ivory-dim); transition: transform .2s var(--ease-in-out); flex: none; }
@@ -170,10 +191,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 9px; padding: 9px 12px 9px 36px; cursor: pointer; position: relative; font: inherit; transition: background .15s; }
 .item:hover { background: var(--emerald-2); }
 .item.active { background: rgba(200,162,83,.14); box-shadow: inset 2px 0 0 var(--gold); }
-.item-mark { position: absolute; left: 12px; top: 10px; width: 15px; height: 15px; display: grid; place-items: center; font-size: 8.5px; font-weight: 700; color: #0B1712; line-height: 1; }
-.item[data-s="verifisert"] .item-mark { background: var(--open-p); }
-.item[data-s="delvis"] .item-mark { background: var(--soon-p); }
-.item[data-s="uavklart"] .item-mark { background: #C3CCC6; }
+.item-mark { position: absolute; left: 14px; top: 12px; width: 11px; height: 11px; }
+.item[data-s="verifisert"] .item-mark { background: var(--cert-p); }
+.item[data-s="delvis"] .item-mark { background: var(--self-p); }
+.item[data-s="uavklart"] .item-mark { background: var(--owned-p); }
 .item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
 /* Statusen star ytterst pa metalinja, ikke ved navnet – da far
    "Stenger kl 23" plass uten a presse lange restaurantnavn. */
@@ -213,15 +234,10 @@ body.panel-collapsed .reopen { display: flex; }
 
 /* Markører */
 /* border-radius settes per nivå fra JS (STATUS[…].shape) – sirkel, avkuttet
-   firkant, firkant. Tegnet inni gjør at nivået leses uten farge i det hele tatt. */
-.pin { width: 17px; height: 17px; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.45); display: grid; place-items: center; }
-.pin span { font-size: 9px; line-height: 1; font-weight: 700; }
-/* Tegnfargen følger pinnen: hvitt bærer bare på den mørke grønne. */
-.pin-verifisert span { color: #fff; }
-.pin-delvis span     { color: #3A2708; }
-.pin-uavklart span   { color: #14201A; }
+   firkant, firkant. Formen gjør at nivået fortsatt kan skilles av en som ikke
+   ser forskjell på grønt, oransje og rødt. */
+.pin { width: 17px; height: 17px; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.45); }
 .pin.big { width: 24px; height: 24px; box-shadow: 0 0 0 4px rgba(200,162,83,.45), 0 0 0 9px rgba(200,162,83,.16), 0 2px 8px rgba(0,0,0,.42), inset 0 2px 3px rgba(255,255,255,.45); }
-.pin.big span { font-size: 12px; }
 .pin-verifisert { background: var(--cert); }
 .pin-delvis { background: var(--self); }
 .pin-uavklart { background: var(--owned); }
@@ -234,15 +250,12 @@ body.panel-collapsed .reopen { display: flex; }
 .pop-meta { font-size: 12px; color: var(--ink-soft); margin: 0 0 9px; letter-spacing: .02em; }
 .pop-meta, .item-meta { font-variant-numeric: tabular-nums; }
 .pop-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
-.pop-badge .dotc { width: 14px; height: 14px; flex: none; display: grid; place-items: center; font-size: 8.5px; font-weight: 700; line-height: 1; }
-.pop-badge[data-s="verifisert"] .dotc { color: #fff; }
-.pop-badge[data-s="delvis"] .dotc     { color: #3A2708; }
-.pop-badge[data-s="uavklart"] .dotc   { color: #14201A; }
+.pop-badge .dotc { width: 10px; height: 10px; flex: none; }
 .pop-badge[data-s="verifisert"] { background: #E4F1E9; color: #1f6340; }
 .pop-badge[data-s="verifisert"] .dotc { background: var(--cert); }
 .pop-badge[data-s="delvis"] { background: #F6ECD8; color: #8a5c10; }
 .pop-badge[data-s="delvis"] .dotc { background: var(--self); }
-.pop-badge[data-s="uavklart"] { background: #ECEDEF; color: #4a5057; }
+.pop-badge[data-s="uavklart"] { background: #FBE7E5; color: #8E1F19; }
 .pop-badge[data-s="uavklart"] .dotc { background: var(--owned); }
 .pop-desc { font-size: 13px; margin: 0 0 9px; line-height: 1.45; color: var(--ink); }
 .pop-note { font-size: 12px; color: var(--soon); font-weight: 600; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--self); }
@@ -251,10 +264,10 @@ body.panel-collapsed .reopen { display: flex; }
    ferskheten, som er det tallet som avgjør om resten er verdt noe. */
 .pop-verify { margin: 0 0 11px; padding: 9px 0 0; border-top: 1px solid rgba(27,38,32,.1); }
 .v-row { display: flex; gap: 9px; align-items: flex-start; padding: 5px 0; }
-.v-mark { width: 17px; height: 17px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 9.5px; font-weight: 700; line-height: 1; color: #fff; margin-top: 1px; }
-.v-ok  { background: var(--open); }
-.v-mid { background: var(--soon); }
-.v-open { background: #6E7A73; }
+.v-mark { width: 11px; height: 11px; flex: none; margin-top: 4px; }
+.v-ok  { background: var(--cert); }
+.v-mid { background: var(--self); }
+.v-open { background: var(--owned); }
 .v-txt { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--ink); }
 .v-src { display: block; font-size: 11.5px; color: var(--ink-soft); margin-top: 1px; }
 .v-when { flex: none; font-size: 11px; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; font-variant-numeric: tabular-nums; }
@@ -353,15 +366,49 @@ body.panel-collapsed .hilite-btn { transform: none; }
 .toast { position: fixed; left: 50%; bottom: 28px; z-index: 3000; transform: translate(-50%, 14px); background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 24px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; max-width: calc(100vw - 36px); text-align: center; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+/* ---- Mobil: kartet er skjermen, panelet er et ark nedenfra ----
+   Kartet fyller hele flaten og panelet ligger som et ark over det. I hvilestand
+   stikker bare toppen opp – sok, strenghet og de nærmeste stedene – og resten
+   dras opp ved behov. Vi flytter ikke elementer i DOM-en: det er samme panel,
+   bare forankret nede i stedet for til venstre. */
 @media (max-width: 720px) {
-  .panel { width: 100%; max-width: 100%; }
-  body:not(.panel-collapsed) #map { visibility: hidden; }
-  .reopen span { display: none; }
-  .reopen { padding: 12px; }
+  :root { --peek: 340px; }
+  .panel {
+    /* fixed, ikke absolute: et absolutt plassert ark som forskyves nedover
+       teller som rullbart innhold, og siden lot seg dra 403 px ned. Fast
+       posisjonerte bokser bidrar ikke til dokumentets rulleflate. */
+    position: fixed;
+    top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: 100%;
+    height: 88vh; border-right: 0;
+    border-top: 1px solid rgba(200,162,83,.2);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -14px 40px rgba(9,28,20,.34), var(--rim);
+  }
+  /* «collapsed» betyr hvilestand her, ikke skjult. Én transform, ingen
+     layout per ramme – arket glir uten at kartet regnes om. */
+  .panel.collapsed { transform: translateY(calc(88vh - var(--peek))); }
+  .panel-head { padding: 4px 18px 14px; border-bottom: 0; }
+  .head-top { display: none; }
+  .search-wrap { margin-top: 0; }
+  .layers { padding-bottom: 8px; }
+
+  /* Hvilestand: sok, strenghet og de nærmeste stedene. Nedtrekkene kommer
+     nar arket dras opp – de er sjeldnere brukt enn a se hva som er i nærheten. */
+  .panel.collapsed .mini-filters,
+  .panel.collapsed .filter-status { display: none; }
+  .strict { padding: 14px 18px 0; }
+  .layers-label { padding: 14px 18px 6px; }
+
+  .sheet-grab { display: block; }
+  .brand-chip { display: inline-flex; }
+  .lbl-wide { display: none; }
+  .lbl-narrow { display: inline; }
+
+  .reopen { display: none !important; }
   .search-hint { display: none; }
-  .toast { bottom: 90px; }
+  .toast { bottom: calc(var(--peek) + 110px); }
   .hilite-btn span { display: none; }
-  /* Panelet dekker hele skjermen her, så knappen skal ikke forskyves med
+  /* Panelet dekker hele bredden her, så knappen skal ikke forskyves med
      panelbredden – 366 px ut på en 390 px skjerm gir horisontal overflyt. */
   .hilite-btn { padding: 12px; transform: none; }
   .hilite-btn:active { transform: translateY(1px); }
@@ -432,6 +479,20 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .kf-err { margin: -7px 0 12px; color: #b3261e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
 .info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
+
+/* Flyteknappene over bunnarket. Denne blokken må stå etter .nearme og
+   .feedback lenger oppe: lik spesifisitet, og da vinner den siste regelen. */
+@media (max-width: 720px) {
+  .nearme { bottom: calc(var(--peek) + 14px); }
+  .feedback { bottom: calc(var(--peek) + 62px); }
+  .tips-btn { bottom: calc(var(--peek) + 62px); }
+  .hilite-btn { bottom: calc(var(--peek) + 14px); }
+  /* Nar arket er dratt opp dekker det knappene – da skal de ikke ta imot trykk. */
+  body:not(.panel-collapsed) .nearme,
+  body:not(.panel-collapsed) .feedback,
+  body:not(.panel-collapsed) .tips-btn,
+  body:not(.panel-collapsed) .hilite-btn { opacity: 0; pointer-events: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   /* Færre og mildere, ikke null. Toningen blir igjen – den forklarer at noe
@@ -544,7 +605,10 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <span>Steder</span>
 </button>
 
+<div class="brand-chip" aria-hidden="true"><span>حلال</span>Halalkartet</div>
+
 <aside class="panel" id="panel">
+  <button class="sheet-grab" id="sheetGrab" type="button" aria-label="Dra opp for hele listen" aria-expanded="false"><span></span></button>
   <div class="panel-head">
     <div class="head-top">
       <div class="brand-mark">حلال</div>
@@ -597,7 +661,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 
   <div class="strict" id="strict"></div>
 
-  <div class="layers-label">Halal-status</div>
+  <div class="layers-label"><span class="lbl-wide">Halal-status</span><span class="lbl-narrow">Nærmest deg</span></div>
   <div class="layers" id="layers">
     <div class="sk" aria-hidden="true">
       <div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div>
