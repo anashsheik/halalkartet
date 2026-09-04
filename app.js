@@ -12,6 +12,7 @@ const STATUS = {
 };
 const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + '</span>';
 const el = id => document.getElementById(id);
+const erMobil = () => window.innerWidth <= 720;
 
 /* All tekst fra spots.json settes inn via innerHTML. Escaping her gjor at et
    restaurantnavn med <, & eller " ikke kan bryte ut av markupen. */
@@ -253,7 +254,13 @@ function initApp() {
 
   HALAL_SPOTS.forEach(s => {
     const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) })
-      .bindPopup(popupHtml(s), { closeButton: true, minWidth: 236, maxWidth: 300 });
+      // autoPanPaddingBottomRight holder kortet klar av bunnarket pa mobil;
+      // uten den apner popupen bak arket og ser ut som ingenting skjedde.
+      .bindPopup(popupHtml(s), {
+        closeButton: true, minWidth: 236, maxWidth: 300,
+        autoPanPaddingTopLeft: L.point(12, 64),
+        autoPanPaddingBottomRight: L.point(12, erMobil() ? 336 : 24)
+      });
     m.on('click', () => setActive(s.id, false));
     m.on('popupclose', () => { if (activeId === s.id) setActive(null); });
     markers[s.id] = m;
@@ -286,6 +293,7 @@ function initApp() {
   });
   el('collapse').addEventListener('click', () => togglePanel(true));
   el('reopen').addEventListener('click', () => togglePanel(false));
+  wireSheet();
   wireNearMe();
   wireInfo();
   wireContactForm();
@@ -311,7 +319,58 @@ function initApp() {
 function togglePanel(collapse) {
   el('panel').classList.toggle('collapsed', collapse);
   document.body.classList.toggle('panel-collapsed', collapse);
+  const g = el('sheetGrab');
+  if (g) g.setAttribute('aria-expanded', String(!collapse));
   setTimeout(() => map.invalidateSize(), 320);
+}
+
+/* ---- Bunnarket pa mobil ----
+   Handtaket kan bade trykkes og dras. Under draget folger arket fingeren via
+   en ren transform, sa ingenting regnes om per ramme; ved slipp bestemmer
+   retning og lengde hvor det snapper. */
+function wireSheet() {
+  const hank = el("sheetGrab"), panel = el("panel");
+  if (!hank || !panel) return;
+  let y0 = null, dy = 0, start = false, flyttet = false;
+
+  const hoyde = () => panel.getBoundingClientRect().height;
+  const hvile = () => hoyde() - parseFloat(getComputedStyle(document.documentElement)
+    .getPropertyValue('--peek') || '322');
+
+  hank.addEventListener('pointerdown', function (e) {
+    if (!erMobil()) return;
+    y0 = e.clientY; dy = 0; start = true; flyttet = false;
+    panel.style.transition = 'none';
+    hank.setPointerCapture(e.pointerId);
+  });
+  hank.addEventListener('pointermove', function (e) {
+    if (!start) return;
+    dy = e.clientY - y0;
+    if (Math.abs(dy) > 3) flyttet = true;
+    const basis = panel.classList.contains('collapsed') ? hvile() : 0;
+    // Litt motstand utenfor endepunktene, slik at arket ikke kan dras vekk.
+    const y = Math.max(-24, Math.min(hvile() + 24, basis + dy));
+    panel.style.transform = 'translateY(' + y + 'px)';
+  });
+  const slipp = function (e) {
+    if (!start) return;
+    start = false;
+    panel.style.transition = '';
+    panel.style.transform = '';
+    if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
+    if (!flyttet) { togglePanel(!panel.classList.contains('collapsed')); return; }
+    // Over 60 px avgjor retningen; kortere drag faller tilbake dit det kom fra.
+    if (dy < -60) togglePanel(false);
+    else if (dy > 60) togglePanel(true);
+  };
+  hank.addEventListener('pointerup', slipp);
+  hank.addEventListener('pointercancel', slipp);
+  hank.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePanel(!panel.classList.contains('collapsed'));
+    }
+  });
 }
 
 function makeIcon(status, big) {
