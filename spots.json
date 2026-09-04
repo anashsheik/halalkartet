@@ -8,14 +8,22 @@
     "lat": 59.914463,
     "lng": 10.7470942,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Falafel"
     ],
     "price": 1,
     "phone": "96 72 86 10",
     "website": "https://gazakjokken.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "mr-bowl-storgata",
@@ -26,14 +34,22 @@
     "lat": 59.9137557,
     "lng": 10.7498851,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "93 01 93 22",
     "website": "https://mrbowl.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "zam-zam-avd-hasle",
@@ -44,14 +60,22 @@
     "lat": 59.9198946,
     "lng": 10.7913278,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway"
     ],
     "price": 1,
     "phone": "92 02 92 80",
     "website": "https://www.zam-zam.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "mehfel-restaurant",
@@ -62,14 +86,22 @@
     "lat": 59.9103032,
     "lng": 10.7435666,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 42 37 77",
     "website": "https://www.mehfel.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "safari-restaurant-oslo",
@@ -80,14 +112,22 @@
     "lat": 59.914093,
     "lng": 10.7632166,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Halal"
     ],
     "price": 1,
     "phone": "94 08 33 20",
     "website": null,
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "alshahba-restaurant-oslo",
@@ -98,14 +138,22 @@
     "lat": 59.9110746,
     "lng": 10.7668704,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "46 37 90 05",
     "website": "https://alshahba.no",
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "shah-s-halal-food-oslo",
@@ -116,14 +164,22 @@
     "lat": 59.9618135,
     "lng": 10.9233817,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 1,
     "phone": "98 46 48 57",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "sultan-gronland-oslo-food-sweets",
@@ -134,14 +190,22 @@
     "lat": 59.9123407,
     "lng": 10.7653533,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Midtøsten"
     ],
     "price": 1,
     "phone": "40 30 90 95",
     "website": null,
-    "hours": "Stenger kl. 03"
+    "hours": "Stenger kl. 03",
+    "lastVerified": null
   },
   {
     "id": "alibaba-turkish-grill-steak",
@@ -152,14 +216,22 @@
     "lat": 59.9191861,
     "lng": 10.7633571,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "21 91 91 01",
     "website": "https://alibabarestaurant.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "simply-tasty",
@@ -170,14 +242,22 @@
     "lat": 59.922185,
     "lng": 10.7520269,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 1,
     "phone": "92 27 78 81",
     "website": null,
-    "hours": "Stenger kl. 20"
+    "hours": "Stenger kl. 20",
+    "lastVerified": null
   },
   {
     "id": "mediterranean-grill",
@@ -188,14 +268,22 @@
     "lat": 59.9172643,
     "lng": 10.7535635,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 1,
     "phone": "47 72 47 70",
     "website": "https://mediterranean.no",
-    "hours": "Stenger kl. 04"
+    "hours": "Stenger kl. 04",
+    "lastVerified": null
   },
   {
     "id": "istanbul-kebab-restaurant-avd-trondheims",
@@ -206,14 +294,22 @@
     "lat": 59.919193,
     "lng": 10.7643854,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "23 40 90 22",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "yalla-habibi-grill-restaurant-bar",
@@ -224,14 +320,22 @@
     "lat": 59.9195989,
     "lng": 10.7648225,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "92 95 95 13",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "khanateria",
@@ -242,14 +346,22 @@
     "lat": 59.9170016,
     "lng": 10.7531046,
     "halalStatus": "delvis",
-    "verification": "Delvis halal – alt unntatt én rett er halal.",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Alt unntatt én rett er halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "40 48 81 88",
     "website": "https://khanateria.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "burger-shack",
@@ -260,14 +372,22 @@
     "lat": 59.9276448,
     "lng": 10.7489461,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 2,
     "phone": "92 14 19 21",
     "website": null,
-    "hours": "Stenger kl. 22:45"
+    "hours": "Stenger kl. 22:45",
+    "lastVerified": null
   },
   {
     "id": "saray-restaurant",
@@ -278,14 +398,22 @@
     "lat": 59.9197558,
     "lng": 10.7635425,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "21 94 22 22",
     "website": "https://sarayrestaurant.no",
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "lahori-dera-tandoori",
@@ -296,14 +424,22 @@
     "lat": 59.9130137,
     "lng": 10.7655942,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 1,
     "phone": "22 67 15 15",
     "website": "https://lahoridera.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "khushi-indian-cuisine-oslo",
@@ -314,14 +450,22 @@
     "lat": 59.9254238,
     "lng": 10.7569925,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "40 16 35 01",
     "website": "https://khushioslo.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "new-delhi-restaurant",
@@ -332,14 +476,22 @@
     "lat": 59.9089744,
     "lng": 10.723378,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "90 57 59 29",
     "website": "https://newdelhi.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "anatolia",
@@ -350,14 +502,22 @@
     "lat": 59.9146312,
     "lng": 10.7759688,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "22 19 08 03",
     "website": "https://anatoliarestaurant.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "masala-politics",
@@ -368,14 +528,22 @@
     "lat": 59.9124739,
     "lng": 10.7446479,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "96 73 73 20",
     "website": "https://www.masalapolitics.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "habibi-restaurant-og-kafe",
@@ -386,14 +554,22 @@
     "lat": 59.9143638,
     "lng": 10.7469584,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 3,
     "phone": "22 17 02 01",
     "website": "https://www.habibi.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "saray-restaurant-gronland",
@@ -404,14 +580,22 @@
     "lat": 59.9130556,
     "lng": 10.7597222,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "22 17 22 22",
     "website": "https://g.sarayrestaurant.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "ricksha-pakistani-street-food",
@@ -422,14 +606,22 @@
     "lat": 59.9126569,
     "lng": 10.7355775,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 2,
     "phone": "93 61 92 00",
     "website": null,
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "dil-se-indian-kitchen-n-bar-oslo",
@@ -440,14 +632,22 @@
     "lat": 59.9292614,
     "lng": 10.7980515,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "98 44 01 16",
     "website": "https://dilse.no",
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "registan-restaurant",
@@ -458,14 +658,22 @@
     "lat": 59.9092238,
     "lng": 10.7682488,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Usbekisk"
     ],
     "price": 2,
     "phone": "93 92 50 05",
     "website": "https://registanrestaurant.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "tasty-thai-gronland",
@@ -476,14 +684,22 @@
     "lat": 59.9131854,
     "lng": 10.7604482,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": null,
     "website": null,
-    "hours": "Stenger kl. 21:30"
+    "hours": "Stenger kl. 21:30",
+    "lastVerified": null
   },
   {
     "id": "indian-street-food-co",
@@ -494,14 +710,22 @@
     "lat": 59.9040236,
     "lng": 10.7561158,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "92 01 09 94",
     "website": "https://www.indianstreetfood.com",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "kebabish-original",
@@ -512,14 +736,22 @@
     "lat": 59.9138553,
     "lng": 10.7622184,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 2,
     "phone": "22 17 46 46",
     "website": "https://kebabishoriginal.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "kammis-grill-frogner",
@@ -530,14 +762,22 @@
     "lat": 59.9163858,
     "lng": 10.7157018,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 1,
     "phone": "99 89 42 21",
     "website": "https://www.kammisgrill.no",
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "village-tandoori",
@@ -548,14 +788,22 @@
     "lat": 59.9189547,
     "lng": 10.7026785,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "22 56 10 25",
     "website": "https://villagetandoori.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "sushi-special-as",
@@ -566,14 +814,22 @@
     "lat": 59.9401216,
     "lng": 10.7589519,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Sushi"
     ],
     "price": 2,
     "phone": "45 50 21 05",
     "website": "https://www.sushispecial.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "roots-restaurant",
@@ -584,14 +840,22 @@
     "lat": 59.9134829,
     "lng": 10.7432116,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Middelhavsk"
     ],
     "price": 2,
     "phone": "22 34 02 30",
     "website": "https://rootsrestaurant.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "halal-toyen-burger",
@@ -602,14 +866,22 @@
     "lat": 59.9125255,
     "lng": 10.7745513,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hurtigmat"
     ],
     "price": 1,
     "phone": "22 68 66 16",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "chowk-indian-restaurant",
@@ -620,14 +892,22 @@
     "lat": 59.9147157,
     "lng": 10.7760574,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "96 82 22 72",
     "website": "https://www.oslochowk.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "1947-gandhi-indisk-restaurant",
@@ -638,14 +918,22 @@
     "lat": 59.928082,
     "lng": 10.7156409,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "48 92 58 96",
     "website": "https://1947gandhi.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "mandi-house-restaurant-oslo",
@@ -656,14 +944,22 @@
     "lat": 59.9142087,
     "lng": 10.7680423,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Arabisk"
     ],
     "price": 1,
     "phone": "98 77 78 88",
     "website": "https://www.mandihouse.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "new-beirut-kebab",
@@ -674,14 +970,22 @@
     "lat": 59.9141362,
     "lng": 10.7468876,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab"
     ],
     "price": 1,
     "phone": "22 42 54 54",
     "website": null,
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "hot-temper",
@@ -692,14 +996,22 @@
     "lat": 59.9211603,
     "lng": 10.758499,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling"
     ],
     "price": 2,
     "phone": null,
     "website": "https://hottemper.no",
-    "hours": "Stengt nå"
+    "hours": "Stengt nå",
+    "lastVerified": null
   },
   {
     "id": "pele-pele",
@@ -710,14 +1022,22 @@
     "lat": 59.9122048,
     "lng": 10.7603045,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling"
     ],
     "price": 2,
     "phone": "97 25 52 82",
     "website": "https://pelepele.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "chaiwala",
@@ -728,14 +1048,22 @@
     "lat": 59.9123946,
     "lng": 10.760334,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "40 88 41 32",
     "website": "https://www.chaiwala.no",
-    "hours": "Stengt nå"
+    "hours": "Stengt nå",
+    "lastVerified": null
   },
   {
     "id": "feniqia",
@@ -746,14 +1074,22 @@
     "lat": 59.9061514,
     "lng": 10.7606192,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Libanesisk"
     ],
     "price": 3,
     "phone": "40 00 40 74",
     "website": "https://www.feniqia.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "175-c-k-fried",
@@ -764,14 +1100,22 @@
     "lat": 59.9225201,
     "lng": 10.7519057,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Koreansk"
     ],
     "price": 2,
     "phone": null,
     "website": null,
-    "hours": "Stenger kl. 21:30"
+    "hours": "Stenger kl. 21:30",
+    "lastVerified": null
   },
   {
     "id": "gate-of-india",
@@ -782,14 +1126,22 @@
     "lat": 59.9286678,
     "lng": 10.7155393,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 69 09 33",
     "website": "https://gateofindia.no",
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "otsu-sushi-poke-bowl",
@@ -800,14 +1152,22 @@
     "lat": 59.9376755,
     "lng": 10.7561237,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Sushi"
     ],
     "price": 2,
     "phone": "22 28 20 20",
     "website": "https://www.otsusushi.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "azadi-restaurant",
@@ -818,14 +1178,22 @@
     "lat": 59.912257,
     "lng": 10.763879,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Midtøsten"
     ],
     "price": 2,
     "phone": "91 53 85 43",
     "website": "https://azadirestaurant.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "istanbul-kebab-avd-gronland",
@@ -836,14 +1204,22 @@
     "lat": 59.913063,
     "lng": 10.7612391,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "23 40 90 22",
     "website": "https://www.istanbulkebab.no",
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "mantra-by-mr-india",
@@ -854,14 +1230,22 @@
     "lat": 59.9110739,
     "lng": 10.7466746,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "22 41 42 00",
     "website": "https://mantra.no",
-    "hours": "Stenger kl. 21:30"
+    "hours": "Stenger kl. 21:30",
+    "lastVerified": null
   },
   {
     "id": "l-oasis-restaurant",
@@ -872,14 +1256,22 @@
     "lat": 59.9196552,
     "lng": 10.7647706,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pizza"
     ],
     "price": 1,
     "phone": "22 37 31 66",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "the-greasy-house",
@@ -890,14 +1282,22 @@
     "lat": 59.9378605,
     "lng": 10.7546939,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 2,
     "phone": "22 23 52 22",
     "website": "https://www.thegreasyhouse.com",
-    "hours": "Stenger kl. 23:45"
+    "hours": "Stenger kl. 23:45",
+    "lastVerified": null
   },
   {
     "id": "listen-to-delhi",
@@ -908,14 +1308,22 @@
     "lat": 59.9152589,
     "lng": 10.7176701,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "99 86 20 00",
     "website": "https://listentodelhi.no",
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "tasty-thai-bislett",
@@ -926,14 +1334,22 @@
     "lat": 59.926012,
     "lng": 10.7305283,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Thai"
     ],
     "price": 2,
     "phone": "22 46 04 00",
     "website": "https://tasty-thai.no",
-    "hours": "Stenger kl. 21:30"
+    "hours": "Stenger kl. 21:30",
+    "lastVerified": null
   },
   {
     "id": "der-peppern-gror",
@@ -944,14 +1360,22 @@
     "lat": 59.9124275,
     "lng": 10.7351495,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "40 00 74 70",
     "website": "https://derpepperngror.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "kos-kos-restaurant",
@@ -962,14 +1386,22 @@
     "lat": 59.9134829,
     "lng": 10.7432115,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Libanesisk"
     ],
     "price": 3,
     "phone": "22 34 02 30",
     "website": null,
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "la-villa-restaurant",
@@ -980,14 +1412,22 @@
     "lat": 59.9126553,
     "lng": 10.7637035,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk"
     ],
     "price": 2,
     "phone": "22 17 71 11",
     "website": "https://www.lavillarestaurant.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "punjab-tandoori",
@@ -998,14 +1438,22 @@
     "lat": 59.9129677,
     "lng": 10.7619495,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Punjabi"
     ],
     "price": 1,
     "phone": "90 61 46 95",
     "website": "https://punjabtandoori.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "jaipur-indisk-restaurant",
@@ -1016,14 +1464,22 @@
     "lat": 59.9126911,
     "lng": 10.7417146,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 3,
     "phone": "22 42 53 11",
     "website": "https://jaipur.no",
-    "hours": "Stenger kl. 22:30"
+    "hours": "Stenger kl. 22:30",
+    "lastVerified": null
   },
   {
     "id": "dr-crunchy-oslo-fried-chicken",
@@ -1034,14 +1490,22 @@
     "lat": 59.9277584,
     "lng": 10.7490842,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hurtigmat"
     ],
     "price": 1,
     "phone": "91 83 23 83",
     "website": "https://www.drcrunchy.no",
-    "hours": "Stenger kl. 23:30"
+    "hours": "Stenger kl. 23:30",
+    "lastVerified": null
   },
   {
     "id": "american-burgers",
@@ -1052,14 +1516,22 @@
     "lat": 59.9220391,
     "lng": 10.7265697,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 1,
     "phone": "22 11 00 12",
     "website": null,
-    "hours": "Stenger kl. 01:30"
+    "hours": "Stenger kl. 01:30",
+    "lastVerified": null
   },
   {
     "id": "dayax-restaurent",
@@ -1070,14 +1542,22 @@
     "lat": 59.913106,
     "lng": 10.7667391,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 1,
     "phone": null,
     "website": null,
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "royal-tandoori",
@@ -1088,14 +1568,22 @@
     "lat": 59.9241905,
     "lng": 10.7310743,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 60 20 06",
     "website": "https://www.royaltandoori.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "pascal-greek-grill",
@@ -1106,14 +1594,22 @@
     "lat": 59.9442797,
     "lng": 10.7863393,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Gresk"
     ],
     "price": 2,
     "phone": "96 71 61 62",
     "website": "https://pascalgreekandgrill.no",
-    "hours": "Stengt nå"
+    "hours": "Stengt nå",
+    "lastVerified": null
   },
   {
     "id": "valerenga-halal-burger",
@@ -1124,14 +1620,22 @@
     "lat": 59.9086746,
     "lng": 10.7870328,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hurtigmat"
     ],
     "price": 1,
     "phone": "21 64 64 64",
     "website": null,
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "tandoori-curry-corner",
@@ -1142,14 +1646,22 @@
     "lat": 59.9129637,
     "lng": 10.7617648,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 1,
     "phone": "22 17 99 06",
     "website": null,
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "damaskus-huset-restaurant",
@@ -1160,14 +1672,22 @@
     "lat": 59.9194951,
     "lng": 10.7645103,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Syrisk"
     ],
     "price": 2,
     "phone": "93 92 71 70",
     "website": null,
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "jonk-gronland",
@@ -1178,14 +1698,22 @@
     "lat": 59.9124912,
     "lng": 10.7616621,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 2,
     "phone": "90 67 93 23",
     "website": "https://www.jonkburger.no",
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "kod-oslo",
@@ -1196,14 +1724,22 @@
     "lat": 59.910431,
     "lng": 10.7445836,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 3,
     "phone": "23 96 69 38",
     "website": "https://restaurantkoed.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "oslo-street-food",
@@ -1214,14 +1750,22 @@
     "lat": 59.915909,
     "lng": 10.7508451,
     "halalStatus": "delvis",
-    "verification": "Delvis halal – deler av menyen er ikke halal.",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Deler av menyen er ikke halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "22 04 00 44",
     "website": "https://www.oslo-streetfood.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "theka-indian-street-food-bar",
@@ -1232,14 +1776,22 @@
     "lat": 59.9235218,
     "lng": 10.7580681,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 35 35 33",
     "website": "https://theka.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "punjabi-masala-rosenhoff",
@@ -1250,14 +1802,22 @@
     "lat": 59.9289422,
     "lng": 10.7773444,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 38 23 00",
     "website": "https://www.punjabimasala.no",
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "aften-pizza-grill",
@@ -1268,14 +1828,22 @@
     "lat": 59.9150766,
     "lng": 10.7545541,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pizza"
     ],
     "price": 1,
     "phone": "22 20 26 61",
     "website": null,
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "crispy-clubs",
@@ -1286,14 +1854,22 @@
     "lat": 59.9143632,
     "lng": 10.7534684,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling"
     ],
     "price": 2,
     "phone": "40 34 66 91",
     "website": "https://www.crispyclubs.no",
-    "hours": "Stenger kl. 20"
+    "hours": "Stenger kl. 20",
+    "lastVerified": null
   },
   {
     "id": "waaberi-restaurant-oslo",
@@ -1304,14 +1880,22 @@
     "lat": 59.9124127,
     "lng": 10.7664275,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Østafrikansk"
     ],
     "price": 1,
     "phone": "22 17 44 44",
     "website": null,
-    "hours": "Stenger kl. 21:15"
+    "hours": "Stenger kl. 21:15",
+    "lastVerified": null
   },
   {
     "id": "ekte-thaimat",
@@ -1322,14 +1906,22 @@
     "lat": 59.9213746,
     "lng": 10.7599479,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway"
     ],
     "price": 2,
     "phone": "94 98 23 61",
     "website": "https://ektethai.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "san-remo-pizza-grill",
@@ -1340,14 +1932,22 @@
     "lat": 59.9336756,
     "lng": 10.7638522,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 2,
     "phone": "22 38 17 50",
     "website": "https://www.sanremo.no",
-    "hours": "Stenger kl. 00"
+    "hours": "Stenger kl. 00",
+    "lastVerified": null
   },
   {
     "id": "french-tacos-burgers-avenue-torshov",
@@ -1358,14 +1958,22 @@
     "lat": 59.9340065,
     "lng": 10.7619235,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant"
     ],
     "price": 1,
     "phone": null,
     "website": "https://french-tacos.no",
-    "hours": "Stenger kl. 23"
+    "hours": "Stenger kl. 23",
+    "lastVerified": null
   },
   {
     "id": "gangnam-korean-restaurant",
@@ -1376,14 +1984,22 @@
     "lat": 59.9111706,
     "lng": 10.720909,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Koreansk"
     ],
     "price": 3,
     "phone": "22 83 22 09",
     "website": "https://www.gangnam.no",
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "new-anarkali",
@@ -1394,14 +2010,22 @@
     "lat": 59.9192586,
     "lng": 10.7596266,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk"
     ],
     "price": 2,
     "phone": "22 20 04 20",
     "website": "https://www.newanarkali.no",
-    "hours": "Stengt nå"
+    "hours": "Stengt nå",
+    "lastVerified": null
   },
   {
     "id": "king-falafel",
@@ -1412,14 +2036,22 @@
     "lat": 59.9144887,
     "lng": 10.7537409,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Vegansk"
     ],
     "price": 1,
     "phone": "45 08 68 78",
     "website": null,
-    "hours": "Stenger kl. 22"
+    "hours": "Stenger kl. 22",
+    "lastVerified": null
   },
   {
     "id": "shawarma-house",
@@ -1430,14 +2062,22 @@
     "lat": 59.9124214,
     "lng": 10.758934,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab"
     ],
     "price": 1,
     "phone": "22 17 40 46",
     "website": null,
-    "hours": "Stenger kl. 21"
+    "hours": "Stenger kl. 21",
+    "lastVerified": null
   },
   {
     "id": "kebab-hot",
@@ -1448,14 +2088,22 @@
     "lat": 59.9313216,
     "lng": 10.7786177,
     "halalStatus": "delvis",
-    "verification": "Delvis halal – deler av menyen er ikke halal.",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Deler av menyen er ikke halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk"
     ],
     "price": 1,
     "phone": "22 79 50 00",
     "website": "https://kebabhot.no",
-    "hours": "Stenger kl. 03"
+    "hours": "Stenger kl. 03",
+    "lastVerified": null
   },
   {
     "id": "namsum-thaimat-halal",
@@ -1466,14 +2114,22 @@
     "lat": 59.9199623,
     "lng": 10.7910591,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway"
     ],
     "price": 2,
     "phone": null,
     "website": "https://namsum.com",
-    "hours": "Midlertidig stengt"
+    "hours": "Midlertidig stengt",
+    "lastVerified": null
   },
   {
     "id": "digg-burger-lokka-by-jack-donnys",
@@ -1484,14 +2140,22 @@
     "lat": 59.9187783,
     "lng": 10.7597068,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 2,
     "phone": "98 88 85 05",
     "website": null,
-    "hours": "Midlertidig stengt"
+    "hours": "Midlertidig stengt",
+    "lastVerified": null
   },
   {
     "id": "zeytouna-grill-house",
@@ -1502,7 +2166,14 @@
     "lat": 59.919313,
     "lng": 10.7636865,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Arabisk",
       "Syrisk",
@@ -1512,7 +2183,8 @@
     "phone": "98 44 01 49",
     "website": null,
     "hours": "Stenger kl. 23",
-    "opens": "10:00"
+    "opens": "10:00",
+    "lastVerified": null
   },
   {
     "id": "last-exit-norway",
@@ -1523,7 +2195,14 @@
     "lat": 59.9514311,
     "lng": 10.7862463,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Pizza",
@@ -1532,7 +2211,8 @@
     "price": 1,
     "phone": "41 29 85 95",
     "website": "https://lastexit.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "hunger-spot",
@@ -1543,7 +2223,14 @@
     "lat": 59.9139188,
     "lng": 10.7742365,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hurtigmat",
       "Takeaway"
@@ -1551,7 +2238,8 @@
     "price": 1,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "fox-and-loaf",
@@ -1562,7 +2250,14 @@
     "lat": 59.9139098,
     "lng": 10.7509146,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway",
       "Hurtigmat"
@@ -1571,7 +2266,8 @@
     "phone": "90 17 65 22",
     "website": null,
     "hours": "Stenger kl. 16",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "fox-and-loaf-grunerlokka",
@@ -1582,7 +2278,14 @@
     "lat": 59.9246235,
     "lng": 10.7595057,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway",
       "Hurtigmat"
@@ -1590,7 +2293,8 @@
     "price": 2,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "sizzl",
@@ -1601,7 +2305,14 @@
     "lat": 59.9125137,
     "lng": 10.7449018,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1610,7 +2321,8 @@
     "phone": null,
     "website": "https://www.sizzl.no",
     "hours": "Stenger kl. 21",
-    "opens": "12:00"
+    "opens": "12:00",
+    "lastVerified": null
   },
   {
     "id": "dar-al-maghreb",
@@ -1621,7 +2333,14 @@
     "lat": 59.9279058,
     "lng": 10.7153187,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Marokkansk",
       "Restaurant"
@@ -1630,7 +2349,8 @@
     "phone": null,
     "website": "https://daralmaghreb.no",
     "hours": "Stenger kl. 23",
-    "opens": "14:00"
+    "opens": "14:00",
+    "lastVerified": null
   },
   {
     "id": "munch-box",
@@ -1641,7 +2361,14 @@
     "lat": 59.9218591,
     "lng": 10.7302303,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Kebab",
@@ -1651,7 +2378,8 @@
     "phone": "40 28 80 00",
     "website": "https://munch-box.no",
     "hours": "Stenger kl. 04",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "sidechick",
@@ -1662,7 +2390,14 @@
     "lat": 59.9608841,
     "lng": 10.9250495,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling",
       "Hurtigmat"
@@ -1670,7 +2405,8 @@
     "price": 1,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "shadys-burgers-fries-vika",
@@ -1681,7 +2417,14 @@
     "lat": 59.9121807,
     "lng": 10.7266173,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1690,7 +2433,8 @@
     "phone": "41 36 49 80",
     "website": "https://www.shadys.no",
     "hours": "Stenger kl. 21",
-    "opens": "09:00"
+    "opens": "09:00",
+    "lastVerified": null
   },
   {
     "id": "grill-s-ville",
@@ -1701,7 +2445,14 @@
     "lat": 59.9164698,
     "lng": 10.7148602,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Kebab",
@@ -1711,7 +2462,8 @@
     "phone": "22 43 77 44",
     "website": null,
     "hours": "Stenger kl. 21:45",
-    "opens": "10:00"
+    "opens": "10:00",
+    "lastVerified": null
   },
   {
     "id": "honsan-restaurant",
@@ -1722,7 +2474,14 @@
     "lat": 59.9129338,
     "lng": 10.7376659,
     "halalStatus": "delvis",
-    "verification": "Delvis halal – halal-retter finnes, men spør i disken.",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Halal-retter finnes, men spør i disken.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant",
       "Asiatisk"
@@ -1731,7 +2490,8 @@
     "phone": "22 42 20 08",
     "website": "https://honsan.no",
     "hours": "Stenger kl. 22",
-    "opens": "16:00"
+    "opens": "16:00",
+    "lastVerified": null
   },
   {
     "id": "haralds-vaffel",
@@ -1742,7 +2502,14 @@
     "lat": 59.9221686,
     "lng": 10.7575107,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Dessert",
       "Takeaway"
@@ -1751,7 +2518,8 @@
     "phone": "92 22 32 30",
     "website": "https://www.haraldsvaffel.no",
     "hours": "Stenger kl. 22",
-    "opens": "13:00"
+    "opens": "13:00",
+    "lastVerified": null
   },
   {
     "id": "phuket-restaurant-oslo",
@@ -1762,7 +2530,14 @@
     "lat": 59.9195845,
     "lng": 10.7621648,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Thai",
       "Restaurant"
@@ -1771,7 +2546,8 @@
     "phone": "40 31 92 84",
     "website": null,
     "hours": "Stenger kl. 00",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "gutta-fra-calcutta",
@@ -1782,7 +2558,14 @@
     "lat": 59.9278145,
     "lng": 10.7492828,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk",
       "Restaurant"
@@ -1791,7 +2574,8 @@
     "phone": "22 71 42 00",
     "website": "https://www.guttafracalcutta.no",
     "hours": "Stenger kl. 22",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "silin-bakeri",
@@ -1802,7 +2586,14 @@
     "lat": 59.9094935,
     "lng": 10.768148,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Syrisk",
       "Pizza",
@@ -1812,7 +2603,8 @@
     "phone": "96 87 89 84",
     "website": "https://silinbakeri.no",
     "hours": "Stenger kl. 21",
-    "opens": "09:00"
+    "opens": "09:00",
+    "lastVerified": null
   },
   {
     "id": "munch-mania",
@@ -1823,7 +2615,14 @@
     "lat": 59.9072256,
     "lng": 10.7821824,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Dessert"
@@ -1831,7 +2630,8 @@
     "price": 1,
     "phone": null,
     "website": "https://www.munchmania.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "doner-berlin-nydalen",
@@ -1842,7 +2642,14 @@
     "lat": 59.9484551,
     "lng": 10.7667854,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab",
       "Hamburger",
@@ -1852,7 +2659,8 @@
     "phone": "92 92 58 58",
     "website": null,
     "hours": "Stenger kl. 21",
-    "opens": "14:00"
+    "opens": "14:00",
+    "lastVerified": null
   },
   {
     "id": "brisketboyz",
@@ -1863,7 +2671,14 @@
     "lat": 59.9168326,
     "lng": 10.7156607,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Grill"
@@ -1871,7 +2686,8 @@
     "price": 2,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "shebi-s-burger",
@@ -1882,7 +2698,14 @@
     "lat": 59.9092915,
     "lng": 10.7682397,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1891,7 +2714,8 @@
     "phone": "45 84 57 92",
     "website": "https://shebis.no",
     "hours": "",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "tyrkisk-kjokken",
@@ -1902,7 +2726,14 @@
     "lat": 59.9328075,
     "lng": 10.8813347,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk",
       "Restaurant"
@@ -1911,7 +2742,8 @@
     "phone": null,
     "website": null,
     "hours": "Stenger kl. 22",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "jonk-colosseum",
@@ -1922,7 +2754,14 @@
     "lat": 59.9301469,
     "lng": 10.7100218,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1931,7 +2770,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "10:30"
+    "opens": "10:30",
+    "lastVerified": null
   },
   {
     "id": "jonk-frysja",
@@ -1942,7 +2782,14 @@
     "lat": 59.9651633,
     "lng": 10.7712941,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1951,7 +2798,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "jonk-fredensborg",
@@ -1962,7 +2810,14 @@
     "lat": 59.9190288,
     "lng": 10.7481463,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1971,7 +2826,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "jonk-grorud",
@@ -1982,7 +2838,14 @@
     "lat": 59.9601112,
     "lng": 10.8816619,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -1991,7 +2854,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "jonk-holmlia",
@@ -2002,7 +2866,14 @@
     "lat": 59.8349117,
     "lng": 10.7954484,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -2011,7 +2882,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "jonk-roa",
@@ -2022,7 +2894,14 @@
     "lat": 59.9466309,
     "lng": 10.6432933,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -2031,7 +2910,8 @@
     "phone": null,
     "website": "https://www.jonkburger.no",
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "doner-bros",
@@ -2042,7 +2922,14 @@
     "lat": 59.9167436,
     "lng": 10.7534918,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal mat. Serverer alkoholholdig drikke.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal mat. Serverer alkoholholdig drikke.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab",
       "Hurtigmat"
@@ -2052,7 +2939,8 @@
     "website": "https://donerbros.no",
     "hours": "Stenger kl. 23",
     "opens": "11:00",
-    "alcohol": true
+    "alcohol": true,
+    "lastVerified": null
   },
   {
     "id": "alibaba-stovner-senter",
@@ -2063,7 +2951,14 @@
     "lat": 59.9615019,
     "lng": 10.9247479,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Tyrkisk",
       "Grill",
@@ -2072,7 +2967,8 @@
     "price": 2,
     "phone": "47 50 89 83",
     "website": "https://alibabarestaurant.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "kylling-pizza-avd-kalbakken",
@@ -2083,7 +2979,14 @@
     "lat": 59.9520219,
     "lng": 10.8671813,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling",
       "Pizza",
@@ -2093,7 +2996,8 @@
     "phone": "22 22 24 64",
     "website": "https://www.kyllingogpizza.no",
     "hours": "Stenger kl. 23",
-    "opens": "10:30"
+    "opens": "10:30",
+    "lastVerified": null
   },
   {
     "id": "hungry-birds-resturant",
@@ -2104,7 +3008,14 @@
     "lat": 59.9166376,
     "lng": 10.7572312,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Syrisk",
       "Kylling",
@@ -2113,7 +3024,8 @@
     "price": 1,
     "phone": null,
     "website": "https://hungry-birds.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "hungry-birds",
@@ -2124,7 +3036,14 @@
     "lat": 59.912937,
     "lng": 10.7630866,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Syrisk",
       "Kylling",
@@ -2134,7 +3053,8 @@
     "phone": "455 72 240",
     "website": "https://hungry-birds.no",
     "hours": "Stenger kl. 22",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "88-street-burger-sentrum",
@@ -2145,7 +3065,14 @@
     "lat": 59.9130585,
     "lng": 10.7490172,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -2154,7 +3081,8 @@
     "phone": "400 90 888",
     "website": null,
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "kammis-grill-loren",
@@ -2165,7 +3093,14 @@
     "lat": 59.9307372,
     "lng": 10.7935132,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab",
       "Hamburger",
@@ -2175,7 +3110,8 @@
     "phone": "99 89 42 21",
     "website": "https://www.kammisgrill.no",
     "hours": "Stenger kl. 23",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "curry-and-ketchup",
@@ -2186,7 +3122,14 @@
     "lat": 59.927681,
     "lng": 10.713806,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Indisk",
       "Restaurant"
@@ -2195,7 +3138,8 @@
     "phone": "22 69 05 22",
     "website": "https://curryandketchup.no",
     "hours": "Stenger kl. 22",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "noods-norway",
@@ -2206,7 +3150,14 @@
     "lat": 59.913714,
     "lng": 10.7337427,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Asiatisk",
       "Restaurant"
@@ -2215,7 +3166,8 @@
     "phone": "40 60 09 10",
     "website": "https://www.noodsnorway.no",
     "hours": "Stenger kl. 20",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "potetgruven",
@@ -2226,7 +3178,14 @@
     "lat": 59.9191509,
     "lng": 10.9558753,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Takeaway",
       "Hurtigmat"
@@ -2235,7 +3194,8 @@
     "phone": "411 66 761",
     "website": "https://potetgruven.no",
     "hours": "Stenger kl. 22",
-    "opens": "14:00"
+    "opens": "14:00",
+    "lastVerified": null
   },
   {
     "id": "guilty-drammen",
@@ -2246,7 +3206,14 @@
     "lat": 59.7441618,
     "lng": 10.2063756,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Kylling"
@@ -2254,7 +3221,8 @@
     "price": 2,
     "phone": "94 44 04 04",
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "sweetella-drammen",
@@ -2265,7 +3233,14 @@
     "lat": 59.7394334,
     "lng": 10.2011446,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Dessert",
       "Kafé"
@@ -2274,7 +3249,8 @@
     "phone": "973 08 008",
     "website": "https://www.sweetella.no",
     "hours": "Stenger kl. 23",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "blend-bean",
@@ -2285,7 +3261,14 @@
     "lat": 60.1387344,
     "lng": 11.1743939,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Dessert",
@@ -2295,7 +3278,8 @@
     "phone": null,
     "website": null,
     "hours": "Stenger kl. 22",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "craving-s-burger",
@@ -2306,14 +3290,22 @@
     "lat": 59.7159866,
     "lng": 10.2216761,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
     "price": 1,
     "phone": null,
     "website": "https://cravingsburger.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "barbecuez-restaurant-solsiden",
@@ -2324,7 +3316,14 @@
     "lat": 63.4333464,
     "lng": 10.4109657,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Grill",
@@ -2334,7 +3333,8 @@
     "phone": "94 44 01 11",
     "website": null,
     "hours": "Stenger kl. 22",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "smash-buddies-ski",
@@ -2345,7 +3345,14 @@
     "lat": 59.7199165,
     "lng": 10.8373316,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Dessert"
@@ -2353,7 +3360,8 @@
     "price": 1,
     "phone": null,
     "website": "https://smashbuddies.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "smash-buddies-askim",
@@ -2364,7 +3372,14 @@
     "lat": 59.5827372,
     "lng": 11.1663704,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Dessert"
@@ -2372,7 +3387,8 @@
     "price": 1,
     "phone": "973 31 040",
     "website": "https://smashbuddies.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "caylos-drammen",
@@ -2383,7 +3399,14 @@
     "lat": 59.7395038,
     "lng": 10.1982919,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling",
       "Hamburger"
@@ -2391,7 +3414,8 @@
     "price": 1,
     "phone": "41 19 60 00",
     "website": "https://caylos.com",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "mannu-grill-strommen",
@@ -2402,7 +3426,14 @@
     "lat": 59.948719,
     "lng": 11.0106534,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Grill",
       "Pakistansk",
@@ -2412,7 +3443,8 @@
     "phone": "63 88 00 00",
     "website": "https://mannugrill.no",
     "hours": "",
-    "opens": "15:00"
+    "opens": "15:00",
+    "lastVerified": null
   },
   {
     "id": "nfc-sarpsborg",
@@ -2423,7 +3455,14 @@
     "lat": 59.2834521,
     "lng": 11.1134211,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kylling",
       "Kebab",
@@ -2433,7 +3472,8 @@
     "phone": "40 53 45 67",
     "website": "https://www.nfchicken.no",
     "hours": "Stenger kl. 23",
-    "opens": "14:00"
+    "opens": "14:00",
+    "lastVerified": null
   },
   {
     "id": "revetal-gamle-stasjon",
@@ -2444,7 +3484,14 @@
     "lat": 59.3719759,
     "lng": 10.2628334,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pizza",
       "Restaurant"
@@ -2453,7 +3500,8 @@
     "phone": "33 06 31 00",
     "website": "https://revetalgamlestasjon.no",
     "hours": "Stenger kl. 22",
-    "opens": "12:00"
+    "opens": "12:00",
+    "lastVerified": null
   },
   {
     "id": "doner-berlin-moss",
@@ -2464,7 +3512,14 @@
     "lat": 59.4354516,
     "lng": 10.6624114,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab",
       "Hamburger",
@@ -2473,7 +3528,8 @@
     "price": 1,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "donerberlin-drammen",
@@ -2484,7 +3540,14 @@
     "lat": 59.7394905,
     "lng": 10.1983105,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Kebab",
       "Hamburger",
@@ -2493,7 +3556,8 @@
     "price": 1,
     "phone": null,
     "website": null,
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "french-tacos-lorenskog",
@@ -2504,7 +3568,14 @@
     "lat": 59.9194144,
     "lng": 10.9542601,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hurtigmat",
       "Takeaway"
@@ -2512,7 +3583,8 @@
     "price": 1,
     "phone": null,
     "website": "https://www.frenchtacos.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "j-co-burgers-lillestrom",
@@ -2523,7 +3595,14 @@
     "lat": 59.9587902,
     "lng": 11.0493909,
     "halalStatus": "delvis",
-    "verification": "Delvis halal – kun burgerne er halal.",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Kun burgerne er halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger"
     ],
@@ -2531,7 +3610,8 @@
     "phone": "41 11 49 49",
     "website": "https://jcoburgers.no",
     "hours": "Stenger kl. 23",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "food-villa",
@@ -2542,7 +3622,14 @@
     "lat": 59.9466132,
     "lng": 11.0088557,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Pakistansk",
       "Restaurant"
@@ -2550,7 +3637,8 @@
     "price": 2,
     "phone": "980 80 281",
     "website": "https://foodvilla.no",
-    "hours": ""
+    "hours": "",
+    "lastVerified": null
   },
   {
     "id": "heavenly-strommen",
@@ -2561,7 +3649,14 @@
     "lat": 59.9467404,
     "lng": 11.009293,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Dessert",
       "Kafé"
@@ -2570,7 +3665,8 @@
     "phone": null,
     "website": null,
     "hours": "Stenger kl. 23",
-    "opens": "16:00"
+    "opens": "16:00",
+    "lastVerified": null
   },
   {
     "id": "88-street-burger-lorenskog",
@@ -2581,7 +3677,14 @@
     "lat": 59.9272856,
     "lng": 10.9531406,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Hamburger",
       "Hurtigmat"
@@ -2590,7 +3693,8 @@
     "phone": "400 90 888",
     "website": null,
     "hours": "Stenger kl. 21",
-    "opens": "11:00"
+    "opens": "11:00",
+    "lastVerified": null
   },
   {
     "id": "tiramisu-cafe-restaurant",
@@ -2601,7 +3705,14 @@
     "lat": 59.2140756,
     "lng": 10.9350778,
     "halalStatus": "verifisert",
-    "verification": "Verifisert 100% halal.",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Restaurant",
       "Kafé"
@@ -2610,7 +3721,8 @@
     "phone": null,
     "website": null,
     "hours": "Stenger kl. 22",
-    "opens": "08:00"
+    "opens": "08:00",
+    "lastVerified": null
   },
   {
     "id": "shashlik",
@@ -2621,7 +3733,14 @@
     "lat": 59.9154517,
     "lng": 10.5614937,
     "halalStatus": "uavklart",
-    "verification": "Uavklart – halal-status ikke bekreftet ennå.",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "dato": null
+      }
+    ],
     "cuisines": [
       "Syrisk",
       "Kebab"
@@ -2630,6 +3749,7 @@
     "phone": "46 66 35 21",
     "website": null,
     "hours": "Stenger kl. 21:30",
-    "opens": "13:00"
+    "opens": "13:00",
+    "lastVerified": null
   }
 ]
