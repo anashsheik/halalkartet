@@ -318,6 +318,9 @@ function initApp() {
 }
 
 function togglePanel(collapse) {
+  // Pa mobil er dette trinn 1 eller 2 av tre; settArk eier tilstanden slik at
+  // handtaket og knappene under aldri kommer i utakt med panelet.
+  if (erMobil()) { settArk(collapse ? 1 : 2); return; }
   el('panel').classList.toggle('collapsed', collapse);
   document.body.classList.toggle('panel-collapsed', collapse);
   const g = el('sheetGrab');
@@ -325,18 +328,43 @@ function togglePanel(collapse) {
   setTimeout(() => map.invalidateSize(), 320);
 }
 
-/* ---- Bunnarket pa mobil ----
+/* ---- Bunnarket pa mobil: tre trinn ----
+   0 gjemt (bare handtaket, hele kartet fritt) · 1 hvile · 2 full.
    Handtaket kan bade trykkes og dras. Under draget folger arket fingeren via
    en ren transform, sa ingenting regnes om per ramme; ved slipp bestemmer
-   retning og lengde hvor det snapper. */
+   retning og lengde hvilket trinn det snapper til. */
+let arkTrinn = 1;
+
+function px(navn, fallback) {
+  const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(navn));
+  return isNaN(v) ? fallback : v;
+}
+
+function settArk(trinn) {
+  arkTrinn = Math.max(0, Math.min(2, trinn));
+  const panel = el('panel'), hank = el('sheetGrab');
+  panel.classList.toggle('collapsed', arkTrinn < 2);
+  panel.classList.toggle('gjemt', arkTrinn === 0);
+  document.body.classList.toggle('panel-collapsed', arkTrinn < 2);
+  document.body.classList.toggle('ark-gjemt', arkTrinn === 0);
+  if (hank) {
+    hank.setAttribute('aria-expanded', String(arkTrinn === 2));
+    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Vis stedene'
+      : arkTrinn === 1 ? 'Dra opp for hele listen' : 'Legg ned listen');
+  }
+  setTimeout(function () { map.invalidateSize(); }, 320);
+}
+
 function wireSheet() {
-  const hank = el("sheetGrab"), panel = el("panel");
+  const hank = el('sheetGrab'), panel = el('panel');
   if (!hank || !panel) return;
   let y0 = null, dy = 0, start = false, flyttet = false;
 
   const hoyde = () => panel.getBoundingClientRect().height;
-  const hvile = () => hoyde() - parseFloat(getComputedStyle(document.documentElement)
-    .getPropertyValue('--peek') || '322');
+  // Hvor langt arket er forskjovet ved hvert trinn.
+  const forskyv = t => t === 2 ? 0
+    : t === 1 ? hoyde() - px('--peek', 340)
+    : hoyde() - px('--gjemt', 30);
 
   hank.addEventListener('pointerdown', function (e) {
     if (!erMobil()) return;
@@ -348,9 +376,8 @@ function wireSheet() {
     if (!start) return;
     dy = e.clientY - y0;
     if (Math.abs(dy) > 3) flyttet = true;
-    const basis = panel.classList.contains('collapsed') ? hvile() : 0;
     // Litt motstand utenfor endepunktene, slik at arket ikke kan dras vekk.
-    const y = Math.max(-24, Math.min(hvile() + 24, basis + dy));
+    const y = Math.max(-24, Math.min(forskyv(0) + 24, forskyv(arkTrinn) + dy));
     panel.style.transform = 'translateY(' + y + 'px)';
   });
   const slipp = function (e) {
@@ -359,18 +386,19 @@ function wireSheet() {
     panel.style.transition = '';
     panel.style.transform = '';
     if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
-    if (!flyttet) { togglePanel(!panel.classList.contains('collapsed')); return; }
-    // Over 60 px avgjor retningen; kortere drag faller tilbake dit det kom fra.
-    if (dy < -60) togglePanel(false);
-    else if (dy > 60) togglePanel(true);
+    // Trykk uten drag: fra gjemt apner det til hvile, ellers veksler det topp/hvile.
+    if (!flyttet) { settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1); return; }
+    // Over 60 px flytter ett trinn i dragretningen; kortere faller tilbake.
+    if (dy < -60) settArk(arkTrinn + 1);
+    else if (dy > 60) settArk(arkTrinn - 1);
+    else settArk(arkTrinn);
   };
   hank.addEventListener('pointerup', slipp);
   hank.addEventListener('pointercancel', slipp);
   hank.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      togglePanel(!panel.classList.contains('collapsed'));
-    }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); settArk(arkTrinn === 2 ? 1 : arkTrinn + 1); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); settArk(arkTrinn + 1); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); settArk(arkTrinn - 1); }
   });
 }
 
