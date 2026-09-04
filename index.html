@@ -80,7 +80,11 @@
 /* overflow pa html i tillegg til body: bunnarket er forskjovet med transform,
    og uten dette rapporterer dokumentet en hoyde storre enn skjermen. */
 html, body { height: 100%; margin: 0; overflow: hidden; }
-body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; overflow: hidden; }
+/* Safari fargelegger statuslinja og verktoylinja etter theme-color, men faller
+   tilbake pa sidens egen bakgrunn i kantene. Kartet dekker body helt, sa denne
+   fargen vises aldri i selve siden - den er der for at kantene skal bli gronne
+   og ikke hvite. */
+body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: var(--emerald); -webkit-font-smoothing: antialiased; overflow: hidden; }
 
 /* Ett synlig fokusuttrykk for hele appen, slik at tastaturbrukere
    alltid ser hvor de er. */
@@ -112,7 +116,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); -webkit
 .sheet-grab:active { cursor: grabbing; }
 .sheet-grab:active span, .sheet-grab:hover span { background: rgba(255,255,255,.42); }
 .sheet-grab:focus-visible span { background: var(--gold); }
-.brand-chip { display: none; position: absolute; top: 12px; left: 12px; z-index: 998; align-items: center; gap: 8px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 20px; padding: 7px 14px 7px 11px; box-shadow: var(--shadow-pill), var(--rim); font-size: 12.5px; font-weight: 700; letter-spacing: .01em; }
+.brand-chip { display: none; position: absolute; top: 12px; left: 12px; z-index: 998; align-items: center; gap: 8px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 20px; padding: 7px 11px 7px 14px; box-shadow: var(--shadow-pill), var(--rim); font-size: 12.5px; font-weight: 700; letter-spacing: .01em; }
 .brand-chip span { font-family: 'Amiri', serif; font-size: 17px; line-height: 1; direction: rtl; color: var(--gold); }
 .lbl-narrow { display: none; }
 
@@ -384,7 +388,7 @@ body.panel-collapsed .hilite-btn { transform: none; }
    dras opp ved behov. Vi flytter ikke elementer i DOM-en: det er samme panel,
    bare forankret nede i stedet for til venstre. */
 @media (max-width: 720px) {
-  :root { --peek: 340px; }
+  :root { --peek: 340px; --gjemt: 30px; }
   .panel {
     /* fixed, ikke absolute: et absolutt plassert ark som forskyves nedover
        teller som rullbart innhold, og siden lot seg dra 403 px ned. Fast
@@ -399,6 +403,9 @@ body.panel-collapsed .hilite-btn { transform: none; }
   /* «collapsed» betyr hvilestand her, ikke skjult. Én transform, ingen
      layout per ramme – arket glir uten at kartet regnes om. */
   .panel.collapsed { transform: translateY(calc(88vh - var(--peek))); }
+  /* Dratt helt ned: bare håndtaket stikker opp, og kartet er fritt. */
+  .panel.collapsed.gjemt { transform: translateY(calc(88vh - var(--gjemt))); }
+  .panel.gjemt .sheet-grab span { width: 56px; background: rgba(255,255,255,.5); }
   .panel-head { padding: 4px 18px 14px; border-bottom: 0; }
   .head-top { display: none; }
   .search-wrap { margin-top: 0; }
@@ -516,6 +523,11 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .feedback { bottom: calc(var(--peek) + 62px); }
   .tips-btn { bottom: calc(var(--peek) + 62px); }
   .hilite-btn { bottom: calc(var(--peek) + 14px); }
+  /* Er arket gjemt, flytter knappene seg ned i den frigjorte plassen. */
+  body.ark-gjemt .nearme { bottom: calc(var(--gjemt) + 14px); }
+  body.ark-gjemt .feedback { bottom: calc(var(--gjemt) + 62px); }
+  body.ark-gjemt .tips-btn { bottom: calc(var(--gjemt) + 62px); }
+  body.ark-gjemt .hilite-btn { bottom: calc(var(--gjemt) + 14px); }
   /* Nar arket er dratt opp dekker det knappene – da skal de ikke ta imot trykk. */
   body:not(.panel-collapsed) .nearme,
   body:not(.panel-collapsed) .feedback,
@@ -637,7 +649,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <span>Steder</span>
 </button>
 
-<div class="brand-chip" aria-hidden="true"><span>حلال</span>Halalkartet</div>
+<div class="brand-chip" aria-hidden="true">Halalkartet<span>حلال</span></div>
 
 <aside class="panel" id="panel">
   <button class="sheet-grab" id="sheetGrab" type="button" aria-label="Dra opp for hele listen" aria-expanded="false"><span></span></button>
