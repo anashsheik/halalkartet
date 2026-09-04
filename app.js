@@ -329,7 +329,7 @@ function togglePanel(collapse) {
 }
 
 /* ---- Bunnarket pa mobil: tre trinn ----
-   0 gjemt (bare handtaket, hele kartet fritt) · 1 hvile · 2 full.
+   0 kompakt (til og med «Alt vi kjenner …») · 1 hvile · 2 full.
    Handtaket kan bade trykkes og dras. Under draget folger arket fingeren via
    en ren transform, sa ingenting regnes om per ramme; ved slipp bestemmer
    retning og lengde hvilket trinn det snapper til. */
@@ -340,16 +340,27 @@ function px(navn, fallback) {
   return isNaN(v) ? fallback : v;
 }
 
+/* Nedtrekt tilstand slutter rett under «Alt vi kjenner …». Hoyden males her
+   i stedet for a gjettes, slik at den treffer ogsa nar linja brytes over to
+   linjer pa en smal skjerm eller teksten endres. */
+function oppdaterKompakt() {
+  const panel = el('panel'), note = document.querySelector('.strict-note');
+  if (!panel || !note) return;
+  const h = Math.round(note.getBoundingClientRect().bottom - panel.getBoundingClientRect().top) + 12;
+  if (h > 60) document.documentElement.style.setProperty('--kompakt', h + 'px');
+}
+
 function settArk(trinn) {
   arkTrinn = Math.max(0, Math.min(2, trinn));
   const panel = el('panel'), hank = el('sheetGrab');
+  oppdaterKompakt();
   panel.classList.toggle('collapsed', arkTrinn < 2);
-  panel.classList.toggle('gjemt', arkTrinn === 0);
+  panel.classList.toggle('kompakt', arkTrinn === 0);
   document.body.classList.toggle('panel-collapsed', arkTrinn < 2);
-  document.body.classList.toggle('ark-gjemt', arkTrinn === 0);
+  document.body.classList.toggle('ark-kompakt', arkTrinn === 0);
   if (hank) {
     hank.setAttribute('aria-expanded', String(arkTrinn === 2));
-    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Vis stedene'
+    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Dra opp for stedene'
       : arkTrinn === 1 ? 'Dra opp for hele listen' : 'Legg ned listen');
   }
   setTimeout(function () { map.invalidateSize(); }, 320);
@@ -364,7 +375,7 @@ function wireSheet() {
   // Hvor langt arket er forskjovet ved hvert trinn.
   const forskyv = t => t === 2 ? 0
     : t === 1 ? hoyde() - px('--peek', 340)
-    : hoyde() - px('--gjemt', 30);
+    : hoyde() - px('--kompakt', 170);
 
   hank.addEventListener('pointerdown', function (e) {
     if (!erMobil()) return;
@@ -380,14 +391,18 @@ function wireSheet() {
     const y = Math.max(-24, Math.min(forskyv(0) + 24, forskyv(arkTrinn) + dy));
     panel.style.transform = 'translateY(' + y + 'px)';
   });
+  const veksel = () => settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1);
+  let sistPeker = 0;
+
   const slipp = function (e) {
     if (!start) return;
     start = false;
+    sistPeker = Date.now();
     panel.style.transition = '';
     panel.style.transform = '';
     if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
-    // Trykk uten drag: fra gjemt apner det til hvile, ellers veksler det topp/hvile.
-    if (!flyttet) { settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1); return; }
+    // Trykk uten drag: fra kompakt til hvile, ellers veksler det hvile/full.
+    if (!flyttet) { veksel(); return; }
     // Over 60 px flytter ett trinn i dragretningen; kortere faller tilbake.
     if (dy < -60) settArk(arkTrinn + 1);
     else if (dy > 60) settArk(arkTrinn - 1);
@@ -395,6 +410,10 @@ function wireSheet() {
   };
   hank.addEventListener('pointerup', slipp);
   hank.addEventListener('pointercancel', slipp);
+  hank.addEventListener('click', function () {
+    if (Date.now() - sistPeker < 600) return;
+    veksel();
+  });
   hank.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); settArk(arkTrinn === 2 ? 1 : arkTrinn + 1); }
     if (e.key === 'ArrowUp') { e.preventDefault(); settArk(arkTrinn + 1); }
@@ -569,6 +588,8 @@ function render() {
   });
 
   renderStrict(filtered);
+  // Teksten under skiven bytter hoyde med trinnet, sa malet ma folge med.
+  if (erMobil()) requestAnimationFrame(oppdaterKompakt);
 
   const box = el('layers');
   box.innerHTML = '';
@@ -992,6 +1013,7 @@ function wireTipsHint() {
   if (!kropp) return;
   kropp.addEventListener('scroll', oppdaterTipsHint, { passive: true });
   window.addEventListener('resize', oppdaterTipsHint);
+  window.addEventListener('resize', oppdaterKompakt);
   oppdaterTipsHint();
 }
 
