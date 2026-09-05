@@ -536,6 +536,16 @@ function popupHtml(s) {
     '</div>';
 }
 
+/* Norske tegn foldes bort for sok. Folk skriver «gronland» eller «groenland»
+   pa et mobiltastatur, og begge skal finne Gronland. Bade sokestrengen og
+   teksten kjores gjennom samme funksjon, sa de moter hverandre pa halvveien. */
+function foldeTegn(t) {
+  return t.toLowerCase()
+    .replace(/æ/g, 'ae').replace(/ø/g, 'oe').replace(/å/g, 'aa')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/aa/g, 'a');
+}
+
 function currentFilters() {
   return {
     q: el('search').value.trim().toLowerCase(),
@@ -560,8 +570,12 @@ function passes(s, f) {
   if (f.alcohol === 'nei' && s.alcohol) return false;
   if (f.q) {
     // Adressen er med, slik at "Grønland 5" eller "Torggata" gir treff.
-    const hay = (s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '')).toLowerCase();
-    if (!hay.includes(f.q)) return false;
+    // Skriver du æøå selv, soker vi bokstavrett – da mener du dem. Skriver du
+    // «gronland» eller «groenland», folder vi begge sider i stedet.
+    const raa = s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '');
+    const bokstavrett = /[æøå]/.test(f.q);
+    const hay = bokstavrett ? raa.toLowerCase() : foldeTegn(raa);
+    if (!hay.includes(bokstavrett ? f.q : foldeTegn(f.q))) return false;
   }
   return true;
 }
