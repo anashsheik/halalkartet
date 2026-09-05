@@ -981,17 +981,33 @@ function trapFocus(e) {
 
 /* ---- Netlify Forms, sendt uten sideomlasting ----
    Begge skjemaene postes urlencodet til /, som er det Netlify forventer. */
+/* Skjemaene postes til «/», som Netlify fanger opp. Ligger siden pa en ren
+   statisk vert uten skjemamottak, svarer den 404, 405 eller 501 - og da er
+   det ikke en forbigaende feil som gar over av seg selv. Vi skiller de to,
+   sa loggen sier hva som faktisk er galt i stedet for a se ut som ustabilt
+   nett. Teksten i skjemaet star igjen uansett; vi nullstiller kun ved svar. */
 function sendNetlifyForm(f, btn, onOk) {
   const opprinnelig = btn.textContent;
   const body = new URLSearchParams(new FormData(f)).toString();
   btn.disabled = true; btn.textContent = 'Sender';
   fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
     .then(function (r) {
-      if (!r.ok) throw new Error('feil');
+      if (!r.ok) { const e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
       f.reset();
       onOk();
     })
-    .catch(function () { toast('Beklager, noe gikk galt. Prøv igjen om litt.'); })
+    .catch(function (e) {
+      const utenMottak = e && (e.status === 404 || e.status === 405 || e.status === 501);
+      if (utenMottak) {
+        console.error('[Halalkartet] Skjemaet ble avvist med HTTP ' + e.status +
+          '. Verten tar ikke imot skjemaposter — Netlify Forms virker ikke her. ' +
+          'Innsendingen er tapt.');
+        toast('Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.');
+      } else {
+        console.error('[Halalkartet] Innsending feilet:', e);
+        toast('Beklager, noe gikk galt. Prøv igjen om litt.');
+      }
+    })
     .then(function () { btn.disabled = false; btn.textContent = opprinnelig; });
 }
 
