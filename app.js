@@ -329,7 +329,7 @@ function togglePanel(collapse) {
 }
 
 /* ---- Bunnarket pa mobil: tre trinn ----
-   0 gjemt (bare handtaket, hele kartet fritt) · 1 hvile · 2 full.
+   0 kompakt (til og med «Alt vi kjenner …») · 1 hvile · 2 full.
    Handtaket kan bade trykkes og dras. Under draget folger arket fingeren via
    en ren transform, sa ingenting regnes om per ramme; ved slipp bestemmer
    retning og lengde hvilket trinn det snapper til. */
@@ -340,16 +340,27 @@ function px(navn, fallback) {
   return isNaN(v) ? fallback : v;
 }
 
+/* Nedtrekt tilstand slutter rett under «Alt vi kjenner …». Hoyden males her
+   i stedet for a gjettes, slik at den treffer ogsa nar linja brytes over to
+   linjer pa en smal skjerm eller teksten endres. */
+function oppdaterKompakt() {
+  const panel = el('panel'), note = document.querySelector('.strict-note');
+  if (!panel || !note) return;
+  const h = Math.round(note.getBoundingClientRect().bottom - panel.getBoundingClientRect().top) + 12;
+  if (h > 60) document.documentElement.style.setProperty('--kompakt', h + 'px');
+}
+
 function settArk(trinn) {
   arkTrinn = Math.max(0, Math.min(2, trinn));
   const panel = el('panel'), hank = el('sheetGrab');
+  oppdaterKompakt();
   panel.classList.toggle('collapsed', arkTrinn < 2);
-  panel.classList.toggle('gjemt', arkTrinn === 0);
+  panel.classList.toggle('kompakt', arkTrinn === 0);
   document.body.classList.toggle('panel-collapsed', arkTrinn < 2);
-  document.body.classList.toggle('ark-gjemt', arkTrinn === 0);
+  document.body.classList.toggle('ark-kompakt', arkTrinn === 0);
   if (hank) {
     hank.setAttribute('aria-expanded', String(arkTrinn === 2));
-    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Vis stedene'
+    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Dra opp for stedene'
       : arkTrinn === 1 ? 'Dra opp for hele listen' : 'Legg ned listen');
   }
   setTimeout(function () { map.invalidateSize(); }, 320);
@@ -358,43 +369,92 @@ function settArk(trinn) {
 function wireSheet() {
   const hank = el('sheetGrab'), panel = el('panel');
   if (!hank || !panel) return;
-  let y0 = null, dy = 0, start = false, flyttet = false;
+  let y0 = null, dy = 0, start = false, flyttet = false, fraHank = false;
 
   const hoyde = () => panel.getBoundingClientRect().height;
   // Hvor langt arket er forskjovet ved hvert trinn.
   const forskyv = t => t === 2 ? 0
     : t === 1 ? hoyde() - px('--peek', 340)
-    : hoyde() - px('--gjemt', 30);
+    : hoyde() - px('--kompakt', 170);
 
-  hank.addEventListener('pointerdown', function (e) {
-    if (!erMobil()) return;
+  /* Hele toppen av arket drar, ikke bare strimmelen. I hvilestand er 340 px
+     av arket synlig, og med bare handtaket var 44 av dem folsomme for et
+     sveip - 13 %. Tommelen lander pa sokefeltet eller skiven, og der skjedde
+     det ingenting. Na drar handtaket, hodet, skiven og listeoverskriften.
+     Kontrollene er unntatt: ellers kunne du verken skrive i soket, velge et
+     strenghetstrinn eller trykke Nullstill. */
+  const DRAFELT  = '.sheet-grab, .panel-head, .strict, .layers-label';
+  /* Sokefeltet er den storste flaten i toppen, og det er der tommelen lander.
+     Det drar derfor ogsa - men bare nar fingeren faktisk beveger seg: et rent
+     trykk slipper gjennom og gir fokus som for. Et drag som endte her far
+     klikket sitt svelget under, sa tastaturet ikke spretter opp. */
+  const KONTROLL = 'select, textarea, a, .strict-step, .reset, .collapse-btn';
+  function kanDra(mal) {
+    if (!erMobil() || !mal || !mal.closest) return false;
+    if (hank.contains(mal)) return true;
+    if (mal.closest(KONTROLL)) return false;
+    return !!mal.closest(DRAFELT);
+  }
+
+  panel.addEventListener('pointerdown', function (e) {
+    if (!kanDra(e.target)) return;
     y0 = e.clientY; dy = 0; start = true; flyttet = false;
+    // Pekerfangst flytter malet for de folgende hendelsene til elementet som
+    // fanger. Vi ma derfor huske her at draget startet pa handtaket – ved
+    // pointerup star det bare «panel», og et trykk ville gatt tapt.
+    fraHank = hank.contains(e.target);
     panel.style.transition = 'none';
-    hank.setPointerCapture(e.pointerId);
+    // Fangsten holder draget i live om fingeren glir utenfor arket. Feiler den,
+    // skal ikke hele gesten ryke – listenerne star pa panelet uansett.
+    try { panel.setPointerCapture(e.pointerId); } catch (err) { /* uten fangst gar det ogsa */ }
   });
-  hank.addEventListener('pointermove', function (e) {
+  panel.addEventListener('pointermove', function (e) {
     if (!start) return;
     dy = e.clientY - y0;
-    if (Math.abs(dy) > 3) flyttet = true;
+    // 6 px slark: en skjelven finger pa et trykk skal ikke telle som drag.
+    if (Math.abs(dy) > 6) flyttet = true;
+    if (!flyttet) return;
     // Litt motstand utenfor endepunktene, slik at arket ikke kan dras vekk.
     const y = Math.max(-24, Math.min(forskyv(0) + 24, forskyv(arkTrinn) + dy));
     panel.style.transform = 'translateY(' + y + 'px)';
   });
+  const veksel = () => settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1);
+  let sistPeker = 0, sistDrag = 0;
+
   const slipp = function (e) {
     if (!start) return;
     start = false;
+    sistPeker = Date.now();
     panel.style.transition = '';
     panel.style.transform = '';
-    if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
-    // Trykk uten drag: fra gjemt apner det til hvile, ellers veksler det topp/hvile.
-    if (!flyttet) { settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1); return; }
+    if (e && e.pointerId != null && panel.hasPointerCapture(e.pointerId)) panel.releasePointerCapture(e.pointerId);
+    if (!flyttet) {
+      // Et trykk veksler bare nar det traff selve handtaket. Ellers ville et
+      // bomtrykk ved siden av sokefeltet lukket arket i ansiktet pa deg.
+      if (fraHank) veksel();
+      return;
+    }
+    sistDrag = Date.now();
     // Over 60 px flytter ett trinn i dragretningen; kortere faller tilbake.
     if (dy < -60) settArk(arkTrinn + 1);
     else if (dy > 60) settArk(arkTrinn - 1);
     else settArk(arkTrinn);
   };
-  hank.addEventListener('pointerup', slipp);
-  hank.addEventListener('pointercancel', slipp);
+  panel.addEventListener('pointerup', slipp);
+  panel.addEventListener('pointercancel', slipp);
+  panel.addEventListener('click', function (e) {
+    // Et drag som endte over en knapp skal ikke ogsa utlose knappen.
+    if (Date.now() - sistDrag < 400) { e.preventDefault(); e.stopPropagation(); return; }
+    if (Date.now() - sistPeker < 600) return;
+    // Reserve hvis pekerhendelsene ikke oppforer seg: traff klikket handtaket?
+    // Bade element og koordinat godtas. Fangsten kan ha flyttet malet vekk fra
+    // handtaket, men uten pekerhendelser er det ingen fangst – og da er malet
+    // det riktige. Koordinaten fanger det motsatte tilfellet.
+    const r = hank.getBoundingClientRect();
+    const traff = hank.contains(e.target) ||
+      (e.clientY >= r.top && e.clientY <= r.bottom && e.clientY > 0);
+    if (traff) veksel();
+  }, true);
   hank.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); settArk(arkTrinn === 2 ? 1 : arkTrinn + 1); }
     if (e.key === 'ArrowUp') { e.preventDefault(); settArk(arkTrinn + 1); }
@@ -517,6 +577,16 @@ function popupHtml(s) {
     '</div>';
 }
 
+/* Norske tegn foldes bort for sok. Folk skriver «gronland» eller «groenland»
+   pa et mobiltastatur, og begge skal finne Gronland. Bade sokestrengen og
+   teksten kjores gjennom samme funksjon, sa de moter hverandre pa halvveien. */
+function foldeTegn(t) {
+  return t.toLowerCase()
+    .replace(/æ/g, 'ae').replace(/ø/g, 'oe').replace(/å/g, 'aa')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/aa/g, 'a');
+}
+
 function currentFilters() {
   return {
     q: el('search').value.trim().toLowerCase(),
@@ -541,8 +611,12 @@ function passes(s, f) {
   if (f.alcohol === 'nei' && s.alcohol) return false;
   if (f.q) {
     // Adressen er med, slik at "Grønland 5" eller "Torggata" gir treff.
-    const hay = (s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '')).toLowerCase();
-    if (!hay.includes(f.q)) return false;
+    // Skriver du æøå selv, soker vi bokstavrett – da mener du dem. Skriver du
+    // «gronland» eller «groenland», folder vi begge sider i stedet.
+    const raa = s.name + ' ' + s.cuisines.join(' ') + ' ' + s.bydel + ' ' + (s.address || '');
+    const bokstavrett = /[æøå]/.test(f.q);
+    const hay = bokstavrett ? raa.toLowerCase() : foldeTegn(raa);
+    if (!hay.includes(bokstavrett ? f.q : foldeTegn(f.q))) return false;
   }
   return true;
 }
@@ -569,6 +643,8 @@ function render() {
   });
 
   renderStrict(filtered);
+  // Teksten under skiven bytter hoyde med trinnet, sa malet ma folge med.
+  if (erMobil()) requestAnimationFrame(oppdaterKompakt);
 
   const box = el('layers');
   box.innerHTML = '';
@@ -960,17 +1036,33 @@ function trapFocus(e) {
 
 /* ---- Netlify Forms, sendt uten sideomlasting ----
    Begge skjemaene postes urlencodet til /, som er det Netlify forventer. */
+/* Skjemaene postes til «/», som Netlify fanger opp. Ligger siden pa en ren
+   statisk vert uten skjemamottak, svarer den 404, 405 eller 501 - og da er
+   det ikke en forbigaende feil som gar over av seg selv. Vi skiller de to,
+   sa loggen sier hva som faktisk er galt i stedet for a se ut som ustabilt
+   nett. Teksten i skjemaet star igjen uansett; vi nullstiller kun ved svar. */
 function sendNetlifyForm(f, btn, onOk) {
   const opprinnelig = btn.textContent;
   const body = new URLSearchParams(new FormData(f)).toString();
   btn.disabled = true; btn.textContent = 'Sender';
   fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
     .then(function (r) {
-      if (!r.ok) throw new Error('feil');
+      if (!r.ok) { const e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
       f.reset();
       onOk();
     })
-    .catch(function () { toast('Beklager, noe gikk galt. Prøv igjen om litt.'); })
+    .catch(function (e) {
+      const utenMottak = e && (e.status === 404 || e.status === 405 || e.status === 501);
+      if (utenMottak) {
+        console.error('[Halalkartet] Skjemaet ble avvist med HTTP ' + e.status +
+          '. Verten tar ikke imot skjemaposter — Netlify Forms virker ikke her. ' +
+          'Innsendingen er tapt.');
+        toast('Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.');
+      } else {
+        console.error('[Halalkartet] Innsending feilet:', e);
+        toast('Beklager, noe gikk galt. Prøv igjen om litt.');
+      }
+    })
     .then(function () { btn.disabled = false; btn.textContent = opprinnelig; });
 }
 
@@ -992,6 +1084,7 @@ function wireTipsHint() {
   if (!kropp) return;
   kropp.addEventListener('scroll', oppdaterTipsHint, { passive: true });
   window.addEventListener('resize', oppdaterTipsHint);
+  window.addEventListener('resize', oppdaterKompakt);
   oppdaterTipsHint();
 }
 

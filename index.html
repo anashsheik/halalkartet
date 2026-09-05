@@ -111,8 +111,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 /* Draghåndtaket og merket over kartet finnes bare på mobil; på skrivebordet
    står panelet til venstre og trenger ingen av delene. */
-.sheet-grab { display: none; width: 100%; background: none; border: 0; padding: 9px 0 4px; cursor: grab; touch-action: none; }
-.sheet-grab span { display: block; width: 42px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.26); margin: 0 auto; transition: background .15s; }
+/* 44 px hoyt treffomrade – 17 px var nesten umulig a treffe med tommelen.
+   Den negative bunnmargen gjor at den ekstra hoyden ikke skyver innholdet ned. */
+.sheet-grab { display: none; width: 100%; min-height: 44px; align-items: center; justify-content: center; background: none; border: 0; padding: 0; margin-bottom: -10px; cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; }
+.sheet-grab span { display: block; width: 58px; height: 5px; border-radius: 999px; background: rgba(255,255,255,.32); transform: scaleX(.79); transition: background .15s, transform .18s var(--ease-out); }
 .sheet-grab:active { cursor: grabbing; }
 .sheet-grab:active span, .sheet-grab:hover span { background: rgba(255,255,255,.42); }
 .sheet-grab:focus-visible span { background: var(--gold); }
@@ -388,7 +390,7 @@ body.panel-collapsed .hilite-btn { transform: none; }
    dras opp ved behov. Vi flytter ikke elementer i DOM-en: det er samme panel,
    bare forankret nede i stedet for til venstre. */
 @media (max-width: 720px) {
-  :root { --peek: 340px; --gjemt: 30px; }
+  :root { --peek: 340px; --kompakt: 170px; }
   .panel {
     /* fixed, ikke absolute: et absolutt plassert ark som forskyves nedover
        teller som rullbart innhold, og siden lot seg dra 403 px ned. Fast
@@ -403,9 +405,11 @@ body.panel-collapsed .hilite-btn { transform: none; }
   /* «collapsed» betyr hvilestand her, ikke skjult. Én transform, ingen
      layout per ramme – arket glir uten at kartet regnes om. */
   .panel.collapsed { transform: translateY(calc(88vh - var(--peek))); }
-  /* Dratt helt ned: bare håndtaket stikker opp, og kartet er fritt. */
-  .panel.collapsed.gjemt { transform: translateY(calc(88vh - var(--gjemt))); }
-  .panel.gjemt .sheet-grab span { width: 56px; background: rgba(255,255,255,.5); }
+  /* Dratt ned: sok, filter og forklaringslinja star igjen – resten av arket
+     glir under kanten. Hoyden males i JS, sa den treffer bunnen av linja
+     ogsa nar teksten brytes annerledes pa en smalere skjerm. */
+  .panel.collapsed.kompakt { transform: translateY(calc(88vh - var(--kompakt))); }
+  .panel.kompakt .sheet-grab span { transform: scaleX(1); background: rgba(255,255,255,.5); }
   .panel-head { padding: 4px 18px 14px; border-bottom: 0; }
   .head-top { display: none; }
   .search-wrap { margin-top: 0; }
@@ -418,7 +422,11 @@ body.panel-collapsed .hilite-btn { transform: none; }
   .strict { padding: 14px 18px 0; }
   .layers-label { padding: 14px 18px 6px; }
 
-  .sheet-grab { display: block; }
+  .sheet-grab { display: flex; }
+  /* Dragflaten ma si fra at nettleseren ikke skal panorere her, ellers stjeler
+     den gesten for pointermove rekker a fyre. Kontrollene far den tilbake, sa
+     markoren fortsatt kan dras i sokefeltet. */
+  .panel-head, .strict, .layers-label { touch-action: none; }
   .brand-chip { display: inline-flex; }
   .lbl-wide { display: none; }
   .lbl-narrow { display: inline; }
@@ -523,11 +531,11 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .feedback { bottom: calc(var(--peek) + 62px); }
   .tips-btn { bottom: calc(var(--peek) + 62px); }
   .hilite-btn { bottom: calc(var(--peek) + 14px); }
-  /* Er arket gjemt, flytter knappene seg ned i den frigjorte plassen. */
-  body.ark-gjemt .nearme { bottom: calc(var(--gjemt) + 14px); }
-  body.ark-gjemt .feedback { bottom: calc(var(--gjemt) + 62px); }
-  body.ark-gjemt .tips-btn { bottom: calc(var(--gjemt) + 62px); }
-  body.ark-gjemt .hilite-btn { bottom: calc(var(--gjemt) + 14px); }
+  /* Er arket dratt ned, flytter knappene seg med i den frigjorte plassen. */
+  body.ark-kompakt .nearme { bottom: calc(var(--kompakt) + 14px); }
+  body.ark-kompakt .feedback { bottom: calc(var(--kompakt) + 62px); }
+  body.ark-kompakt .tips-btn { bottom: calc(var(--kompakt) + 62px); }
+  body.ark-kompakt .hilite-btn { bottom: calc(var(--kompakt) + 14px); }
   /* Nar arket er dratt opp dekker det knappene – da skal de ikke ta imot trykk. */
   body:not(.panel-collapsed) .nearme,
   body:not(.panel-collapsed) .feedback,
@@ -740,8 +748,9 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat i Oslo. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
         <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
         <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
-           <span class="info-badge" style="background:#D98A1F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
-           <span class="info-badge" style="background:#8A8F98"></span> Grå betyr at halalstatusen ikke er bekreftet ennå.</p>
+           <span class="info-badge" style="background:#D9600F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
+           <span class="info-badge" style="background:#C62828"></span> Rød betyr at vi ikke har rukket å bekrefte halalstatusen ennå. Rødt er en oppfordring om å sjekke selv, ikke en påstand om at stedet ikke er halal.</p>
+        <p>Hver farge har også sin egen form — sirkel, avkuttet firkant og firkant — slik at nivået kan leses av deg som ikke skiller fargene.</p>
         <p>Vi begynner i Oslo og legger til flere steder etter hvert, og på sikt flere byer. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
       </section>
       <section class="info-section" data-section="kontakt">
@@ -789,7 +798,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
       <section class="info-section" data-section="vilkar">
         <h2>Vilkår og betingelser</h2>
         <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
-        <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
+        <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket røde eller oransje.</p>
         <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
         <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
         <p class="muted">Sist oppdatert august 2026.</p>
@@ -797,9 +806,9 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
       <section class="info-section" data-section="faq">
         <h2>Ofte stilte spørsmål</h2>
         <h3>Hva betyr fargene på kartet?</h3>
-        <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå.</p>
+        <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Rød betyr at vi ikke har bekreftet halalstatusen ennå — det sier ingenting om at stedet ikke er halal, bare at vi ikke vet. Formene skiller nivåene også: sirkel, avkuttet firkant, firkant.</p>
         <h3>Hvordan vet dere at et sted er halal?</h3>
-        <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+        <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet rødt.</p>
         <h3>Hva betyr dollartegnene?</h3>
         <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå i panelet til venstre.</p>
         <h3>Hvor pålitelige er åpningstidene?</h3>
