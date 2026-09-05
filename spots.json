@@ -787,12 +787,12 @@
     "address": "Bygdøy allé 65, 0265 Oslo",
     "lat": 59.9189547,
     "lng": 10.7026785,
-    "halalStatus": "uavklart",
+    "halalStatus": "delvis",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "delvis",
         "kilde": null,
-        "tekst": "Halal-status er ikke bekreftet ennå.",
+        "tekst": "Alt er halal bortsett fra and og reinsdyr.",
         "dato": null
       }
     ],
@@ -1983,12 +1983,12 @@
     "address": "Munkedamsveien 59, 0270 Oslo",
     "lat": 59.9111706,
     "lng": 10.720909,
-    "halalStatus": "verifisert",
+    "halalStatus": "delvis",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "delvis",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Kun kylling og biff er halal.",
         "dato": null
       }
     ],
@@ -3149,12 +3149,12 @@
     "address": "Klingenberggata 4, 0161 Oslo",
     "lat": 59.913714,
     "lng": 10.7337427,
-    "halalStatus": "verifisert",
+    "halalStatus": "delvis",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "delvis",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Deler av menyen er ikke halal.",
         "dato": null
       }
     ],
@@ -3750,6 +3750,1069 @@
     "website": null,
     "hours": "Stenger kl. 21:30",
     "opens": "13:00",
+    "lastVerified": null
+  },
+  {
+    "id": "burek-factory-restaurant",
+    "name": "Burek Factory Restaurant",
+    "description": "",
+    "bydel": "Grünerløkka",
+    "address": "Trondheimsveien 4A, 0560 Oslo",
+    "lat": 59.9191312,
+    "lng": 10.7626409,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Balkansk",
+      "Takeaway"
+    ],
+    "price": 2,
+    "phone": "97 34 33 17",
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "tasty-thai-stovner-senter",
+    "name": "Tasty Thai Stovner Senter",
+    "description": "",
+    "bydel": "Stovner",
+    "address": "Stovner Senter 3, 0985 Oslo",
+    "lat": 59.9614907,
+    "lng": 10.9241876,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Thai",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "new-winny-kebab",
+    "name": "New Winny Kebab",
+    "description": "",
+    "bydel": "Grefsen",
+    "address": "Grefsenveien 57, 0487 Oslo",
+    "lat": 59.9453591,
+    "lng": 10.7805438,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": "22 22 91 91",
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-bislett",
+    "name": "Bislett Kebab House Bislett",
+    "description": "",
+    "bydel": "Bislett",
+    "address": "",
+    "lat": 59.9204236,
+    "lng": 10.7338008,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "Stenger kl. 04",
+    "opens": "10:00",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-pilestredet",
+    "name": "Bislett Kebab House Pilestredet",
+    "description": "",
+    "bydel": "Bislett",
+    "address": "Pilestredet 55, 0350 Oslo",
+    "lat": 59.9228733,
+    "lng": 10.7317632,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-kalbakken",
+    "name": "Bislett Kebab House Kalbakken",
+    "description": "",
+    "bydel": "Kalbakken",
+    "address": "Trondheimsveien 391, 0953 Oslo",
+    "lat": 59.9519667,
+    "lng": 10.867836,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-sandaker",
+    "name": "Bislett Kebab House Sandaker",
+    "description": "",
+    "bydel": "Sandaker",
+    "address": "",
+    "lat": 59.942292,
+    "lng": 10.7700761,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-majorstuen",
+    "name": "Bislett Kebab House Majorstuen",
+    "description": "",
+    "bydel": "Majorstuen",
+    "address": "",
+    "lat": 59.9284323,
+    "lng": 10.7163828,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-manglerud",
+    "name": "Bislett Kebab House Manglerud",
+    "description": "",
+    "bydel": "Manglerud",
+    "address": "",
+    "lat": 59.8978273,
+    "lng": 10.8143917,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-carl-berner",
+    "name": "Bislett Kebab House Carl Berner",
+    "description": "",
+    "bydel": "Carl Berner",
+    "address": "",
+    "lat": 59.9295045,
+    "lng": 10.77836,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-grunerlokka",
+    "name": "Bislett Kebab House Grünerløkka",
+    "description": "",
+    "bydel": "Grünerløkka",
+    "address": "",
+    "lat": 59.9197493,
+    "lng": 10.7591113,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-tveita",
+    "name": "Bislett Kebab House Tveita",
+    "description": "",
+    "bydel": "Tveita",
+    "address": "",
+    "lat": 59.913834,
+    "lng": 10.8411569,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-linderud",
+    "name": "Bislett Kebab House Linderud",
+    "description": "",
+    "bydel": "Linderud",
+    "address": "",
+    "lat": 59.9440671,
+    "lng": 10.8329289,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-metro",
+    "name": "Bislett Kebab House Metro",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "",
+    "lat": 59.9275241,
+    "lng": 10.9578656,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-lorenskog",
+    "name": "Bislett Kebab House Lørenskog",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "",
+    "lat": 59.9448761,
+    "lng": 10.9507642,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-prinsdal",
+    "name": "Bislett Kebab House Prinsdal",
+    "description": "",
+    "bydel": "Prinsdal",
+    "address": "",
+    "lat": 59.833591,
+    "lng": 10.8070918,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-vinterbro",
+    "name": "Bislett Kebab House Vinterbro",
+    "description": "",
+    "bydel": "Vinterbro",
+    "address": "",
+    "lat": 59.7394298,
+    "lng": 10.7707396,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bislett-kebab-house-lillestrom",
+    "name": "Bislett Kebab House Lillestrøm",
+    "description": "",
+    "bydel": "Lillestrøm",
+    "address": "",
+    "lat": 59.956804,
+    "lng": 11.0479881,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.bislettkebabhouse.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "kebabbiten",
+    "name": "Kebabbiten",
+    "description": "",
+    "bydel": "Rosenhoff",
+    "address": "Trondheimsveien 154, 0570 Oslo",
+    "lat": 59.9289898,
+    "lng": 10.7776808,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kebab",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "kylling-pizza-rosenhoff",
+    "name": "Kylling & Pizza Rosenhoff",
+    "description": "",
+    "bydel": "Rosenhoff",
+    "address": "Konghellegata 8, 0570 Oslo",
+    "lat": 59.9295804,
+    "lng": 10.7787801,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kylling",
+      "Pizza",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.kyllingogpizza.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "grytelokket-avd-torshov",
+    "name": "Grytelokket Avd. Torshov",
+    "description": "",
+    "bydel": "Torshov",
+    "address": "Vogts gate 39, 0474 Oslo",
+    "lat": 59.933259,
+    "lng": 10.7635259,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hamburger",
+      "Kebab",
+      "Pizza"
+    ],
+    "price": 1,
+    "phone": "47 99 44 44",
+    "website": "https://grytelokket.no",
+    "hours": "Stenger kl. 01",
+    "opens": "11:00",
+    "lastVerified": null
+  },
+  {
+    "id": "grytelokket-avd-storgata",
+    "name": "Grytelokket Avd. Storgata",
+    "description": "",
+    "bydel": "Sentrum",
+    "address": "Storgata 45, 0182 Oslo",
+    "lat": 59.915536,
+    "lng": 10.7557989,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hamburger",
+      "Kebab",
+      "Pizza"
+    ],
+    "price": 1,
+    "phone": "22 11 47 39",
+    "website": "https://grytelokket.no",
+    "hours": "Stenger kl. 00:30",
+    "opens": "11:00",
+    "lastVerified": null
+  },
+  {
+    "id": "grytelokket-avd-klemetsrud",
+    "name": "Grytelokket Avd. Klemetsrud",
+    "description": "",
+    "bydel": "Klemetsrud",
+    "address": "",
+    "lat": 59.8358459,
+    "lng": 10.8419199,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hamburger",
+      "Kebab",
+      "Pizza"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://grytelokket.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "grytelokket-skjetten",
+    "name": "Grytelokket Skjetten",
+    "description": "",
+    "bydel": "Skjetten",
+    "address": "",
+    "lat": 59.9803346,
+    "lng": 10.9709299,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hamburger",
+      "Kebab",
+      "Pizza"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://grytelokket.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "kod-bergen",
+    "name": "KöD Bergen",
+    "description": "",
+    "bydel": "Bergen",
+    "address": "Øvre Ole Bulls plass 7, 5012 Bergen",
+    "lat": 60.3925341,
+    "lng": 5.3215613,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Må sjekkes – uavklart inntil videre.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Restaurant"
+    ],
+    "price": 3,
+    "phone": null,
+    "website": "https://restaurantkoed.no",
+    "hours": "",
+    "opens": "17:00",
+    "lastVerified": null
+  },
+  {
+    "id": "kod-oslo-frogner",
+    "name": "KöD Oslo - Frogner",
+    "description": "",
+    "bydel": "Frogner",
+    "address": "Frognerveien 9B, 0257 Oslo",
+    "lat": 59.9164535,
+    "lng": 10.7154395,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Restaurant"
+    ],
+    "price": 3,
+    "phone": null,
+    "website": "https://restaurantkoed.no",
+    "hours": "",
+    "opens": "16:00",
+    "lastVerified": null
+  },
+  {
+    "id": "verona-pizza",
+    "name": "Verona pizza",
+    "description": "",
+    "bydel": "Sentrum",
+    "address": "Brugata 10, 0186 Oslo",
+    "lat": 59.9140065,
+    "lng": 10.7548278,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab",
+      "Hamburger"
+    ],
+    "price": 1,
+    "phone": "22 17 10 01",
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-kebab-house-bislett",
+    "name": "Balkan Pizza & Kebab House Bislett",
+    "description": "",
+    "bydel": "Bislett",
+    "address": "",
+    "lat": 59.921445,
+    "lng": 10.7320871,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-og-kebab-house-avd-toyen",
+    "name": "Balkan Pizza og Kebab House Avd. Tøyen",
+    "description": "",
+    "bydel": "Tøyen",
+    "address": "Åkebergveien 24, 0650 Oslo",
+    "lat": 59.9111167,
+    "lng": 10.7725601,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-kebab-house-lillestrom",
+    "name": "Balkan Pizza & Kebab House Lillestrøm",
+    "description": "",
+    "bydel": "Lillestrøm",
+    "address": "Kirkegata 6, 2000 Lillestrøm",
+    "lat": 59.9544085,
+    "lng": 11.0447154,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-kebab-house-ski",
+    "name": "Balkan Pizza & Kebab House Ski",
+    "description": "",
+    "bydel": "Ski",
+    "address": "Torgveien 2, 1400 Ski",
+    "lat": 59.7191,
+    "lng": 10.8370028,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-og-kebab-bolerasen",
+    "name": "Balkan Pizza og Kebab Bøleråsen",
+    "description": "",
+    "bydel": "Bøleråsen",
+    "address": "",
+    "lat": 59.764357,
+    "lng": 10.8516863,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "balkan-pizza-kebab-house-drobak",
+    "name": "Balkan Pizza & Kebab House Drøbak",
+    "description": "",
+    "bydel": "Drøbak",
+    "address": "",
+    "lat": 59.6593977,
+    "lng": 10.6299598,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.balkan.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "confused-baked-potato",
+    "name": "Confused Baked Potato",
+    "description": "",
+    "bydel": "Storo",
+    "address": "Storo Storsenter, 0485 Oslo",
+    "lat": 59.9466279,
+    "lng": 10.7754258,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Takeaway",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": "40 18 05 66",
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "sagene-pizzaria-og-kebab",
+    "name": "Sagene Pizzaria og Kebab",
+    "description": "",
+    "bydel": "Sagene",
+    "address": "Arendalsgata 3, 0463 Oslo",
+    "lat": 59.9374795,
+    "lng": 10.7553634,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "prinsdal-pizza",
+    "name": "Prinsdal Pizza",
+    "description": "",
+    "bydel": "Prinsdal",
+    "address": "Nedre Prinsdals vei 76, 1263 Oslo",
+    "lat": 59.8330053,
+    "lng": 10.8085708,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pizza",
+      "Hamburger"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.prinsdalpizza.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "coyo-meksikansk-restaurant-taquilla-bar-sorenga",
+    "name": "Coyo - Meksikansk Restaurant & Taquilla Bar Sørenga",
+    "description": "",
+    "bydel": "Sørenga",
+    "address": "Sørengkaia 165, 0194 Oslo",
+    "lat": 59.9017624,
+    "lng": 10.7512488,
+    "halalStatus": "delvis",
+    "verification": [
+      {
+        "type": "delvis",
+        "kilde": null,
+        "tekst": "Alt er halal bortsett fra svinerettene.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Meksikansk",
+      "Restaurant"
+    ],
+    "price": 3,
+    "phone": "23 68 75 57",
+    "website": "https://coyorestaurant.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "sultan-radhuset-oslo-food-sweets",
+    "name": "Sultan Rådhuset Oslo food & sweets",
+    "description": "",
+    "bydel": "Sentrum",
+    "address": "Fridtjof Nansens plass 9, 0160 Oslo",
+    "lat": 59.9120276,
+    "lng": 10.7352331,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Midtøsten",
+      "Dessert"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "levant-restaurant",
+    "name": "Levant Restaurant",
+    "description": "",
+    "bydel": "Sentrum",
+    "address": "Stenersgata 10, 0184 Oslo",
+    "lat": 59.91321,
+    "lng": 10.7524949,
+    "halalStatus": "verifisert",
+    "verification": [
+      {
+        "type": "bekreftet",
+        "kilde": null,
+        "tekst": "Registrert som helt halal.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Syrisk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": "22 17 88 80",
+    "website": "https://levantspektrum.no",
+    "hours": "Stenger kl. 22",
+    "opens": "12:00",
     "lastVerified": null
   }
 ]
