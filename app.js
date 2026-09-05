@@ -369,7 +369,7 @@ function settArk(trinn) {
 function wireSheet() {
   const hank = el('sheetGrab'), panel = el('panel');
   if (!hank || !panel) return;
-  let y0 = null, dy = 0, start = false, flyttet = false;
+  let y0 = null, dy = 0, start = false, flyttet = false, fraHank = false;
 
   const hoyde = () => panel.getBoundingClientRect().height;
   // Hvor langt arket er forskjovet ved hvert trinn.
@@ -377,22 +377,49 @@ function wireSheet() {
     : t === 1 ? hoyde() - px('--peek', 340)
     : hoyde() - px('--kompakt', 170);
 
-  hank.addEventListener('pointerdown', function (e) {
-    if (!erMobil()) return;
+  /* Hele toppen av arket drar, ikke bare strimmelen. I hvilestand er 340 px
+     av arket synlig, og med bare handtaket var 44 av dem folsomme for et
+     sveip - 13 %. Tommelen lander pa sokefeltet eller skiven, og der skjedde
+     det ingenting. Na drar handtaket, hodet, skiven og listeoverskriften.
+     Kontrollene er unntatt: ellers kunne du verken skrive i soket, velge et
+     strenghetstrinn eller trykke Nullstill. */
+  const DRAFELT  = '.sheet-grab, .panel-head, .strict, .layers-label';
+  /* Sokefeltet er den storste flaten i toppen, og det er der tommelen lander.
+     Det drar derfor ogsa - men bare nar fingeren faktisk beveger seg: et rent
+     trykk slipper gjennom og gir fokus som for. Et drag som endte her far
+     klikket sitt svelget under, sa tastaturet ikke spretter opp. */
+  const KONTROLL = 'select, textarea, a, .strict-step, .reset, .collapse-btn';
+  function kanDra(mal) {
+    if (!erMobil() || !mal || !mal.closest) return false;
+    if (hank.contains(mal)) return true;
+    if (mal.closest(KONTROLL)) return false;
+    return !!mal.closest(DRAFELT);
+  }
+
+  panel.addEventListener('pointerdown', function (e) {
+    if (!kanDra(e.target)) return;
     y0 = e.clientY; dy = 0; start = true; flyttet = false;
+    // Pekerfangst flytter malet for de folgende hendelsene til elementet som
+    // fanger. Vi ma derfor huske her at draget startet pa handtaket – ved
+    // pointerup star det bare «panel», og et trykk ville gatt tapt.
+    fraHank = hank.contains(e.target);
     panel.style.transition = 'none';
-    hank.setPointerCapture(e.pointerId);
+    // Fangsten holder draget i live om fingeren glir utenfor arket. Feiler den,
+    // skal ikke hele gesten ryke – listenerne star pa panelet uansett.
+    try { panel.setPointerCapture(e.pointerId); } catch (err) { /* uten fangst gar det ogsa */ }
   });
-  hank.addEventListener('pointermove', function (e) {
+  panel.addEventListener('pointermove', function (e) {
     if (!start) return;
     dy = e.clientY - y0;
-    if (Math.abs(dy) > 3) flyttet = true;
+    // 6 px slark: en skjelven finger pa et trykk skal ikke telle som drag.
+    if (Math.abs(dy) > 6) flyttet = true;
+    if (!flyttet) return;
     // Litt motstand utenfor endepunktene, slik at arket ikke kan dras vekk.
     const y = Math.max(-24, Math.min(forskyv(0) + 24, forskyv(arkTrinn) + dy));
     panel.style.transform = 'translateY(' + y + 'px)';
   });
   const veksel = () => settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1);
-  let sistPeker = 0;
+  let sistPeker = 0, sistDrag = 0;
 
   const slipp = function (e) {
     if (!start) return;
@@ -400,20 +427,34 @@ function wireSheet() {
     sistPeker = Date.now();
     panel.style.transition = '';
     panel.style.transform = '';
-    if (e && e.pointerId != null && hank.hasPointerCapture(e.pointerId)) hank.releasePointerCapture(e.pointerId);
-    // Trykk uten drag: fra kompakt til hvile, ellers veksler det hvile/full.
-    if (!flyttet) { veksel(); return; }
+    if (e && e.pointerId != null && panel.hasPointerCapture(e.pointerId)) panel.releasePointerCapture(e.pointerId);
+    if (!flyttet) {
+      // Et trykk veksler bare nar det traff selve handtaket. Ellers ville et
+      // bomtrykk ved siden av sokefeltet lukket arket i ansiktet pa deg.
+      if (fraHank) veksel();
+      return;
+    }
+    sistDrag = Date.now();
     // Over 60 px flytter ett trinn i dragretningen; kortere faller tilbake.
     if (dy < -60) settArk(arkTrinn + 1);
     else if (dy > 60) settArk(arkTrinn - 1);
     else settArk(arkTrinn);
   };
-  hank.addEventListener('pointerup', slipp);
-  hank.addEventListener('pointercancel', slipp);
-  hank.addEventListener('click', function () {
+  panel.addEventListener('pointerup', slipp);
+  panel.addEventListener('pointercancel', slipp);
+  panel.addEventListener('click', function (e) {
+    // Et drag som endte over en knapp skal ikke ogsa utlose knappen.
+    if (Date.now() - sistDrag < 400) { e.preventDefault(); e.stopPropagation(); return; }
     if (Date.now() - sistPeker < 600) return;
-    veksel();
-  });
+    // Reserve hvis pekerhendelsene ikke oppforer seg: traff klikket handtaket?
+    // Bade element og koordinat godtas. Fangsten kan ha flyttet malet vekk fra
+    // handtaket, men uten pekerhendelser er det ingen fangst – og da er malet
+    // det riktige. Koordinaten fanger det motsatte tilfellet.
+    const r = hank.getBoundingClientRect();
+    const traff = hank.contains(e.target) ||
+      (e.clientY >= r.top && e.clientY <= r.bottom && e.clientY > 0);
+    if (traff) veksel();
+  }, true);
   hank.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); settArk(arkTrinn === 2 ? 1 : arkTrinn + 1); }
     if (e.key === 'ArrowUp') { e.preventDefault(); settArk(arkTrinn + 1); }

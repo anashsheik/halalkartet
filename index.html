@@ -423,6 +423,10 @@ body.panel-collapsed .hilite-btn { transform: none; }
   .layers-label { padding: 14px 18px 6px; }
 
   .sheet-grab { display: flex; }
+  /* Dragflaten ma si fra at nettleseren ikke skal panorere her, ellers stjeler
+     den gesten for pointermove rekker a fyre. Kontrollene far den tilbake, sa
+     markoren fortsatt kan dras i sokefeltet. */
+  .panel-head, .strict, .layers-label { touch-action: none; }
   .brand-chip { display: inline-flex; }
   .lbl-wide { display: none; }
   .lbl-narrow { display: inline; }
