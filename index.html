@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://tiles.stadiamaps.com https://*.basemaps.cartocdn.com https://cdnjs.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script src="tema.js"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
+<script src="analytics.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halalkartet · Finn halal mat i Oslo</title>
+<meta name="description" content="Halalkartet viser deg hvor du finner halal mat i Oslo, og hvor sikker halalstatusen er. Gratis, uten konto og uten sporing.">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --emerald:    #0E3D2C;
+  --emerald-2:  #164A37;
+  --emerald-3:  #1C5642;
+  --gold:       #C8A253;
+  --gold-soft:  #DCC28A;
+  --ivory:      #F2ECDE;
+  --ivory-dim:  #9DB3A5;
+  --hairline:   rgba(200,162,83,.22);
+  --hairline-2: rgba(255,255,255,.08);
+  --ink:        #1B2620;
+  --ink-soft:   #5f6b63;
+  --paper:      #F7F2E7;
+  --cert:       #2E7D4F;
+  --self:       #D9600F;
+  --owned:      #636B67;
+  --cert-p:     #5CE894;
+  --self-p:     #FFA94D;
+  --owned-p:    #B4BFB8;
+  --open:       #1F6340;
+  --soon:       #8A5C10;
+  --closed:     #B3261E;
+  --open-p:     #5CE894;
+  --soon-p:     #E8B75C;
+  --closed-p:   #F0897C;
+  --pill:       rgba(17,90,64,.86);
+  --pill-hover: rgba(24,112,80,.92);
+  --pill-solid: #115A40;
+  --pill-solid-2: #187050;
+  --shadow-lg:  0 10px 40px rgba(9,28,20,.30);
+  --shadow-sm:  0 2px 10px rgba(9,28,20,.16);
+  --focus:      0 0 0 3px rgba(200,162,83,.45);
+
+  /* Glass */
+  --glass:      blur(20px) saturate(150%);
+  --glass-soft: blur(14px) saturate(130%);
+  --rim:        inset 0 1px 0 rgba(255,255,255,.14);
+  --rim-light:  inset 0 1px 0 rgba(255,255,255,.7);
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --shadow-panel: 0 24px 64px rgba(6,20,14,.40);
+  --shadow-float: 0 18px 46px rgba(6,20,14,.32);
+  --shadow-pill:  0 6px 22px rgba(6,20,14,.30);
+  --kort-bak:    #FFFDF8;
+  --kort-tekst:  #1B2620;
+  --kort-dempet: #56625A;
+  --kort-strek:  #E3DCCB;
+  --brikke-bak:  #FFFFFF;
+  --brikke-paa:  #0E3D2C;
+  --brikke-paa-tekst: #F2ECDE;
+  --flate-bak:   #F7F2E7;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: var(--emerald); -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 8px; }
+
+#map { position: absolute; inset: 0; background: #eae4d6; z-index: 1; }
+
+.leaflet-control-zoom a { background: #fff !important; color: var(--emerald) !important; border: 0 !important; box-shadow: var(--shadow-sm); font-weight: 600; }
+.leaflet-control-zoom { border: 0 !important; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.leaflet-control-attribution { background: rgba(255,255,255,.8) !important; font-size: 10px; }
+.tema-bryter { border: 0 !important; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm); margin-top: 8px !important; }
+.tema-bryter button { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 0; background: #fff; color: var(--emerald); cursor: pointer; transition: background .15s, color .15s; }
+.tema-bryter button:hover { background: #f3efe5; }
+.tema-bryter button:focus-visible { box-shadow: var(--focus); }
+[data-theme="dark"] .tema-bryter button { background: var(--mork-flate); color: var(--gold-soft); }
+[data-theme="dark"] .tema-bryter button:hover { background: rgba(40,58,48,.95); }
+
+.panel {
+  position: absolute; top: 0; left: 0; bottom: 0; width: 366px; z-index: 1000;
+  background: linear-gradient(180deg, rgba(14,61,44,.93) 0%, rgba(9,42,29,.95) 100%);
+  backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
+  border-right: 1px solid rgba(200,162,83,.14);
+  color: var(--ivory); box-shadow: var(--shadow-panel), var(--rim);
+  display: flex; flex-direction: column;
+  transition: transform .32s var(--ease-drawer);
+}
+.panel.collapsed { transform: translateX(-100%); }
+
+.sheet-grab { display: none; width: 100%; min-height: 44px; align-items: center; justify-content: center; background: none; border: 0; padding: 0; margin-bottom: -10px; cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; }
+.sheet-grab span { display: block; width: 58px; height: 5px; border-radius: 999px; background: rgba(255,255,255,.32); transform: scaleX(.79); transition: background .15s, transform .18s var(--ease-out); }
+.sheet-grab:active { cursor: grabbing; }
+.sheet-grab:active span, .sheet-grab:hover span { background: rgba(255,255,255,.42); }
+.sheet-grab:focus-visible span { background: var(--gold); }
+.lbl-narrow { display: none; }
+
+.panel-head { padding: 22px 22px 18px; border-bottom: 1px solid var(--hairline); }
+.head-top { display: flex; align-items: center; gap: 13px; }
+.brand-mark { font-family: 'Amiri', serif; font-weight: 700; font-size: 33px; line-height: 1; flex: none; direction: rtl; padding: 2px 2px 0; background: linear-gradient(115deg, #A97F32 0%, var(--gold) 28%, #F6E9C4 46%, var(--gold) 64%, #A97F32 100%); background-size: 280% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: sheen 2.4s var(--ease-in-out) .35s 1 both; }
+@keyframes sheen { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+.brand-text { flex: 1; padding-left: 13px; border-left: 1px solid var(--hairline); }
+.brand-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0; line-height: .98; letter-spacing: .01em; color: var(--ivory); }
+.brand-text span { font-size: 10px; text-transform: uppercase; letter-spacing: .22em; color: var(--gold-soft); font-weight: 600; }
+.collapse-btn { border: 0; background: none; color: var(--ivory-dim); cursor: pointer; padding: 6px; border-radius: 50%; display: grid; place-items: center; flex: none; transition: color .15s, background .15s; }
+.collapse-btn:hover { background: var(--emerald-2); color: var(--ivory); }
+
+.search-wrap { position: relative; margin-top: 18px; }
+.search-wrap > svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ivory-dim); pointer-events: none; }
+.search { width: 100%; padding: 11px 34px 11px 39px; border: 1px solid var(--hairline-2); border-radius: 10px; font: inherit; font-size: 14px; color: var(--ivory); background: rgba(255,255,255,.05); transition: border-color .18s, box-shadow .18s, background .18s; }
+.search::placeholder { color: var(--ivory-dim); }
+.search:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,.08); box-shadow: 0 0 0 3px rgba(200,162,83,.16); }
+.search-hint { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 10.5px; font-weight: 700; color: var(--ivory-dim); border: 1px solid var(--hairline-2); border-radius: 5px; padding: 1px 6px; pointer-events: none; }
+.search:focus ~ .search-hint, .search:not(:placeholder-shown) ~ .search-hint { opacity: 0; }
+
+.mini-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 10px; }
+.mini-filters .span2 { grid-column: 1 / -1; }
+.mini-filters select { width: 100%; min-width: 0; padding: 9px 11px; font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ivory); border: 1px solid var(--hairline-2); border-radius: 9px; background-color: rgba(255,255,255,.05); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239DB3A5' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; transition: border-color .18s, background .18s; }
+.mini-filters select:hover { background-color: rgba(255,255,255,.08); }
+.mini-filters select:focus { outline: none; border-color: var(--gold); }
+.mini-filters select.paa { border-color: var(--gold); background-color: rgba(200,162,83,.13); font-weight: 700; box-shadow: inset 0 0 0 1px rgba(200,162,83,.25); }
+.mini-filters option { color: #1B2620; }
+.filter-status { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; font-size: 12px; color: var(--ivory-dim); }
+.reset { border: 0; background: none; color: var(--gold-soft); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; padding: 2px 4px; border-radius: 6px; }
+.reset:hover { color: var(--gold); text-decoration: underline; }
+.reset:disabled { color: var(--emerald-3); cursor: default; text-decoration: none; }
+
+.layers-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--gold-soft); padding: 18px 22px 8px; }
+.layers { flex: 1; overflow-y: auto; padding: 0 12px 18px; }
+.layers::-webkit-scrollbar { width: 8px; }
+.layers::-webkit-scrollbar-thumb { background: var(--emerald-3); border-radius: 8px; }
+
+.layer { border-radius: 11px; margin-bottom: 2px; }
+.layer + .layer { border-top: 1px solid var(--hairline-2); }
+.layer-row { display: flex; align-items: center; gap: 12px; padding-left: 10px; border-radius: 9px; }
+.layer-row:hover { background: var(--emerald-2); }
+.layer-head { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 12px 10px; cursor: pointer; border: 0; background: none; font: inherit; color: inherit; text-align: left; border-radius: 9px; }
+/* Strenghetsskive */
+.strict { padding: 16px 22px 0; }
+.strict-head { font-size: 12.5px; color: var(--ivory-dim); margin-bottom: 9px; font-variant-numeric: tabular-nums; }
+.strict-head b { color: var(--ivory); font-size: 15px; font-weight: 700; }
+.strict-steps { display: flex; gap: 6px; }
+.strict-step { flex: 1; min-width: 0; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; display: flex; flex-direction: column; gap: 7px; text-align: left; }
+.strict-bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,.13); transition: background .18s var(--ease-out); }
+.strict-step.on .strict-bar { background: var(--gold); }
+.strict-label { font-size: 11.5px; font-weight: 600; color: var(--ivory-dim); line-height: 1.25; transition: color .18s; }
+.strict-step.sel .strict-label { color: var(--ivory); }
+.strict-step:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+.strict-note { font-size: 11.5px; color: var(--ivory-dim); margin: 9px 0 0; line-height: 1.4; }
+.layer-dot { width: 12px; height: 12px; flex: none; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+.layer[data-s="verifisert"] .layer-dot { background: var(--cert-p); }
+.layer[data-s="delvis"] .layer-dot { background: var(--self-p); }
+.layer[data-s="uavklart"] .layer-dot { background: var(--owned-p); }
+.layer-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ivory); }
+.layer-count { font-size: 12px; color: var(--ivory-dim); font-variant-numeric: tabular-nums; font-weight: 600; }
+.layer-chev { color: var(--ivory-dim); transition: transform .2s var(--ease-in-out); flex: none; }
+.layer.collapsed .layer-chev { transform: rotate(-90deg); }
+.layer.off .layer-name, .layer.off .layer-count { color: var(--emerald-3); }
+.layer.off .layer-dot { opacity: .35; }
+
+.layer-items { padding: 2px 0 8px; }
+.layer.collapsed .layer-items { display: none; }
+.item { display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 9px; padding: 9px 12px 9px 36px; cursor: pointer; position: relative; font: inherit; transition: background .15s; }
+.item:hover { background: var(--emerald-2); }
+.item.active { background: rgba(200,162,83,.14); box-shadow: inset 2px 0 0 var(--gold); }
+.item-mark { position: absolute; left: 14px; top: 12px; width: 11px; height: 11px; }
+.item[data-s="verifisert"] .item-mark { background: var(--cert-p); }
+.item[data-s="delvis"] .item-mark { background: var(--self-p); }
+.item[data-s="uavklart"] .item-mark { background: var(--owned-p); }
+.item-name { font-size: 13.5px; font-weight: 600; line-height: 1.25; color: var(--ivory); }
+.item-meta { font-size: 11.5px; color: var(--ivory-dim); margin-top: 3px; letter-spacing: .01em; display: flex; align-items: baseline; gap: 8px; }
+.item-meta-txt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.price { font-weight: 700; letter-spacing: .04em; }
+.item-meta .pris-1 { color: var(--open-p); }
+.item-meta .pris-2 { color: var(--soon-p); }
+.item-meta .pris-3 { color: var(--closed-p); }
+.pop-meta .pris-1, .hmeta .pris-1 { color: var(--open); }
+.pop-meta .pris-2, .hmeta .pris-2 { color: var(--soon); }
+.pop-meta .pris-3, .hmeta .pris-3 { color: var(--closed); }
+.item-meta .os { flex: none; font-weight: 700; white-space: nowrap; }
+.os-open { color: var(--open-p); }
+.os-soon { color: var(--soon-p); }
+.os-closed { color: var(--closed-p); }
+/* Klynger */
+.klynge { width: 100%; height: 100%; display: grid; place-items: center; border-radius: 50%; background: var(--emerald-3); color: var(--ivory); border: 2px solid rgba(200,162,83,.55); box-shadow: 0 2px 8px rgba(9,28,20,.4), inset 0 1px 0 rgba(255,255,255,.18); font: 700 12px/1 'Manrope', sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.klynge.stor { font-size: 13px; border-color: var(--gold); }
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow { transition: transform .22s var(--ease-out), opacity .22s ease; }
+.leaflet-cluster-spider-leg { stroke: rgba(200,162,83,.7) !important; }
+
+/* Kjeder */
+.kjede { border-radius: 9px; }
+.kjede-hode .item-name { font-weight: 700; }
+.kjede-hode .kjede-chev { flex: none; color: var(--ivory-dim); transition: transform .2s var(--ease-in-out); }
+.kjede.apen .kjede-hode .kjede-chev { transform: rotate(180deg); }
+.kjede-filialer { display: none; margin: 2px 0 6px; border-left: 1px solid var(--hairline-2); margin-left: 19px; }
+.kjede.apen .kjede-filialer { display: block; }
+.kjede-filialer .item { padding-left: 30px; }
+.kjede-filialer .item-mark { left: 9px; width: 8px; height: 8px; top: 13px; }
+.kjede-filialer .item-name { font-weight: 600; font-size: 13px; color: var(--ivory-dim); }
+.kjede.apen .kjede-filialer .item.active .item-name { color: var(--ivory); }
+.layer-empty { font-size: 12.5px; color: var(--ivory-dim); font-style: italic; padding: 4px 12px 8px 36px; }
+
+.no-results { text-align: center; color: var(--ivory-dim); padding: 32px 18px; font-size: 13.5px; }
+.no-results b { display: block; color: var(--ivory); font-size: 15px; margin-bottom: 5px; font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+
+.sk { padding: 4px 10px; }
+.sk-row { height: 40px; border-radius: 9px; margin-bottom: 9px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.10), rgba(255,255,255,.04)); background-size: 200% 100%; animation: sk 1.3s linear infinite; }
+.sk-row:nth-child(2) { animation-delay: .1s; }
+.sk-row:nth-child(3) { animation-delay: .2s; }
+.sk-row:nth-child(4) { animation-delay: .3s; }
+@keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+.reopen { position: absolute; top: 14px; left: 14px; z-index: 999; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 13px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 15px 11px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .02em;
+  opacity: 0; visibility: hidden; transform: translateX(-10px); pointer-events: none;
+  transition: opacity .18s var(--ease-out), transform .24s var(--ease-out), visibility 0s linear .24s, background .18s; }
+.reopen svg { color: var(--gold); flex: none; }
+.reopen b { font-weight: 700; color: var(--gold-soft); font-variant-numeric: tabular-nums; }
+body.panel-collapsed .reopen { opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+  transition: opacity .22s var(--ease-out) .14s, transform .3s var(--ease-out) .14s, visibility 0s, background .18s; }
+.reopen:hover { background: var(--pill-hover); }
+
+.pin { width: 22px; height: 22px; display: grid; place-items: center; color: #fff; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35), inset 0 1.5px 2px rgba(255,255,255,.3); }
+.pin svg { width: 13px; height: 13px; display: block; }
+.pin.big svg { width: 16px; height: 16px; }
+.pin.big { width: 28px; height: 28px; box-shadow: 0 0 0 4px rgba(200,162,83,.45), 0 0 0 9px rgba(200,162,83,.16), 0 2px 8px rgba(0,0,0,.42), inset 0 2px 3px rgba(255,255,255,.45); }
+.pin-verifisert { background: var(--cert); }
+.pin-delvis { background: var(--self); }
+.pin-uavklart { background: var(--owned); }
+
+.leaflet-popup-content-wrapper { border-radius: 15px; box-shadow: var(--shadow-float), var(--rim-light); background: rgba(247,242,231,.88); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); }
+.leaflet-popup-tip { background: rgba(247,242,231,.88); }
+.leaflet-popup-content { margin: 15px 17px; font-family: 'Manrope', sans-serif; }
+.pop-name { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; margin: 0 0 2px; color: var(--ink); line-height: 1.05; }
+.pop-meta { font-size: 12px; color: var(--ink-soft); margin: 0 0 9px; letter-spacing: .02em; }
+.pop-meta, .item-meta { font-variant-numeric: tabular-nums; }
+.pop-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
+.pop-badge .dotc { width: 13px; height: 13px; flex: none; display: grid; place-items: center; }
+.pop-badge .dotc svg { width: 13px; height: 13px; }
+.pop-badge[data-s="verifisert"] { background: #E4F1E9; color: #1f6340; }
+.pop-badge[data-s="verifisert"] .dotc { color: currentColor; }
+.pop-badge[data-s="delvis"] { background: #F6ECD8; color: #8a5c10; }
+.pop-badge[data-s="delvis"] .dotc { color: currentColor; }
+.pop-badge[data-s="uavklart"] { background: #ECEEEC; color: #454D49; }
+.pop-badge[data-s="uavklart"] .dotc { color: currentColor; }
+.pop-desc { font-size: 13px; margin: 0 0 9px; line-height: 1.45; color: var(--ink); }
+.pop-note { font-size: 12px; color: var(--soon); font-weight: 600; margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--self); }
+/* Verifisering i kortet */
+.pop-verify { margin: 0 0 11px; padding: 9px 0 0; border-top: 1px solid rgba(27,38,32,.1); }
+.v-row { display: flex; gap: 9px; align-items: flex-start; padding: 5px 0; }
+.v-mark { width: 11px; height: 11px; flex: none; margin-top: 4px; }
+.v-ok  { background: var(--cert); }
+.v-mid { background: var(--self); }
+.v-open { background: var(--owned); }
+.v-txt { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--ink); }
+.v-src { display: block; font-size: 11.5px; color: var(--ink-soft); margin-top: 1px; }
+.v-when { flex: none; font-size: 11px; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; font-variant-numeric: tabular-nums; }
+.v-foot { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(27,38,32,.08); }
+.v-age { display: block; font-size: 11.5px; font-weight: 600; }
+.v-age.v-ok { background: none; color: var(--open); }
+.v-age.v-mid { background: none; color: var(--soon); }
+.v-age.v-open { background: none; color: #56635C; }
+.v-disc { display: block; font-size: 11px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
+.pop-row { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0; display: flex; gap: 8px; align-items: flex-start; }
+.pop-row svg { flex: none; margin-top: 1px; }
+.leaflet-container a.pop-link { color: var(--emerald); font-weight: 600; text-decoration: none; }
+.pop-link:hover { text-decoration: underline; }
+.pop-row .os { font-weight: 700; }
+.pop-row .os-open { color: var(--open); }
+.pop-row .os-soon { color: var(--soon); }
+.pop-row .os-closed { color: var(--closed); }
+
+.hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: rgba(247,242,231,.90); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s var(--ease-out), transform .24s var(--ease-out); }
+.hilite.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+.hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
+.hilite.counting .hilite-bar { animation: hbar 3s linear forwards; }
+.hilite:hover .hilite-bar, .hilite:focus-within .hilite-bar { animation-play-state: paused; }
+@keyframes hbar { to { transform: scaleX(0); } }
+.hilite-head { padding: 18px 20px 12px; }
+.hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
+.hilite-head p { margin: 4px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+.hilite-list { padding: 0 10px; max-height: 52vh; overflow-y: auto; }
+.hrow { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 10px 10px; cursor: pointer; font: inherit; transition: background .15s; }
+.hrow:hover { background: #EFE8D6; }
+.hdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.hdot[data-s="verifisert"] { background: var(--cert); }
+.hdot[data-s="delvis"] { background: var(--self); }
+.hdot[data-s="uavklart"] { background: var(--owned); }
+.hmain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hname { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.hmeta { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hrow .os { font-size: 11px; font-weight: 700; flex: none; white-space: nowrap; }
+.hrow .os-open { color: var(--open); }
+.hrow .os-soon { color: var(--soon); }
+.hrow .os-closed { color: var(--closed); }
+.hilite-foot { padding: 10px 20px 18px; }
+.hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+.hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
+
+.tips-btn { position: absolute; z-index: 999; left: 12px; bottom: 74px; transform: translateX(366px); background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
+.tips-btn svg { color: var(--gold); }
+.tips-btn:hover { background: var(--pill-hover); }
+.tips-btn:active { transform: translateX(366px) translateY(1px); }
+body.panel-collapsed .tips-btn { transform: none; }
+body.panel-collapsed .tips-btn:active { transform: translateY(1px); }
+
+.tips { width: 412px; max-height: 88vh; display: flex; flex-direction: column; }
+.tips.counting .hilite-bar { animation-duration: 5s; }
+.tips-lead { margin: 0; padding: 11px 20px; background: rgba(200,162,83,.16); border-bottom: 1px solid rgba(200,162,83,.28); font-size: 12.5px; line-height: 1.5; color: #6b551d; }
+.tips-lead strong { color: var(--ink); font-weight: 700; }
+.tips-lead, .tips .hilite-head, .tips .hilite-foot, .tips .hilite-bar { flex: none; }
+.tips-body { padding: 0 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; position: relative; }
+.tips-scroll { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
+.tips-scroll::before, .tips-scroll::after { content: ""; position: absolute; left: 0; right: 0; height: 26px; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .18s var(--ease-out); }
+.tips-scroll::before { top: 0; background: linear-gradient(rgba(247,242,231,.96), rgba(247,242,231,0)); }
+.tips-scroll::after { bottom: 0; background: linear-gradient(rgba(247,242,231,0), rgba(247,242,231,.96)); }
+.tips-scroll[data-topp="ja"]::before { opacity: 1; }
+.tips-scroll[data-bunn="ja"]::after { opacity: 1; }
+.tips-mer { position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); z-index: 3; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--emerald); color: var(--ivory); box-shadow: 0 2px 8px rgba(9,28,20,.28); pointer-events: none; opacity: 0; transition: opacity .18s var(--ease-out); }
+.tips-scroll[data-bunn="ja"] .tips-mer { opacity: 1; }
+.tips .kf-field { font-size: 12.5px; margin-bottom: 11px; }
+.tips .kf-field input, .tips .kf-field textarea, .tips .kf-select { font-size: 13.5px; padding: 9px 11px; }
+.kf-select { display: block; width: 100%; margin-top: 6px; font: inherit; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235f6b63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; padding-right: 30px; }
+.kf-select:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
+.tips-foot { display: flex; flex-direction: column; gap: 8px; }
+.tips-send { width: 100%; }
+.tips-rules { margin: 13px 0 4px; padding: 11px 13px; background: rgba(200,162,83,.12); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
+
+.hilite-btn { position: absolute; z-index: 999; left: 12px; bottom: 26px; transform: translateX(366px); background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .32s var(--ease-drawer); }
+.hilite-btn svg { color: var(--gold); }
+.hilite-btn:hover { background: var(--pill-hover); }
+body.panel-collapsed .hilite-btn { transform: none; }
+
+.pop-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 11px; border-top: 1px solid rgba(27,38,32,.10); }
+.pop-act { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 8px; border: 1px solid #d8d2c4; border-radius: 9px; background: #fff; color: var(--emerald); font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s; }
+.pop-act:hover { background: #f0ece1; border-color: #c9c2b1; text-decoration: none; }
+.pop-act.primary { background: var(--emerald); border-color: var(--emerald); color: var(--ivory); }
+.pop-act.primary:hover { background: var(--emerald-2); border-color: var(--emerald-2); }
+
+.map-overlay { position: absolute; inset: 0; z-index: 1200; display: grid; place-items: center; background: #eceae4; padding: 24px; }
+.map-overlay .box { max-width: 440px; text-align: center; background: var(--paper); border-radius: 16px; padding: 32px 30px; box-shadow: var(--shadow-lg); }
+.map-overlay h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.map-overlay p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; margin: 0 0 9px; }
+.map-overlay code { background: #eae3d3; padding: 3px 8px; border-radius: 6px; font-size: 13px; display: inline-block; color: var(--emerald); }
+
+.toast { position: fixed; left: 50%; bottom: 28px; z-index: 3000; transform: translate(-50%, 14px); background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 24px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; max-width: calc(100vw - 36px); text-align: center; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Mobil: toppfelt og hurtigbrikker */
+.toppfelt, .ark-hode { display: none; }
+
+.toppfelt { position: fixed; z-index: 1100; left: 0; right: 0; top: 0; padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 0; pointer-events: none; }
+.toppfelt > * { pointer-events: auto; }
+.sokekort { display: flex; align-items: center; gap: 4px; min-height: 52px; padding: 4px 4px 4px 14px; background: var(--kort-bak); color: var(--kort-tekst); border-radius: 16px; box-shadow: 0 6px 22px rgba(9,28,20,.18), 0 1px 0 rgba(0,0,0,.04); border: 1px solid var(--kort-strek); }
+.sokemerke { font-family: 'Amiri', serif; font-weight: 700; font-size: 24px; line-height: 1; color: var(--gold); direction: rtl; padding-right: 10px; border-right: 1px solid var(--kort-strek); flex: none; }
+.sokekort .search-wrap { flex: 1; min-width: 0; margin: 0; }
+.sokekort .search { background: transparent; border: 0; color: var(--kort-tekst); font-size: 16px; padding: 12px 8px 12px 34px; }
+.sokekort .search::placeholder { color: var(--kort-dempet); }
+.sokekort .search:focus { box-shadow: none; background: transparent; }
+.sokekort .search-wrap > svg { left: 9px; color: var(--kort-dempet); }
+.filterknapp { position: relative; flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 12px; background: var(--flate-bak); color: var(--kort-tekst); cursor: pointer; }
+.filterteller { position: absolute; top: 4px; right: 4px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; background: var(--brikke-paa); color: var(--brikke-paa-tekst); font: 700 10.5px/17px 'Manrope', sans-serif; text-align: center; }
+
+.hurtigrad { display: flex; gap: 8px; margin: 10px -12px 0; padding: 0 12px 6px; overflow-x: auto; scrollbar-width: none; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
+.hurtigrad::-webkit-scrollbar { display: none; }
+.hbrikke { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--kort-strek); background: var(--brikke-bak); color: var(--kort-tekst); font: 700 13.5px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(9,28,20,.12); transition: background .15s, color .15s, border-color .15s; }
+.hbrikke svg { flex: none; }
+.hbrikke[aria-pressed="true"], .hbrikke.satt { background: var(--brikke-paa); border-color: var(--brikke-paa); color: var(--brikke-paa-tekst); }
+.hbrikke.satt .x { opacity: .85; }
+
+.ark-hode { padding: 0 18px 12px; }
+.ark-tall { margin: 0; font-size: 15px; color: var(--ivory-dim); }
+.ark-tall b { color: var(--ivory); font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.forklaring { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; padding: 0; list-style: none; font-size: 12px; font-weight: 600; color: var(--ivory-dim); }
+.forklaring li { display: inline-flex; align-items: center; gap: 6px; }
+.forklaring li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; }
+.forklaring li[data-s="verifisert"]::before { background: var(--cert-p); }
+.forklaring li[data-s="delvis"]::before { background: var(--self-p); }
+.forklaring li[data-s="uavklart"]::before { background: var(--owned-p); border-radius: 3px; }
+
+/* Filterarket */
+.filterark { position: fixed; inset: 0; z-index: 2600; display: flex; flex-direction: column; background: var(--kort-bak); color: var(--kort-tekst); transform: translateY(100%); transition: transform .34s var(--ease-drawer); }
+.filterark.apen { transform: none; }
+.filterark[hidden] { display: none; }
+.fa-hode { flex: none; display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 8px; padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px 8px; border-bottom: 1px solid var(--kort-strek); }
+.fa-hode h2 { margin: 0; text-align: center; font: 800 17px 'Manrope', sans-serif; }
+.fa-lukk, .fa-null { min-width: 44px; min-height: 44px; border: 0; background: none; color: inherit; font: 700 14px 'Manrope', sans-serif; cursor: pointer; border-radius: 10px; }
+.fa-lukk { display: grid; place-items: center; }
+.fa-null:disabled { color: var(--kort-dempet); opacity: .7; cursor: default; }
+.fa-kropp { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 6px 18px 24px; }
+.fa-del { padding: 16px 0; border-bottom: 1px solid var(--kort-strek); }
+.fa-del:last-child { border-bottom: 0; }
+.fa-del h3 { margin: 0 0 10px; font: 800 16px 'Manrope', sans-serif; }
+.fa-note { margin: 9px 0 0; font-size: 13px; line-height: 1.45; color: var(--kort-dempet); }
+.segment { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: var(--flate-bak); }
+.segment button { flex: 1; min-height: 42px; border: 0; border-radius: 10px; background: none; color: var(--kort-dempet); font: 700 14px 'Manrope', sans-serif; cursor: pointer; transition: background .15s, color .15s; }
+.segment button[aria-checked="true"] { background: var(--brikke-bak); color: var(--kort-tekst); box-shadow: 0 1px 4px rgba(9,28,20,.16); }
+.fa-rad { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.fa-rad h3 { margin: 0; }
+.fa-rad p { margin: 3px 0 0; font-size: 13px; color: var(--kort-dempet); }
+.bryter { flex: none; position: relative; width: 52px; height: 32px; border: 0; border-radius: 99px; background: var(--kort-strek); cursor: pointer; transition: background .2s; }
+.bryter::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s var(--ease-out); }
+.bryter[aria-checked="true"] { background: var(--brikke-paa); }
+.bryter[aria-checked="true"]::after { transform: translateX(20px); }
+.fa-brikker { display: flex; flex-wrap: wrap; gap: 8px; }
+.fa-brikker button, .fa-pris button { min-height: 42px; padding: 0 16px; border-radius: 99px; border: 1px solid var(--kort-strek); background: var(--brikke-bak); color: var(--kort-tekst); font: 700 14px 'Manrope', sans-serif; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+.fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"] { background: var(--brikke-paa); border-color: var(--brikke-paa); color: var(--brikke-paa-tekst); }
+.fa-brikker .fa-flere { border-style: dashed; color: var(--kort-dempet); }
+.fa-pris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.fa-pris button { border-radius: 12px; }
+.fa-fot { flex: none; padding: 12px 18px calc(env(safe-area-inset-bottom, 0px) + 14px); border-top: 1px solid var(--kort-strek); }
+.fa-vis { width: 100%; min-height: 54px; border: 0; border-radius: 14px; background: var(--brikke-paa); color: var(--brikke-paa-tekst); font: 800 16px 'Manrope', sans-serif; cursor: pointer; }
+.fa-vis:disabled { opacity: .55; cursor: default; }
+.filterark :focus-visible, .toppfelt :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; box-shadow: none; }
+
+/* Mobil */
+@media (max-width: 720px) {
+  :root { --peek: 340px; --kompakt: 170px; --ark-h: calc(100vh - var(--toppfelt-h, 120px)); }
+  @supports (height: 100dvh) { :root { --ark-h: calc(100dvh - var(--toppfelt-h, 120px)); } }
+  .panel {
+    position: fixed;
+    top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: 100%;
+    height: var(--ark-h); border-right: 0;
+    border-top: 1px solid rgba(200,162,83,.2);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -14px 40px rgba(9,28,20,.34), var(--rim);
+  }
+  .panel.collapsed { transform: translateY(calc(var(--ark-h) - var(--peek))); }
+  .panel.collapsed.kompakt { transform: translateY(calc(var(--ark-h) - var(--kompakt))); }
+  .panel.kompakt .sheet-grab span { transform: scaleX(1); background: rgba(255,255,255,.5); }
+  .toppfelt { display: block; }
+  .ark-hode { display: block; }
+  .panel-head, .strict { display: none !important; }
+  .leaflet-control-zoom { display: none; }
+  .leaflet-top.leaflet-right { top: var(--toppfelt-h, 120px); }
+  .search-wrap { margin-top: 0; }
+  .layers { padding-bottom: 8px; }
+  .layers-label { padding: 14px 18px 6px; }
+  .panel.collapsed .layers { overflow-y: hidden; touch-action: none; }
+
+  .sheet-grab { display: flex; }
+  .layers-label, .ark-hode { touch-action: none; }
+  .lbl-wide { display: none; }
+  .lbl-narrow { display: inline; }
+
+  .reopen { display: none !important; }
+  .search-hint { display: none; }
+  .toast { bottom: calc(var(--peek) + 110px); }
+  .hilite-btn span { display: none; }
+  .hilite-btn { padding: 12px; transform: none; }
+  .hilite-btn:active { transform: translateY(1px); }
+  .tips-btn { transform: none; }
+  .tips-btn:active { transform: translateY(1px); }
+  .tips { max-height: 88vh; max-height: 88dvh; }
+  .tips-lead { padding: 7px 18px; font-size: 11.5px; line-height: 1.4; }
+  .tips .hilite-head { padding: 10px 18px 6px; }
+  .tips .hilite-head h2 { font-size: 18px; }
+  .tips .hilite-head p { font-size: 11.5px; line-height: 1.4; margin-top: 3px; }
+  .tips-body { padding: 0 18px; }
+  .tips .hilite-foot { padding: 9px 18px 12px; }
+  .tips-foot { flex-direction: row-reverse; gap: 9px; align-items: stretch; }
+  .tips-foot .kf-send { flex: 1 1 auto; width: auto; margin-top: 0; padding: 13px 22px; }
+  .tips-foot .hilite-lukk { flex: 0 0 auto; width: auto; padding: 13px 22px; }
+  .kf-field { margin-bottom: 9px; }
+}
+
+.nearme { position: absolute; z-index: 999; right: 12px; bottom: 26px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
+.nearme:active, .feedback:active, .reopen:active { transform: translateY(1px); }
+.hilite-btn:active { transform: translateX(366px) translateY(1px); }
+body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
+.nearme svg { color: var(--gold); }
+.nearme:hover { background: var(--pill-hover); }
+.nearme.loading { opacity: .6; pointer-events: none; }
+.nearme.loading svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.feedback { position: absolute; z-index: 999; right: 12px; bottom: 74px; background: var(--pill); backdrop-filter: var(--glass-soft); -webkit-backdrop-filter: var(--glass-soft); color: var(--ivory); border: 1px solid rgba(200,162,83,.26); border-radius: 24px; box-shadow: var(--shadow-pill), var(--rim); padding: 11px 16px 11px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 600; letter-spacing: .01em; transition: background .18s, transform .18s; }
+.feedback svg { color: var(--gold); }
+.feedback:hover { background: var(--pill-hover); }
+.userloc { width: 16px; height: 16px; border-radius: 50%; background: #2b7fff; border: 3px solid #fff; box-shadow: 0 0 0 4px rgba(43,127,255,.25), 0 1px 4px rgba(0,0,0,.4); }
+.item-meta .dist { color: var(--gold-soft); font-weight: 700; }
+
+.panel-foot { padding: 13px 16px 16px; border-top: 1px solid var(--hairline-2); display: flex; flex-wrap: wrap; gap: 7px 15px; }
+.panel-foot a { color: var(--ivory-dim); font-size: 11.5px; font-weight: 600; text-decoration: none; cursor: pointer; letter-spacing: .01em; }
+.panel-foot a:hover { color: var(--gold-soft); }
+
+.info-scrim { position: fixed; inset: 0; z-index: 2000; background: rgba(9,24,17,.55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.info-scrim.open { display: flex; }
+.info-card { background: rgba(247,242,231,.94); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); color: var(--ink); width: 100%; max-width: 640px; max-height: 86vh; border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); display: flex; flex-direction: column; overflow: hidden; }
+.info-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: linear-gradient(180deg, #0E3D2C, #0B3324); }
+.info-brand { font-family: 'Amiri', serif; font-weight: 700; font-size: 22px; direction: rtl; flex: none; background: linear-gradient(155deg, #EAD59B, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.info-tabs { flex: 1; display: flex; gap: 3px; overflow-x: auto; scrollbar-width: none; }
+.info-tabs::-webkit-scrollbar { display: none; }
+.info-tab { border: 0; background: none; color: var(--ivory-dim); font: inherit; font-size: 12.5px; font-weight: 600; padding: 7px 11px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.info-tab:hover { color: var(--ivory); }
+.info-tab.active { background: rgba(200,162,83,.16); color: var(--gold-soft); }
+.info-close { border: 0; background: none; color: var(--ivory-dim); font-size: 24px; line-height: 1; cursor: pointer; flex: none; padding: 0 4px; }
+.info-close:hover { color: var(--ivory); }
+.info-body { padding: 22px 24px 26px; overflow-y: auto; }
+.info-section { display: none; }
+.info-section.active { display: block; }
+.info-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
+.info-section h3 { font-size: 13.5px; font-weight: 700; margin: 17px 0 4px; color: var(--ink); }
+.info-section p { font-size: 14px; line-height: 1.62; color: #3c4640; margin: 0 0 11px; }
+.info-section a { color: var(--cert); font-weight: 600; }
+.info-section .muted { font-size: 12px; color: var(--ink-soft); }
+.kf { margin-top: 2px; }
+.kf-hp { position: absolute; left: -9999px; }
+.kf-field { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 13px; }
+.kf-field input, .kf-field textarea { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; font: inherit; font-size: 14px; font-weight: 400; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; box-sizing: border-box; }
+.kf-field textarea { resize: vertical; min-height: 92px; }
+.kf-field input:focus, .kf-field textarea:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
+.kf-opt { font-weight: 500; color: var(--ink-soft); font-size: 11px; }
+.kf-req { font-weight: 600; color: #a86412; font-size: 11px; }
+.kf-send { margin-top: 2px; padding: 11px 22px; font: inherit; font-weight: 700; font-size: 13.5px; color: #fff; background: #0E3D2C; border: 0; border-radius: 10px; cursor: pointer; }
+.kf-send:hover { background: #0b3324; }
+.kf-send:disabled { opacity: .6; cursor: default; }
+.kf-ok { margin-top: 8px; padding: 13px 15px; background: #E4F1E9; color: #1f6340; border-radius: 10px; font-size: 14px; font-weight: 600; }
+.skjema-av { color: #6b551d; background: rgba(200,162,83,.14); border-left: 2px solid var(--gold); padding: 9px 12px; border-radius: 0 8px 8px 0; margin: 0 0 12px; font-weight: 600; font-size: 12.5px; line-height: 1.45; }
+.kf-err { margin: -7px 0 12px; color: #b3261e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
+.info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+@media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
+@media (max-height: 700px) and (max-width: 720px) {
+  .tips .hilite-head p { display: none; }
+  .tips-lead { padding: 6px 18px; font-size: 11px; }
+}
+
+@media (max-width: 720px) {
+  .nearme { bottom: calc(var(--peek) + 14px); }
+  .feedback { bottom: calc(var(--peek) + 62px); }
+  .tips-btn { bottom: calc(var(--peek) + 62px); }
+  .hilite-btn { bottom: calc(var(--peek) + 14px); }
+  body.ark-kompakt .nearme { bottom: calc(var(--kompakt) + 14px); }
+  body.ark-kompakt .feedback { bottom: calc(var(--kompakt) + 62px); }
+  body.ark-kompakt .tips-btn { bottom: calc(var(--kompakt) + 62px); }
+  body.ark-kompakt .hilite-btn { bottom: calc(var(--kompakt) + 14px); }
+  body:not(.panel-collapsed) .nearme,
+  body:not(.panel-collapsed) .feedback,
+  body:not(.panel-collapsed) .tips-btn,
+  body:not(.panel-collapsed) .hilite-btn { opacity: 0; pointer-events: none; }
+}
+
+/* Mørkt tema */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:    #142019;
+  --ink:      #ECE5D5;
+  --ink-soft: #A9B7AD;
+  --open:     #6EE7A4;
+  --soon:     #EBC06E;
+  --closed:   #F5978B;
+  --mork-flate:  rgba(20,32,25,.92);
+  --mork-felt:   #0E1813;
+  --mork-strek:  rgba(255,255,255,.12);
+  --mork-strek-2: rgba(255,255,255,.07);
+  --kort-bak:    #16241C;
+  --kort-tekst:  #ECE5D5;
+  --kort-dempet: #A9B7AD;
+  --kort-strek:  rgba(255,255,255,.13);
+  --brikke-bak:  #1C2C23;
+  --brikke-paa:  #2E7D4F;
+  --brikke-paa-tekst: #FFFFFF;
+  --flate-bak:   #0F1914;
+}
+[data-theme="dark"] .panel { border-right-color: rgba(200,162,83,.42); box-shadow: 0 24px 64px rgba(0,0,0,.6), inset -1px 0 0 rgba(200,162,83,.18), var(--rim); }
+[data-theme="dark"] #map { background: #1b1f1d; }
+[data-theme="dark"] .leaflet-control-zoom a { background: var(--mork-flate) !important; color: var(--ivory) !important; border-bottom: 1px solid var(--mork-strek) !important; }
+[data-theme="dark"] .leaflet-control-attribution { background: rgba(20,32,25,.82) !important; color: var(--ink-soft); }
+[data-theme="dark"] .leaflet-control-attribution a { color: var(--gold-soft); }
+[data-theme="dark"] .mini-filters option { color: var(--ink); background: var(--paper); }
+
+[data-theme="dark"] .leaflet-popup-content-wrapper, [data-theme="dark"] .leaflet-popup-tip { background: var(--mork-flate); color: var(--ink); box-shadow: 0 18px 46px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08); }
+[data-theme="dark"] .leaflet-container a.leaflet-popup-close-button { color: var(--ink-soft); }
+[data-theme="dark"] .pop-badge[data-s="verifisert"] { background: rgba(110,231,164,.13); color: #8CEDB8; }
+[data-theme="dark"] .pop-badge[data-s="delvis"]     { background: rgba(255,169,77,.14);  color: #FFC489; }
+[data-theme="dark"] .pop-badge[data-s="uavklart"]   { background: rgba(255,255,255,.1); color: #CDD5D0; }
+[data-theme="dark"] .pop-verify, [data-theme="dark"] .pop-actions { border-top-color: var(--mork-strek); }
+[data-theme="dark"] .v-foot { border-top-color: var(--mork-strek-2); }
+[data-theme="dark"] .v-age.v-open { color: var(--ink-soft); }
+[data-theme="dark"] .leaflet-container a.pop-link { color: var(--gold-soft); }
+[data-theme="dark"] .pop-act { background: rgba(255,255,255,.05); border-color: var(--mork-strek); color: var(--ink); }
+[data-theme="dark"] .pop-act:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
+[data-theme="dark"] .pop-act.primary { background: var(--cert); border-color: var(--cert); color: #fff; }
+[data-theme="dark"] .pop-act.primary:hover { background: #379260; border-color: #379260; }
+
+[data-theme="dark"] .hilite { background: var(--mork-flate); box-shadow: 0 18px 46px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08); }
+[data-theme="dark"] .hrow:hover { background: rgba(255,255,255,.06); }
+[data-theme="dark"] .hilite-lukk { background: rgba(255,255,255,.05); border-color: var(--mork-strek); color: var(--ink); }
+[data-theme="dark"] .hilite-lukk:hover, [data-theme="dark"] .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
+[data-theme="dark"] .tips-lead { color: var(--gold-soft); background: rgba(200,162,83,.12); }
+[data-theme="dark"] .tips-scroll::before { background: linear-gradient(rgba(20,32,25,.96), rgba(20,32,25,0)); }
+[data-theme="dark"] .tips-scroll::after  { background: linear-gradient(rgba(20,32,25,0), rgba(20,32,25,.96)); }
+[data-theme="dark"] .tips-mer { background: var(--gold); color: #1b2620; }
+
+[data-theme="dark"] .kf-field input, [data-theme="dark"] .kf-field textarea, [data-theme="dark"] .kf-select { background-color: var(--mork-felt); border-color: var(--mork-strek); color: var(--ink); }
+[data-theme="dark"] .kf-field input::placeholder, [data-theme="dark"] .kf-field textarea::placeholder { color: #7E8C83; }
+[data-theme="dark"] .kf-req { color: var(--soon); }
+[data-theme="dark"] .kf-send { background: var(--cert); }
+[data-theme="dark"] .kf-send:hover { background: #379260; }
+[data-theme="dark"] .kf-ok { background: rgba(110,231,164,.13); color: #8CEDB8; }
+[data-theme="dark"] .kf-err { color: var(--closed); }
+[data-theme="dark"] .skjema-av { color: var(--gold-soft); background: rgba(200,162,83,.12); }
+
+[data-theme="dark"] .info-card { background: rgba(20,32,25,.96); color: var(--ink); }
+[data-theme="dark"] .info-section p { color: #CFD8D2; }
+[data-theme="dark"] .info-section a { color: var(--open); }
+[data-theme="dark"] .map-overlay { background: #1b1f1d; }
+[data-theme="dark"] .map-overlay code { background: var(--mork-felt); color: var(--gold-soft); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  [data-theme="dark"] .leaflet-popup-content-wrapper, [data-theme="dark"] .leaflet-popup-tip,
+  [data-theme="dark"] .hilite, [data-theme="dark"] .info-card { background: var(--paper); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel, .layer-chev, .hilite-btn { transition: none; }
+  .hilite, .hilite.open { transform: translate(-50%, -50%); transition: opacity .2s var(--ease-out); }
+  .toast, .toast.show { transform: translate(-50%, 0); transition: opacity .2s var(--ease-out); }
+  .nearme:active, .feedback:active, .reopen:active { transform: none; }
+  .filterark { transition: opacity .2s var(--ease-out); transform: none; opacity: 0; }
+  .filterark.apen { opacity: 1; }
+  .reopen, body.panel-collapsed .reopen { transform: none; }
+  .brand-mark, .sk-row, .nearme.loading svg, .hilite.counting .hilite-bar { animation: none; }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .panel { background: linear-gradient(180deg, #0E3D2C 0%, #0A2F21 100%); }
+  .nearme, .feedback, .hilite-btn, .reopen { background: var(--pill-solid); }
+  .nearme:hover, .feedback:hover, .hilite-btn:hover, .reopen:hover { background: var(--pill-solid-2); }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip, .hilite, .info-card { background: var(--paper); }
+}
+</style>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#0E3D2C">
+</head>
+<body>
+
+<div id="map"></div>
+
+<button class="nearme" id="nearme" aria-label="Finn steder nær meg">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+  <span>Nær meg</span>
+</button>
+
+<button class="feedback" id="feedback" aria-label="Send oss en tilbakemelding">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3a8.38 8.38 0 0 1 8.5 8.5z"/></svg>
+  <span>Si ifra</span>
+</button>
+
+<button class="tips-btn" id="tipsBtn" aria-label="Tips oss om en restaurant">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  <span>Tips oss</span>
+</button>
+
+<div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
+  <div class="hilite-bar" id="tipsBar"></div>
+  <p class="tips-lead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
+  <div class="hilite-head">
+    <h2>Kjenner du et sted?</h2>
+    <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
+  </div>
+  <div class="tips-scroll">
+  <div class="tips-body" id="tipsBody">
+    <form name="restauranttips" method="POST" id="tipsForm" class="kf">
+      <input type="hidden" name="form-name" value="restauranttips">
+      <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+      <label class="kf-field">Restaurantens navn <span class="kf-req">påkrevd</span>
+        <input type="text" name="restaurant" required autocomplete="off">
+      </label>
+      <label class="kf-field">Adresse eller by/bydel <span class="kf-opt">frivillig</span>
+        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17">
+      </label>
+      <label class="kf-field">Hva vet du om stedet? <span class="kf-req">påkrevd</span>
+        <select name="vurdering" class="kf-select" required>
+          <option value="">Velg ett</option>
+          <option>Helt halal</option>
+          <option>Halal mat, men serverer alkohol som drikke</option>
+          <option>Delvis halal – deler av menyen er ikke halal</option>
+          <option>Serverer svinekjøtt</option>
+          <option>Usikker – vil gjerne at dere sjekker</option>
+        </select>
+      </label>
+      <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …"></textarea>
+      </label>
+      <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+        <input type="text" name="kontakt" autocomplete="email">
+      </label>
+    </form>
+    <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
+    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
+  </div>
+  <span class="tips-mer" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+  </div>
+  <div class="hilite-foot tips-foot">
+    <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
+    <button class="hilite-lukk" id="tipsLukk" type="button">Lukk</button>
+  </div>
+</div>
+
+<button class="hilite-btn" id="hiliteBtn" aria-label="Vis utvalgte steder">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.4 5.3 5.6.6-4.2 3.9 1.2 5.6L12 15.6 6.9 18.4l1.2-5.6L4 8.9l5.6-.6z"/></svg>
+  <span>Utvalgte</span>
+</button>
+
+<div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" hidden>
+  <div class="hilite-bar" id="hiliteBar"></div>
+  <div class="hilite-head">
+    <h2>Utvalgte steder</h2>
+    <p id="hiliteSub">Fem utvalgte steder som vi mener du burde prøve.</p>
+  </div>
+  <div class="hilite-list" id="hiliteList"></div>
+  <div class="hilite-foot">
+    <button class="hilite-lukk" id="hiliteLukk" type="button">Lukk</button>
+  </div>
+</div>
+
+<button class="reopen" id="reopen" aria-label="Vis listen og filtrene">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+  <span>Steder <b id="reopenTall"></b></span>
+</button>
+
+<div class="toppfelt" id="toppfelt">
+  <div class="sokekort" id="sokekort">
+    <span class="sokemerke" aria-hidden="true">حلال</span>
+    <button class="filterknapp" id="filterknapp" type="button" aria-label="Åpne filtrene" aria-haspopup="dialog">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+      <span class="filterteller" id="filterTeller" hidden></span>
+    </button>
+  </div>
+  <div class="hurtigrad" id="hurtigrad" role="toolbar" aria-label="Hurtigfiltre"></div>
+</div>
+
+<aside class="panel" id="panel">
+  <button class="sheet-grab" id="sheetGrab" type="button" aria-label="Dra opp for hele listen" aria-expanded="false"><span></span></button>
+  <div class="ark-hode" id="arkHode">
+    <p class="ark-tall"><b id="arkTall">–</b> <span id="arkTallTekst">steder</span></p>
+    <ul class="forklaring" aria-label="Hva fargene betyr">
+      <li data-s="verifisert">Verifisert</li><li data-s="delvis">Delvis</li><li data-s="uavklart">Uavklart</li>
+    </ul>
+  </div>
+  <div class="panel-head">
+    <div class="head-top">
+      <div class="brand-mark">حلال</div>
+      <div class="brand-text">
+        <h1>Halalkartet</h1>
+        <span>Oslo</span>
+      </div>
+      <button class="collapse-btn" id="collapse" aria-label="Skjul panel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+    </div>
+
+    <div class="search-wrap">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="search" class="search" type="search" placeholder="Søk på navn, kjøkken eller adresse…" aria-label="Søk">
+      <span class="search-hint" aria-hidden="true">/</span>
+    </div>
+    <div class="mini-filters">
+      <select id="fBydel" aria-label="Filtrer på område"><option value="">Alle områder</option></select>
+      <select id="fCuisine" aria-label="Filtrer på kjøkken"><option value="">Alle kjøkken</option></select>
+      <select id="fPrice" aria-label="Filtrer på prisnivå">
+        <option value="">Alle priser</option>
+        <option value="1">$ · Rimelig</option>
+        <option value="2">$$ · Middels</option>
+        <option value="3">$$$ · Dyrere</option>
+      </select>
+      <select id="fOpen" aria-label="Filtrer på åpningstid">
+        <option value="">Alle åpningstider</option>
+        <option value="naa">Åpent nå</option>
+        <option value="soon">Stenger snart</option>
+        <option value="closed">Stengt</option>
+      </select>
+      <select id="fAlcohol" class="span2" aria-label="Filtrer på alkoholservering">
+        <option value="">Alkohol: alle steder</option>
+        <option value="ja">Halal mat, serverer alkohol</option>
+        <option value="nei">Ingen kjent alkoholservering</option>
+      </select>
+      <select id="fSort" class="span2" aria-label="Sorter listen">
+        <option value="">Sorter etter</option>
+        <option value="avstand">Nærmest meg</option>
+        <option value="navn">Navn A–Å</option>
+        <option value="pris">Pris lav–høy</option>
+      </select>
+    </div>
+    <div class="filter-status">
+      <span id="resultCount" aria-live="polite">Laster…</span>
+      <button class="reset" id="reset" disabled>Nullstill</button>
+    </div>
+  </div>
+
+  <div class="strict" id="strict"></div>
+
+  <div class="layers-label"><span class="lbl-wide">Halal-status</span><span class="lbl-narrow">Nærmest deg</span></div>
+  <div class="layers" id="layers">
+    <div class="sk" aria-hidden="true">
+      <div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div>
+    </div>
+  </div>
+
+  <div class="panel-foot">
+    <a data-info="om" tabindex="0" role="button">Om oss</a>
+    <a data-info="kontakt" tabindex="0" role="button">Kontakt oss</a>
+    <a data-info="personvern" tabindex="0" role="button">Personvern</a>
+    <a data-info="vilkar" tabindex="0" role="button">Vilkår</a>
+    <a data-info="faq" tabindex="0" role="button">FAQ</a>
+  </div>
+</aside>
+
+<div class="info-scrim" id="infoScrim">
+  <div class="info-card" role="dialog" aria-modal="true" aria-label="Informasjon">
+    <div class="info-head">
+      <span class="info-brand">حلال</span>
+      <div class="info-tabs">
+        <button class="info-tab active" data-tab="om">Om oss</button>
+        <button class="info-tab" data-tab="kontakt">Kontakt</button>
+        <button class="info-tab" data-tab="personvern">Personvern</button>
+        <button class="info-tab" data-tab="vilkar">Vilkår</button>
+        <button class="info-tab" data-tab="faq">FAQ</button>
+      </div>
+      <button class="info-close" id="infoClose" aria-label="Lukk">×</button>
+    </div>
+    <div class="info-body" id="infoBody">
+      <section class="info-section active" data-section="om">
+        <h2>Om oss</h2>
+        <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat i Oslo. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
+        <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
+        <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
+           <span class="info-badge" style="background:#D9600F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
+           <span class="info-badge" style="background:#636B67"></span> Grå betyr at vi ikke har rukket å bekrefte halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at du bør sjekke selv.</p>
+        <p>Pinnene har også tegn: hake, strek og spørsmålstegn. Da ser du forskjell selv om du ikke skiller fargene. Uavklarte steder er i tillegg firkantede.</p>
+        <p>Vi begynner i Oslo og legger til flere steder etter hvert, og på sikt flere byer. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
+      </section>
+      <section class="info-section" data-section="kontakt">
+        <h2>Kontakt oss</h2>
+        <p>Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.</p>
+        <p>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
+        <form name="tilbakemelding" method="POST" id="kontaktForm" class="kf">
+          <input type="hidden" name="form-name" value="tilbakemelding">
+      <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+          <label class="kf-field">Navn <span class="kf-opt">frivillig</span>
+            <input type="text" name="navn" autocomplete="name">
+          </label>
+          <label class="kf-field">Hvor kommer du fra? By eller bydel <span class="kf-opt">frivillig</span>
+            <input type="text" name="sted">
+          </label>
+          <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+            <input type="text" name="kontakt" id="kfKontakt" autocomplete="email">
+          </label>
+          <p class="kf-err" id="kfKontaktErr" hidden>Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.</p>
+          <label class="kf-field">Meldingen din <span class="kf-req">påkrevd</span>
+            <textarea name="melding" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="kf-send">Send inn</button>
+        </form>
+        <p class="kf-ok" id="kontaktOk" hidden>Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.</p>
+      </section>
+      <section class="info-section" data-section="personvern">
+        <h2>Personvern</h2>
+        <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
+        <h3>Ingen konto og ingen sporing</h3>
+        <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
+        <h3>Besøksstatistikk</h3>
+        <p>Vi teller hvor mange som besøker siden med Google Analytics, satt opp uten informasjonskapsler og med anonymisert IP-adresse. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
+        <h3>Posisjon</h3>
+        <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
+        <h3>Veibeskrivelse</h3>
+        <p>Trykker du på Veibeskrivelse, åpnes Google Maps i en ny fane med adressen til stedet. Da gjelder Googles egne vilkår og personvernregler, ikke våre.</p>
+        <h3>Skjemaet på kontaktsiden</h3>
+        <p>Sender du inn skjemaet, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+        <h3>Kart og drift</h3>
+        <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
+        <p class="muted">Sist oppdatert august 2026.</p>
+      </section>
+      <section class="info-section" data-section="vilkar">
+        <h2>Vilkår og betingelser</h2>
+        <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
+        <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
+        <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
+        <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
+        <p class="muted">Sist oppdatert august 2026.</p>
+      </section>
+      <section class="info-section" data-section="faq">
+        <h2>Ofte stilte spørsmål</h2>
+        <h3>Hva betyr fargene på kartet?</h3>
+        <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at vi ikke vet. Tegnene i pinnene skiller nivåene også: hake, strek og spørsmålstegn.</p>
+        <h3>Hvordan vet dere at et sted er halal?</h3>
+        <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+        <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå, og det står i kortet.</p>
+        <h3>Hva betyr dollartegnene?</h3>
+        <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå.</p>
+        <h3>Hvor pålitelige er åpningstidene?</h3>
+        <p>Klokkeslettene følger norsk tid uansett hvor du selv befinner deg. Grønt betyr åpent, gult at det stenger om under en time, og rødt at det er stengt.</p>
+        <p>Vær oppmerksom på at vi foreløpig bare har registrert når stedene <em>stenger</em>, ikke når de åpner. Tidlig på dagen kan et sted derfor vises som åpent selv om det ikke har åpnet ennå. Ring gjerne først hvis du er ute i god tid.</p>
+        <h3>Hva er «Utvalgte steder»?</h3>
+        <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
+        <h3>Kan jeg dele et sted med noen?</h3>
+        <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
+        <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
+        <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> nede til venstre på kartet, eller bruk skjemaet på kontaktsiden.</p>
+        <h3>Hvilke steder kommer med på kartet?</h3>
+        <p>Serverer stedet både halal mat og svin, kommer det med som <b>delvis halal</b> og merkes oransje, med en linje i kortet om hva som ikke er halal. Da kan du avgjøre selv om det er greit for deg. Steder uten noe halal på menyen kommer ikke med.</p>
+        <p>Serverer de alkohol å drikke, men ikke bruker det i maten, kan stedet merkes halal. Da står det en tydelig merknad i kortet om at de serverer halal mat, men også alkoholholdig drikke, så du kan bestemme selv.</p>
+        <p>Det samme gjelder når bare deler av menyen er halal av andre grunner: stedet merkes oransje, og kortet sier hva som gjelder.</p>
+        <h3>Dekker dere hele Norge?</h3>
+        <p>Vi begynner i Oslo og utvider til flere byer etter hvert.</p>
+        <h3>Koster det noe?</h3>
+        <p>Nei, Halalkartet er helt gratis å bruke.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="filterark" id="filterark" role="dialog" aria-modal="true" aria-labelledby="faTittel" hidden>
+  <header class="fa-hode">
+    <button class="fa-lukk" id="faLukk" type="button" aria-label="Lukk filtrene">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h2 id="faTittel">Filtre</h2>
+    <button class="fa-null" id="faNull" type="button">Nullstill</button>
+  </header>
+  <div class="fa-kropp" id="faKropp"></div>
+  <footer class="fa-fot"><button class="fa-vis" id="faVis" type="button">Vis steder</button></footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

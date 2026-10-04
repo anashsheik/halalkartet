@@ -1,0 +1,7 @@
+.vscode/
+.DS_Store
+node_modules/
+
+# Testene
+tests/node_modules/
+tests/.bygg/
