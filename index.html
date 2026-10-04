@@ -10,7 +10,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
 <script src="analytics.js"></script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Halalkartet · Finn halal mat i Oslo</title>
 <meta name="description" content="Halalkartet viser deg hvor du finner halal mat i Oslo, og hvor sikker halalstatusen er. Gratis, uten konto og uten sporing.">
 
@@ -73,8 +73,13 @@
   --brikke-paa:  #0E3D2C;
   --brikke-paa-tekst: #F2ECDE;
   --flate-bak:   #F7F2E7;
+  --flis-bak:    #E4EFE8;
+  --merke-v-bak: #E4F1E9; --merke-v: #1F6340;
+  --merke-d-bak: #FBE6D4; --merke-d: #9A4308;
+  --merke-u-bak: #ECEEEC; --merke-u: #454D49;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { height: 100%; margin: 0; overflow: hidden; }
 body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); background: var(--emerald); -webkit-font-smoothing: antialiased; overflow: hidden; }
 
@@ -103,12 +108,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 }
 .panel.collapsed { transform: translateX(-100%); }
 
-.sheet-grab { display: none; width: 100%; min-height: 44px; align-items: center; justify-content: center; background: none; border: 0; padding: 0; margin-bottom: -10px; cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; }
-.sheet-grab span { display: block; width: 58px; height: 5px; border-radius: 999px; background: rgba(255,255,255,.32); transform: scaleX(.79); transition: background .15s, transform .18s var(--ease-out); }
-.sheet-grab:active { cursor: grabbing; }
-.sheet-grab:active span, .sheet-grab:hover span { background: rgba(255,255,255,.42); }
-.sheet-grab:focus-visible span { background: var(--gold); }
-.lbl-narrow { display: none; }
 
 .panel-head { padding: 22px 22px 18px; border-bottom: 1px solid var(--hairline); }
 .head-top { display: flex; align-items: center; gap: 13px; }
@@ -361,7 +360,7 @@ body.panel-collapsed .hilite-btn { transform: none; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* Mobil: toppfelt og hurtigbrikker */
-.toppfelt, .ark-hode { display: none; }
+.toppfelt { display: none; }
 
 .toppfelt { position: fixed; z-index: 1100; left: 0; right: 0; top: 0; padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 0; pointer-events: none; }
 .toppfelt > * { pointer-events: auto; }
@@ -382,15 +381,6 @@ body.panel-collapsed .hilite-btn { transform: none; }
 .hbrikke[aria-pressed="true"], .hbrikke.satt { background: var(--brikke-paa); border-color: var(--brikke-paa); color: var(--brikke-paa-tekst); }
 .hbrikke.satt .x { opacity: .85; }
 
-.ark-hode { padding: 0 18px 12px; }
-.ark-tall { margin: 0; font-size: 15px; color: var(--ivory-dim); }
-.ark-tall b { color: var(--ivory); font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.forklaring { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; padding: 0; list-style: none; font-size: 12px; font-weight: 600; color: var(--ivory-dim); }
-.forklaring li { display: inline-flex; align-items: center; gap: 6px; }
-.forklaring li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; }
-.forklaring li[data-s="verifisert"]::before { background: var(--cert-p); }
-.forklaring li[data-s="delvis"]::before { background: var(--self-p); }
-.forklaring li[data-s="uavklart"]::before { background: var(--owned-p); border-radius: 3px; }
 
 /* Filterarket */
 .filterark { position: fixed; inset: 0; z-index: 2600; display: flex; flex-direction: column; background: var(--kort-bak); color: var(--kort-tekst); transform: translateY(100%); transition: transform .34s var(--ease-drawer); }
@@ -429,42 +419,6 @@ body.panel-collapsed .hilite-btn { transform: none; }
 
 /* Mobil */
 @media (max-width: 720px) {
-  :root { --peek: 340px; --kompakt: 170px; --ark-h: calc(100vh - var(--toppfelt-h, 120px)); }
-  @supports (height: 100dvh) { :root { --ark-h: calc(100dvh - var(--toppfelt-h, 120px)); } }
-  .panel {
-    position: fixed;
-    top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: 100%;
-    height: var(--ark-h); border-right: 0;
-    border-top: 1px solid rgba(200,162,83,.2);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -14px 40px rgba(9,28,20,.34), var(--rim);
-  }
-  .panel.collapsed { transform: translateY(calc(var(--ark-h) - var(--peek))); }
-  .panel.collapsed.kompakt { transform: translateY(calc(var(--ark-h) - var(--kompakt))); }
-  .panel.kompakt .sheet-grab span { transform: scaleX(1); background: rgba(255,255,255,.5); }
-  .toppfelt { display: block; }
-  .ark-hode { display: block; }
-  .panel-head, .strict { display: none !important; }
-  .leaflet-control-zoom { display: none; }
-  .leaflet-top.leaflet-right { top: var(--toppfelt-h, 120px); }
-  .search-wrap { margin-top: 0; }
-  .layers { padding-bottom: 8px; }
-  .layers-label { padding: 14px 18px 6px; }
-  .panel.collapsed .layers { overflow-y: hidden; touch-action: none; }
-
-  .sheet-grab { display: flex; }
-  .layers-label, .ark-hode { touch-action: none; }
-  .lbl-wide { display: none; }
-  .lbl-narrow { display: inline; }
-
-  .reopen { display: none !important; }
-  .search-hint { display: none; }
-  .toast { bottom: calc(var(--peek) + 110px); }
-  .hilite-btn span { display: none; }
-  .hilite-btn { padding: 12px; transform: none; }
-  .hilite-btn:active { transform: translateY(1px); }
-  .tips-btn { transform: none; }
-  .tips-btn:active { transform: translateY(1px); }
   .tips { max-height: 88vh; max-height: 88dvh; }
   .tips-lead { padding: 7px 18px; font-size: 11.5px; line-height: 1.4; }
   .tips .hilite-head { padding: 10px 18px 6px; }
@@ -538,19 +492,135 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .tips-lead { padding: 6px 18px; font-size: 11px; }
 }
 
+/* Mobil: kart, liste, lagret og detaljer */
+.kartforklaring, .bunnark, .liste, .vis-kart, .fane, .mer, .detalj { display: none; }
+
 @media (max-width: 720px) {
-  .nearme { bottom: calc(var(--peek) + 14px); }
-  .feedback { bottom: calc(var(--peek) + 62px); }
-  .tips-btn { bottom: calc(var(--peek) + 62px); }
-  .hilite-btn { bottom: calc(var(--peek) + 14px); }
-  body.ark-kompakt .nearme { bottom: calc(var(--kompakt) + 14px); }
-  body.ark-kompakt .feedback { bottom: calc(var(--kompakt) + 62px); }
-  body.ark-kompakt .tips-btn { bottom: calc(var(--kompakt) + 62px); }
-  body.ark-kompakt .hilite-btn { bottom: calc(var(--kompakt) + 14px); }
-  body:not(.panel-collapsed) .nearme,
-  body:not(.panel-collapsed) .feedback,
-  body:not(.panel-collapsed) .tips-btn,
-  body:not(.panel-collapsed) .hilite-btn { opacity: 0; pointer-events: none; }
+  :root { --fane-h: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  .panel, .reopen, .feedback, .tips-btn, .hilite-btn, .tema-bryter, .leaflet-control-zoom { display: none !important; }
+  .toppfelt { display: block; }
+  .leaflet-top.leaflet-right { top: var(--toppfelt-h, 120px); }
+  .search-wrap { margin-top: 0; }
+  .search-hint { display: none; }
+  #map .leaflet-bottom { bottom: var(--bunn-topp, 180px); }
+  .toast { bottom: calc(var(--bunn-topp, 180px) + 90px); }
+
+  .nearme { right: 16px; bottom: calc(var(--bunn-topp, 180px) + 28px); width: 52px; height: 52px; padding: 0; justify-content: center; border-radius: 50%; background: var(--kort-bak); color: var(--kort-tekst); border: 1px solid var(--kort-strek); box-shadow: 0 6px 20px rgba(9,28,20,.2); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .nearme span { display: none; }
+  .nearme svg { width: 22px; height: 22px; color: var(--kort-tekst); }
+  .nearme:hover { background: var(--kort-bak); }
+
+  .kartforklaring { display: flex; position: fixed; z-index: 1000; left: 16px; bottom: calc(var(--bunn-topp, 180px) + 32px); gap: 14px; margin: 0; padding: 10px 16px; list-style: none; border-radius: 99px; background: var(--kort-bak); color: var(--kort-tekst); border: 1px solid var(--kort-strek); box-shadow: 0 6px 20px rgba(9,28,20,.16); font-size: 13px; font-weight: 700; }
+  .kartforklaring li { display: inline-flex; align-items: center; gap: 6px; }
+  .kartforklaring li::before { content: ""; width: 11px; height: 11px; border-radius: 50%; }
+  .kartforklaring li[data-s="verifisert"]::before { background: var(--cert); }
+  .kartforklaring li[data-s="delvis"]::before { background: var(--self); }
+  .kartforklaring li[data-s="uavklart"]::before { background: var(--owned); border-radius: 3px; }
+
+  .bunnark { display: block; position: fixed; z-index: 1100; left: 0; right: 0; bottom: var(--fane-h); padding: 6px 16px 14px; background: var(--kort-bak); color: var(--kort-tekst); border: 1px solid var(--kort-strek); border-bottom: 0; border-radius: 22px 22px 0 0; box-shadow: 0 -10px 30px rgba(9,28,20,.14); touch-action: none; }
+  .bunnark::before { content: ""; display: block; width: 40px; height: 5px; margin: 4px auto 6px; border-radius: 99px; background: var(--kort-strek); }
+  .bunn-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .bunn-tall { margin: 0; font-size: 17px; color: var(--kort-dempet); }
+  .bunn-tall b { color: var(--kort-tekst); font-weight: 800; }
+  .bunn-liste { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--open); font: 700 16px 'Manrope', sans-serif; cursor: pointer; }
+  .valgt { margin-top: 10px; }
+
+  body.vis-liste .bunnark, body.vis-liste .kartforklaring, body.vis-liste .nearme { display: none; }
+  body.vis-liste .toppfelt { background: var(--kort-bak); border-bottom: 1px solid var(--kort-strek); }
+  body.vis-liste .liste { display: block; position: fixed; z-index: 1050; left: 0; right: 0; top: calc(var(--toppfelt-h, 120px) - 6px); bottom: var(--fane-h); overflow-y: auto; overscroll-behavior: contain; padding: 16px 16px 100px; background: var(--flate-bak); color: var(--kort-tekst); }
+  body.fane-lagret .toppfelt { display: none; }
+  body.fane-lagret .liste { top: 0; padding-top: calc(env(safe-area-inset-top, 0px) + 18px); }
+  .liste-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 12px; }
+  .liste-tall { margin: 0; font: 800 18px 'Manrope', sans-serif; }
+  body.fane-lagret .liste-tall { font: 700 32px 'Cormorant Garamond', serif; }
+  .liste-sorter { position: relative; display: inline-flex; align-items: center; gap: 2px; font-size: 15px; font-weight: 600; color: var(--kort-dempet); }
+  .liste-sorter::after { content: ""; position: absolute; right: 6px; top: 50%; width: 7px; height: 7px; margin-top: -6px; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(45deg); pointer-events: none; }
+  .liste-sorter select { appearance: none; -webkit-appearance: none; min-height: 44px; padding: 0 24px 0 4px; border: 0; background: transparent; color: var(--kort-tekst); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
+  .liste-sorter select option { color: #1B2620; background: #fff; }
+  .liste-kort { display: grid; gap: 12px; }
+  .tom { padding: 28px 20px; text-align: center; font-size: 15px; line-height: 1.5; color: var(--kort-dempet); background: var(--kort-bak); border: 1px solid var(--kort-strek); border-radius: 18px; }
+  .tom b { display: block; margin-bottom: 4px; font-size: 17px; color: var(--kort-tekst); }
+
+  .lkort, .vkort { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 0 14px; align-items: start; padding: 14px; border: 1px solid var(--kort-strek); border-radius: 18px; }
+  .lkort { background: var(--kort-bak); box-shadow: 0 2px 10px rgba(9,28,20,.05); }
+  .flis { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 14px; background: var(--flis-bak); color: var(--open); }
+  .lkort h3, .vkort h3 { margin: 2px 0 0; font: 800 17px/1.25 'Manrope', sans-serif; color: var(--kort-tekst); }
+  .lkort-navn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .lkort-navn::after { content: ""; position: absolute; inset: 0; border-radius: 18px; }
+  .lkort-meta { margin: 3px 0 8px; font-size: 14px; color: var(--kort-dempet); }
+  .lkort-meta .price, .d-meta .price { color: inherit; font-weight: 600; }
+  .smerke { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 99px; font-size: 13px; font-weight: 700; }
+  .smerke svg { width: 13px; height: 13px; flex: none; }
+  .smerke[data-s="verifisert"] { background: var(--merke-v-bak); color: var(--merke-v); }
+  .smerke[data-s="delvis"] { background: var(--merke-d-bak); color: var(--merke-d); }
+  .smerke[data-s="uavklart"] { background: var(--merke-u-bak); color: var(--merke-u); }
+  .apent { margin: 8px 0 0; font-size: 14px; font-weight: 700; }
+  .apent.os-open, .d-apent.os-open { color: var(--open); }
+  .apent.os-soon, .d-apent.os-soon { color: var(--soon); }
+  .apent.os-closed, .d-apent.os-closed { color: var(--closed); }
+  .hjerte { position: relative; z-index: 1; width: 44px; height: 44px; margin: -8px -8px 0 0; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--kort-tekst); cursor: pointer; }
+  .hjerte[aria-pressed="true"] svg, .dknapp[aria-pressed="true"] svg { fill: var(--closed); stroke: var(--closed); }
+  .vkort-knapper { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .knapp { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 12px; border: 0; border-radius: 14px; background: var(--flate-bak); color: var(--kort-tekst); font: 700 16px 'Manrope', sans-serif; text-decoration: none; cursor: pointer; }
+  .knapp.primar { background: var(--brikke-paa); color: var(--brikke-paa-tekst); }
+
+  body.vis-liste:not(.fane-lagret) .vis-kart { display: inline-flex; position: fixed; z-index: 1200; left: 50%; bottom: calc(var(--fane-h) + 16px); transform: translateX(-50%); align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border: 0; border-radius: 99px; background: var(--kort-tekst); color: var(--kort-bak); font: 800 16px 'Manrope', sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,.28); cursor: pointer; }
+
+  .fane { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--kort-bak); border-top: 1px solid var(--kort-strek); }
+  .fane button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 700 12px 'Manrope', sans-serif; cursor: pointer; }
+  .fane button[aria-current="page"] { color: var(--open); }
+
+  .pin-navn { position: absolute; left: 50%; bottom: calc(100% + 12px); transform: translateX(-50%); padding: 6px 12px; border-radius: 10px; background: var(--kort-bak); color: var(--kort-tekst); font: 800 14px 'Manrope', sans-serif; white-space: nowrap; box-shadow: 0 4px 14px rgba(9,28,20,.22); pointer-events: none; }
+
+  .mer { display: flex; position: fixed; inset: 0; z-index: 2100; align-items: flex-end; background: rgba(9,24,17,.45); }
+  .mer-ark { width: 100%; max-height: 88vh; overflow-y: auto; padding: 4px 18px calc(env(safe-area-inset-bottom, 0px) + 18px); background: var(--kort-bak); color: var(--kort-tekst); border-radius: 22px 22px 0 0; transform: translateY(100%); transition: transform .3s var(--ease-drawer); }
+  .mer.apen .mer-ark { transform: none; }
+  .mer-hode { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; }
+  .mer-hode h2 { margin: 0; font: 800 18px 'Manrope', sans-serif; }
+  .mer-liste { margin: 0; padding: 0; list-style: none; }
+  .mer-liste button { width: 100%; min-height: 54px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--kort-strek); background: none; color: var(--kort-tekst); font: 700 16px 'Manrope', sans-serif; text-align: left; cursor: pointer; }
+  .mer-tema { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 2px 4px; }
+  .mer-tema b { font-size: 16px; }
+  .mer-tema p { margin: 3px 0 0; font-size: 13px; line-height: 1.4; color: var(--kort-dempet); }
+
+  .detalj { display: block; position: fixed; inset: 0; z-index: 2200; overflow-y: auto; overscroll-behavior: contain; background: var(--flate-bak); color: var(--kort-tekst); opacity: 0; transform: translateY(18px); transition: opacity .22s var(--ease-out), transform .3s var(--ease-drawer); }
+  .detalj.apen { opacity: 1; transform: none; }
+  .d-topp { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; margin-bottom: -76px; padding: calc(env(safe-area-inset-top, 0px) + 14px) 16px 14px; pointer-events: none; }
+  .d-topp > * { pointer-events: auto; }
+  .d-luft { flex: 1; }
+  .d-rund { width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: var(--kort-bak); color: var(--kort-tekst); box-shadow: 0 4px 14px rgba(9,28,20,.18); cursor: pointer; }
+  .hjerte.d-rund { margin: 0; }
+  .d-hero { height: 220px; display: grid; place-items: center; background: var(--flis-bak); color: var(--open); }
+  .d-kropp { position: relative; margin-top: -24px; padding: 20px 16px calc(env(safe-area-inset-bottom, 0px) + 28px); background: var(--flate-bak); border-radius: 24px 24px 0 0; }
+  .d-kropp h2 { margin: 12px 0 6px; font: 700 34px/1.1 'Cormorant Garamond', serif; }
+  .d-meta { margin: 0; font-size: 16px; color: var(--kort-dempet); }
+  .d-apent { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; font-size: 16px; font-weight: 700; }
+  .d-apent::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
+  .d-beskr { margin: 12px 0 0; font-size: 15px; line-height: 1.5; }
+  .d-knapper { display: grid; gap: 10px; margin: 18px 0; }
+  .dknapp { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 76px; padding: 10px 4px; border: 1px solid var(--kort-strek); border-radius: 16px; background: var(--kort-bak); color: var(--kort-tekst); font: 700 14px 'Manrope', sans-serif; text-align: center; text-decoration: none; cursor: pointer; }
+  .dknapp.primar { background: var(--brikke-paa); border-color: var(--brikke-paa); color: var(--brikke-paa-tekst); }
+  .d-boks { margin: 0 0 14px; padding: 18px; background: var(--kort-bak); border: 1px solid var(--kort-strek); border-radius: 18px; }
+  .d-bevis { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; }
+  .d-skjold { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 12px; background: var(--flis-bak); color: var(--open); }
+  .d-bevis h3 { margin: 0 0 4px; font: 800 17px 'Manrope', sans-serif; }
+  .d-bevis p { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
+  .d-bevis .d-naar { font-size: 13px; color: var(--kort-dempet); }
+  .d-kilde { color: var(--kort-dempet); }
+  .d-lenke { padding: 8px 0 0; border: 0; background: none; color: var(--open); font: 700 15px 'Manrope', sans-serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .d-info { padding: 0 18px; list-style: none; }
+  .d-info li { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 0; border-bottom: 1px solid var(--kort-strek); font-size: 16px; }
+  .d-info li:last-child { border-bottom: 0; }
+  .d-info svg { flex: none; color: var(--kort-dempet); }
+  .d-info a { color: var(--open); font-weight: 700; }
+  .d-kartboks { padding: 0; overflow: hidden; }
+  .d-kart { height: 170px; background: #eae4d6; }
+  .d-kartlenke { display: flex; align-items: center; justify-content: center; min-height: 54px; border-top: 1px solid var(--kort-strek); color: var(--open); font: 700 16px 'Manrope', sans-serif; text-decoration: none; }
+
+  .bunnark :focus-visible, .liste :focus-visible, .fane :focus-visible, .mer :focus-visible, .detalj :focus-visible,
+  .vis-kart:focus-visible, .nearme:focus-visible { outline: 3px solid var(--open); outline-offset: 2px; box-shadow: none; }
+  .lkort-navn:focus-visible { outline: none; }
+  .lkort-navn:focus-visible::after { outline: 3px solid var(--open); outline-offset: 2px; }
 }
 
 /* Mørkt tema */
@@ -574,6 +644,10 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   --brikke-paa:  #2E7D4F;
   --brikke-paa-tekst: #FFFFFF;
   --flate-bak:   #0F1914;
+  --flis-bak:    rgba(110,231,164,.12);
+  --merke-v-bak: rgba(110,231,164,.13); --merke-v: #8CEDB8;
+  --merke-d-bak: rgba(255,169,77,.14);  --merke-d: #FFC489;
+  --merke-u-bak: rgba(255,255,255,.1);  --merke-u: #CDD5D0;
 }
 [data-theme="dark"] .panel { border-right-color: rgba(200,162,83,.42); box-shadow: 0 24px 64px rgba(0,0,0,.6), inset -1px 0 0 rgba(200,162,83,.18), var(--rim); }
 [data-theme="dark"] #map { background: #1b1f1d; }
@@ -749,13 +823,6 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 </div>
 
 <aside class="panel" id="panel">
-  <button class="sheet-grab" id="sheetGrab" type="button" aria-label="Dra opp for hele listen" aria-expanded="false"><span></span></button>
-  <div class="ark-hode" id="arkHode">
-    <p class="ark-tall"><b id="arkTall">–</b> <span id="arkTallTekst">steder</span></p>
-    <ul class="forklaring" aria-label="Hva fargene betyr">
-      <li data-s="verifisert">Verifisert</li><li data-s="delvis">Delvis</li><li data-s="uavklart">Uavklart</li>
-    </ul>
-  </div>
   <div class="panel-head">
     <div class="head-top">
       <div class="brand-mark">حلال</div>
@@ -808,7 +875,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 
   <div class="strict" id="strict"></div>
 
-  <div class="layers-label"><span class="lbl-wide">Halal-status</span><span class="lbl-narrow">Nærmest deg</span></div>
+  <div class="layers-label">Halal-status</div>
   <div class="layers" id="layers">
     <div class="sk" aria-hidden="true">
       <div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div>
@@ -939,6 +1006,67 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <div class="fa-kropp" id="faKropp"></div>
   <footer class="fa-fot"><button class="fa-vis" id="faVis" type="button">Vis steder</button></footer>
 </div>
+
+<ul class="kartforklaring" id="kartforklaring" aria-label="Hva fargene betyr">
+  <li data-s="verifisert">Verifisert</li><li data-s="delvis">Delvis</li><li data-s="uavklart">Uavklart</li>
+</ul>
+
+<section class="bunnark" id="bunnark" aria-label="Steder på kartet">
+  <div class="bunn-hode">
+    <p class="bunn-tall"><b id="bunnTall">–</b> <span id="bunnTekst">steder</span></p>
+    <button class="bunn-liste" id="visListe" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/></svg>Vis liste</button>
+  </div>
+  <div class="valgt" id="valgt" hidden></div>
+</section>
+
+<section class="liste" id="liste" aria-labelledby="listeTall">
+  <div class="liste-hode">
+    <h2 class="liste-tall" id="listeTall">Steder</h2>
+    <label class="liste-sorter" id="listeSorter">Sorter:
+      <select id="listeSort">
+        <option value="">Anbefalt</option>
+        <option value="avstand">Nærmest</option>
+        <option value="navn">Navn A–Å</option>
+        <option value="pris">Pris lav–høy</option>
+      </select>
+    </label>
+  </div>
+  <div class="liste-kort" id="listeKort"></div>
+</section>
+
+<button class="vis-kart" id="visKart" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>Vis kart</button>
+
+<nav class="fane" id="fane" aria-label="Hovedmeny">
+  <button type="button" data-fane="utforsk" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/></svg><span>Utforsk</span></button>
+  <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg><span>Lagret</span></button>
+  <button type="button" data-fane="tips"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Tips oss</span></button>
+  <button type="button" data-fane="mer" id="faneMer" aria-haspopup="dialog"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Mer</span></button>
+</nav>
+
+<div class="mer" id="mer" role="dialog" aria-modal="true" aria-labelledby="merTittel" hidden>
+  <div class="mer-ark">
+    <header class="mer-hode">
+      <h2 id="merTittel">Mer</h2>
+      <button class="fa-lukk" id="merLukk" type="button" aria-label="Lukk">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </header>
+    <ul class="mer-liste">
+      <li><button type="button" data-mer="hilite">Utvalgte steder</button></li>
+      <li><button type="button" data-mer="kontakt">Si ifra eller kontakt oss</button></li>
+      <li><button type="button" data-mer="om">Om oss</button></li>
+      <li><button type="button" data-mer="faq">Ofte stilte spørsmål</button></li>
+      <li><button type="button" data-mer="personvern">Personvern</button></li>
+      <li><button type="button" data-mer="vilkar">Vilkår</button></li>
+    </ul>
+    <div class="mer-tema">
+      <div><b id="merTemaTekst">Mørkt tema</b><p>Følger sola i Oslo. Et valg her gjelder til neste soloppgang eller solnedgang.</p></div>
+      <button type="button" class="bryter" id="merTema" role="switch" aria-labelledby="merTemaTekst" aria-checked="false"></button>
+    </div>
+  </div>
+</div>
+
+<div class="detalj" id="detalj" role="dialog" aria-modal="true" aria-labelledby="detaljNavn" hidden></div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

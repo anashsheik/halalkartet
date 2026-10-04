@@ -229,7 +229,6 @@ function showLoadError(err) {
   el('layers').innerHTML =
     '<div class="no-results"><b>Fant ikke dataene</b>' +
     'Kartet fikk ikke lastet <code>spots.json</code>. Prøv å laste siden på nytt.</div>';
-  if (window.innerWidth <= 720) togglePanel(true);
   const overlay = document.createElement('div');
   overlay.className = 'map-overlay';
   overlay.innerHTML =
@@ -248,12 +247,15 @@ function initApp() {
     .forEach(c => el('fCuisine').add(new Option(c, c)));
 
   HALAL_SPOTS.forEach(s => {
-    const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) })
-      .bindPopup(popupHtml(s), { closeButton: true, minWidth: 236, maxWidth: 300, autoPan: false });
-    m.on('click', () => { if (erMobil() && arkTrinn > 0) settArk(0); setActive(s.id, false); });
+    const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) });
+    m.on('click', () => {
+      setActive(s.id, false);
+      if (erMobil()) etterKortet(function () { holdPunktFritt(s.id); });
+    });
     m.on('popupclose', () => { if (activeId === s.id) setActive(null); });
     markers[s.id] = m;
   });
+  kobleKort();
 
   ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlcohol', 'fSort'].forEach(id => {
     const x = el(id);
@@ -290,8 +292,8 @@ function initApp() {
   });
   el('collapse').addEventListener('click', () => togglePanel(true));
   el('reopen').addEventListener('click', () => togglePanel(false));
-  wireSheet();
   wireMobilskall();
+  wireMobil();
   wireTipsHint();
   wireNearMe();
   wireInfo();
@@ -302,8 +304,6 @@ function initApp() {
   wireShortcuts();
   wireSheets();
   el('feedback').addEventListener('click', function () { openInfo('kontakt'); });
-  if (window.innerWidth <= 720) togglePanel(true);
-
   render();
   const deepLinked = applyHash();
 
@@ -313,7 +313,6 @@ function initApp() {
 }
 
 function togglePanel(collapse) {
-  if (erMobil()) { settArk(collapse ? 1 : 2); return; }
   const panel = el('panel');
   const hadFokus = panel.contains(document.activeElement);
   panel.classList.toggle('collapsed', collapse);
@@ -321,126 +320,17 @@ function togglePanel(collapse) {
   panel.inert = collapse;
   if (collapse && hadFokus) el('reopen').focus();
   else if (!collapse && document.activeElement === el('reopen')) el('collapse').focus();
-  const g = el('sheetGrab');
-  if (g) g.setAttribute('aria-expanded', String(!collapse));
   setTimeout(() => map.invalidateSize(), 320);
 }
 
-// Bunnarket på mobil
-let arkTrinn = 1;
-
-function px(navn, fallback) {
-  const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(navn));
-  return isNaN(v) ? fallback : v;
-}
-
-function oppdaterKompakt() {
-  const panel = el('panel'),
-        note = erMobil() ? el('arkHode') : document.querySelector('.strict-note');
-  if (!panel || !note) return;
-  if (!panel.classList.contains('collapsed')) return;
-  const h = Math.round(note.getBoundingClientRect().bottom - panel.getBoundingClientRect().top) + 12;
-  if (h > 60) document.documentElement.style.setProperty('--kompakt', h + 'px');
-}
-
-function settArk(trinn) {
-  arkTrinn = Math.max(0, Math.min(2, trinn));
-  const panel = el('panel'), hank = el('sheetGrab');
-  panel.inert = false;
-  panel.classList.toggle('collapsed', arkTrinn < 2);
-  panel.classList.toggle('kompakt', arkTrinn === 0);
-  oppdaterKompakt();
-  document.body.classList.toggle('panel-collapsed', arkTrinn < 2);
-  document.body.classList.toggle('ark-kompakt', arkTrinn === 0);
-  if (hank) {
-    hank.setAttribute('aria-expanded', String(arkTrinn === 2));
-    hank.setAttribute('aria-label', arkTrinn === 0 ? 'Dra opp for stedene'
-      : arkTrinn === 1 ? 'Dra opp for hele listen' : 'Legg ned listen');
-  }
-  setTimeout(function () { map.invalidateSize(); }, 320);
-}
-
-function wireSheet() {
-  const hank = el('sheetGrab'), panel = el('panel');
-  if (!hank || !panel) return;
-  let y0 = null, dy = 0, start = false, flyttet = false, fraHank = false;
-
-  const hoyde = () => panel.getBoundingClientRect().height;
-  const forskyv = t => t === 2 ? 0
-    : t === 1 ? hoyde() - px('--peek', 340)
-    : hoyde() - px('--kompakt', 170);
-
-  const DRAFELT  = '.sheet-grab, .ark-hode, .panel-head, .strict, .layers-label';
-  const KONTROLL = 'button:not(.sheet-grab), select, textarea, a, [role="button"]';
-  function kanDra(mal) {
-    if (!erMobil() || !mal || !mal.closest) return false;
-    if (hank.contains(mal)) return true;
-    if (arkTrinn < 2 && mal.closest('#layers')) return true;
-    if (mal.closest(KONTROLL)) return false;
-    return !!mal.closest(DRAFELT);
-  }
-
-  panel.addEventListener('pointerdown', function (e) {
-    if (!kanDra(e.target)) return;
-    y0 = e.clientY; dy = 0; start = true; flyttet = false;
-    fraHank = hank.contains(e.target);
-    panel.style.transition = 'none';
-  });
-  panel.addEventListener('pointermove', function (e) {
-    if (!start) return;
-    dy = e.clientY - y0;
-    if (Math.abs(dy) > 6 && !flyttet) {
-      flyttet = true;
-      // fang pekeren først ved bevegelse, ellers går klikket til panelet
-      try { panel.setPointerCapture(e.pointerId); } catch (err) {}
-    }
-    if (!flyttet) return;
-    const y = Math.max(-24, Math.min(forskyv(0) + 24, forskyv(arkTrinn) + dy));
-    panel.style.transform = 'translateY(' + y + 'px)';
-  });
-  const veksel = () => settArk(arkTrinn === 0 ? 1 : arkTrinn === 1 ? 2 : 1);
-  let sistPeker = 0, sistDrag = 0;
-
-  const slipp = function (e) {
-    if (!start) return;
-    start = false;
-    sistPeker = Date.now();
-    panel.style.transition = '';
-    panel.style.transform = '';
-    if (e && e.pointerId != null && panel.hasPointerCapture(e.pointerId)) panel.releasePointerCapture(e.pointerId);
-    if (!flyttet) {
-      if (fraHank) veksel();
-      return;
-    }
-    sistDrag = Date.now();
-    if (dy < -60) settArk(arkTrinn + 1);
-    else if (dy > 60) settArk(arkTrinn - 1);
-    else settArk(arkTrinn);
-  };
-  panel.addEventListener('pointerup', slipp);
-  panel.addEventListener('pointercancel', slipp);
-  panel.addEventListener('click', function (e) {
-    if (Date.now() - sistDrag < 400) { e.preventDefault(); e.stopPropagation(); return; }
-    if (Date.now() - sistPeker < 600) return;
-    const r = hank.getBoundingClientRect();
-    const traff = hank.contains(e.target) ||
-      (e.clientY >= r.top && e.clientY <= r.bottom && e.clientY > 0);
-    if (traff) veksel();
-  }, true);
-  hank.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); settArk(arkTrinn === 2 ? 1 : arkTrinn + 1); }
-    if (e.key === 'ArrowUp') { e.preventDefault(); settArk(arkTrinn + 1); }
-    if (e.key === 'ArrowDown') { e.preventDefault(); settArk(arkTrinn - 1); }
-  });
-}
-
-function makeIcon(status, big) {
+function makeIcon(status, big, navn) {
   const st = STATUS[status];
   const d = big ? 28 : 22;
   return L.divIcon({
     className: '', iconSize: [d, d], iconAnchor: [d / 2, d / 2],
     popupAnchor: [0, -(d / 2 + 4)],
-    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape + '">' + st.tegn + '</div>'
+    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape + '">' + st.tegn + '</div>' +
+      (navn ? '<span class="pin-navn">' + esc(navn) + '</span>' : '')
   });
 }
 
@@ -520,8 +410,7 @@ function popupHtml(s) {
     rows.push(iconRow('globe', '<a class="pop-link" href="' + esc(site) + '" target="_blank" rel="noopener">Nettside ↗</a>'));
   }
 
-  const dir = 'https://www.google.com/maps/dir/?api=1&destination=' +
-    encodeURIComponent(s.address ? s.name + ', ' + s.address : s.lat + ',' + s.lng);
+  const dir = ruteUrl(s);
 
   return '<div class="pop-name">' + esc(s.name) + '</div>' +
     '<div class="pop-meta">' + esc(s.cuisines.join(' · ')) + ' &nbsp;·&nbsp; ' + priceLabel(s.price) + '</div>' +
@@ -594,7 +483,6 @@ function render() {
   klynge.addLayers(paaKart.map(s => markers[s.id]));
 
   renderStrict(filtered);
-  if (erMobil()) requestAnimationFrame(oppdaterKompakt);
 
   const box = el('layers');
   box.innerHTML = '';
@@ -645,6 +533,7 @@ function render() {
   if (el('reopenTall')) el('reopenTall').textContent = visibleCount;
   el('reset').disabled = !anyFilter;
   visAktiveFiltre();
+  tegnMobil();
 }
 
 // Mobil: toppfelt og hurtigbrikker
@@ -714,19 +603,19 @@ function byggHurtigrad() {
 function oppdaterSkall() {
   const f = currentFilters();
   const n = HALAL_SPOTS.filter(function (s) { return passes(s, f) && layerOn[s.halalStatus]; }).length;
-  if (el('arkTall')) el('arkTall').textContent = n;
-  if (el('arkTallTekst')) el('arkTallTekst').textContent = (n === 1 ? 'sted' : 'steder') +
-    (n === HALAL_SPOTS.length ? '' : ' passer');
+  const omrade = el('fBydel').value;
+  el('bunnTall').textContent = n;
+  el('bunnTekst').textContent = (n === 1 ? 'sted' : 'steder') + (omrade ? ' i ' + omrade : '');
   const a = antallAktive(), t = el('filterTeller');
   if (t) { t.hidden = !a; t.textContent = a; }
   if (el('filterknapp')) el('filterknapp').setAttribute('aria-label', a ? 'Åpne filtrene, ' + a + ' på' : 'Åpne filtrene');
   byggHurtigrad();
-  const t2 = el('toppfelt');
-  if (t2 && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t2.getBoundingClientRect().height + 6) + 'px');
+  maalToppfelt();
   if (el('filterark') && !el('filterark').hidden) tegnFilterark(n);
 }
 
 // Filterarket
+const BAKGRUNN = ['map', 'panel', 'toppfelt', 'nearme', 'feedback', 'tipsBtn', 'hiliteBtn', 'bunnark', 'liste', 'visKart', 'fane', 'kartforklaring'];
 let faApnetFra = null, faVisAlle = { kjokken: false, omrade: false };
 
 function velgEn(id, verdi) {
@@ -802,7 +691,7 @@ function apneFilterark(del) {
   faApnetFra = document.activeElement;
   ark.hidden = false;
   oppdaterSkall();
-  ['map', 'panel', 'toppfelt', 'nearme', 'feedback', 'tipsBtn', 'hiliteBtn'].forEach(function (id) { if (el(id)) el(id).inert = true; });
+  BAKGRUNN.forEach(function (id) { if (el(id)) el(id).inert = true; });
   requestAnimationFrame(function () {
     ark.classList.add('apen');
     const kropp = el('faKropp');
@@ -817,7 +706,7 @@ function lukkFilterark() {
   const ark = el('filterark');
   if (ark.hidden) return;
   ark.classList.remove('apen');
-  ['map', 'panel', 'toppfelt', 'nearme', 'feedback', 'tipsBtn', 'hiliteBtn'].forEach(function (id) { if (el(id)) el(id).inert = false; });
+  BAKGRUNN.forEach(function (id) { if (el(id)) el(id).inert = false; });
   if (el('panel') && !erMobil()) el('panel').inert = el('panel').classList.contains('collapsed');
   setTimeout(function () { if (!ark.classList.contains('apen')) ark.hidden = true; }, reduceMotion ? 220 : 360);
   if (faApnetFra && faApnetFra.focus && document.contains(faApnetFra)) faApnetFra.focus();
@@ -855,7 +744,419 @@ function wireMobilskall() {
     if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
     else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
   });
-  el('search').addEventListener('focus', function () { if (erMobil() && arkTrinn === 0) settArk(1); });
+  el('search').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && erMobil()) { e.preventDefault(); el('search').blur(); settVisning('liste'); }
+  });
+}
+
+// Mobil: kart, liste, lagret og detaljer
+const SVG = (w, sti, ekstra) => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"' + (ekstra || '') + '>' + sti + '</svg>';
+const IKON2 = {
+  kniv:    w => SVG(w, '<path d="M7 3v8M4.5 3v5a2.5 2.5 0 005 0V3M7 11v10"/><path d="M17 21V3c-2.2 1.2-3.5 3.8-3.5 7.5 0 1.8 1 3 3.5 3"/>'),
+  hjerte:  SVG(22, '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/>'),
+  rute:    SVG(20, '<path d="M3 11l19-9-9 19-2-8-8-2z"/>'),
+  liste:   SVG(20, '<path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke-width="3"/>'),
+  kart:    SVG(20, '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>'),
+  telefon: SVG(22, '<path d="M5 4h4l2 5-3 2a11 11 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>'),
+  globus:  SVG(22, '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/>'),
+  del:     SVG(20, '<path d="M12 3v13M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/>'),
+  tilbake: SVG(22, '<polyline points="15 18 9 12 15 6"/>'),
+  skjold:  SVG(22, '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><polyline points="9 12 11 14 15 10"/>'),
+  sted:    SVG(22, '<path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>'),
+  klokke:  SVG(22, '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+  glass:   SVG(22, '<path d="M8 3h8l-1 7a3 3 0 01-6 0L8 3zM12 13v8M9 21h6"/>')
+};
+
+let visning = 'kart', fane = 'utforsk', kortModus = null;
+let detaljFra = null, detaljKart = null, merFra = null;
+
+function kobleKort() {
+  const mobil = erMobil();
+  if (mobil === kortModus) return;
+  kortModus = mobil;
+  const aktiv = activeId;
+  map.closePopup();
+  HALAL_SPOTS.forEach(function (s) {
+    const m = markers[s.id];
+    if (mobil) m.unbindPopup();
+    else m.bindPopup(popupHtml(s), { closeButton: true, minWidth: 236, maxWidth: 300, autoPan: false });
+  });
+  if (!mobil) { visning = 'kart'; fane = 'utforsk'; document.body.classList.remove('vis-liste', 'fane-lagret'); }
+  if (aktiv) {
+    setActive(aktiv, false);
+    if (!mobil && markers[aktiv].getElement()) markers[aktiv].openPopup();
+  }
+}
+
+function ruteUrl(s) {
+  return 'https://www.google.com/maps/dir/?api=1&destination=' +
+    encodeURIComponent(s.address ? s.name + ', ' + s.address : s.lat + ',' + s.lng);
+}
+function kartAppUrl(s) {
+  const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  return ios ? 'https://maps.apple.com/?q=' + encodeURIComponent(s.name) + '&ll=' + s.lat + ',' + s.lng
+    : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + (s.address ? ', ' + s.address : ''));
+}
+
+function statusMerke(s) {
+  return '<span class="smerke" data-s="' + esc(s.halalStatus) + '">' + STATUS[s.halalStatus].tegn + STATUS[s.halalStatus].label + '</span>';
+}
+function apentLinje(s) {
+  const st = openState(s);
+  if (st.state === 'open') return { cls: 'os-open', tekst: 'Åpent · ' + st.label.toLowerCase() };
+  if (st.state === 'soon') {
+    const t = clockMinutes(s.hours);
+    return { cls: 'os-soon', tekst: 'Stenger snart' + (t === null ? '' : ' · ' + fmtClose(t)) };
+  }
+  if (st.state === 'closed') return { cls: 'os-closed', tekst: st.label };
+  return null;
+}
+function metaTekst(s) {
+  const deler = [];
+  if (userLoc) deler.push(fmtDist(dist(s)));
+  deler.push(s.cuisines.slice(0, 2).join(', '), s.bydel);
+  return deler.map(esc).join(' · ') + ' · ' + priceLabel(s.price);
+}
+
+// Lagret
+const LAGRET_NOKKEL = 'halalkartet-lagret';
+function lagrede() {
+  try { const v = JSON.parse(localStorage.getItem(LAGRET_NOKKEL)); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+}
+function erLagret(id) { return lagrede().indexOf(id) >= 0; }
+function hjerte(s, kls) {
+  const p = erLagret(s.id);
+  return '<button type="button" class="hjerte ' + (kls || '') + '" data-lagre="' + esc(s.id) + '" aria-pressed="' + p +
+    '" aria-label="' + (p ? 'Fjern ' + esc(s.name) + ' fra Lagret' : 'Lagre ' + esc(s.name)) + '">' + IKON2.hjerte + '</button>';
+}
+function oppdaterHjerte(b) {
+  const s = byId(b.dataset.lagre);
+  if (!s) return;
+  const p = erLagret(s.id);
+  b.setAttribute('aria-pressed', String(p));
+  if (b.dataset.tekst) b.querySelector('span').textContent = p ? 'Lagret' : 'Lagre';
+  else b.setAttribute('aria-label', p ? 'Fjern ' + s.name + ' fra Lagret' : 'Lagre ' + s.name);
+}
+function byttLagret(id) {
+  const l = lagrede(), i = l.indexOf(id), s = byId(id);
+  if (i >= 0) l.splice(i, 1); else l.push(id);
+  try { localStorage.setItem(LAGRET_NOKKEL, JSON.stringify(l)); }
+  catch (e) { toast('Kunne ikke lagre på denne enheten'); return; }
+  toast(i >= 0 ? 'Fjernet fra Lagret' : 'Lagret på denne enheten');
+  track(i >= 0 ? 'lagret_fjernet' : 'lagret', { navn: s ? s.name : id });
+  document.querySelectorAll('[data-lagre]').forEach(function (b) { if (b.dataset.lagre === id) oppdaterHjerte(b); });
+  if (fane === 'lagret') tegnListe();
+}
+
+// Liste
+function synligeSteder() {
+  const f = currentFilters();
+  return HALAL_SPOTS.filter(function (s) { return passes(s, f) && layerOn[s.halalStatus]; });
+}
+function anbefalt(liste, mode) {
+  if (mode || userLoc) return sortItems(liste, mode);
+  return STATUS_ORDER.flatMap(function (st) { return liste.filter(function (s) { return s.halalStatus === st; }); });
+}
+function listekortHtml(s) {
+  const ap = apentLinje(s);
+  return '<article class="lkort" data-id="' + esc(s.id) + '">' +
+    '<span class="flis" aria-hidden="true">' + IKON2.kniv(26) + '</span>' +
+    '<div class="lkort-tekst">' +
+      '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
+      '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
+      statusMerke(s) +
+      (ap ? '<p class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
+    '</div>' + hjerte(s) + '</article>';
+}
+function tegnListe() {
+  const boks = el('listeKort');
+  if (!boks) return;
+  const lagretVis = fane === 'lagret';
+  const liste = lagretVis ? lagrede().map(byId).filter(Boolean) : anbefalt(synligeSteder(), el('fSort').value);
+  el('listeTall').textContent = lagretVis ? 'Lagret' : liste.length + (liste.length === 1 ? ' sted' : ' steder');
+  el('listeSorter').hidden = lagretVis;
+  el('listeSort').value = el('fSort').value;
+  if (!liste.length) {
+    boks.innerHTML = lagretVis
+      ? '<div class="tom"><b>Ingen lagrede steder ennå</b>Trykk på hjertet ved et sted for å lagre det. Lagrede steder ligger bare på denne enheten.</div>'
+      : '<div class="tom"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
+    return;
+  }
+  boks.innerHTML = liste.map(listekortHtml).join('');
+}
+
+// Kortet i bunnarket
+function bunnTopp() {
+  const b = el('bunnark');
+  if (b && b.getClientRects().length) return Math.round(window.innerHeight - b.getBoundingClientRect().top);
+  const f = el('fane');
+  return f && f.getClientRects().length ? Math.round(window.innerHeight - f.getBoundingClientRect().top) : 0;
+}
+function etterKortet(fn) {
+  requestAnimationFrame(function () {
+    document.documentElement.style.setProperty('--bunn-topp', bunnTopp() + 'px');
+    if (fn) fn();
+  });
+}
+function holdPunktFritt(id) {
+  const m = markers[id];
+  if (!m || !erMobil()) return;
+  const p = map.latLngToContainerPoint(m.getLatLng()), o = trygtOmrade();
+  const topp = o.topp + 44, bunn = o.bunn - 20;
+  let dx = 0, dy = 0;
+  if (p.y < topp) dy = p.y - topp; else if (p.y > bunn) dy = p.y - bunn;
+  if (p.x < o.venstre + 60) dx = p.x - (o.venstre + 60); else if (p.x > o.hoyre - 60) dx = p.x - (o.hoyre - 60);
+  if (Math.abs(dx) > 1 || Math.abs(dy) > 1) map.panBy([Math.round(dx), Math.round(dy)], { animate: !reduceMotion, duration: .25 });
+}
+function tegnValgt() {
+  const boks = el('valgt');
+  if (!boks) return;
+  const s = erMobil() && activeId ? byId(activeId) : null;
+  boks.hidden = !s;
+  if (!s) { boks.innerHTML = ''; etterKortet(); return; }
+  const ap = apentLinje(s);
+  boks.innerHTML =
+    '<article class="vkort" aria-labelledby="valgtNavn">' +
+      '<span class="flis" aria-hidden="true">' + IKON2.kniv(26) + '</span>' +
+      '<div class="lkort-tekst">' +
+        '<h3 id="valgtNavn">' + esc(s.name) + '</h3>' +
+        '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
+        statusMerke(s) +
+        (ap ? '<p class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
+      '</div>' + hjerte(s) +
+      '<div class="vkort-knapper">' +
+        '<a class="knapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + 'Veibeskrivelse</a>' +
+        '<button type="button" class="knapp" data-detalj="' + esc(s.id) + '">Se detaljer</button>' +
+      '</div>' +
+    '</article>';
+  etterKortet();
+}
+function tegnMobil() {
+  if (!erMobil() || !el('bunnark')) return;
+  if (document.body.classList.contains('vis-liste')) tegnListe();
+  tegnValgt();
+}
+
+function maalToppfelt() {
+  const t = el('toppfelt');
+  if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
+}
+function oppdaterVisning() {
+  const liste = fane === 'lagret' || visning === 'liste';
+  document.body.classList.toggle('vis-liste', liste);
+  document.body.classList.toggle('fane-lagret', fane === 'lagret');
+  document.querySelectorAll('#fane [data-fane]').forEach(function (b) {
+    if (b.dataset.fane === fane) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+  if (liste) tegnListe();
+  requestAnimationFrame(function () { maalToppfelt(); etterKortet(); if (!liste) map.invalidateSize(); });
+}
+function settVisning(v) {
+  if (!erMobil()) return;
+  visning = v; fane = 'utforsk';
+  oppdaterVisning();
+  track('visning', { visning: v });
+}
+function settFane(f) {
+  fane = f;
+  oppdaterVisning();
+  if (f === 'lagret') el('liste').scrollTop = 0;
+  track('fane', { fane: f });
+}
+
+// Detaljsiden
+function bevisHtml(s) {
+  const tittel = { verifisert: 'Verifisert halal', delvis: 'Delvis halal', uavklart: 'Ikke bekreftet ennå' }[s.halalStatus];
+  const liste = Array.isArray(s.verification) ? s.verification : (s.verification ? [{ tekst: s.verification }] : []);
+  const tekst = liste.map(function (v) {
+    return '<p>' + esc(v.tekst || '') + (v.kilde ? ' <span class="d-kilde">' + esc(v.kilde) + '</span>' : '') + '</p>';
+  }).join('');
+  const d = dagerSiden(s.lastVerified);
+  const naar = d === null ? 'Ikke bekreftet med dato ennå' : 'Sist bekreftet ' + fmtDato(s.lastVerified) + (d > 180 ? ', over et halvår siden' : '');
+  return '<section class="d-boks d-bevis" data-s="' + esc(s.halalStatus) + '">' +
+    '<span class="d-skjold" aria-hidden="true">' + IKON2.skjold + '</span><div>' +
+    '<h3>' + tittel + '</h3>' + (tekst || '<p>Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.</p>') +
+    '<p class="d-naar">' + naar + '. Halalkartet sertifiserer ikke selv.</p>' +
+    '<button type="button" class="d-lenke" data-faq>Hva betyr statusene?</button></div></section>';
+}
+function detaljHtml(s) {
+  const ap = apentLinje(s), lagret = erLagret(s.id);
+  const tel = s.phone ? String(s.phone).replace(/\s+/g, '') : '';
+  const site = safeUrl(s.website);
+  const knapper = [
+    '<a class="dknapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + '<span>Veibeskrivelse</span></a>',
+    tel ? '<a class="dknapp" href="tel:' + esc(tel) + '">' + IKON2.telefon + '<span>Ring</span></a>' : '',
+    site ? '<a class="dknapp" href="' + esc(site) + '" target="_blank" rel="noopener">' + IKON2.globus + '<span>Nettside</span></a>' : '',
+    '<button type="button" class="dknapp" data-lagre="' + esc(s.id) + '" data-tekst="1" aria-pressed="' + lagret + '">' + IKON2.hjerte + '<span>' + (lagret ? 'Lagret' : 'Lagre') + '</span></button>'
+  ].filter(Boolean);
+  const rad = function (ikon, innhold) { return '<li>' + ikon + '<span>' + innhold + '</span></li>'; };
+  const rader = [
+    rad(IKON2.sted, esc(s.address ? s.address + ', ' + s.bydel : s.bydel)),
+    rad(IKON2.klokke, esc(ap ? ap.tekst : (s.hours || 'Åpningstid ukjent'))),
+    rad(IKON2.glass, s.alcohol ? 'Serverer alkoholholdig drikke' : 'Ingen kjent alkoholservering')
+  ];
+  if (tel) rader.push(rad(IKON2.telefon, '<a href="tel:' + esc(tel) + '">' + esc(s.phone) + '</a>'));
+  return '<div class="d-topp">' +
+      '<button type="button" class="d-rund" id="detaljTilbake" aria-label="Tilbake">' + IKON2.tilbake + '</button>' +
+      '<span class="d-luft"></span>' +
+      '<button type="button" class="d-rund" data-act="del" data-id="' + esc(s.id) + '" aria-label="Del ' + esc(s.name) + '">' + IKON2.del + '</button>' +
+      hjerte(s, 'd-rund') +
+    '</div>' +
+    '<div class="d-hero" aria-hidden="true">' + IKON2.kniv(64) + '</div>' +
+    '<div class="d-kropp">' +
+      statusMerke(s) +
+      '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
+      '<p class="d-meta">' + esc(s.cuisines.join(', ')) + ' · ' + esc(s.bydel) + ' · ' + priceLabel(s.price) + '</p>' +
+      (ap ? '<p class="d-apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
+      (s.description ? '<p class="d-beskr">' + esc(s.description) + '</p>' : '') +
+      '<div class="d-knapper" style="grid-template-columns:repeat(' + knapper.length + ',1fr)">' + knapper.join('') + '</div>' +
+      bevisHtml(s) +
+      '<ul class="d-boks d-info">' + rader.join('') + '</ul>' +
+      '<div class="d-boks d-kartboks"><div class="d-kart" id="detaljKart"></div>' +
+        '<a class="d-kartlenke" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener">Åpne i Kart-appen</a></div>' +
+    '</div>';
+}
+function tegnDetaljKart(s) {
+  const boks = el('detaljKart');
+  if (!boks) return;
+  detaljKart = L.map(boks, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
+    boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
+  detaljKart.attributionControl.setPrefix(false);
+  L.tileLayer(flisUrl(temaNa()), { subdomains: 'abcd', maxZoom: 20, attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(detaljKart);
+  L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, true), keyboard: false, interactive: false }).addTo(detaljKart);
+}
+function apneDetalj(id) {
+  const s = byId(id), d = el('detalj');
+  if (!s || !d) return;
+  if (detaljKart) { detaljKart.remove(); detaljKart = null; }
+  if (d.hidden) detaljFra = document.activeElement;
+  d.innerHTML = detaljHtml(s);
+  d.hidden = false;
+  d.scrollTop = 0;
+  BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = true; });
+  if (!(history.state && history.state.detalj)) history.pushState({ detalj: id }, '', '#' + encodeURIComponent(id));
+  else history.replaceState({ detalj: id }, '', '#' + encodeURIComponent(id));
+  void d.offsetWidth;
+  d.classList.add('apen');
+  el('detaljTilbake').focus({ preventScroll: true });
+  requestAnimationFrame(function () { tegnDetaljKart(s); });
+  track('detaljer_apnet', { navn: s.name });
+}
+function lukkDetalj(fraHistorikk) {
+  const d = el('detalj');
+  if (!d || d.hidden) return;
+  if (!fraHistorikk && history.state && history.state.detalj) { history.back(); return; }
+  d.classList.remove('apen');
+  d.hidden = true;
+  if (detaljKart) { detaljKart.remove(); detaljKart = null; }
+  BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = false; });
+  if (detaljFra && document.contains(detaljFra) && detaljFra.getClientRects().length) detaljFra.focus({ preventScroll: true });
+  detaljFra = null;
+}
+
+// Mer
+function apneMer() {
+  const m = el('mer');
+  merFra = document.activeElement;
+  m.hidden = false;
+  BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = true; });
+  oppdaterMerTema();
+  void m.offsetWidth;
+  m.classList.add('apen');
+  el('merLukk').focus({ preventScroll: true });
+  track('mer_apnet');
+}
+function lukkMer() {
+  const m = el('mer');
+  if (!m || m.hidden) return;
+  m.classList.remove('apen');
+  m.hidden = true;
+  BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = false; });
+  if (merFra && document.contains(merFra)) merFra.focus({ preventScroll: true });
+}
+function oppdaterMerTema() {
+  const b = el('merTema');
+  if (b && window.halalTema) b.setAttribute('aria-checked', String(window.halalTema.na() === 'dark'));
+}
+
+function fangTab(e, boks) {
+  if (e.key !== 'Tab') return;
+  const f = [...boks.querySelectorAll('a[href], button:not([disabled]), select')].filter(function (x) { return x.getClientRects().length; });
+  if (!f.length) return;
+  if (!boks.contains(document.activeElement)) { e.preventDefault(); f[0].focus(); return; }
+  if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+}
+
+function wireMobil() {
+  window.addEventListener('resize', function () { kobleKort(); tegnMobil(); maalToppfelt(); etterKortet(); });
+  map.on('click', function () { if (erMobil() && activeId) setActive(null); });
+
+  el('visListe').addEventListener('click', function () { settVisning('liste'); });
+  el('visKart').addEventListener('click', function () { settVisning('kart'); });
+  el('listeSort').addEventListener('change', function () {
+    el('fSort').value = el('listeSort').value;
+    el('fSort').dispatchEvent(new Event('change'));
+    render();
+  });
+
+  el('fane').addEventListener('click', function (e) {
+    const b = e.target.closest('[data-fane]');
+    if (!b) return;
+    const f = b.dataset.fane;
+    if (f === 'tips') openSheet('tips', false);
+    else if (f === 'mer') apneMer();
+    else if (f === 'lagret') settFane('lagret');
+    else settFane('utforsk');
+  });
+
+  document.addEventListener('click', function (e) {
+    const t = e.target.closest ? e.target : null;
+    if (!t) return;
+    const lagre = t.closest('[data-lagre]');
+    if (lagre) { e.preventDefault(); byttLagret(lagre.dataset.lagre); return; }
+    const det = t.closest('[data-detalj]');
+    if (det) { e.preventDefault(); apneDetalj(det.dataset.detalj); return; }
+    if (t.closest('#detaljTilbake')) { lukkDetalj(); return; }
+    if (t.closest('[data-faq]')) { lukkDetalj(); setTimeout(function () { openInfo('faq'); }, 60); }
+  });
+  window.addEventListener('popstate', function () {
+    if (!el('detalj').hidden && !(history.state && history.state.detalj)) lukkDetalj(true);
+  });
+
+  const bunn = el('bunnark');
+  let y0 = null;
+  bunn.addEventListener('pointerdown', function (e) { if (!e.target.closest('a, button')) y0 = e.clientY; });
+  bunn.addEventListener('pointerup', function (e) {
+    if (y0 === null) return;
+    const dy = e.clientY - y0;
+    y0 = null;
+    if (dy < -40) settVisning('liste');
+    else if (dy > 40 && activeId) setActive(null);
+  });
+  bunn.addEventListener('pointercancel', function () { y0 = null; });
+
+  el('merLukk').addEventListener('click', lukkMer);
+  el('mer').addEventListener('click', function (e) {
+    if (e.target === el('mer')) { lukkMer(); return; }
+    const b = e.target.closest('[data-mer]');
+    if (!b) return;
+    lukkMer();
+    el('faneMer').focus({ preventScroll: true });
+    if (b.dataset.mer === 'hilite') openSheet('hilite', false);
+    else openInfo(b.dataset.mer);
+  });
+  el('merTema').addEventListener('click', function () { if (window.halalTema) window.halalTema.bytt(); oppdaterMerTema(); });
+  window.addEventListener('temaendring', oppdaterMerTema);
+
+  document.addEventListener('keydown', function (e) {
+    const d = el('detalj'), m = el('mer');
+    if (!d.hidden) { if (e.key === 'Escape') { e.preventDefault(); lukkDetalj(); } else fangTab(e, d); return; }
+    if (!m.hidden) { if (e.key === 'Escape') { e.preventDefault(); lukkMer(); } else fangTab(e, m); return; }
+    if (e.key === 'Escape' && erMobil() && activeId) setActive(null);
+  });
+
+  oppdaterVisning();
 }
 
 // Kartet følger filteret
@@ -1001,6 +1302,7 @@ function itemEl(s) {
 function setActive(id, fromList) {
   if (activeId && markers[activeId] && byId(activeId)) {
     markers[activeId].setIcon(makeIcon(byId(activeId).halalStatus, false));
+    markers[activeId].setZIndexOffset(0);
   }
   activeId = id;
   document.querySelectorAll('.item').forEach(c => c.classList.toggle('active', c.dataset.id === id));
@@ -1008,37 +1310,34 @@ function setActive(id, fromList) {
     const s = byId(id);
     if (!s) return;
     track('restaurant_klikk', { navn: s.name, bydel: s.bydel, status: s.halalStatus });
-    markers[id].setIcon(makeIcon(s.halalStatus, true));
-    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + encodeURIComponent(id));
+    markers[id].setIcon(makeIcon(s.halalStatus, true, erMobil() ? s.name : ''));
+    markers[id].setZIndexOffset(1000);
+    if (location.hash !== '#' + id) history.replaceState(history.state, '', '#' + encodeURIComponent(id));
     if (fromList) {
-      if (erMobil()) settArk(0);
+      if (erMobil()) settVisning('kart');
       let apnet = false;
-      const naar = function () { if (apnet) return; apnet = true; visPopup(id); };
+      const naar = function () {
+        if (apnet) return; apnet = true;
+        visPopup(id, erMobil() ? function () { etterKortet(function () { holdPunktFritt(id); }); } : null);
+      };
       map.once('moveend', naar);
       goTo(s.lat, s.lng, 15);
       setTimeout(naar, 900); // ingen moveend hvis kartet allerede står der
     }
-  } else if (location.hash) {
+  } else if (location.hash && !(history.state && history.state.detalj)) {
     history.replaceState(null, '', location.pathname + location.search);
   }
-}
-
-function polstringBunn() {
-  if (!erMobil()) return 24;
-  const synlig = arkTrinn === 0 ? px('--kompakt', 170)
-    : arkTrinn === 1 ? px('--peek', 340) : el('panel').getBoundingClientRect().height;
-  return Math.round(synlig) + 16;
+  tegnValgt();
 }
 
 // Plassering av kortet
 function trygtOmrade() {
   const W = window.innerWidth, H = window.innerHeight;
   if (erMobil()) {
-    const k = document.querySelector('.leaflet-top.leaflet-right');
     const t = el('toppfelt');
-    const under = Math.max(k ? k.getBoundingClientRect().bottom : 64, t ? t.getBoundingClientRect().bottom : 0);
-    return { venstre: 10, hoyre: W - 10, topp: under + 10,
-             bunn: H - polstringBunn() };
+    // over bunnarket og fargeforklaringen
+    return { venstre: 10, hoyre: W - 10, topp: (t ? t.getBoundingClientRect().bottom : 0) + 10,
+             bunn: H - bunnTopp() - 90 };
   }
   const panel = el('panel');
   const apent = panel && !panel.classList.contains('collapsed');
@@ -1058,10 +1357,10 @@ function holdKortetFritt() {
 }
 map.on('popupopen', function () { requestAnimationFrame(holdKortetFritt); });
 
-function visPopup(id) {
+function visPopup(id, ferdig) {
   const m = markers[id];
   if (!m) return;
-  const apne = function () { m.openPopup(); };
+  const apne = ferdig || function () { m.openPopup(); };
   if (m.getElement() || !klynge.hasLayer(m)) { apne(); return; }
 
   const forsok = function (igjen) {
@@ -1134,6 +1433,7 @@ function openSheet(key, auto) {
   Object.keys(SHEETS).forEach(function (k) { if (k !== key) closeSheet(k); });
   if (cfg.foer) cfg.foer();
   box.hidden = false;
+  void box.offsetWidth;
   box.classList.add('open');
   if (key === 'tips') requestAnimationFrame(oppdaterTipsHint);
   track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
@@ -1207,6 +1507,7 @@ function refreshOpenStates() {
     const s = byId(activeId);
     if (s && markers[activeId].isPopupOpen()) markers[activeId].setPopupContent(popupHtml(s));
   }
+  if (erMobil()) tegnMobil();
 }
 
 // Deling
@@ -1288,7 +1589,6 @@ function locateUser() {
     goTo(userLoc.lat, userLoc.lng, 14.5);
     btn.classList.remove('loading');
     if (el('fSort') && !el('fSort').value) el('fSort').value = 'avstand';
-    if (window.innerWidth <= 720) togglePanel(true);
     render();
   }, () => {
     btn.classList.remove('loading');
@@ -1423,7 +1723,6 @@ function wireTipsHint() {
   if (!kropp) return;
   kropp.addEventListener('scroll', oppdaterTipsHint, { passive: true });
   window.addEventListener('resize', oppdaterTipsHint);
-  window.addEventListener('resize', oppdaterKompakt);
   oppdaterTipsHint();
 }
 
