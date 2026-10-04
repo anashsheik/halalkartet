@@ -8,7 +8,6 @@ Kart over halal mat i Norge, på [halalkartet.no](https://halalkartet.no). Stati
 |---|---|
 | `index.html` | Markup og CSS |
 | `app.js` | Kart, liste, filtre, søk og skjemaer |
-| `tema.js` | Lyst/mørkt tema, lastes før siden tegnes |
 | `analytics.js` | Google Analytics uten cookies |
 | `spots.json` | Stedene |
 | `CNAME` | Domenet for GitHub Pages |

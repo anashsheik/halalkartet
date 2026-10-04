@@ -10,7 +10,7 @@ const STATUS = {
   'delvis':     { label: 'Delvis halal',     color: '#D9600F', pin: 'pin-delvis',
                   shape: '50%', kort: 'Delvis',     tegn: TEGN.delvis },
   'uavklart':   { label: 'Uavklart',         color: '#636B67', pin: 'pin-uavklart',
-                  shape: '6px', kort: 'Uavklart',   tegn: TEGN.uavklart }
+                  shape: '50%', kort: 'Uavklart',   tegn: TEGN.uavklart }
 };
 const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + '</span>';
 const el = id => document.getElementById(id);
@@ -119,41 +119,12 @@ const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView(
 L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
-// Stadia godkjenner domenet (halalkartet.no), så det trengs ingen API-nøkkel.
-const flisUrl = tema => 'https://tiles.stadiamaps.com/tiles/' +
-  (tema === 'dark' ? 'alidade_smooth_dark' : 'alidade_smooth') + '/{z}/{x}/{y}{r}.png';
+// Stadia godkjenner domenet (halalkartet.no). Virker ikke det, lim inn en API-nøkkel fra Stadia her.
+const STADIA_NOKKEL = '';
+const flisUrl = () => 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png' +
+  (STADIA_NOKKEL ? '?api_key=' + encodeURIComponent(STADIA_NOKKEL) : '');
 const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
-const temaNa = () => (window.halalTema ? window.halalTema.na() : 'light');
-const flislag = L.tileLayer(flisUrl(temaNa()), { attribution: FLIS_KILDE, maxZoom: 20 }).addTo(map);
-window.addEventListener('temaendring', function () { flislag.setUrl(flisUrl(temaNa())); });
-
-const TemaKontroll = L.Control.extend({
-  options: { position: 'topright' },
-  onAdd: function () {
-    const k = L.DomUtil.create('div', 'leaflet-bar tema-bryter');
-    const b = L.DomUtil.create('button', '', k);
-    b.type = 'button';
-    const tegn = function () {
-      const mork = temaNa() === 'dark';
-      b.setAttribute('aria-label', mork ? 'Bytt til lyst tema' : 'Bytt til mørkt tema');
-      b.title = b.getAttribute('aria-label');
-      b.setAttribute('aria-pressed', String(mork));
-      b.innerHTML = mork
-        ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
-        : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>';
-    };
-    tegn();
-    L.DomEvent.disableClickPropagation(k);
-    L.DomEvent.on(b, 'click', function () {
-      if (!window.halalTema) return;
-      const t = window.halalTema.bytt();
-      track('tema', { tema: t === 'dark' ? 'mørkt' : 'lyst' });
-    });
-    window.addEventListener('temaendring', tegn);
-    return k;
-  }
-});
-new TemaKontroll().addTo(map);
+const flislag = L.tileLayer(flisUrl(), { attribution: FLIS_KILDE, maxZoom: 20 }).addTo(map);
 
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function goTo(lat, lng, zoom) {
@@ -542,7 +513,7 @@ function plasserSok() {
   if (!sok || !kort || !hode) return;
   if (erMobil()) { if (sok.parentElement !== kort) kort.insertBefore(sok, el('filterknapp')); }
   else if (sok.parentElement !== hode) hode.insertBefore(sok, hode.querySelector('.mini-filters'));
-  el('search').placeholder = erMobil() ? 'Søk sted eller kjøkken' : 'Søk på navn, kjøkken eller adresse…';
+  el('search').placeholder = erMobil() ? 'Restaurant, kjøkken, område' : 'Søk på navn, kjøkken eller adresse…';
   const t = el('toppfelt');
   if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
 }
@@ -604,6 +575,7 @@ function oppdaterSkall() {
   const omrade = el('fBydel').value;
   el('bunnTall').textContent = n;
   el('bunnTekst').textContent = (n === 1 ? 'sted' : 'steder') + (omrade ? ' i ' + omrade : '');
+  tegnBunnHode();
   const a = antallAktive(), t = el('filterTeller');
   if (t) { t.hidden = !a; t.textContent = a; }
   if (el('filterknapp')) el('filterknapp').setAttribute('aria-label', a ? 'Åpne filtrene, ' + a + ' på' : 'Åpne filtrene');
@@ -613,7 +585,7 @@ function oppdaterSkall() {
 }
 
 // Filterarket
-const BAKGRUNN = ['map', 'panel', 'toppfelt', 'nearme', 'feedback', 'tipsBtn', 'hiliteBtn', 'bunnark', 'liste', 'visKart', 'fane', 'kartforklaring'];
+const BAKGRUNN = ['map', 'panel', 'toppfelt', 'nearme', 'feedback', 'tipsBtn', 'hiliteBtn', 'bunnark', 'liste', 'visKart', 'fane'];
 let faApnetFra = null, faVisAlle = { kjokken: false, omrade: false };
 
 function velgEn(id, verdi) {
@@ -680,7 +652,8 @@ function tegnFilterark(antall) {
 
   const a = antallAktive();
   el('faNull').disabled = !a;
-  el('faVis').textContent = antall ? 'Vis ' + antall + (antall === 1 ? ' sted' : ' steder') : 'Ingen steder passer';
+  el('faVis').innerHTML = '<span>' + (!antall ? 'Ingen steder passer' : antall === HALAL_SPOTS.length ? 'Vis alle ' + antall + ' steder'
+    : 'Vis ' + antall + (antall === 1 ? ' sted' : ' steder')) + '</span>' + (antall ? IKON2.pil : '');
   el('faVis').disabled = !antall;
 }
 
@@ -762,7 +735,9 @@ const IKON2 = {
   skjold:  SVG(22, '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><polyline points="9 12 11 14 15 10"/>'),
   sted:    SVG(22, '<path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>'),
   klokke:  SVG(22, '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-  glass:   SVG(22, '<path d="M8 3h8l-1 7a3 3 0 01-6 0L8 3zM12 13v8M9 21h6"/>')
+  glass:   SVG(22, '<path d="M8 3h8l-1 7a3 3 0 01-6 0L8 3zM12 13v8M9 21h6"/>'),
+  pil:     SVG(18, '<path d="M5 12h14M13 6l6 6-6 6"/>'),
+  utpil:   SVG(16, '<path d="M7 17L17 7M9 7h8v8"/>')
 };
 
 let visning = 'kart', fane = 'utforsk', kortModus = null;
@@ -796,24 +771,34 @@ function kartAppUrl(s) {
     : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + (s.address ? ', ' + s.address : ''));
 }
 
-function statusMerke(s) {
-  return '<span class="smerke" data-s="' + esc(s.halalStatus) + '">' + STATUS[s.halalStatus].tegn + STATUS[s.halalStatus].label + '</span>';
+const SKJOLD = SVG(20, '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/>');
+function skjold(s, medTekst) {
+  const st = STATUS[s.halalStatus];
+  return '<span class="skjold" data-s="' + esc(s.halalStatus) + '"' + (medTekst ? '' : ' role="img" aria-label="' + st.label + '"') + '>' +
+    SKJOLD + '<span class="skjold-tegn" aria-hidden="true">' + st.tegn + '</span></span>' + (medTekst ? '<span class="skjold-tekst">' + st.label + '</span>' : '');
+}
+function monogram(s) {
+  const m = /[A-Za-zÀ-ÿÆØÅæøå0-9]/.exec(s.name);
+  let h = 0;
+  for (const c of s.id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return '<span class="mono ' + (h % 2 ? 'mono-lys' : 'mono-mork') + '" aria-hidden="true">' + (m ? m[0].toUpperCase() : '?') + '</span>';
 }
 function apentLinje(s) {
   const st = openState(s);
-  if (st.state === 'open') return { cls: 'os-open', tekst: 'Åpent · ' + st.label.toLowerCase() };
-  if (st.state === 'soon') {
-    const t = clockMinutes(s.hours);
-    return { cls: 'os-soon', tekst: 'Stenger snart' + (t === null ? '' : ' · ' + fmtClose(t)) };
+  const stenger = clockMinutes(s.hours);
+  if (st.state === 'open') return { cls: 'os-open', tekst: 'Åpent til ' + fmtClock(stenger) };
+  if (st.state === 'soon') return { cls: 'os-soon', tekst: 'Stenger ' + fmtClock(stenger) };
+  if (st.state === 'closed') {
+    const apner = s.opens ? clockMinutes(s.opens) : null;
+    return { cls: 'os-closed', tekst: /^Åpner/.test(st.label) && apner !== null ? 'Stengt, åpner ' + fmtClock(apner) : st.label };
   }
-  if (st.state === 'closed') return { cls: 'os-closed', tekst: st.label };
   return null;
 }
 function metaTekst(s) {
   const deler = [];
   if (userLoc) deler.push(fmtDist(dist(s)));
   deler.push(s.cuisines.slice(0, 2).join(', '), s.bydel);
-  return deler.map(esc).join(' · ') + ' · ' + priceLabel(s.price);
+  return deler.map(esc).join('<span class="skraa"> / </span>') + '<span class="skraa"> / </span>' + priceLabel(s.price);
 }
 
 // Lagret
@@ -857,13 +842,11 @@ function anbefalt(liste, mode) {
 }
 function listekortHtml(s) {
   const ap = apentLinje(s);
-  return '<article class="lkort" data-id="' + esc(s.id) + '">' +
-    '<span class="flis" aria-hidden="true">' + IKON2.kniv(26) + '</span>' +
+  return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s) +
     '<div class="lkort-tekst">' +
       '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
       '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
-      statusMerke(s) +
-      (ap ? '<p class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
+      '<p class="lkort-status">' + skjold(s, !ap) + (ap ? '<span class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</span>' : '') + '</p>' +
     '</div>' + hjerte(s) + '</article>';
 }
 function tegnListe() {
@@ -871,7 +854,7 @@ function tegnListe() {
   if (!boks) return;
   const lagretVis = fane === 'lagret';
   const liste = lagretVis ? lagrede().map(byId).filter(Boolean) : anbefalt(synligeSteder(), el('fSort').value);
-  el('listeTall').textContent = lagretVis ? 'Lagret' : liste.length + (liste.length === 1 ? ' sted' : ' steder');
+  el('listeTall').innerHTML = lagretVis ? 'Lagret' : '<b>' + liste.length + '</b> ' + (liste.length === 1 ? 'sted' : 'steder');
   el('listeSorter').hidden = lagretVis;
   el('listeSort').value = el('fSort').value;
   if (!liste.length) {
@@ -911,23 +894,30 @@ function tegnValgt() {
   if (!boks) return;
   const s = erMobil() && activeId ? byId(activeId) : null;
   boks.hidden = !s;
+  tegnBunnHode();
   if (!s) { boks.innerHTML = ''; etterKortet(); return; }
   const ap = apentLinje(s);
   boks.innerHTML =
-    '<article class="vkort" aria-labelledby="valgtNavn">' +
-      '<span class="flis" aria-hidden="true">' + IKON2.kniv(26) + '</span>' +
+    '<article class="vkort" aria-labelledby="valgtNavn">' + monogram(s) +
       '<div class="lkort-tekst">' +
         '<h3 id="valgtNavn">' + esc(s.name) + '</h3>' +
         '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
-        statusMerke(s) +
-        (ap ? '<p class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
-      '</div>' + hjerte(s) +
+      '</div>' +
+      '<p class="vkort-status">' + skjold(s, true) + (ap ? '<span class="skille" aria-hidden="true"></span><span class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</span>' : '') + '</p>' +
       '<div class="vkort-knapper">' +
         '<a class="knapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + 'Veibeskrivelse</a>' +
-        '<button type="button" class="knapp" data-detalj="' + esc(s.id) + '">Se detaljer</button>' +
+        '<button type="button" class="knapp" data-detalj="' + esc(s.id) + '">Se stedet</button>' +
+        hjerte(s, 'knapp-hjerte') +
       '</div>' +
     '</article>';
   etterKortet();
+}
+function tegnBunnHode() {
+  const valgt = erMobil() && !!activeId;
+  const b = el('bunnark');
+  if (!b) return;
+  b.classList.toggle('har-valgt', valgt);
+  el('visListe').innerHTML = (valgt ? 'Alle ' + el('bunnTall').textContent + ' steder' : 'Vis liste') + IKON2.pil;
 }
 function tegnMobil() {
   if (!erMobil() || !el('bunnark')) return;
@@ -963,55 +953,58 @@ function settFane(f) {
 }
 
 // Detaljsiden
-function bevisHtml(s) {
-  const tittel = { verifisert: 'Verifisert halal', delvis: 'Delvis halal', uavklart: 'Ikke bekreftet ennå' }[s.halalStatus];
-  const liste = Array.isArray(s.verification) ? s.verification : (s.verification ? [{ tekst: s.verification }] : []);
-  const tekst = liste.map(function (v) {
-    return '<p>' + esc(v.tekst || '') + (v.kilde ? ' <span class="d-kilde">' + esc(v.kilde) + '</span>' : '') + '</p>';
-  }).join('');
-  const d = dagerSiden(s.lastVerified);
-  const naar = d === null ? 'Ikke bekreftet med dato ennå' : 'Sist bekreftet ' + fmtDato(s.lastVerified) + (d > 180 ? ', over et halvår siden' : '');
-  return '<section class="d-boks d-bevis" data-s="' + esc(s.halalStatus) + '">' +
-    '<span class="d-skjold" aria-hidden="true">' + IKON2.skjold + '</span><div>' +
-    '<h3>' + tittel + '</h3>' + (tekst || '<p>Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.</p>') +
-    '<p class="d-naar">' + naar + '. Halalkartet sertifiserer ikke selv.</p>' +
-    '<button type="button" class="d-lenke" data-faq>Hva betyr statusene?</button></div></section>';
-}
 function detaljHtml(s) {
-  const ap = apentLinje(s), lagret = erLagret(s.id);
+  const ap = apentLinje(s), st = STATUS[s.halalStatus];
   const tel = s.phone ? String(s.phone).replace(/\s+/g, '') : '';
   const site = safeUrl(s.website);
   const knapper = [
     '<a class="dknapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + '<span>Veibeskrivelse</span></a>',
     tel ? '<a class="dknapp" href="tel:' + esc(tel) + '">' + IKON2.telefon + '<span>Ring</span></a>' : '',
-    site ? '<a class="dknapp" href="' + esc(site) + '" target="_blank" rel="noopener">' + IKON2.globus + '<span>Nettside</span></a>' : '',
-    '<button type="button" class="dknapp" data-lagre="' + esc(s.id) + '" data-tekst="1" aria-pressed="' + lagret + '">' + IKON2.hjerte + '<span>' + (lagret ? 'Lagret' : 'Lagre') + '</span></button>'
+    site ? '<a class="dknapp" href="' + esc(site) + '" target="_blank" rel="noopener">' + IKON2.globus + '<span>Nett</span></a>' : ''
   ].filter(Boolean);
-  const rad = function (ikon, innhold) { return '<li>' + ikon + '<span>' + innhold + '</span></li>'; };
+
+  const liste = Array.isArray(s.verification) ? s.verification : (s.verification ? [{ tekst: s.verification }] : []);
+  const bevis = liste.map(function (v) {
+    return '<p>' + esc(v.tekst || '') + (v.kilde ? ' <span class="d-kilde">' + esc(v.kilde) + '</span>' : '') + '</p>';
+  }).join('') || '<p>Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.</p>';
+  const d = dagerSiden(s.lastVerified);
+  const naar = d === null ? 'Ikke bekreftet med dato ennå' : 'Sist bekreftet ' + fmtDato(s.lastVerified) + (d > 180 ? ', over et halvår siden' : '');
+
+  const stenger = clockMinutes(s.hours), apner = s.opens ? clockMinutes(s.opens) : null;
+  const idag = stenger === null ? (s.hours || 'Ukjent')
+    : (apner !== null ? fmtClock(apner) + ' – ' + fmtClock(stenger) : 'Stenger ' + fmtClock(stenger));
+  const rad = function (navn, verdi) { return '<div><dt>' + navn + '</dt><dd>' + verdi + '</dd></div>'; };
   const rader = [
-    rad(IKON2.sted, esc(s.address ? s.address + ', ' + s.bydel : s.bydel)),
-    rad(IKON2.klokke, esc(ap ? ap.tekst : (s.hours || 'Åpningstid ukjent'))),
-    rad(IKON2.glass, s.alcohol ? 'Serverer alkoholholdig drikke' : 'Ingen kjent alkoholservering')
+    rad('Adresse', esc(s.address || '') + (s.address ? '<br>' : '') + esc(s.bydel)),
+    rad('I dag', esc(idag)),
+    rad('Alkohol', s.alcohol ? 'Serveres' : 'Ingen kjent servering')
   ];
-  if (tel) rader.push(rad(IKON2.telefon, '<a href="tel:' + esc(tel) + '">' + esc(s.phone) + '</a>'));
+  if (tel) rader.push(rad('Telefon', '<a href="tel:' + esc(tel) + '">' + esc(s.phone) + '</a>'));
+
   return '<div class="d-topp">' +
       '<button type="button" class="d-rund" id="detaljTilbake" aria-label="Tilbake">' + IKON2.tilbake + '</button>' +
       '<span class="d-luft"></span>' +
       '<button type="button" class="d-rund" data-act="del" data-id="' + esc(s.id) + '" aria-label="Del ' + esc(s.name) + '">' + IKON2.del + '</button>' +
       hjerte(s, 'd-rund') +
     '</div>' +
-    '<div class="d-hero" aria-hidden="true">' + IKON2.kniv(64) + '</div>' +
-    '<div class="d-kropp">' +
-      statusMerke(s) +
+    '<header class="d-hero">' +
+      '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s, true) + '</p>' +
       '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
-      '<p class="d-meta">' + esc(s.cuisines.join(', ')) + ' · ' + esc(s.bydel) + ' · ' + priceLabel(s.price) + '</p>' +
+      '<p class="d-meta">' + metaTekst(s) + '</p>' +
+    '</header>' +
+    '<div class="d-kropp">' +
       (ap ? '<p class="d-apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
       (s.description ? '<p class="d-beskr">' + esc(s.description) + '</p>' : '') +
-      '<div class="d-knapper" style="grid-template-columns:repeat(' + knapper.length + ',1fr)">' + knapper.join('') + '</div>' +
-      bevisHtml(s) +
-      '<ul class="d-boks d-info">' + rader.join('') + '</ul>' +
-      '<div class="d-boks d-kartboks"><div class="d-kart" id="detaljKart"></div>' +
-        '<a class="d-kartlenke" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener">Åpne i Kart-appen</a></div>' +
+      '<div class="d-knapper k' + knapper.length + '">' + knapper.join('') + '</div>' +
+      '<section class="d-om" aria-labelledby="dOmTittel">' +
+        '<div class="d-om-hode"><h3 id="dOmTittel">Om halal-statusen</h3><span class="d-ar" aria-hidden="true">حلال</span></div>' +
+        bevis +
+        '<p class="d-naar">' + naar + '. Halalkartet sertifiserer ikke selv.</p>' +
+        '<button type="button" class="d-lenke" data-faq>Hva betyr statusene?</button>' +
+      '</section>' +
+      '<dl class="d-info">' + rader.join('') + '</dl>' +
+      '<div class="d-kartboks"><div class="d-kart" id="detaljKart"></div>' +
+        '<a class="d-kartlenke" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener">Åpne i kart-appen' + IKON2.utpil + '</a></div>' +
     '</div>';
 }
 function tegnDetaljKart(s) {
@@ -1020,7 +1013,7 @@ function tegnDetaljKart(s) {
   detaljKart = L.map(boks, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
     boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
   detaljKart.attributionControl.setPrefix(false);
-  L.tileLayer(flisUrl(temaNa()), { maxZoom: 20, attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap' }).addTo(detaljKart);
+  L.tileLayer(flisUrl(), { maxZoom: 20, attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap' }).addTo(detaljKart);
   L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, true), keyboard: false, interactive: false }).addTo(detaljKart);
 }
 function apneDetalj(id) {
@@ -1058,7 +1051,6 @@ function apneMer() {
   merFra = document.activeElement;
   m.hidden = false;
   BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = true; });
-  oppdaterMerTema();
   void m.offsetWidth;
   m.classList.add('apen');
   el('merLukk').focus({ preventScroll: true });
@@ -1071,10 +1063,6 @@ function lukkMer() {
   m.hidden = true;
   BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = false; });
   if (merFra && document.contains(merFra)) merFra.focus({ preventScroll: true });
-}
-function oppdaterMerTema() {
-  const b = el('merTema');
-  if (b && window.halalTema) b.setAttribute('aria-checked', String(window.halalTema.na() === 'dark'));
 }
 
 function fangTab(e, boks) {
@@ -1144,8 +1132,6 @@ function wireMobil() {
     if (b.dataset.mer === 'hilite') openSheet('hilite', false);
     else openInfo(b.dataset.mer);
   });
-  el('merTema').addEventListener('click', function () { if (window.halalTema) window.halalTema.bytt(); oppdaterMerTema(); });
-  window.addEventListener('temaendring', oppdaterMerTema);
 
   document.addEventListener('keydown', function (e) {
     const d = el('detalj'), m = el('mer');
