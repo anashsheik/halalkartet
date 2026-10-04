@@ -119,15 +119,11 @@ const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView(
 L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
-const flisUrl = tema => 'https://{s}.basemaps.cartocdn.com/' +
-  (tema === 'dark' ? 'dark_all' : 'light_all') + '/{z}/{x}/{y}{r}.png';
+// Mørkt tema lages med CSS-filter på flisene, se .leaflet-tile-pane i index.html.
+const FLIS_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+const FLIS_KILDE = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
+const flislag = L.tileLayer(FLIS_URL, { attribution: FLIS_KILDE, maxZoom: 19 }).addTo(map);
 const temaNa = () => (window.halalTema ? window.halalTema.na() : 'light');
-const flislag = L.tileLayer(flisUrl(temaNa()), {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap-bidragsytere</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 20
-}).addTo(map);
-window.addEventListener('temaendring', function () { flislag.setUrl(flisUrl(temaNa())); });
 
 const TemaKontroll = L.Control.extend({
   options: { position: 'topright' },
@@ -1022,7 +1018,7 @@ function tegnDetaljKart(s) {
   detaljKart = L.map(boks, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
     boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
   detaljKart.attributionControl.setPrefix(false);
-  L.tileLayer(flisUrl(temaNa()), { subdomains: 'abcd', maxZoom: 20, attribution: '&copy; OpenStreetMap &copy; CARTO' }).addTo(detaljKart);
+  L.tileLayer(FLIS_URL, { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(detaljKart);
   L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, true), keyboard: false, interactive: false }).addTo(detaljKart);
 }
 function apneDetalj(id) {
