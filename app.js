@@ -119,24 +119,15 @@ const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView(
 L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
-// Stadia godkjenner domenet, så det trengs ingen API-nøkkel.
-const PREMIUM_MAP = true;
-const flisUrl = tema => 'https://tiles.stadiamaps.com/tiles/' +
-  (tema === 'dark' ? 'alidade_smooth_dark' : 'alidade_smooth') + '/{z}/{x}/{y}{r}.png';
+const flisUrl = tema => 'https://{s}.basemaps.cartocdn.com/' +
+  (tema === 'dark' ? 'dark_all' : 'light_all') + '/{z}/{x}/{y}{r}.png';
 const temaNa = () => (window.halalTema ? window.halalTema.na() : 'light');
-let flislag = null;
-if (PREMIUM_MAP) {
-  flislag = L.tileLayer(flisUrl(temaNa()), {
-    attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; OpenStreetMap-bidragsytere',
-    minZoom: 0,
-    maxZoom: 20
-  }).addTo(map);
-  window.addEventListener('temaendring', function () { flislag.setUrl(flisUrl(temaNa())); });
-} else {
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap-bidragsytere', maxZoom: 19
-  }).addTo(map);
-}
+const flislag = L.tileLayer(flisUrl(temaNa()), {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap-bidragsytere</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 20
+}).addTo(map);
+window.addEventListener('temaendring', function () { flislag.setUrl(flisUrl(temaNa())); });
 
 const TemaKontroll = L.Control.extend({
   options: { position: 'topright' },
