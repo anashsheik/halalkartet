@@ -119,11 +119,13 @@ const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView(
 L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
-// Mørkt tema lages med CSS-filter på flisene, se .leaflet-tile-pane i index.html.
-const FLIS_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-const FLIS_KILDE = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
-const flislag = L.tileLayer(FLIS_URL, { attribution: FLIS_KILDE, maxZoom: 19 }).addTo(map);
+// Stadia godkjenner domenet (halalkartet.no), så det trengs ingen API-nøkkel.
+const flisUrl = tema => 'https://tiles.stadiamaps.com/tiles/' +
+  (tema === 'dark' ? 'alidade_smooth_dark' : 'alidade_smooth') + '/{z}/{x}/{y}{r}.png';
+const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
 const temaNa = () => (window.halalTema ? window.halalTema.na() : 'light');
+const flislag = L.tileLayer(flisUrl(temaNa()), { attribution: FLIS_KILDE, maxZoom: 20 }).addTo(map);
+window.addEventListener('temaendring', function () { flislag.setUrl(flisUrl(temaNa())); });
 
 const TemaKontroll = L.Control.extend({
   options: { position: 'topright' },
@@ -1018,7 +1020,7 @@ function tegnDetaljKart(s) {
   detaljKart = L.map(boks, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
     boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
   detaljKart.attributionControl.setPrefix(false);
-  L.tileLayer(FLIS_URL, { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(detaljKart);
+  L.tileLayer(flisUrl(temaNa()), { maxZoom: 20, attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap' }).addTo(detaljKart);
   L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, true), keyboard: false, interactive: false }).addTo(detaljKart);
 }
 function apneDetalj(id) {

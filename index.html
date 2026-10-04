@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tile.openstreetmap.org https://cdnjs.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tiles.stadiamaps.com https://cdnjs.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script src="tema.js"></script>
 
@@ -86,8 +86,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 :focus-visible { outline: none; box-shadow: var(--focus); border-radius: 8px; }
 
 #map { position: absolute; inset: 0; background: #eae4d6; z-index: 1; }
-.leaflet-tile-pane { filter: saturate(.55) contrast(.94) brightness(1.04); }
-[data-theme="dark"] .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) saturate(.45) brightness(.92) contrast(.88); }
 
 .leaflet-control-zoom a { background: #fff !important; color: var(--emerald) !important; border: 0 !important; box-shadow: var(--shadow-sm); font-weight: 600; }
 .leaflet-control-zoom { border: 0 !important; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm); }
@@ -955,7 +953,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <h3>Skjemaet på kontaktsiden</h3>
         <p>Sender du inn skjemaet, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
         <h3>Kart og drift</h3>
-        <p>Siden driftes av GitHub Pages. Kartflisene lastes fra OpenStreetMap. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
+        <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
         <p class="muted">Sist oppdatert august 2026.</p>
       </section>
       <section class="info-section" data-section="vilkar">
