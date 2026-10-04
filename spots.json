@@ -121,7 +121,7 @@
       }
     ],
     "cuisines": [
-      "Halal"
+      "Restaurant"
     ],
     "price": 1,
     "phone": "94 08 33 20",
@@ -4876,6 +4876,116 @@
     "website": "https://levantspektrum.no",
     "hours": "Stenger kl. 22",
     "opens": "12:00",
+    "lastVerified": null
+  },
+  {
+    "id": "zouq-sandnes",
+    "name": "Zouq Sandnes",
+    "chain": "Zouq",
+    "description": "",
+    "bydel": "Sandnes",
+    "address": "St. Olavs gate 43, 4306 Sandnes",
+    "lat": 58.8529,
+    "lng": 5.7332,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "zouq-restaurant-take-away",
+    "name": "Zouq Restaurant & Take away",
+    "chain": "Zouq",
+    "description": "",
+    "bydel": "Stavanger",
+    "address": "Pedersgata 12, 4013 Stavanger",
+    "lat": 58.9711,
+    "lng": 5.7369,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Restaurant",
+      "Takeaway"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "mathus-grill",
+    "name": "Mathus Grill",
+    "description": "",
+    "bydel": "Grünerløkka",
+    "address": "Lakkegata 71, 0562 Oslo",
+    "lat": 59.9189,
+    "lng": 10.7633,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Grill"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "soulcake-grunerlokka",
+    "name": "Soulcake Grünerløkka",
+    "description": "",
+    "bydel": "Grünerløkka",
+    "address": "Thorvald Meyers gate 56A, 0552 Oslo",
+    "lat": 59.9238,
+    "lng": 10.7589,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
     "lastVerified": null
   }
 ]

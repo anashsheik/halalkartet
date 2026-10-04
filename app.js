@@ -186,8 +186,12 @@ function track(name, props) {
   try {
     const res = await fetch('spots.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    HALAL_SPOTS = await res.json();
-    if (!Array.isArray(HALAL_SPOTS) || !HALAL_SPOTS.length) throw new Error('tomt');
+    const alle = await res.json();
+    if (!Array.isArray(alle)) throw new Error('ikke en liste');
+    // et sted uten koordinater ville stoppet hele kartet
+    HALAL_SPOTS = alle.filter(s => s && Number.isFinite(s.lat) && Number.isFinite(s.lng));
+    if (HALAL_SPOTS.length < alle.length) console.warn('Halalkartet: hopper over ' + (alle.length - HALAL_SPOTS.length) + ' steder uten koordinater');
+    if (!HALAL_SPOTS.length) throw new Error('tomt');
   } catch (e) { showLoadError(e); return; }
   initApp();
 })();

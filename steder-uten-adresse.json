@@ -1,0 +1,1489 @@
+[
+  {
+    "id": "sandnes-kebab-pizza-house",
+    "name": "Sandnes Kebab & Pizza House",
+    "description": "",
+    "bydel": "Sandnes",
+    "address": "Sandnes",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Kebab",
+      "Pizza"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "quick-bite",
+    "name": "Quick bite",
+    "description": "",
+    "bydel": "Sandnes",
+    "address": "Sandnes",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "afghansk-smak",
+    "name": "Afghansk Smak",
+    "description": "",
+    "bydel": "Food Truck",
+    "address": "Food Truck",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Afghansk",
+      "Food truck"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "furuset-pizza-grill",
+    "name": "Furuset Pizza & Grill",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Pizza",
+      "Grill"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "tandoori-bistro-stavanger",
+    "name": "Tandoori Bistro Stavanger",
+    "description": "",
+    "bydel": "Stavanger",
+    "address": "Stavanger",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Restaurant",
+      "Indisk"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "digg-burger-stavanger",
+    "name": "Digg Burger Stavanger",
+    "description": "",
+    "bydel": "Stavanger",
+    "address": "Breigata 22, 4006 Stavanger",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Hamburger",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "istanbul-pizza-og-kebab",
+    "name": "Istanbul Pizza og Kebab",
+    "description": "",
+    "bydel": "Stavanger",
+    "address": "Stavanger",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Tyrkisk",
+      "Pizza",
+      "Kebab",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "doner-02",
+    "name": "Döner 02",
+    "description": "",
+    "bydel": "Ukjent",
+    "address": null,
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "mannu-pizza-og-grill-jessheim",
+    "name": "Mannu Pizza og Grill Jessheim",
+    "description": "",
+    "bydel": "Jessheim",
+    "address": "Jessheim",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Pizza",
+      "Grill",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "zam-zam-ksu",
+    "name": "Zam Zam KSU",
+    "description": "",
+    "bydel": "Kristiansund",
+    "address": "Kristiansund",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bilos-pizza-kebab-house",
+    "name": "Bilos Pizza Kebab House",
+    "description": "",
+    "bydel": "Stavanger",
+    "address": "Stavanger",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Pizza",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "truck-burger",
+    "name": "Truck Burger",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Hamburger"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "memili-turkish-grill-pizza",
+    "name": "Memili Turkish Grill & Pizza",
+    "description": "",
+    "bydel": "Jessheim",
+    "address": "Jessheim",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Tyrkisk",
+      "Pizza",
+      "Grill",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "karachi-streetfood",
+    "name": "Karachi Streetfood",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "nord-burger",
+    "name": "NORD BURGER",
+    "description": "",
+    "bydel": "Sandefjord",
+    "address": "Sandefjord",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Hamburger",
+      "Food truck"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "stop-go-asian-kitchen",
+    "name": "Stop & Go Asian Kitchen",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Thai",
+      "Asiatisk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "boboko-indonesian-cuisine",
+    "name": "Boboko Indonesian Cuisine",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Indonesisk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "masala-junction",
+    "name": "Masala Junction",
+    "description": "",
+    "bydel": "Gjerdrum",
+    "address": "Gjerdrum",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "mathus-chicken",
+    "name": "Mathus Chicken",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Kylling"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "potetgutta",
+    "name": "PotetGutta",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Food truck"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "minicash",
+    "name": "MiniCash",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "falafel-n-juice-bislett",
+    "name": "FALAFEL n' JUICE, Bislett",
+    "chain": "FALAFEL n' JUICE",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Bislett, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Falafel"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "falafel-n-juice",
+    "name": "FALAFEL n' JUICE",
+    "chain": "FALAFEL n' JUICE",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Falafel"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "falafel-n-juice-torggata",
+    "name": "FALAFEL n' JUICE Torggata",
+    "chain": "FALAFEL n' JUICE",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Torggata, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Falafel"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "kebab-kongen-klofta",
+    "name": "Kebab Kongen Kløfta",
+    "description": "",
+    "bydel": "Kløfta",
+    "address": "Kløfta",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Kebab"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "hira-catering-banquet-facilities",
+    "name": "Hira Catering & Banquet Facilities",
+    "description": "",
+    "bydel": "Ukjent",
+    "address": null,
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Catering"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "medina",
+    "name": "Medina",
+    "description": "",
+    "bydel": "Skien",
+    "address": "Skien",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "jafs-stovner",
+    "name": "JAFS Stovner",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Stovner, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "vestlibua",
+    "name": "VestliBua",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Vestli, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "desi-grill",
+    "name": "DESI GRILL",
+    "description": "",
+    "bydel": "Drammen",
+    "address": "Drammen",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Restaurant",
+      "Grill"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "pingo-s-lekeland-kjokken",
+    "name": "Pingo's Lekeland (Kjøkken)",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "Lørenskog",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "kitchen-cater",
+    "name": "Kitchen Cater (Lørenskog)",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "Lørenskog",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Catering"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "snappy-s-grill-stromso",
+    "name": "Snappy's Grill Strømsø",
+    "description": "",
+    "bydel": "Drammen",
+    "address": "Strømsø, Drammen",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Grill"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "hangover-grill",
+    "name": "Hangover Grill",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Grill"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "desi-kitchen-oslo",
+    "name": "Desi Kitchen Oslo",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Catering"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "jonk-mortensrud",
+    "name": "JØNK Mortensrud",
+    "chain": "JØNK",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Mortensrud, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Hamburger"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.jonkburger.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "punjabi-kitchen",
+    "name": "Punjabi Kitchen",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Catering"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "lille-marmaris",
+    "name": "Lille Marmaris",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "jonk-triaden",
+    "name": "JØNK Triaden",
+    "chain": "JØNK",
+    "description": "",
+    "bydel": "Rasta",
+    "address": "Triaden, Rasta",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Hamburger"
+    ],
+    "price": 1,
+    "phone": null,
+    "website": "https://www.jonkburger.no",
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "zouq-sandvika",
+    "name": "Zouq Sandvika",
+    "chain": "Zouq",
+    "description": "",
+    "bydel": "Ukjent",
+    "address": "Sandvika",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Pakistansk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "foodish",
+    "name": "Foodish",
+    "description": "",
+    "bydel": "Fjellhamar",
+    "address": "Fjellhamar",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Hurtigmat",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "suave-bageri",
+    "name": "SUAVÉ Bageri",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "Lørenskog",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "terrrassen-kafe-stovner",
+    "name": "Terrassen Kafé Stovner",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Stovner, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Tyrkisk",
+      "Restaurant"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "holmlia-kulturkafe",
+    "name": "Holmlia Kulturkafé",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Holmlia, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kafé"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "zayt-zaatar-as",
+    "name": "Zayt & Zaatar AS",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "Lørenskog",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Libanesisk",
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "delicia-bekkestua",
+    "name": "Delicia Bekkestua",
+    "chain": "Delicia",
+    "description": "",
+    "bydel": "Bekkestua",
+    "address": "Bekkestua",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bagelito",
+    "name": "Bagelito",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "delicia-oslo-city",
+    "name": "Delicia Oslo City",
+    "chain": "Delicia",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo City, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "soulcake-cafe-steen-strom",
+    "name": "Soulcake Café Steen & Strøm",
+    "chain": "Soulcake",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Steen & Strøm, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "soulcake-bogstadveien",
+    "name": "Soulcake Bogstadveien",
+    "chain": "Soulcake",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Bogstadveien, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "adriatic-cafe",
+    "name": "Adriatic Café",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kafé"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "soulcake-strommen-storsenter",
+    "name": "Soulcake Strømmen Storsenter",
+    "chain": "Soulcake",
+    "description": "",
+    "bydel": "Strømmen",
+    "address": "Strømmen Storsenter, Strømmen",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Bakeri"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "creamy-grunerlokka",
+    "name": "Creamy Grünerløkka",
+    "chain": "Creamy",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Grünerløkka, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kafé"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "creamy-gronland",
+    "name": "Creamy Grønland",
+    "chain": "Creamy",
+    "description": "",
+    "bydel": "Oslo",
+    "address": "Grønland, Oslo",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kafé"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  },
+  {
+    "id": "bla-ugle-metro-senter",
+    "name": "Blå Ugle Metro Senter",
+    "description": "",
+    "bydel": "Lørenskog",
+    "address": "Metro Senter, Lørenskog",
+    "lat": null,
+    "lng": null,
+    "halalStatus": "uavklart",
+    "verification": [
+      {
+        "type": "uavklart",
+        "kilde": null,
+        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "dato": null
+      }
+    ],
+    "cuisines": [
+      "Kafé"
+    ],
+    "price": 2,
+    "phone": null,
+    "website": null,
+    "hours": "",
+    "lastVerified": null
+  }
+]
