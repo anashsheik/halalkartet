@@ -120,7 +120,7 @@ L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
 // Stadia godkjenner domenet (halalkartet.no). Virker ikke det, lim inn en API-nøkkel fra Stadia her.
-const STADIA_NOKKEL = '';
+const STADIA_NOKKEL = '1907df04-d41e-4675-bd5c-291804b5dc1f';
 const flisUrl = () => 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png' +
   (STADIA_NOKKEL ? '?api_key=' + encodeURIComponent(STADIA_NOKKEL) : '');
 const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
