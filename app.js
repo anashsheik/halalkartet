@@ -214,14 +214,22 @@ function safeUrl(u) {
 }
 
 // Åpningstid
+// Å lage en ny formatterer for hvert sted tok over et halvt sekund på en treg telefon.
+// Nå finnes det én, og svaret gjenbrukes i ett sekund.
+const OSLO_TID = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Europe/Oslo', hour12: false,
+  year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit'
+});
+let osloSist = 0, osloSvar = null;
 function osloNow() {
+  const naa = Date.now();
+  if (osloSvar && naa - osloSist < 1000 && naa >= osloSist) return osloSvar;
   const p = {};
-  new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Europe/Oslo', hour12: false,
-    year: 'numeric', month: '2-digit', day: '2-digit',
-    hour: '2-digit', minute: '2-digit'
-  }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
-  return { y: +p.year, m: +p.month, d: +p.day, min: (+p.hour % 24) * 60 + (+p.minute) };
+  OSLO_TID.formatToParts(new Date(naa)).forEach(function (x) { p[x.type] = x.value; });
+  osloSist = naa;
+  osloSvar = { y: +p.year, m: +p.month, d: +p.day, min: (+p.hour % 24) * 60 + (+p.minute) };
+  return osloSvar;
 }
 function fmtClock(mins) {
   const h = Math.floor(mins / 60) % 24, m = mins % 60;
@@ -378,7 +386,7 @@ function track(name, props) {
 
 (async function boot() {
   try {
-    const res = await fetch('spots.json', { cache: 'no-store' });
+    const res = await fetch('spots.json', { cache: 'no-cache' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const alle = await res.json();
     if (!Array.isArray(alle)) throw new Error('ikke en liste');
@@ -446,6 +454,7 @@ function initApp() {
     if (v === 'avstand' && !userLoc) locateUser();
   });
   oversettStatisk();
+  document.addEventListener('touchstart', function () {}, { passive: true });
   wireMobilskall();
   wirePc();
   wireMobil();
@@ -583,10 +592,15 @@ function render() {
   const filtered = HALAL_SPOTS.filter(s => passes(s, f));
   const shown = new Set(filtered.map(s => s.id));
 
-  const paaKart = HALAL_SPOTS.filter(s => shown.has(s.id) && layerOn[s.halalStatus]);
-  klynge.clearLayers();
-  // det valgte stedet står utenfor klyngene, så det alltid synes
-  klynge.addLayers(paaKart.filter(s => s.id !== activeId).map(s => markers[s.id]));
+  // det valgte stedet står utenfor klyngene, så det alltid synes.
+  // Bare pinnene som endrer seg flyttes; å tømme og fylle alle klyngene på nytt var tregt.
+  const inn = [], ut = [];
+  HALAL_SPOTS.forEach(function (s) {
+    const m = markers[s.id], skal = shown.has(s.id) && layerOn[s.halalStatus] && s.id !== activeId, er = klynge.hasLayer(m);
+    if (skal && !er) inn.push(m); else if (!skal && er) ut.push(m);
+  });
+  if (ut.length) klynge.removeLayers(ut);
+  if (inn.length) klynge.addLayers(inn);
 
   oppdaterSkall();
   tegnMobil();

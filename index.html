@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://tiles.stadiamaps.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -379,6 +380,8 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .mono-mork { background: var(--emerald); color: var(--gold); }
   .mono-lys { background: #EBE3D2; color: var(--emerald); }
   .lkort { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 0 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--kort-strek); }
+  /* nettleseren tegner bare kortene som er på skjermen */
+  .liste-kort .lkort { content-visibility: auto; contain-intrinsic-size: auto 82px; }
   .lkort .mono { width: 44px; height: 44px; border-radius: 10px; font-size: 26px; }
   .lkort h3 { margin: 0; font: 600 23px/1.15 'Cormorant Garamond', serif; color: var(--emerald); }
   .vkort h3 { margin: 0; font: 600 30px/1.1 'Cormorant Garamond', serif; color: var(--emerald); }
@@ -441,6 +444,20 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .skjold[data-s="delvis"] { color: #B05E14; }
 .skjold[data-s="uavklart"] { color: #6B726E; }
 .skjold-tekst { margin-left: 8px; }
+/* Raskere trykk: ingen ventetid på dobbelttrykk-zoom og ingen grå blink, men et tydelig svar idet fingeren treffer */
+button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+@media (hover: none) {
+  .knapp, .dknapp, .d-rund, .hjerte, .filterknapp, .fane button, .hbrikke, .fa-brikker button, .fa-pris button, .segment button, .fa-vis,
+  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .hilite-lukk, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .hrow, .topp-merke, .d-merke {
+    transition: transform .12s var(--ease-out), opacity .12s var(--ease-out);
+  }
+  .knapp:active, .dknapp:active, .d-rund:active, .hjerte:active, .filterknapp:active, .fa-brikker button:active, .fa-pris button:active,
+  .fa-vis:active, .nearme:active, .hilite-lukk:active, .kf-send:active, .hrow:active { transform: scale(.96); transition-duration: 0s; }
+  body.vis-liste:not(.fane-lagret) .vis-kart:active { transform: translateX(-50%) scale(.96); transition-duration: 0s; }
+  .fane button:active, .hbrikke:active, .segment button:active, .bunn-liste:active, .mer-liste button:active, .fa-null:active, .fa-lukk:active,
+  .d-lenke:active, .d-alletider:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
+  .lkort:active { background: rgba(14,61,44,.06); }
+}
 .apent { color: var(--kort-tekst); }
 .apent.os-soon { color: var(--soon); }
 .apent.os-closed { color: var(--closed); }
@@ -1137,6 +1154,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=391e10c7"></script>
+<script src="app.js?v=a7d2b246"></script>
 </body>
 </html>
