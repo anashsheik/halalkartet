@@ -1,7 +1,7 @@
 const STATUS_ORDER = ['verifisert', 'delvis', 'uavklart'];
 const TEGN = {
   verifisert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg>',
-  delvis:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  delvis:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M12 5.5l7.5 13h-15z"/></svg>',
   uavklart:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.8a3.5 3.5 0 016.8 1.1c0 2.3-3.4 2.9-3.4 5.1"/><circle cx="12" cy="19.2" r=".6" fill="currentColor"/></svg>'
 };
 const STATUS = {
@@ -515,9 +515,9 @@ function plasserSok() {
   const sok = document.querySelector('.search-wrap');
   const kort = el('sokekort'), hode = document.querySelector('.panel-head');
   if (!sok || !kort || !hode) return;
-  if (erMobil()) { if (sok.parentElement !== kort) kort.insertBefore(sok, el('filterknapp')); }
+  if (erMobil()) { if (sok.parentElement !== kort) kort.appendChild(sok); }
   else if (sok.parentElement !== hode) hode.insertBefore(sok, hode.querySelector('.mini-filters'));
-  el('search').placeholder = erMobil() ? 'Restaurant, kjøkken, område' : 'Søk på navn, kjøkken eller adresse…';
+  el('search').placeholder = erMobil() ? 'Søk' : 'Søk på navn, kjøkken eller adresse…';
   const t = el('toppfelt');
   if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
 }
@@ -557,7 +557,7 @@ function byggHurtigrad() {
   brikke(IKON.hake + 'Kun verifisert', { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
-  const felt = [['fCuisine', 'Kjøkken', 'kjokken'], ['fBydel', 'Område', 'omrade'], ['fPrice', 'Pris', 'pris'], ['fAlcohol', 'Alkohol', 'alkohol']];
+  const felt = [['fCuisine', 'Kjøkken', 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade'], ['fAlcohol', 'Alkohol', 'alkohol']];
   felt.filter(function (d) { return el(d[0]).value; }).concat(felt.filter(function (d) { return !el(d[0]).value; }))
     .forEach(function (d) {
       const x = el(d[0]);
@@ -781,11 +781,22 @@ function skjold(s, medTekst) {
   return '<span class="skjold" data-s="' + esc(s.halalStatus) + '"' + (medTekst ? '' : ' role="img" aria-label="' + st.label + '"') + '>' +
     SKJOLD + '<span class="skjold-tegn" aria-hidden="true">' + st.tegn + '</span></span>' + (medTekst ? '<span class="skjold-tekst">' + st.label + '</span>' : '');
 }
-function monogram(s) {
+function monogram(s, i) {
   const m = /[A-Za-zÀ-ÿÆØÅæøå0-9]/.exec(s.name);
-  let h = 0;
-  for (const c of s.id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  let h = i;
+  if (h === undefined) { h = 0; for (const c of s.id) h = (h * 31 + c.charCodeAt(0)) >>> 0; }
   return '<span class="mono ' + (h % 2 ? 'mono-lys' : 'mono-mork') + '" aria-hidden="true">' + (m ? m[0].toUpperCase() : '?') + '</span>';
+}
+function tidNa(s) {
+  const st = openState(s), stenger = clockMinutes(s.hours), apner = s.opens ? clockMinutes(s.opens) : null;
+  return { state: st.state, cls: st.cls, label: st.label,
+           stenger: stenger === null ? '' : fmtClock(stenger), apner: apner === null ? '' : fmtClock(apner) };
+}
+function kortTid(s) {
+  const t = tidNa(s);
+  if (t.state === 'open' || t.state === 'soon') return { cls: t.cls, tekst: 'til ' + t.stenger };
+  if (t.state === 'closed') return { cls: t.cls, tekst: /^Åpner/.test(t.label) && t.apner ? 'åpner ' + t.apner : t.label };
+  return null;
 }
 function apentLinje(s) {
   const st = openState(s);
@@ -798,11 +809,12 @@ function apentLinje(s) {
   }
   return null;
 }
-function metaTekst(s) {
+function metaTekst(s, skille) {
+  const sk = '<span class="skraa">' + (skille || ' / ') + '</span>';
   const deler = [];
   if (userLoc) deler.push(fmtDist(dist(s)));
   deler.push(s.cuisines.slice(0, 2).join(', '), s.bydel);
-  return deler.map(esc).join('<span class="skraa"> / </span>') + '<span class="skraa"> / </span>' + priceLabel(s.price);
+  return deler.map(esc).join(sk) + sk + priceLabel(s.price);
 }
 
 // Lagret
@@ -844,13 +856,13 @@ function anbefalt(liste, mode) {
   if (mode || userLoc) return sortItems(liste, mode);
   return STATUS_ORDER.flatMap(function (st) { return liste.filter(function (s) { return s.halalStatus === st; }); });
 }
-function listekortHtml(s) {
-  const ap = apentLinje(s);
-  return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s) +
+function listekortHtml(s, i) {
+  const t = kortTid(s);
+  return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s, i) +
     '<div class="lkort-tekst">' +
       '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
-      '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
-      '<p class="lkort-status">' + skjold(s, !ap) + (ap ? '<span class="apent ' + ap.cls + '">' + esc(ap.tekst) + '</span>' : '') + '</p>' +
+      '<p class="lkort-meta">' + skjold(s) + '<span>' + metaTekst(s, ' · ') +
+        (t ? '<span class="skraa"> · </span><span class="apent ' + t.cls + '">' + esc(t.tekst) + '</span>' : '') + '</span></p>' +
     '</div>' + hjerte(s) + '</article>';
 }
 function tegnListe() {
@@ -867,7 +879,7 @@ function tegnListe() {
       : '<div class="tom"><b>Ingen treff</b>Prøv å fjerne et filter eller søk på noe annet.</div>';
     return;
   }
-  boks.innerHTML = liste.map(listekortHtml).join('');
+  boks.innerHTML = liste.map(function (s, i) { return listekortHtml(s, i); }).join('');
 }
 
 // Kortet i bunnarket
@@ -957,8 +969,24 @@ function settFane(f) {
 }
 
 // Detaljsiden
+function dagensTid(s) {
+  const t = tidNa(s);
+  let hoved, rest = '';
+  if (t.state === 'open') { hoved = 'Åpent nå'; rest = 'til ' + t.stenger; }
+  else if (t.state === 'soon') { hoved = 'Stenger snart'; rest = 'kl ' + t.stenger; }
+  else if (t.state === 'closed') { hoved = t.label === 'Midlertidig stengt' ? t.label : 'Stengt'; rest = /^Åpner/.test(t.label) && t.apner ? 'åpner ' + t.apner : ''; }
+  else return '';
+  return '<p class="d-apent ' + t.cls + '"><b>' + hoved + '</b>' + (rest ? ' <span>' + rest + '</span>' : '') + '</p>';
+}
+function adresseLinjer(s) {
+  if (!s.address) return esc(s.bydel);
+  const deler = s.address.split(',');
+  const gate = deler[0].trim();
+  const by = deler.length > 1 ? deler[deler.length - 1].replace(/\d+/g, '').trim() : '';
+  const linje2 = !by || by === s.bydel ? s.bydel : s.bydel + ', ' + by;
+  return esc(gate) + '<br>' + esc(linje2);
+}
 function detaljHtml(s) {
-  const ap = apentLinje(s), st = STATUS[s.halalStatus];
   const tel = s.phone ? String(s.phone).replace(/\s+/g, '') : '';
   const site = safeUrl(s.website);
   const knapper = [
@@ -972,14 +1000,14 @@ function detaljHtml(s) {
     return '<p>' + esc(v.tekst || '') + (v.kilde ? ' <span class="d-kilde">' + esc(v.kilde) + '</span>' : '') + '</p>';
   }).join('') || '<p>Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.</p>';
   const d = dagerSiden(s.lastVerified);
-  const naar = d === null ? 'Ikke bekreftet med dato ennå' : 'Sist bekreftet ' + fmtDato(s.lastVerified) + (d > 180 ? ', over et halvår siden' : '');
+  const naar = d === null ? 'Ikke bekreftet med dato' : 'Sist bekreftet ' + fmtDato(s.lastVerified) + (d > 180 ? ', over et halvår siden' : '');
 
   const stenger = clockMinutes(s.hours), apner = s.opens ? clockMinutes(s.opens) : null;
   const idag = stenger === null ? (s.hours || 'Ukjent')
     : (apner !== null ? fmtClock(apner) + ' – ' + fmtClock(stenger) : 'Stenger ' + fmtClock(stenger));
   const rad = function (navn, verdi) { return '<div><dt>' + navn + '</dt><dd>' + verdi + '</dd></div>'; };
   const rader = [
-    rad('Adresse', esc(s.address || '') + (s.address ? '<br>' : '') + esc(s.bydel)),
+    rad('Adresse', adresseLinjer(s)),
     rad('I dag', esc(idag)),
     rad('Alkohol', s.alcohol ? 'Serveres' : 'Ingen kjent servering')
   ];
@@ -997,18 +1025,20 @@ function detaljHtml(s) {
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
     '</header>' +
     '<div class="d-kropp">' +
-      (ap ? '<p class="d-apent ' + ap.cls + '">' + esc(ap.tekst) + '</p>' : '') +
+      dagensTid(s) +
       (s.description ? '<p class="d-beskr">' + esc(s.description) + '</p>' : '') +
       '<div class="d-knapper k' + knapper.length + '">' + knapper.join('') + '</div>' +
       '<section class="d-om" aria-labelledby="dOmTittel">' +
         '<div class="d-om-hode"><h3 id="dOmTittel">Om halal-statusen</h3><span class="d-ar" aria-hidden="true">حلال</span></div>' +
         bevis +
-        '<p class="d-naar">' + naar + '. Halalkartet sertifiserer ikke selv.</p>' +
-        '<button type="button" class="d-lenke" data-faq>Hva betyr statusene?</button>' +
+        '<p class="d-forbehold">Halalkartet sertifiserer ikke selv.</p>' +
+        '<div class="d-om-fot"><span class="d-naar">' + naar + '</span><button type="button" class="d-lenke" data-faq>Hva betyr statusene?</button></div>' +
       '</section>' +
       '<dl class="d-info">' + rader.join('') + '</dl>' +
       '<div class="d-kartboks"><div class="d-kart" id="detaljKart"></div>' +
         '<a class="d-kartlenke" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener">Åpne i kart-appen' + IKON2.utpil + '</a></div>' +
+      '<div class="d-feil"><div><h3>Ser du noe som er feil?</h3><p>Si ifra, så sjekker vi stedet på nytt.</p></div>' +
+        '<button type="button" class="knapp" data-sifra="' + esc(s.id) + '">Si ifra</button></div>' +
     '</div>';
 }
 function tegnDetaljKart(s) {
@@ -1028,6 +1058,7 @@ function apneDetalj(id) {
   d.innerHTML = detaljHtml(s);
   d.hidden = false;
   d.scrollTop = 0;
+  d.classList.remove('rullet');
   BAKGRUNN.forEach(function (x) { if (el(x)) el(x).inert = true; });
   if (!(history.state && history.state.detalj)) history.pushState({ detalj: id }, '', '#' + encodeURIComponent(id));
   else history.replaceState({ detalj: id }, '', '#' + encodeURIComponent(id));
@@ -1108,8 +1139,22 @@ function wireMobil() {
     const det = t.closest('[data-detalj]');
     if (det) { e.preventDefault(); apneDetalj(det.dataset.detalj); return; }
     if (t.closest('#detaljTilbake')) { lukkDetalj(); return; }
-    if (t.closest('[data-faq]')) { lukkDetalj(); setTimeout(function () { openInfo('faq'); }, 60); }
+    if (t.closest('[data-faq]')) { lukkDetalj(); setTimeout(function () { openInfo('faq'); }, 60); return; }
+    const sifra = t.closest('[data-sifra]');
+    if (sifra) {
+      const sted = byId(sifra.dataset.sifra);
+      lukkDetalj();
+      setTimeout(function () {
+        openInfo('kontakt');
+        const felt = document.querySelector('#kontaktForm textarea[name="melding"]');
+        if (felt && sted && !felt.value) felt.value = 'Om ' + sted.name + ': ';
+      }, 60);
+    }
   });
+  el('detalj').addEventListener('scroll', function () {
+    const d = el('detalj'), hero = d.querySelector('.d-hero');
+    d.classList.toggle('rullet', !!hero && d.scrollTop > hero.offsetHeight - 70);
+  }, { passive: true });
   window.addEventListener('popstate', function () {
     if (!el('detalj').hidden && !(history.state && history.state.detalj)) lukkDetalj(true);
   });
