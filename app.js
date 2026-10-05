@@ -68,7 +68,7 @@ const ENGELSK = {
   'Ingen kjent alkoholservering': 'No known alcohol', 'Sorter etter': 'Sort by', 'Nærmest meg': 'Nearest me',
   // steder og tider
   'til {t}': 'until {t}', 'åpner {t}': 'opens {t}', 'Åpent til {t}': 'Open until {t}', 'Stenger {t}': 'Closes {t}', 'Stengt, åpner {t}': 'Closed, opens {t}',
-  'kl {t}': 'at {t}', 'Midlertidig stengt': 'Temporarily closed', 'Stengt nå': 'Closed now', 'Åpningstid ukjent': 'Opening hours unknown',
+  'kl {t}': 'at {t}', 'kl. {t}': 'at {t}', 'til kl. {t}': 'until {t}', 'kl. {a} – kl. {b}': '{a} – {b}', 'Stenger kl. {t}': 'Closes {t}', 'Filter': 'Filters', 'Midlertidig stengt': 'Temporarily closed', 'Stengt nå': 'Closed now', 'Åpningstid ukjent': 'Opening hours unknown',
   'Alle åpningstider for {navn}, i kart-appen': 'All opening hours for {navn}, in the maps app', 'Alle tider': 'All hours',
   'Veibeskrivelse': 'Directions', 'Se stedet': 'View place', 'Se hele siden': 'View full page', 'Ring': 'Call', 'Nett': 'Website',
   'Fjern {navn} fra Lagret': 'Remove {navn} from Saved', 'Lagre {navn}': 'Save {navn}', 'Lagre': 'Save',
@@ -327,6 +327,9 @@ const klynge = L.markerClusterGroup({
   animate: !reduceMotion,
   iconCreateFunction: function (c) {
     const n = c.getChildCount();
+    // mobil: rund mørkegrønn sirkel med gullkant og tallet inni, uten bestikk
+    if (erMobil()) return L.divIcon({ className: '', iconSize: [50, 50], iconAnchor: [25, 25],
+      html: '<div class="rklynge' + (n >= 10 ? ' stor' : '') + '"><span>' + n + '</span></div>' });
     return L.divIcon({
       className: '', iconSize: [36, 48], iconAnchor: [18, 47],
       html: '<div class="klynge' + (n >= 10 ? ' stor' : '') + '">' + DRAAPE + '<span>' + n + '</span></div>'
@@ -482,25 +485,37 @@ function nullstill() {
 }
 
 const DRAAPE = '<svg class="pin-form" viewBox="0 0 30 40" aria-hidden="true"><path d="M15 38.5S2 24.4 2 15a13 13 0 0126 0c0 9.4-13 23.5-13 23.5z"/></svg>';
+const BESTIKK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v8M4.5 3v5a2.5 2.5 0 005 0V3M7 11v10"/><path d="M17 21V3c-2.2 1.2-3.5 3.8-3.5 7.5 0 1.8 1 3 3.5 3"/></svg>';
+// merket i hjørnet: حلال for verifisert, ! og ? for de andre
+const PINMERKE = { verifisert: 'حلال', delvis: '!', uavklart: '?' };
 
 function makeIcon(status, big, navn) {
   const st = STATUS[status];
-  const etikett = navn ? '<span class="pin-navn">' + esc(navn) + '</span>' : '';
-  if (big && !erMobil()) return L.divIcon({
+  if (erMobil()) return rundPinne(status, big, navn);
+  if (big) return L.divIcon({
     className: '', iconSize: [40, 53], iconAnchor: [20, 52],
     html: '<div class="pin draape stor ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>' +
       (navn ? '<span class="pin-navn under">' + esc(navn) + '</span>' : '')
   });
-  if (big) return L.divIcon({
-    className: '', iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -18],
-    html: '<div class="pin ' + st.pin + ' big" style="border-radius:' + st.shape + '">' + st.tegn + '</div>' + etikett
-  });
   // spissen står på stedet
   return L.divIcon({
     className: '', iconSize: [30, 40], iconAnchor: [15, 39],
-    html: '<div class="pin draape ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>' + etikett
+    html: '<div class="pin draape ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>'
   });
 }
+// Mobil: rund pinne med kniv og gaffel og et lite merke i hjørnet. Valgt sted blir større, med gullkant og navnet under.
+function rundPinne(status, stor, navn) {
+  const st = STATUS[status];
+  return L.divIcon({
+    className: '', iconSize: stor ? [50, 58] : [34, 40], iconAnchor: stor ? [25, 57] : [17, 39],
+    html: '<div class="rpin ' + st.pin + (stor ? ' stor' : '') + '" data-s="' + status + '">' +
+      '<span class="rpin-sirkel">' + BESTIKK + '</span>' +
+      '<span class="rpin-merke" aria-hidden="true">' + PINMERKE[status] + '</span></div>' +
+      (stor && navn ? '<span class="rpin-navn">' + esc(navn) + '</span>' : '')
+  });
+}
+// Minikartet på stedssiden: en gullprikk med mørk ring
+const STEDSPRIKK = L.divIcon({ className: '', iconSize: [34, 34], iconAnchor: [17, 17], html: '<div class="d-punkt"></div>' });
 
 const MND = ['januar','februar','mars','april','mai','juni',
              'juli','august','september','oktober','november','desember'];
@@ -690,13 +705,13 @@ function tegnFilterark(antall) {
       return '<button type="button" role="radio" aria-checked="' + (v[0] === aktiv) + '" data-v="' + esc(v[0]) + '" data-seg="' + klikk + '">' + esc(T(v[1])) + '</button>';
     }).join('') + '</div>';
   };
-  const brikker = function (id, del, verdier) {
+  const brikker = function (id, del, verdier, antall) {
     const valgt = el(id).value;
-    const vis = faVisAlle[del] ? verdier : verdier.slice(0, 9);
+    const vis = faVisAlle[del] ? verdier : verdier.slice(0, antall);
     if (valgt && vis.indexOf(valgt) < 0) vis.push(valgt);
     return '<div class="fa-brikker">' + vis.map(function (v) {
       return '<button type="button" aria-pressed="' + (v === valgt) + '" data-velg="' + id + '" data-v="' + esc(v) + '">' + esc(id === 'fCuisine' ? T(v) : v) + '</button>';
-    }).join('') + (verdier.length > 9 ? '<button type="button" class="fa-flere" data-flere="' + del + '">' +
+    }).join('') + (verdier.length > antall ? '<button type="button" class="fa-flere" data-flere="' + del + '">' +
       (faVisAlle[del] ? T('Vis færre') : T('Vis alle {n}', { n: verdier.length })) + '</button>' : '') + '</div>';
   };
   const telling = function (felt) {
@@ -719,8 +734,8 @@ function tegnFilterark(antall) {
     '<section class="fa-del" data-del="apent"><div class="fa-rad"><div><h3>' + T('Åpent nå') + '</h3>' +
       '<p>' + T('Skjul steder som er stengt') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Åpent nå') + '" aria-checked="' + (el('fOpen').value === 'naa') + '" data-bryter="apent"></button></div></section>' +
-    '<section class="fa-del" data-del="kjokken"><h3>' + T('Kjøkken') + '</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines')) + '</section>' +
-    '<section class="fa-del" data-del="omrade"><h3>' + T('Område') + '</h3>' + brikker('fBydel', 'omrade', telling('bydel')) + '</section>' +
+    '<section class="fa-del" data-del="kjokken"><h3>' + T('Kjøkken') + '</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines'), 6) + '</section>' +
+    '<section class="fa-del" data-del="omrade"><h3>' + T('Område') + '</h3>' + brikker('fBydel', 'omrade', telling('bydel'), 8) + '</section>' +
     '<section class="fa-del" data-del="pris"><h3>' + T('Pris') + '</h3><div class="fa-pris">' + ['1', '2', '3'].map(function (v) {
       return '<button type="button" aria-pressed="' + (el('fPrice').value === v) + '" data-velg="fPrice" data-v="' + v + '" aria-label="' +
         T(['Rimelig', 'Middels', 'Dyrere'][v - 1]) + '">' + '$'.repeat(+v) + '</button>'; }).join('') + '</div></section>' +
@@ -832,8 +847,13 @@ let detaljFra = null, detaljKart = null, merFra = null, detaljId = null;
 function kobleKort() {
   const mobil = erMobil();
   if (mobil === kortModus) return;
+  const forste = kortModus === null;
   kortModus = mobil;
   const aktiv = activeId;
+  if (!forste) {
+    HALAL_SPOTS.forEach(function (s) { if (s.id !== aktiv) markers[s.id].setIcon(makeIcon(s.halalStatus, false)); });
+    klynge.refreshClusters();
+  }
   if (!mobil) { visning = 'kart'; fane = 'utforsk'; document.body.classList.remove('vis-liste', 'fane-lagret'); }
   plasserTips();
   if (aktiv) setActive(aktiv, false);
@@ -974,10 +994,13 @@ function holdPunktFritt(id) {
   const m = markers[id];
   if (!m || !erMobil()) return;
   const p = map.latLngToContainerPoint(m.getLatLng()), o = trygtOmrade();
-  const topp = o.topp + 44, bunn = o.bunn - 20;
+  const lapp = m.getElement() && m.getElement().querySelector('.rpin-navn');
+  const halv = Math.max(60, lapp ? lapp.offsetWidth / 2 + 12 : 0);
+  // pinnen er 58 px høy, og navnet står under spissen
+  const topp = o.topp + 64, bunn = o.bunn - (lapp ? lapp.offsetHeight + 16 : 20);
   let dx = 0, dy = 0;
   if (p.y < topp) dy = p.y - topp; else if (p.y > bunn) dy = p.y - bunn;
-  if (p.x < o.venstre + 60) dx = p.x - (o.venstre + 60); else if (p.x > o.hoyre - 60) dx = p.x - (o.hoyre - 60);
+  if (p.x < o.venstre + halv) dx = p.x - (o.venstre + halv); else if (p.x > o.hoyre - halv) dx = p.x - (o.hoyre - halv);
   if (Math.abs(dx) > 1 || Math.abs(dy) > 1) map.panBy([Math.round(dx), Math.round(dy)], { animate: !reduceMotion, duration: .25 });
 }
 function tegnValgt() {
@@ -1047,8 +1070,8 @@ function settFane(f) {
 function dagensTid(s) {
   const t = tidNa(s);
   let hoved, rest = '';
-  if (t.state === 'open') { hoved = T('Åpent nå'); rest = T('til {t}', { t: t.stenger }); }
-  else if (t.state === 'soon') { hoved = T('Stenger snart'); rest = T('kl {t}', { t: t.stenger }); }
+  if (t.state === 'open') { hoved = T('Åpent nå'); rest = T('til kl. {t}', { t: t.stenger }); }
+  else if (t.state === 'soon') { hoved = T('Stenger snart'); rest = T('kl. {t}', { t: t.stenger }); }
   else if (t.state === 'closed') { hoved = T(t.label === 'Midlertidig stengt' ? t.label : 'Stengt'); rest = /^Åpner/.test(t.label) && t.apner ? T('åpner {t}', { t: t.apner }) : ''; }
   else return '';
   return '<p class="d-apent ' + t.cls + '"><b>' + hoved + '</b>' + (rest ? ' <span>' + rest + '</span>' : '') + '</p>';
@@ -1079,7 +1102,7 @@ function detaljHtml(s) {
 
   const stenger = clockMinutes(s.hours), apner = s.opens ? clockMinutes(s.opens) : null;
   const idag = stenger === null ? (s.hours ? visTid(s.hours) : T('Ukjent'))
-    : (apner !== null ? fmtClock(apner) + ' – ' + fmtClock(stenger) : T('Stenger {t}', { t: fmtClock(stenger) }));
+    : (apner !== null ? T('kl. {a} – kl. {b}', { a: fmtClock(apner), b: fmtClock(stenger) }) : T('Stenger kl. {t}', { t: fmtClock(stenger) }));
   const rad = function (navn, verdi) { return '<div><dt>' + T(navn) + '</dt><dd>' + verdi + '</dd></div>'; };
   const rader = [
     rad('Adresse', adresseLinjer(s)),
@@ -1096,7 +1119,7 @@ function detaljHtml(s) {
       '<a class="d-merke" href="./" aria-label="' + T('Halalkartet, start på nytt') + '">حلال</a>' +
     '</div>' +
     '<header class="d-hero">' +
-      '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s, true) + '</p>' +
+      '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s) + '</p>' +
       '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
     '</header>' +
@@ -1125,7 +1148,7 @@ function tegnDetaljKart(s) {
     boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
   detaljKart.attributionControl.setPrefix(false);
   L.tileLayer(flisUrl(), { maxZoom: 20, attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap' }).addTo(detaljKart);
-  L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, true), keyboard: false, interactive: false }).addTo(detaljKart);
+  L.marker([s.lat, s.lng], { icon: STEDSPRIKK, keyboard: false, interactive: false }).addTo(detaljKart);
 }
 function apneDetalj(id) {
   const s = byId(id), d = el('detalj');
