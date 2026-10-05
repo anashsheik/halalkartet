@@ -185,7 +185,8 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .toppfelt { position: fixed; z-index: 1100; left: 0; right: 0; top: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px; padding: calc(env(safe-area-inset-top, 0px) + 8px) 16px 1px; background: var(--emerald); color: var(--ivory); border-radius: 0 0 18px 18px; box-shadow: 0 8px 24px rgba(9,28,20,.22); }
-.topp-merke { margin: 0; }
+.topp-merke { display: block; margin: 0; padding: 8px 0 8px 10px; border-radius: 10px; text-decoration: none; }
+.topp-merke:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .sokemerke { display: block; font-family: 'Amiri', serif; font-weight: 700; font-size: 25px; line-height: 1; color: var(--gold); direction: rtl; }
 .sokekort { display: flex; align-items: stretch; gap: 8px; min-width: 0; }
 .sokekort .search-wrap { flex: 1; min-width: 0; margin: 0; }
@@ -270,7 +271,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .info-scrim.open { display: flex; }
 .info-card { background: rgba(247,242,231,.94); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); color: var(--ink); width: 100%; max-width: 640px; max-height: 86vh; border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); display: flex; flex-direction: column; overflow: hidden; }
 .info-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: linear-gradient(180deg, #0E3D2C, #0B3324); }
-.info-brand { font-family: 'Amiri', serif; font-weight: 700; font-size: 22px; direction: rtl; flex: none; background: linear-gradient(155deg, #EAD59B, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.info-brand { text-decoration: none; border-radius: 8px; font-family: 'Amiri', serif; font-weight: 700; font-size: 22px; direction: rtl; flex: none; background: linear-gradient(155deg, #EAD59B, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .info-tabs { flex: 1; display: flex; gap: 3px; overflow-x: auto; scrollbar-width: none; }
 .info-tabs::-webkit-scrollbar { display: none; }
 .info-tab { border: 0; background: none; color: var(--ivory-dim); font: inherit; font-size: 12.5px; font-weight: 600; padding: 7px 11px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
@@ -386,9 +387,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   body.vis-liste:not(.fane-lagret) .vis-kart { display: inline-flex; position: fixed; z-index: 1200; left: 50%; bottom: calc(var(--fane-h) + 18px); transform: translateX(-50%); align-items: center; gap: 12px; min-height: 50px; padding: 0 24px; border: 0; border-radius: 99px; background: var(--emerald); color: var(--ivory); font: 700 17px 'Manrope', sans-serif; box-shadow: 0 10px 26px rgba(9,28,20,.3); cursor: pointer; }
   .vis-kart svg { color: var(--gold); }
 
-  .fane { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
+  .fane { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
   .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 11px 'Manrope', sans-serif; cursor: pointer; }
   .fane svg { width: 22px; height: 22px; }
+  .fane .fane-sprak { color: var(--emerald); font-weight: 800; letter-spacing: .04em; }
   .fane button[aria-current="page"] { color: var(--emerald); font-weight: 800; }
   .fane button[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 50%; width: 44px; height: 3px; margin-left: -22px; border-radius: 0 0 3px 3px; background: var(--gold); }
 
@@ -434,6 +436,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .detalj.rullet .d-topp { background: var(--emerald); box-shadow: 0 4px 16px rgba(9,28,20,.25); }
 .d-topp > * { pointer-events: auto; }
 .d-luft { flex: 1; }
+.d-merke { pointer-events: auto; display: grid; place-items: center; min-width: 46px; height: 46px; margin-left: 2px; border-radius: 12px; font: 700 25px/1 'Amiri', serif; color: var(--gold); direction: rtl; text-decoration: none; }
 .d-rund { width: 46px; height: 46px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; background: rgba(9,30,21,.55); color: #fff; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; }
 .hjerte.d-rund { color: #fff; }
 .d-hero { padding: calc(env(safe-area-inset-top, 0px) + 112px) 20px 24px; background: var(--emerald) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23C8A253' stroke-opacity='.22' stroke-width='1.2'%3E%3Crect x='24' y='24' width='24' height='24'/%3E%3Crect x='24' y='24' width='24' height='24' transform='rotate(45 36 36)'/%3E%3Cpath d='M0 36h19M53 36h19M36 0v19M36 53v19'/%3E%3C/g%3E%3C/svg%3E") repeat; background-size: 72px 72px; color: var(--ivory); }
@@ -527,6 +530,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .pc-merke { display: flex; align-items: center; justify-content: flex-end; gap: 22px; min-width: 0; }
   .pc-slagord { font: italic 500 24px/1 'Cormorant Garamond', serif; color: var(--ivory); white-space: nowrap; }
   .pc-ar { padding-left: 22px; border-left: 1px solid rgba(200,162,83,.35); font: 700 36px/1 'Amiri', serif; color: var(--gold); direction: rtl; }
+  .pc-merke-lenke { display: flex; align-items: center; gap: 22px; min-width: 0; color: inherit; text-decoration: none; border-radius: 10px; }
 
   .pc-filter { display: flex; align-items: center; gap: 26px; position: fixed; z-index: 1100; top: var(--pc-topp); left: 0; right: 0; height: var(--pc-filter); padding: 0 40px; background: var(--flate-bak); border-bottom: 1px solid var(--kort-strek); }
   .pc-statusgruppe, .pc-valggruppe { display: flex; align-items: center; gap: 26px; }
@@ -552,6 +556,9 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .pc-nedtrekk button:hover, .pc-nedtrekk button:focus-visible { background: #F1ECDF; box-shadow: none; }
   .pc-nedtrekk button[aria-checked="true"] { color: var(--emerald); font-weight: 700; }
   .pc-nedtrekk small { color: var(--kort-dempet); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .pc-sprak { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--emerald); font: 800 15px 'Manrope', sans-serif; letter-spacing: .04em; white-space: nowrap; cursor: pointer; }
+  .pc-sprak span { padding-bottom: 3px; border-bottom: 3px solid transparent; }
+  .pc-sprak:hover span { border-color: var(--kort-strek); }
   .pc-nullstill { margin-left: auto; min-height: 44px; padding: 0; border: 0; background: none; color: var(--gull-tekst); font: 600 15px 'Manrope', sans-serif; text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 6px; cursor: pointer; }
   .pc-nullstill:disabled { opacity: .5; cursor: default; }
 
@@ -683,43 +690,45 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 <header class="pc-topp" id="pcTopp">
   <div class="pc-venstre">
-    <button class="pc-menyknapp" id="pcMenyknapp" type="button" aria-label="Meny" aria-haspopup="dialog" aria-expanded="false">
+    <button class="pc-menyknapp" id="pcMenyknapp" type="button" aria-label="Meny" data-ta="aria-label" aria-haspopup="dialog" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8h14M5 16h14"/></svg>
     </button>
-    <button class="pc-lenke" id="pcNaer" type="button">Nær meg</button>
-    <button class="pc-lenke" id="pcTips" type="button">Tips oss</button>
-    <button class="pc-lenke pc-hjerte" id="pcLagret" type="button" aria-pressed="false" aria-label="Lagrede steder">
+    <button class="pc-lenke" id="pcNaer" type="button" data-t>Nær meg</button>
+    <button class="pc-lenke" id="pcTips" type="button" data-t>Tips oss</button>
+    <button class="pc-lenke pc-hjerte" id="pcLagret" type="button" aria-pressed="false" aria-label="Lagrede steder" data-ta="aria-label">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg>
       <span class="pc-lagret-tall" id="pcLagretTall" hidden></span>
     </button>
   </div>
   <form class="pc-sok" id="pcSok" role="search">
-    <button class="pc-sokknapp" type="submit">Søk</button>
+    <button class="pc-sokknapp" type="submit" data-t>Søk</button>
   </form>
   <div class="pc-merke">
     <h1 class="vh">Halalkartet</h1>
-    <span class="pc-slagord">Finn halal nær deg</span>
-    <span class="pc-ar" aria-hidden="true">حلال</span>
+    <a class="pc-merke-lenke" href="./" aria-label="Halalkartet, start på nytt" data-ta="aria-label">
+      <span class="pc-slagord" data-t>Finn halal nær deg</span>
+      <span class="pc-ar" aria-hidden="true">حلال</span>
+    </a>
   </div>
 </header>
 
-<div class="pc-filter" id="pcFilter" role="toolbar" aria-label="Filtre"></div>
+<div class="pc-filter" id="pcFilter" role="toolbar" aria-label="Filtre" data-ta="aria-label"></div>
 
 <div class="pc-kartinfo" id="pcKartinfo" aria-live="polite">
-  <p class="pc-ki-etikett">I kartet nå</p>
+  <p class="pc-ki-etikett" data-t>I kartet nå</p>
   <p class="pc-ki-tekst"><b id="pcKiTall">–</b> <span id="pcKiTekst">steder</span></p>
 </div>
 
 <aside class="pc-liste" id="pcListe" aria-labelledby="pcListeTittel">
   <div class="pc-liste-hode">
     <h2 id="pcListeTittel">Steder</h2>
-    <label class="pc-sorter"><span class="vh">Sorter listen</span>
+    <label class="pc-sorter"><span class="vh" data-t>Sorter listen</span>
       <select id="pcSort">
-        <option value="bydel">Etter bydel</option>
-        <option value="">Anbefalt</option>
-        <option value="avstand">Nærmest</option>
-        <option value="navn">Navn A–Å</option>
-        <option value="pris">Pris lav–høy</option>
+        <option value="bydel" data-t>Etter bydel</option>
+        <option value="" data-t>Anbefalt</option>
+        <option value="avstand" data-t>Nærmest</option>
+        <option value="navn" data-t>Navn A–Å</option>
+        <option value="pris" data-t>Pris lav–høy</option>
       </select>
     </label>
   </div>
@@ -728,36 +737,38 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 <div class="pc-skjerm" id="pcSkjerm" hidden></div>
 
-<nav class="pc-skuff" id="pcSkuff" aria-label="Meny" hidden>
+<nav class="pc-skuff" id="pcSkuff" aria-label="Meny" data-ta="aria-label" hidden>
   <div class="pc-skuff-topp">
-    <span class="pc-slagord">Finn halal nær deg</span>
-    <span class="pc-ar" aria-hidden="true">حلال</span>
-    <button class="pc-menyknapp pc-lukk" id="pcSkuffLukk" type="button" aria-label="Lukk menyen">
+    <a class="pc-merke-lenke" href="./" aria-label="Halalkartet, start på nytt" data-ta="aria-label">
+      <span class="pc-slagord" data-t>Finn halal nær deg</span>
+      <span class="pc-ar" aria-hidden="true">حلال</span>
+    </a>
+    <button class="pc-menyknapp pc-lukk" id="pcSkuffLukk" type="button" aria-label="Lukk menyen" data-ta="aria-label">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
   <ul class="pc-skuff-liste">
-    <li><button type="button" data-side="tips">Tips oss om et sted</button></li>
-    <li><button type="button" data-side="feil">Si ifra om feil</button></li>
-    <li><button type="button" data-side="faq">FAQ</button></li>
-    <li><button type="button" data-side="personvern">Personvern</button></li>
-    <li><button type="button" data-side="vilkar">Vilkår</button></li>
-    <li><button type="button" data-side="om">Om oss</button></li>
-    <li><button type="button" data-side="kontakt">Kontakt oss</button></li>
+    <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
+    <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
+    <li><button type="button" data-side="faq" data-t>FAQ</button></li>
+    <li><button type="button" data-side="personvern" data-t>Personvern</button></li>
+    <li><button type="button" data-side="vilkar" data-t>Vilkår</button></li>
+    <li><button type="button" data-side="om" data-t>Om oss</button></li>
+    <li><button type="button" data-side="kontakt" data-t>Kontakt oss</button></li>
   </ul>
 </nav>
 
-<button class="nearme" id="nearme" aria-label="Finn steder nær meg">
+<button class="nearme" id="nearme" aria-label="Finn steder nær meg" data-ta="aria-label">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
-  <span>Nær meg</span>
+  <span data-t>Nær meg</span>
 </button>
 
-<div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" hidden>
+<div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" data-ta="aria-label" hidden>
   <div class="hilite-bar" id="tipsBar"></div>
-  <p class="tips-lead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
+  <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
   <div class="hilite-head">
-    <h2>Kjenner du et sted?</h2>
-    <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
+    <h2 data-t>Kjenner du et sted?</h2>
+    <p data-t>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
   </div>
   <div class="tips-scroll">
   <div class="tips-body" id="tipsBody">
@@ -765,49 +776,49 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
       <input type="hidden" name="form-name" value="restauranttips">
       <input type="hidden" name="_subject" value="Nytt tips til Halalkartet">
       <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
-      <label class="kf-field">Restaurantens navn <span class="kf-req">påkrevd</span>
+      <label class="kf-field"><span data-t>Restaurantens navn</span> <span class="kf-req" data-t>påkrevd</span>
         <input type="text" name="restaurant" required autocomplete="off">
       </label>
-      <label class="kf-field">Adresse eller by/bydel <span class="kf-opt">frivillig</span>
-        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17">
+      <label class="kf-field"><span data-t>Adresse eller by/bydel</span> <span class="kf-opt" data-t>frivillig</span>
+        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17" data-ta="placeholder">
       </label>
-      <label class="kf-field">Hva vet du om stedet? <span class="kf-req">påkrevd</span>
+      <label class="kf-field"><span data-t>Hva vet du om stedet?</span> <span class="kf-req" data-t>påkrevd</span>
         <select name="vurdering" class="kf-select" required>
-          <option value="">Velg ett</option>
-          <option>Helt halal</option>
-          <option>Halal mat, men serverer alkohol som drikke</option>
-          <option>Delvis halal – deler av menyen er ikke halal</option>
-          <option>Serverer svinekjøtt</option>
-          <option>Usikker – vil gjerne at dere sjekker</option>
+          <option value="" data-t>Velg ett</option>
+          <option value="Helt halal" data-t>Helt halal</option>
+          <option value="Halal mat, men serverer alkohol som drikke" data-t>Halal mat, men serverer alkohol som drikke</option>
+          <option value="Delvis halal – deler av menyen er ikke halal" data-t>Delvis halal – deler av menyen er ikke halal</option>
+          <option value="Serverer svinekjøtt" data-t>Serverer svinekjøtt</option>
+          <option value="Usikker – vil gjerne at dere sjekker" data-t>Usikker – vil gjerne at dere sjekker</option>
         </select>
       </label>
-      <label class="kf-field">Hvordan vet du det? <span class="kf-opt">frivillig</span>
-        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …"></textarea>
+      <label class="kf-field"><span data-t>Hvordan vet du det?</span> <span class="kf-opt" data-t>frivillig</span>
+        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …" data-ta="placeholder"></textarea>
       </label>
-      <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+      <label class="kf-field"><span data-t>Telefon eller e-post</span> <span class="kf-opt" data-t>frivillig</span>
         <input type="text" name="kontakt" autocomplete="email">
       </label>
     </form>
-    <p class="kf-ok" id="tipsOk" hidden>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
-    <p class="tips-rules">Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
+    <p class="kf-ok" id="tipsOk" hidden data-t>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
+    <p class="tips-rules" data-t>Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
   </div>
   <span class="tips-mer" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
   </div>
   <div class="hilite-foot tips-foot">
-    <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend">Send inn tips</button>
-    <button class="hilite-lukk" id="tipsLukk" type="button">Lukk</button>
+    <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
+    <button class="hilite-lukk" id="tipsLukk" type="button" data-t>Lukk</button>
   </div>
 </div>
 
-<div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" hidden>
+<div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" data-ta="aria-label" hidden>
   <div class="hilite-bar" id="hiliteBar"></div>
   <div class="hilite-head">
-    <h2>Utvalgte steder</h2>
+    <h2 data-t>Utvalgte steder</h2>
     <p id="hiliteSub">Fem utvalgte steder som vi mener du burde prøve.</p>
   </div>
   <div class="hilite-list" id="hiliteList"></div>
   <div class="hilite-foot">
-    <button class="hilite-lukk" id="hiliteLukk" type="button">Lukk</button>
+    <button class="hilite-lukk" id="hiliteLukk" type="button" data-t>Lukk</button>
   </div>
 </div>
 
@@ -822,8 +833,8 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
       <input id="search" class="search" type="search" placeholder="Søk på navn, kjøkken eller adresse…" aria-label="Søk">
     </div>
   </div>
-  <p class="topp-merke"><span class="sokemerke" aria-hidden="true">حلال</span><span class="vh">Halalkartet</span></p>
-  <div class="hurtigrad" id="hurtigrad" role="toolbar" aria-label="Hurtigfiltre"></div>
+  <a class="topp-merke" href="./" aria-label="Halalkartet, start på nytt" data-ta="aria-label"><span class="sokemerke" aria-hidden="true">حلال</span></a>
+  <div class="hurtigrad" id="hurtigrad" role="toolbar" aria-label="Hurtigfiltre" data-ta="aria-label"></div>
 </div>
 
 <div class="filterverdier" hidden>
@@ -849,117 +860,188 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   <select id="fSort" aria-label="Sorter listen">
     <option value="">Sorter etter</option>
     <option value="avstand">Nærmest meg</option>
-    <option value="navn">Navn A–Å</option>
-    <option value="pris">Pris lav–høy</option>
+    <option value="navn" data-t>Navn A–Å</option>
+    <option value="pris" data-t>Pris lav–høy</option>
   </select>
 </div>
 
 <div class="info-scrim" id="infoScrim">
-  <div class="info-card" role="dialog" aria-modal="true" aria-label="Informasjon">
+  <div class="info-card" role="dialog" aria-modal="true" aria-label="Informasjon" data-ta="aria-label">
     <div class="info-head">
-      <span class="info-brand">حلال</span>
+      <a class="info-brand" href="./" aria-label="Halalkartet, start på nytt" data-ta="aria-label">حلال</a>
       <div class="info-tabs">
-        <button class="info-tab active" data-tab="om">Om oss</button>
-        <button class="info-tab" data-tab="kontakt">Kontakt</button>
-        <button class="info-tab" data-tab="personvern">Personvern</button>
-        <button class="info-tab" data-tab="vilkar">Vilkår</button>
-        <button class="info-tab" data-tab="faq">FAQ</button>
+        <button class="info-tab active" data-tab="om" data-t>Om oss</button>
+        <button class="info-tab" data-tab="kontakt" data-t>Kontakt</button>
+        <button class="info-tab" data-tab="personvern" data-t>Personvern</button>
+        <button class="info-tab" data-tab="vilkar" data-t>Vilkår</button>
+        <button class="info-tab" data-tab="faq" data-t>FAQ</button>
       </div>
-      <button class="info-close" id="infoClose" aria-label="Lukk">×</button>
+      <button class="info-close" id="infoClose" aria-label="Lukk" data-ta="aria-label">×</button>
     </div>
     <div class="info-body" id="infoBody">
       <section class="info-section active" data-section="om">
-        <h2>Om oss</h2>
-        <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat i Oslo. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
-        <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
-        <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
-           <span class="info-badge" style="background:#D9600F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
-           <span class="info-badge" style="background:#636B67"></span> Grå betyr at vi ikke har rukket å bekrefte halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at du bør sjekke selv.</p>
-        <p>Pinnene har også tegn: حلال, utropstegn og spørsmålstegn. Da ser du forskjell selv om du ikke skiller fargene.</p>
-        <p>Vi begynner i Oslo og legger til flere steder etter hvert, og på sikt flere byer. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
+        <div data-sprak="nb">
+          <h2>Om oss</h2>
+          <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat i Oslo. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
+          <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
+          <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
+             <span class="info-badge" style="background:#D9600F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
+             <span class="info-badge" style="background:#636B67"></span> Grå betyr at vi ikke har rukket å bekrefte halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at du bør sjekke selv.</p>
+          <p>Pinnene har også tegn: حلال, utropstegn og spørsmålstegn. Da ser du forskjell selv om du ikke skiller fargene.</p>
+          <p>Vi begynner i Oslo og legger til flere steder etter hvert, og på sikt flere byer. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
+        </div>
+        <div data-sprak="en" lang="en" hidden>
+          <h2>About us</h2>
+          <p>Halalkartet is a small project made to make it easier to find halal food in Oslo. The idea is simple. If you are out with friends and get hungry, or want to try somewhere new, the map shows you where you can eat and how certain the halal status is.</p>
+          <p>The colours on the map tell you how safe the food is.</p>
+          <p><span class="info-badge" style="background:#2E7D4F"></span> Green means the place is confirmed one hundred percent halal.<br>
+             <span class="info-badge" style="background:#D9600F"></span> Orange means parts of the menu are not halal.<br>
+             <span class="info-badge" style="background:#636B67"></span> Grey means we have not yet confirmed the halal status. It does not mean the place is not halal, only that you should check for yourself.</p>
+          <p>The pins also have symbols: حلال, an exclamation mark and a question mark. That way you can tell them apart even if you cannot tell the colours apart.</p>
+          <p>We are starting in Oslo and will add more places over time, and eventually more cities. If you have a tip or a correction, we really appreciate you letting us know.</p>
+        </div>
       </section>
       <section class="info-section" data-section="tips">
-        <h2>Tips oss om et sted</h2>
-        <p>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
+        <h2 data-t>Tips oss om et sted</h2>
+        <p data-t>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
         <div class="pc-tipsplass" id="pcTipsplass"></div>
       </section>
       <section class="info-section" data-section="kontakt">
         <h2 id="kontaktTittel">Kontakt oss</h2>
         <p id="kontaktIntro">Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.</p>
-        <p>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
+        <p data-t>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
         <form name="tilbakemelding" method="POST" id="kontaktForm" class="kf">
           <input type="hidden" name="form-name" value="tilbakemelding">
           <input type="hidden" name="_subject" value="Ny melding til Halalkartet">
           <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
-          <label class="kf-field">Navn <span class="kf-opt">frivillig</span>
+          <label class="kf-field"><span data-t>Navn</span> <span class="kf-opt" data-t>frivillig</span>
             <input type="text" name="navn" autocomplete="name">
           </label>
-          <label class="kf-field">Hvor kommer du fra? By eller bydel <span class="kf-opt">frivillig</span>
+          <label class="kf-field"><span data-t>Hvor kommer du fra? By eller bydel</span> <span class="kf-opt" data-t>frivillig</span>
             <input type="text" name="sted">
           </label>
-          <label class="kf-field">Telefon eller e-post <span class="kf-opt">frivillig</span>
+          <label class="kf-field"><span data-t>Telefon eller e-post</span> <span class="kf-opt" data-t>frivillig</span>
             <input type="text" name="kontakt" id="kfKontakt" autocomplete="email">
           </label>
-          <p class="kf-err" id="kfKontaktErr" hidden>Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.</p>
-          <label class="kf-field">Meldingen din <span class="kf-req">påkrevd</span>
+          <p class="kf-err" id="kfKontaktErr" hidden data-t>Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.</p>
+          <label class="kf-field"><span data-t>Meldingen din</span> <span class="kf-req" data-t>påkrevd</span>
             <textarea name="melding" rows="4" required></textarea>
           </label>
-          <button type="submit" class="kf-send">Send inn</button>
+          <button type="submit" class="kf-send" data-t>Send inn</button>
         </form>
-        <p class="kf-ok" id="kontaktOk" hidden>Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.</p>
+        <p class="kf-ok" id="kontaktOk" hidden data-t>Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.</p>
       </section>
       <section class="info-section" data-section="personvern">
-        <h2>Personvern</h2>
-        <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
-        <h3>Ingen konto og ingen sporing</h3>
-        <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
-        <h3>Besøksstatistikk</h3>
-        <p>Vi teller hvor mange som besøker siden med Google Analytics, satt opp uten informasjonskapsler og med anonymisert IP-adresse. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
-        <h3>Posisjon</h3>
-        <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
-        <h3>Veibeskrivelse</h3>
-        <p>Trykker du på Veibeskrivelse, åpnes Google Maps i en ny fane med adressen til stedet. Da gjelder Googles egne vilkår og personvernregler, ikke våre.</p>
-        <h3>Skjemaene</h3>
-        <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
-        <p>Skjemaene sendes gjennom Formspree, som videresender dem til oss på e-post. Formspree tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
-        <h3>Kart og drift</h3>
-        <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
-        <p class="muted">Sist oppdatert oktober 2026.</p>
+        <div data-sprak="nb">
+          <h2>Personvern</h2>
+          <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
+          <h3>Ingen konto og ingen sporing</h3>
+          <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
+          <h3>Besøksstatistikk</h3>
+          <p>Vi teller hvor mange som besøker siden med Google Analytics, satt opp uten informasjonskapsler og med anonymisert IP-adresse. Tellingen er anonym og samlet, og vi lager ingen profil av deg.</p>
+          <h3>Posisjon</h3>
+          <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
+          <h3>Veibeskrivelse</h3>
+          <p>Trykker du på Veibeskrivelse, åpnes Google Maps i en ny fane med adressen til stedet. Da gjelder Googles egne vilkår og personvernregler, ikke våre.</p>
+          <h3>Skjemaene</h3>
+          <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+          <p>Skjemaene sendes gjennom Formspree, som videresender dem til oss på e-post. Formspree tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
+          <h3>Kart og drift</h3>
+          <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
+          <p class="muted">Sist oppdatert oktober 2026.</p>
+        </div>
+        <div data-sprak="en" lang="en" hidden>
+          <h2>Privacy</h2>
+          <p>Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the site.</p>
+          <h3>No account and no tracking</h3>
+          <p>You do not need an account to use Halalkartet. We use no tracking cookies and show no ads.</p>
+          <h3>Visitor statistics</h3>
+          <p>We count how many people visit the site with Google Analytics, set up without cookies and with an anonymised IP address. The count is anonymous and aggregated, and we do not build a profile of you.</p>
+          <h3>Location</h3>
+          <p>If you tap Near me, the browser asks for your location to show places nearby. The location is only used in your browser there and then. It is not stored, and it is not sent to us.</p>
+          <h3>Directions</h3>
+          <p>If you tap Directions, Google Maps opens in a new tab with the address of the place. Google’s own terms and privacy rules then apply, not ours.</p>
+          <h3>The forms</h3>
+          <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, let us know and we will.</p>
+          <p>The forms are sent through Formspree, which forwards them to us by email. Formspree keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
+          <h3>Map and hosting</h3>
+          <p>The site is hosted on GitHub Pages. The map tiles are loaded from Stadia Maps, which builds them from OpenStreetMap and OpenMapTiles data. These services may see technical details such as IP address in order to deliver the map and keep the site running.</p>
+          <p class="muted">Last updated October 2026.</p>
+        </div>
       </section>
       <section class="info-section" data-section="vilkar">
-        <h2>Vilkår og betingelser</h2>
-        <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
-        <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
-        <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
-        <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
-        <p class="muted">Sist oppdatert august 2026.</p>
+        <div data-sprak="nb">
+          <h2>Vilkår og betingelser</h2>
+          <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
+          <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
+          <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
+          <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
+          <p class="muted">Sist oppdatert august 2026.</p>
+        </div>
+        <div data-sprak="en" lang="en" hidden>
+          <h2>Terms and conditions</h2>
+          <p>Halalkartet is a free information service, and we provide it as it is.</p>
+          <p>We do our best to keep the information accurate, but we cannot guarantee that halal status, opening hours, addresses or other details are always correct or up to date. This applies especially to places marked grey or orange.</p>
+          <p>Whether a place is actually halal is ultimately your own responsibility. If in doubt, check directly with the place before you eat. You use the map at your own risk, and we are not responsible for errors or omissions.</p>
+          <p>Content and features may change without notice. By using Halalkartet, you accept these terms.</p>
+          <p class="muted">Last updated August 2026.</p>
+        </div>
       </section>
       <section class="info-section" data-section="faq">
-        <h2>Ofte stilte spørsmål</h2>
-        <h3>Hva betyr fargene på kartet?</h3>
-        <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at vi ikke vet. Tegnene i pinnene skiller nivåene også: حلال, utropstegn og spørsmålstegn.</p>
-        <h3>Hvordan vet dere at et sted er halal?</h3>
-        <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
-        <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå, og det står i kortet.</p>
-        <h3>Hva betyr dollartegnene?</h3>
-        <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå.</p>
-        <h3>Hvor pålitelige er åpningstidene?</h3>
-        <p>Klokkeslettene følger norsk tid uansett hvor du selv befinner deg. Grønt betyr åpent, gult at det stenger om under en time, og rødt at det er stengt.</p>
-        <p>Vær oppmerksom på at vi foreløpig bare har registrert når stedene <em>stenger</em>, ikke når de åpner. Tidlig på dagen kan et sted derfor vises som åpent selv om det ikke har åpnet ennå. Ring gjerne først hvis du er ute i god tid.</p>
-        <h3>Hva er «Utvalgte steder»?</h3>
-        <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
-        <h3>Kan jeg dele et sted med noen?</h3>
-        <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
-        <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
-        <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> nede til venstre på kartet, eller bruk skjemaet på kontaktsiden.</p>
-        <h3>Hvilke steder kommer med på kartet?</h3>
-        <p>Serverer stedet både halal mat og svin, kommer det med som <b>delvis halal</b> og merkes oransje, med en linje i kortet om hva som ikke er halal. Da kan du avgjøre selv om det er greit for deg. Steder uten noe halal på menyen kommer ikke med.</p>
-        <p>Serverer de alkohol å drikke, men ikke bruker det i maten, kan stedet merkes halal. Da står det en tydelig merknad i kortet om at de serverer halal mat, men også alkoholholdig drikke, så du kan bestemme selv.</p>
-        <p>Det samme gjelder når bare deler av menyen er halal av andre grunner: stedet merkes oransje, og kortet sier hva som gjelder.</p>
-        <h3>Dekker dere hele Norge?</h3>
-        <p>Vi begynner i Oslo og utvider til flere byer etter hvert.</p>
-        <h3>Koster det noe?</h3>
-        <p>Nei, Halalkartet er helt gratis å bruke.</p>
+        <div data-sprak="nb">
+          <h2>Ofte stilte spørsmål</h2>
+          <h3>Hva betyr fargene på kartet?</h3>
+          <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at vi ikke vet. Tegnene i pinnene skiller nivåene også: حلال, utropstegn og spørsmålstegn.</p>
+          <h3>Hvordan vet dere at et sted er halal?</h3>
+          <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+          <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå, og det står i kortet.</p>
+          <h3>Hva betyr dollartegnene?</h3>
+          <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå.</p>
+          <h3>Hvor pålitelige er åpningstidene?</h3>
+          <p>Klokkeslettene følger norsk tid uansett hvor du selv befinner deg. Grønt betyr åpent, gult at det stenger om under en time, og rødt at det er stengt.</p>
+          <p>Vær oppmerksom på at vi foreløpig bare har registrert når stedene <em>stenger</em>, ikke når de åpner. Tidlig på dagen kan et sted derfor vises som åpent selv om det ikke har åpnet ennå. Ring gjerne først hvis du er ute i god tid.</p>
+          <h3>Hva er «Utvalgte steder»?</h3>
+          <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
+          <h3>Kan jeg dele et sted med noen?</h3>
+          <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
+          <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
+          <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> nede til venstre på kartet, eller bruk skjemaet på kontaktsiden.</p>
+          <h3>Hvilke steder kommer med på kartet?</h3>
+          <p>Serverer stedet både halal mat og svin, kommer det med som <b>delvis halal</b> og merkes oransje, med en linje i kortet om hva som ikke er halal. Da kan du avgjøre selv om det er greit for deg. Steder uten noe halal på menyen kommer ikke med.</p>
+          <p>Serverer de alkohol å drikke, men ikke bruker det i maten, kan stedet merkes halal. Da står det en tydelig merknad i kortet om at de serverer halal mat, men også alkoholholdig drikke, så du kan bestemme selv.</p>
+          <p>Det samme gjelder når bare deler av menyen er halal av andre grunner: stedet merkes oransje, og kortet sier hva som gjelder.</p>
+          <h3>Dekker dere hele Norge?</h3>
+          <p>Vi begynner i Oslo og utvider til flere byer etter hvert.</p>
+          <h3>Koster det noe?</h3>
+          <p>Nei, Halalkartet er helt gratis å bruke.</p>
+        </div>
+        <div data-sprak="en" lang="en" hidden>
+          <h2>Frequently asked questions</h2>
+          <h3>What do the colours on the map mean?</h3>
+          <p>Green means confirmed one hundred percent halal. Orange means parts of the menu are not halal. Grey means we have not confirmed the halal status yet. It does not mean the place is not halal, only that we do not know. The symbols in the pins also tell the levels apart: حلال, an exclamation mark and a question mark.</p>
+          <h3>How do you know a place is halal?</h3>
+          <p>We check each place as well as we can, for example whether a certificate is visible, what the staff say, or whether the place is well known for being halal. If we are unsure, we mark the place grey.</p>
+          <p><b>Halalkartet does not certify places itself.</b> We show the source, the date and who said it, so you can judge for yourself. If a place has no date, we have not confirmed it yet, and the card says so.</p>
+          <h3>What do the dollar signs mean?</h3>
+          <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
+          <h3>How reliable are the opening hours?</h3>
+          <p>The times follow Norwegian time wherever you are. Green means open, yellow that it closes within an hour, and red that it is closed.</p>
+          <p>Please note that so far we have only recorded when places <em>close</em>, not when they open. Early in the day a place may therefore show as open even if it has not opened yet. Feel free to call first if you are out early.</p>
+          <h3>What are “Featured places”?</h3>
+          <p>Five places from the map shown at a time, changed every fifth day. The selection is the same for everyone and goes through the whole list in turn.</p>
+          <h3>Can I share a place with someone?</h3>
+          <p>Yes. Open the place on the map and tap Share, and you get a link that opens the map right on that place.</p>
+          <h3>Can I suggest a place or report an error?</h3>
+          <p>Yes, and we really appreciate it. Tap <em>Suggest a place</em> on the map, or use the form on the contact page.</p>
+          <h3>Which places are included on the map?</h3>
+          <p>If a place serves both halal food and pork, it is included as <b>partly halal</b> and marked orange, with a line in the card about what is not halal. Then you can decide for yourself whether it is fine for you. Places with nothing halal on the menu are not included.</p>
+          <p>If they serve alcohol to drink but do not use it in the food, the place can be marked halal. The card then has a clear note that they serve halal food but also alcoholic drinks, so you can decide for yourself.</p>
+          <p>The same applies when only parts of the menu are halal for other reasons: the place is marked orange, and the card says what applies.</p>
+          <h3>Do you cover all of Norway?</h3>
+          <p>We are starting in Oslo and will expand to more cities over time.</p>
+          <h3>Does it cost anything?</h3>
+          <p>No, Halalkartet is completely free to use.</p>
+        </div>
       </section>
     </div>
   </div>
@@ -967,9 +1049,9 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 <div class="filterark" id="filterark" role="dialog" aria-modal="true" aria-labelledby="faTittel" hidden>
   <header class="fa-hode">
-    <h2 id="faTittel">Filtre</h2>
-    <button class="fa-null" id="faNull" type="button">Nullstill</button>
-    <button class="fa-lukk" id="faLukk" type="button" aria-label="Lukk filtrene">
+    <h2 id="faTittel" data-t>Filtre</h2>
+    <button class="fa-null" id="faNull" type="button" data-t>Nullstill</button>
+    <button class="fa-lukk" id="faLukk" type="button" aria-label="Lukk filtrene" data-ta="aria-label">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </header>
@@ -977,10 +1059,10 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   <footer class="fa-fot"><button class="fa-vis" id="faVis" type="button">Vis steder</button></footer>
 </div>
 
-<section class="bunnark" id="bunnark" aria-label="Steder på kartet">
+<section class="bunnark" id="bunnark" aria-label="Steder på kartet" data-ta="aria-label">
   <div class="bunn-hode">
     <p class="bunn-tall"><b id="bunnTall">–</b> <span id="bunnTekst">steder</span></p>
-    <p class="bunn-oy">Valgt sted</p>
+    <p class="bunn-oy" data-t>Valgt sted</p>
     <button class="bunn-liste" id="visListe" type="button">Vis liste</button>
   </div>
   <div class="valgt" id="valgt" hidden></div>
@@ -989,42 +1071,43 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 <section class="liste" id="liste" aria-labelledby="listeTall">
   <div class="liste-hode">
     <h2 class="liste-tall" id="listeTall">Steder</h2>
-    <label class="liste-sorter" id="listeSorter"><span class="vh">Sorter:</span>
+    <label class="liste-sorter" id="listeSorter"><span class="vh" data-t>Sorter:</span>
       <select id="listeSort">
-        <option value="">Anbefalt</option>
-        <option value="avstand">Nærmest</option>
-        <option value="navn">Navn A–Å</option>
-        <option value="pris">Pris lav–høy</option>
+        <option value="" data-t>Anbefalt</option>
+        <option value="avstand" data-t>Nærmest</option>
+        <option value="navn" data-t>Navn A–Å</option>
+        <option value="pris" data-t>Pris lav–høy</option>
       </select>
     </label>
   </div>
   <div class="liste-kort" id="listeKort"></div>
 </section>
 
-<button class="vis-kart" id="visKart" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>Kart</button>
+<button class="vis-kart" id="visKart" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-t>Kart</span></button>
 
-<nav class="fane" id="fane" aria-label="Hovedmeny">
-  <button type="button" data-fane="utforsk" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>Kart</span></button>
-  <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg><span>Lagret</span></button>
-  <button type="button" data-fane="tips"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Tips oss</span></button>
-  <button type="button" data-fane="mer" id="faneMer" aria-haspopup="dialog"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M4 15h16"/></svg><span>Mer</span></button>
+<nav class="fane" id="fane" aria-label="Hovedmeny" data-ta="aria-label">
+  <button type="button" data-fane="utforsk" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-t>Kart</span></button>
+  <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg><span data-t>Lagret</span></button>
+  <button type="button" data-fane="tips"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-t="Tips oss (fane)">Tips oss</span></button>
+  <button type="button" data-fane="sprak" id="faneSprak" class="fane-sprak">EN</button>
+  <button type="button" data-fane="mer" id="faneMer" aria-haspopup="dialog"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M4 15h16"/></svg><span data-t>Mer</span></button>
 </nav>
 
 <div class="mer" id="mer" role="dialog" aria-modal="true" aria-labelledby="merTittel" hidden>
   <div class="mer-ark">
     <header class="mer-hode">
-      <h2 id="merTittel">Mer</h2>
-      <button class="fa-lukk" id="merLukk" type="button" aria-label="Lukk">
+      <h2 id="merTittel" data-t>Mer</h2>
+      <button class="fa-lukk" id="merLukk" type="button" aria-label="Lukk" data-ta="aria-label">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </header>
     <ul class="mer-liste">
-      <li><button type="button" data-mer="hilite">Utvalgte steder</button></li>
-      <li><button type="button" data-mer="kontakt">Si ifra eller kontakt oss</button></li>
-      <li><button type="button" data-mer="om">Om oss</button></li>
-      <li><button type="button" data-mer="faq">Ofte stilte spørsmål</button></li>
-      <li><button type="button" data-mer="personvern">Personvern</button></li>
-      <li><button type="button" data-mer="vilkar">Vilkår</button></li>
+      <li><button type="button" data-mer="hilite" data-t>Utvalgte steder</button></li>
+      <li><button type="button" data-mer="kontakt" data-t>Si ifra eller kontakt oss</button></li>
+      <li><button type="button" data-mer="om" data-t>Om oss</button></li>
+      <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
+      <li><button type="button" data-mer="personvern" data-t>Personvern</button></li>
+      <li><button type="button" data-mer="vilkar" data-t>Vilkår</button></li>
     </ul>
   </div>
 </div>
@@ -1035,6 +1118,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=cedf5495"></script>
+<script src="app.js?v=46e1dcf7"></script>
 </body>
 </html>

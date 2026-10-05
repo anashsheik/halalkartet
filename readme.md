@@ -29,6 +29,10 @@ GitHub Pages bygger fra `main` med `.github/workflows/static.yml`. Det er ingen 
 
 GitHub Pages lar nettleseren huske filene i ti minutter. Derfor lastes `app.js` og `analytics.js` med et versjonsnummer, `app.js?v=…`. Endrer du en av dem, må du også bytte tallet etter `?v=` i `index.html`. Ellers kan en besøkende få ny `index.html` sammen med gammel `app.js`, og da virker ikke siden.
 
+## Språk
+
+Siden er på norsk, og knappen «EN» bytter til engelsk («NO» bytter tilbake). Valget huskes i nettleseren. Engelsken står i ordlista `ENGELSK` øverst i `app.js`, der nøkkelen er den norske teksten. Legger du til et nytt kjøkken, en ny beskrivelse eller en ny tekst i `verification` i `spots.json`, må du også legge inn den engelske teksten der. Ellers står den på norsk, og testen i `tests/sprak.js` sier hvilken tekst som mangler. De lange sidene (Om oss, Personvern, Vilkår, FAQ) har en norsk og en engelsk blokk hver i `index.html`.
+
 ## Skjemaene
 
 Tips- og kontaktskjemaet sendes til [Formspree](https://formspree.io), som videresender dem på e-post. Adressen til skjemaet står i `SKJEMA_ENDEPUNKT` øverst i skjemadelen av `app.js`, f.eks. `https://formspree.io/f/abcdwxyz`. Står den tom, er skjemaene avslått og sier fra om det. Gratisplanen tar imot 50 innsendinger i måneden.
