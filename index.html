@@ -506,7 +506,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .bunnark, .liste, .vis-kart, .fane, .mer, .detalj { display: none; }
 
 @media (max-width: 720px) {
-  :root { --fane-h: calc(56px + env(safe-area-inset-bottom, 0px)); }
+  :root { --fane-h: calc(48px + env(safe-area-inset-bottom, 0px)); }
   .panel, .reopen, .feedback, .tips-btn, .hilite-btn, .leaflet-control-zoom { display: none !important; }
   .toppfelt { display: grid; }
   .search-wrap { margin-top: 0; }
@@ -525,15 +525,16 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .pin-navn::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
   .pin-navn::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -7px; border: 7px solid transparent; border-top-color: var(--emerald); }
 
-  .bunnark { display: block; position: fixed; z-index: 1100; left: 0; right: 0; bottom: var(--fane-h); padding: 4px 20px 10px; background: var(--flate-bak); color: var(--kort-tekst); border-radius: 20px 20px 0 0; box-shadow: 0 -10px 30px rgba(9,28,20,.14); touch-action: none; }
-  .bunnark::before { content: ""; display: block; width: 36px; height: 4px; margin: 2px auto 4px; border-radius: 99px; background: #D9D1BF; }
+  .bunnark { display: block; position: fixed; z-index: 1100; left: 0; right: 0; bottom: var(--fane-h); padding: 12px 20px 4px; background: var(--flate-bak); color: var(--kort-tekst); border-radius: 20px 20px 0 0; box-shadow: 0 -10px 30px rgba(9,28,20,.14); touch-action: none; }
+  .bunnark::before { content: ""; position: absolute; top: 6px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 99px; background: #D9D1BF; }
   .bunn-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .bunn-tall { display: flex; align-items: baseline; gap: 6px; margin: 0; font-size: 14px; color: var(--kort-dempet); }
   .bunn-tall b { font: 600 26px/1 'Cormorant Garamond', serif; color: var(--emerald); }
   .bunn-oy { display: none; margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); }
+  .bunnark.har-valgt { padding-bottom: 12px; }
   .bunnark.har-valgt .bunn-tall { display: none; }
   .bunnark.har-valgt .bunn-oy { display: block; }
-  .bunn-liste { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 2px; border: 0; background: none; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
+  .bunn-liste { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -3px 0; padding: 0 2px; border: 0; background: none; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
   .valgt { margin-top: 12px; }
 
   body.vis-liste .bunnark, body.vis-liste .nearme { display: none; }
@@ -602,7 +603,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .vis-kart svg { color: var(--gold); }
 
   .fane { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
-  .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 12px 'Manrope', sans-serif; cursor: pointer; }
+  .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 11px 'Manrope', sans-serif; cursor: pointer; }
+  .fane svg { width: 22px; height: 22px; }
   .fane button[aria-current="page"] { color: var(--emerald); font-weight: 800; }
   .fane button[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 50%; width: 44px; height: 3px; margin-left: -22px; border-radius: 0 0 3px 3px; background: var(--gold); }
 
