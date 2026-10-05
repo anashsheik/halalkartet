@@ -205,7 +205,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .topp-merke { display: block; margin: 0; padding: 8px 0 8px 10px; border-radius: 10px; text-decoration: none; }
 .topp-merke:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .sokemerke { display: block; font-family: 'Amiri', serif; font-weight: 700; font-size: 25px; line-height: 1; color: var(--gold); direction: rtl; }
-.sokekort { display: flex; align-items: stretch; gap: 8px; min-width: 0; }
+.sokekort { position: relative; z-index: 1; display: flex; align-items: stretch; gap: 8px; min-width: 0; }
 .sokekort .search-wrap { flex: 1; min-width: 0; margin: 0; }
 .sokekort .search { height: 40px; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; color: var(--ivory); font-size: 16px; padding: 8px 10px 8px 38px; }
 .sokekort .search::placeholder { color: #B5C4BA; }
@@ -214,7 +214,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .filterknapp { position: relative; flex: none; width: 40px; height: 40px; display: grid; place-items: center; border: 1.5px solid var(--gold); border-radius: 10px; background: transparent; color: var(--gold); cursor: pointer; }
 .filterteller { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 99px; background: var(--gold); color: var(--emerald); font: 800 11px/20px 'Manrope', sans-serif; text-align: center; }
 
-.hurtigrad { grid-column: 1 / -1; display: flex; gap: 22px; margin: 3px -16px 0; padding: 5px 40px 5px 16px; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent); overflow-x: auto; scrollbar-width: none; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
+.hurtigrad { grid-column: 1 / -1; display: flex; gap: 22px; margin: 0 -16px 0; padding: 9px 40px 8px 16px; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent); overflow-x: auto; scrollbar-width: none; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
 .hurtigrad::-webkit-scrollbar { display: none; }
 .hbrikke { position: relative; flex: none; display: inline-flex; align-items: center; gap: 4px; min-height: 34px; padding: 0 1px; border: 0; border-radius: 0; background: transparent; box-shadow: inset 0 -2px 0 rgba(242,236,222,.32); color: var(--ivory); font: 600 14px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; transition: color .15s, box-shadow .15s; }
 .hbrikke::after, .filterknapp::after { content: ""; position: absolute; inset: -5px -11px; }
@@ -223,6 +223,9 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hbrikke[aria-pressed="true"], .hbrikke.satt { color: var(--gold); box-shadow: inset 0 -3px 0 var(--gold); }
 .hbrikke.satt .x { opacity: .85; }
 .hbrikke[data-hurtig="apent"] svg, .hbrikke[data-hurtig="verifisert"] svg { display: none; }
+/* Kun verifisert, valgt: en takket gullsirkel rundt, som et segl */
+.hbrikke[data-hurtig="verifisert"][aria-pressed="true"] { margin: 0 -6px; padding: 0 24px; box-shadow: none; font-weight: 800; }
+.hbrikke[data-hurtig="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -8px 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpolygon points='198.0 30.0 189.3 32.6 195.2 36.7 184.2 37.6 186.8 43.0 174.1 42.2 173.4 48.6 159.7 46.1 155.7 53.0 141.8 49.0 134.8 56.2 121.5 50.9 111.8 57.8 100.0 51.5 88.2 57.8 78.5 50.9 65.2 56.2 58.2 49.0 44.3 53.0 40.3 46.1 26.6 48.6 25.9 42.2 13.2 43.0 15.8 37.6 4.8 36.7 10.7 32.6 2.0 30.0 10.7 27.4 4.8 23.3 15.8 22.4 13.2 17.0 25.9 17.8 26.6 11.4 40.3 13.9 44.3 7.0 58.2 11.0 65.2 3.8 78.5 9.1 88.2 2.2 100.0 8.5 111.8 2.2 121.5 9.1 134.8 3.8 141.8 11.0 155.7 7.0 159.7 13.9 173.4 11.4 174.1 17.8 186.8 17.0 184.2 22.4 195.2 23.3 189.3 27.4' fill='none' stroke='%23C8A253' stroke-width='2' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; pointer-events: none; }
 
 /* Filterarket */
 .filterark { position: fixed; inset: 0; z-index: 2600; display: flex; flex-direction: column; background: var(--flate-bak); color: var(--kort-tekst); transform: translateY(100%); transition: transform .34s var(--ease-drawer); }
@@ -233,7 +236,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .fa-lukk, .fa-null { min-width: 44px; min-height: 44px; border: 0; background: none; color: var(--kort-tekst); font: 700 16px 'Manrope', sans-serif; cursor: pointer; border-radius: 10px; }
 .fa-lukk { display: grid; place-items: center; }
 .fa-null { padding: 0 6px; color: var(--emerald); text-decoration: underline wavy var(--emerald); text-decoration-thickness: 1.5px; text-underline-offset: 7px; }
-.fa-null:disabled { opacity: .45; cursor: default; }
+.fa-null:disabled { cursor: default; }
 .fa-kropp { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 8px 20px 24px; }
 .fa-del { padding: 20px 0; border-bottom: 1px solid var(--kort-strek); }
 .fa-del:last-child, .fa-del[data-del="kjokken"], .fa-del[data-del="omrade"] { border-bottom: 0; }
