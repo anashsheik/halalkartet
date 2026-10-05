@@ -4887,12 +4887,12 @@
     "address": "St. Olavs gate 43, 4306 Sandnes",
     "lat": 58.8529,
     "lng": 5.7332,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -4915,12 +4915,12 @@
     "address": "Pedersgata 12, 4013 Stavanger",
     "lat": 58.9711,
     "lng": 5.7369,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -4943,12 +4943,12 @@
     "address": "Lakkegata 71, 0562 Oslo",
     "lat": 59.9189,
     "lng": 10.7633,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -4970,12 +4970,12 @@
     "address": "Thorvald Meyers gate 56A, 0552 Oslo",
     "lat": 59.9238,
     "lng": 10.7589,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],

@@ -279,6 +279,7 @@ function initApp() {
   el('feedback').addEventListener('click', function () { openInfo('kontakt'); });
   render();
   const deepLinked = applyHash();
+  window.addEventListener('hashchange', function () { if (location.hash.slice(1) !== encodeURIComponent(activeId || '')) applyHash(); });
 
   if (!deepLinked) setTimeout(function () { openSheet('tips', true); }, 600);
 
@@ -1612,7 +1613,10 @@ function locateUser() {
   track('naer_meg');
   if (!navigator.geolocation) { toast('Nettleseren din støtter ikke posisjon.'); return; }
   btn.classList.add('loading');
+  // svarer man aldri på spørsmålet om posisjon, skal knappen ikke bli stående låst
+  const slipp = setTimeout(() => btn.classList.remove('loading'), 15000);
   navigator.geolocation.getCurrentPosition(pos => {
+    clearTimeout(slipp);
     userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
     if (userMarker) map.removeLayer(userMarker);
     userMarker = L.marker([userLoc.lat, userLoc.lng], {
@@ -1624,6 +1628,7 @@ function locateUser() {
     if (el('fSort') && !el('fSort').value) el('fSort').value = 'avstand';
     render();
   }, () => {
+    clearTimeout(slipp);
     btn.classList.remove('loading');
     track('naer_meg_avslag');
     if (el('fSort') && el('fSort').value === 'avstand') el('fSort').value = '';

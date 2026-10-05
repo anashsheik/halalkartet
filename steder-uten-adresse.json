@@ -7,12 +7,12 @@
     "address": "Sandnes",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -35,12 +35,12 @@
     "address": "Sandnes",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -61,12 +61,12 @@
     "address": "Food Truck",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -88,12 +88,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -116,12 +116,12 @@
     "address": "Stavanger",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -143,12 +143,12 @@
     "address": "Breigata 22, 4006 Stavanger",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -171,12 +171,12 @@
     "address": "Stavanger",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -200,12 +200,12 @@
     "address": null,
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -227,12 +227,12 @@
     "address": "Jessheim",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -256,12 +256,12 @@
     "address": "Kristiansund",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -282,12 +282,12 @@
     "address": "Stavanger",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -310,12 +310,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -337,12 +337,12 @@
     "address": "Jessheim",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -366,12 +366,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -393,12 +393,12 @@
     "address": "Sandefjord",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -421,12 +421,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -449,12 +449,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -476,12 +476,12 @@
     "address": "Gjerdrum",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -503,12 +503,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -530,12 +530,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -556,12 +556,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -583,12 +583,12 @@
     "address": "Bislett, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -610,12 +610,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -637,12 +637,12 @@
     "address": "Torggata, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -663,12 +663,12 @@
     "address": "Kløfta",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -690,12 +690,12 @@
     "address": null,
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -717,12 +717,12 @@
     "address": "Skien",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -743,12 +743,12 @@
     "address": "Stovner, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -769,12 +769,12 @@
     "address": "Vestli, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -795,12 +795,12 @@
     "address": "Drammen",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -823,12 +823,12 @@
     "address": "Lørenskog",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -849,12 +849,12 @@
     "address": "Lørenskog",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -876,12 +876,12 @@
     "address": "Strømsø, Drammen",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -903,12 +903,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -930,12 +930,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -958,12 +958,12 @@
     "address": "Mortensrud, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -985,12 +985,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1012,12 +1012,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1039,12 +1039,12 @@
     "address": "Triaden, Rasta",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1067,12 +1067,12 @@
     "address": "Sandvika",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1094,12 +1094,12 @@
     "address": "Fjellhamar",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1121,12 +1121,12 @@
     "address": "Lørenskog",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1147,12 +1147,12 @@
     "address": "Stovner, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1174,12 +1174,12 @@
     "address": "Holmlia, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1200,12 +1200,12 @@
     "address": "Lørenskog",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1228,12 +1228,12 @@
     "address": "Bekkestua",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1254,12 +1254,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1281,12 +1281,12 @@
     "address": "Oslo City, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1308,12 +1308,12 @@
     "address": "Steen & Strøm, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1335,12 +1335,12 @@
     "address": "Bogstadveien, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1361,12 +1361,12 @@
     "address": "Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1388,12 +1388,12 @@
     "address": "Strømmen Storsenter, Strømmen",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1415,12 +1415,12 @@
     "address": "Grünerløkka, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1442,12 +1442,12 @@
     "address": "Grønland, Oslo",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
@@ -1468,12 +1468,12 @@
     "address": "Metro Senter, Lørenskog",
     "lat": null,
     "lng": null,
-    "halalStatus": "uavklart",
+    "halalStatus": "verifisert",
     "verification": [
       {
-        "type": "uavklart",
+        "type": "bekreftet",
         "kilde": null,
-        "tekst": "Står som halal i en annen app, men er ikke sjekket av Halalkartet ennå.",
+        "tekst": "Registrert som helt halal.",
         "dato": null
       }
     ],
