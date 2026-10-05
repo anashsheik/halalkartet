@@ -1,7 +1,7 @@
 const STATUS_ORDER = ['verifisert', 'delvis', 'uavklart'];
 const TEGN = {
-  verifisert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg>',
-  delvis:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M12 5.5l7.5 13h-15z"/></svg>',
+  verifisert: '<span class="tegn-ar">حلال</span>',
+  delvis:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><path d="M12 5v8.5"/><circle cx="12" cy="19" r=".5"/></svg>',
   uavklart:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.8a3.5 3.5 0 016.8 1.1c0 2.3-3.4 2.9-3.4 5.1"/><circle cx="12" cy="19.2" r=".6" fill="currentColor"/></svg>'
 };
 const STATUS = {
@@ -123,8 +123,9 @@ L.control.zoom({ position: 'topright' }).addTo(map);
 const STADIA_NOKKEL = '1907df04-d41e-4675-bd5c-291804b5dc1f';
 const flisUrl = () => 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png' +
   (STADIA_NOKKEL ? '?api_key=' + encodeURIComponent(STADIA_NOKKEL) : '');
-const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bidragsytere';
+const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
 const flislag = L.tileLayer(flisUrl(), { attribution: FLIS_KILDE, maxZoom: 20 }).addTo(map);
+map.attributionControl.setPrefix('<a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> ·');
 
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function goTo(lat, lng, zoom) {
@@ -142,8 +143,8 @@ const klynge = L.markerClusterGroup({
   iconCreateFunction: function (c) {
     const n = c.getChildCount();
     return L.divIcon({
-      className: '', iconSize: [n >= 10 ? 38 : 32, n >= 10 ? 38 : 32],
-      html: '<div class="klynge' + (n >= 10 ? ' stor' : '') + '">' + n + '</div>'
+      className: '', iconSize: [36, 48], iconAnchor: [18, 47],
+      html: '<div class="klynge' + (n >= 10 ? ' stor' : '') + '">' + DRAAPE + '<span>' + n + '</span></div>'
     });
   }
 });
@@ -161,7 +162,7 @@ const STRICT_STEPS = [
   { label: '+ delvis',       tillat: ['verifisert', 'delvis'],
     note: 'Også steder der bare deler av menyen er halal.' },
   { label: '+ uavklart',     tillat: ['verifisert', 'delvis', 'uavklart'],
-    note: 'Alt vi kjenner til, inkludert steder vi ikke har rukket å sjekke.' }
+    note: 'Alt vi kjenner til, også steder vi ikke har rukket å sjekke ennå.' }
 ];
 let strict = 2;
 const layerOn = { 'verifisert': true, 'delvis': true, 'uavklart': true };
@@ -297,14 +298,19 @@ function togglePanel(collapse) {
   setTimeout(() => map.invalidateSize(), 320);
 }
 
+const DRAAPE = '<svg class="pin-form" viewBox="0 0 30 40" aria-hidden="true"><path d="M15 38.5S2 24.4 2 15a13 13 0 0126 0c0 9.4-13 23.5-13 23.5z"/></svg>';
+
 function makeIcon(status, big, navn) {
   const st = STATUS[status];
-  const d = big ? 28 : 22;
+  const etikett = navn ? '<span class="pin-navn">' + esc(navn) + '</span>' : '';
+  if (big) return L.divIcon({
+    className: '', iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -18],
+    html: '<div class="pin ' + st.pin + ' big" style="border-radius:' + st.shape + '">' + st.tegn + '</div>' + etikett
+  });
+  // spissen står på stedet
   return L.divIcon({
-    className: '', iconSize: [d, d], iconAnchor: [d / 2, d / 2],
-    popupAnchor: [0, -(d / 2 + 4)],
-    html: '<div class="pin ' + st.pin + (big ? ' big' : '') + '" style="border-radius:' + st.shape + '">' + st.tegn + '</div>' +
-      (navn ? '<span class="pin-navn">' + esc(navn) + '</span>' : '')
+    className: '', iconSize: [30, 40], iconAnchor: [15, 39], popupAnchor: [0, -36],
+    html: '<div class="pin draape ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>' + etikett
   });
 }
 
@@ -574,12 +580,26 @@ function byggHurtigrad() {
   rad.scrollLeft = scroll;
 }
 
+function filterTekst() {
+  const deler = [];
+  const sok = el('search').value.trim();
+  if (sok) deler.push('«' + sok + '»');
+  if (el('fOpen').value) deler.push(el('fOpen').options[el('fOpen').selectedIndex].text.toLowerCase());
+  if (strict < 2) deler.push(strict === 0 ? 'kun verifisert' : 'uten uavklarte');
+  if (el('fCuisine').value) deler.push(el('fCuisine').value.toLowerCase());
+  if (el('fBydel').value) deler.push(el('fBydel').value);
+  if (el('fPrice').value) deler.push('$'.repeat(+el('fPrice').value));
+  if (el('fAlcohol').value) deler.push(el('fAlcohol').value === 'ja' ? 'serverer alkohol' : 'uten kjent alkohol');
+  if (!deler.length) return '';
+  return ' · ' + (deler.length === 1 ? deler[0] : deler.length + ' filtre');
+}
+
 function oppdaterSkall() {
   const f = currentFilters();
   const n = HALAL_SPOTS.filter(function (s) { return passes(s, f) && layerOn[s.halalStatus]; }).length;
-  const omrade = el('fBydel').value;
   el('bunnTall').textContent = n;
-  el('bunnTekst').textContent = (n === 1 ? 'sted' : 'steder') + (omrade ? ' i ' + omrade : '');
+  el('bunnTekst').textContent = n < HALAL_SPOTS.length
+    ? 'av ' + HALAL_SPOTS.length + ' steder' + filterTekst() : (n === 1 ? 'sted' : 'steder');
   tegnBunnHode();
   const a = antallAktive(), t = el('filterTeller');
   if (t) { t.hidden = !a; t.textContent = a; }
@@ -621,7 +641,6 @@ function tegnFilterark(antall) {
     HALAL_SPOTS.forEach(function (s) { (felt === 'cuisines' ? s.cuisines : [s[felt]]).forEach(function (v) { c[v] = (c[v] || 0) + 1; }); });
     return Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b, 'nb'); });
   };
-  const utenTid = HALAL_SPOTS.filter(function (s) { return openState(s).state === 'unknown'; }).length;
 
   const f = document.activeElement, nokkel = f && k.contains(f)
     ? ['velg', 'seg', 'bryter', 'flere'].filter(function (a) { return f.dataset[a] !== undefined; })
@@ -635,7 +654,7 @@ function tegnFilterark(antall) {
       segment('Halal-status', [['0', 'Verifisert'], ['1', '+ Delvis'], ['2', 'Alle']], String(strict), 'strict') +
       '<p class="fa-note">' + esc(STRICT_STEPS[strict].note) + '</p></section>' +
     '<section class="fa-del" data-del="apent"><div class="fa-rad"><div><h3>Åpent nå</h3>' +
-      '<p>Skjuler stengte steder og de ' + utenTid + ' vi ikke kjenner åpningstiden til.</p></div>' +
+      '<p>Skjul steder som er stengt</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="Åpent nå" aria-checked="' + (el('fOpen').value === 'naa') + '" data-bryter="apent"></button></div></section>' +
     '<section class="fa-del" data-del="kjokken"><h3>Kjøkken</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines')) + '</section>' +
     '<section class="fa-del" data-del="omrade"><h3>Område</h3>' + brikker('fBydel', 'omrade', telling('bydel')) + '</section>' +
@@ -1026,7 +1045,8 @@ function detaljHtml(s) {
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
     '</header>' +
     '<div class="d-kropp">' +
-      dagensTid(s) +
+      '<div class="d-tidrad">' + (dagensTid(s) || '<p class="d-apent"><span>Åpningstid ukjent</span></p>') +
+        '<a class="d-alletider" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener" aria-label="Alle åpningstider for ' + esc(s.name) + ', i kart-appen">Alle tider</a></div>' +
       (s.description ? '<p class="d-beskr">' + esc(s.description) + '</p>' : '') +
       '<div class="d-knapper k' + knapper.length + '">' + knapper.join('') + '</div>' +
       '<section class="d-om" aria-labelledby="dOmTittel">' +
@@ -1680,7 +1700,7 @@ function trapFocus(e) {
 }
 
 // Skjemaer
-const SKJEMA_ENDEPUNKT = '';
+const SKJEMA_ENDEPUNKT = 'https://formspree.io/f/meaeqdlj';
 const SKJEMA_EPOST = '';
 
 function skjemaVirker() { return !!(SKJEMA_ENDEPUNKT || SKJEMA_EPOST); }
