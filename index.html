@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tiles.stadiamaps.com https://cdnjs.cloudflare.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tiles.stadiamaps.com https://cdnjs.cloudflare.com; connect-src 'self' https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
@@ -714,7 +714,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   <div class="tips-body" id="tipsBody">
     <form name="restauranttips" method="POST" id="tipsForm" class="kf">
       <input type="hidden" name="form-name" value="restauranttips">
-      <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+      <input type="hidden" name="_subject" value="Nytt tips til Halalkartet">
+      <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
       <label class="kf-field">Restaurantens navn <span class="kf-req">påkrevd</span>
         <input type="text" name="restaurant" required autocomplete="off">
       </label>
@@ -881,7 +882,8 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <p>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
         <form name="tilbakemelding" method="POST" id="kontaktForm" class="kf">
           <input type="hidden" name="form-name" value="tilbakemelding">
-      <p class="kf-hp"><label>La dette feltet stå tomt <input name="bot-field"></label></p>
+          <input type="hidden" name="_subject" value="Ny melding til Halalkartet">
+          <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
           <label class="kf-field">Navn <span class="kf-opt">frivillig</span>
             <input type="text" name="navn" autocomplete="name">
           </label>
@@ -910,11 +912,12 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
         <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
         <h3>Veibeskrivelse</h3>
         <p>Trykker du på Veibeskrivelse, åpnes Google Maps i en ny fane med adressen til stedet. Da gjelder Googles egne vilkår og personvernregler, ikke våre.</p>
-        <h3>Skjemaet på kontaktsiden</h3>
-        <p>Sender du inn skjemaet, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+        <h3>Skjemaene</h3>
+        <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+        <p>Skjemaene sendes gjennom Formspree, som videresender dem til oss på e-post. Formspree tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
         <h3>Kart og drift</h3>
         <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
-        <p class="muted">Sist oppdatert august 2026.</p>
+        <p class="muted">Sist oppdatert oktober 2026.</p>
       </section>
       <section class="info-section" data-section="vilkar">
         <h2>Vilkår og betingelser</h2>

@@ -1709,7 +1709,7 @@ function sendSkjema(f, btn, onOk) {
   if (!SKJEMA_ENDEPUNKT) {
     const d = new FormData(f);
     const linjer = [];
-    d.forEach(function (v, k) { if (k !== 'form-name' && k !== 'bot-field' && v) linjer.push(k + ': ' + v); });
+    d.forEach(function (v, k) { if (k.charAt(0) !== '_' && k !== 'form-name' && v) linjer.push(k + ': ' + v); });
     location.href = 'mailto:' + SKJEMA_EPOST +
       '?subject=' + encodeURIComponent('Halalkartet – ' + (f.name || 'skjema')) +
       '&body=' + encodeURIComponent(linjer.join('\n'));
@@ -1718,7 +1718,11 @@ function sendSkjema(f, btn, onOk) {
   }
 
   const opprinnelig = btn.textContent;
-  const body = new URLSearchParams(new FormData(f)).toString();
+  const data = new FormData(f);
+  const kontakt = String(data.get('kontakt') || '').trim();
+  // da kan vi svare rett fra e-posten
+  if (kontakt.indexOf('@') > 0) data.set('_replyto', kontakt);
+  const body = new URLSearchParams(data).toString();
   btn.disabled = true; btn.textContent = 'Sender';
   fetch(SKJEMA_ENDEPUNKT, {
     method: 'POST',

@@ -26,6 +26,10 @@ python3 -m http.server
 
 GitHub Pages bygger fra `main` med `.github/workflows/static.yml`. Det er ingen byggesteg.
 
+## Skjemaene
+
+Tips- og kontaktskjemaet sendes til [Formspree](https://formspree.io), som videresender dem på e-post. Adressen til skjemaet står i `SKJEMA_ENDEPUNKT` øverst i skjemadelen av `app.js`, f.eks. `https://formspree.io/f/abcdwxyz`. Står den tom, er skjemaene avslått og sier fra om det. Gratisplanen tar imot 50 innsendinger i måneden.
+
 ## Felter i spots.json
 
 | Felt | Type | Påkrevd | Merknad |
