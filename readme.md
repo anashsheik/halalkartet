@@ -10,6 +10,7 @@ Kart over halal mat i Norge, på [halalkartet.no](https://halalkartet.no). Stati
 | `app.js` | Kart, liste, filtre, søk og skjemaer |
 | `analytics.js` | Google Analytics uten cookies |
 | `spots.json` | Stedene |
+| `favicon.svg`, `apple-touch-icon.png` | Ikonet i fanen og på hjemskjermen |
 | `CNAME` | Domenet for GitHub Pages |
 
 ## Kjøre lokalt
@@ -25,6 +26,8 @@ python3 -m http.server
 ## Publisering
 
 GitHub Pages bygger fra `main` med `.github/workflows/static.yml`. Det er ingen byggesteg.
+
+GitHub Pages lar nettleseren huske filene i ti minutter. Derfor lastes `app.js` og `analytics.js` med et versjonsnummer, `app.js?v=…`. Endrer du en av dem, må du også bytte tallet etter `?v=` i `index.html`. Ellers kan en besøkende få ny `index.html` sammen med gammel `app.js`, og da virker ikke siden.
 
 ## Skjemaene
 
