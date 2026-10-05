@@ -357,21 +357,23 @@ body.panel-collapsed .hilite-btn { transform: none; }
 .toppfelt { display: none; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.toppfelt { position: fixed; z-index: 1100; left: 0; right: 0; top: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 14px; padding: calc(env(safe-area-inset-top, 0px) + 10px) 16px 12px; background: var(--emerald); color: var(--ivory); border-radius: 0 0 24px 24px; box-shadow: 0 8px 24px rgba(9,28,20,.22); }
+.toppfelt { position: fixed; z-index: 1100; left: 0; right: 0; top: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px; padding: calc(env(safe-area-inset-top, 0px) + 8px) 16px 1px; background: var(--emerald); color: var(--ivory); border-radius: 0 0 18px 18px; box-shadow: 0 8px 24px rgba(9,28,20,.22); }
 .topp-merke { margin: 0; }
-.sokemerke { display: block; font-family: 'Amiri', serif; font-weight: 700; font-size: 30px; line-height: 1; color: var(--gold); direction: rtl; }
-.sokekort { display: flex; align-items: stretch; gap: 10px; min-width: 0; }
+.sokemerke { display: block; font-family: 'Amiri', serif; font-weight: 700; font-size: 25px; line-height: 1; color: var(--gold); direction: rtl; }
+.sokekort { display: flex; align-items: stretch; gap: 8px; min-width: 0; }
 .sokekort .search-wrap { flex: 1; min-width: 0; margin: 0; }
-.sokekort .search { height: 44px; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; color: var(--ivory); font-size: 16px; padding: 10px 10px 10px 40px; }
+.sokekort .search { height: 40px; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; color: var(--ivory); font-size: 16px; padding: 8px 10px 8px 38px; }
 .sokekort .search::placeholder { color: #B5C4BA; }
 .sokekort .search:focus { box-shadow: 0 0 0 2px var(--gold); background: rgba(0,0,0,.28); }
 .sokekort .search-wrap > svg { left: 13px; color: var(--gold); }
-.filterknapp { position: relative; flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 1.5px solid var(--gold); border-radius: 12px; background: transparent; color: var(--gold); cursor: pointer; }
+.filterknapp { position: relative; flex: none; width: 40px; height: 40px; display: grid; place-items: center; border: 1.5px solid var(--gold); border-radius: 10px; background: transparent; color: var(--gold); cursor: pointer; }
 .filterteller { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 99px; background: var(--gold); color: var(--emerald); font: 800 11px/20px 'Manrope', sans-serif; text-align: center; }
 
-.hurtigrad { grid-column: 1 / -1; display: flex; gap: 22px; margin: 10px -16px 0; padding: 0 16px; overflow-x: auto; scrollbar-width: none; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
+.hurtigrad { grid-column: 1 / -1; display: flex; gap: 22px; margin: 3px -16px 0; padding: 5px 16px; overflow-x: auto; scrollbar-width: none; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
 .hurtigrad::-webkit-scrollbar { display: none; }
-.hbrikke { flex: none; display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 0 1px; border: 0; border-radius: 0; background: transparent; box-shadow: inset 0 -2px 0 rgba(200,162,83,.6); color: var(--ivory); font: 600 15px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; transition: color .15s, box-shadow .15s; }
+.hbrikke { position: relative; flex: none; display: inline-flex; align-items: center; gap: 4px; min-height: 34px; padding: 0 1px; border: 0; border-radius: 0; background: transparent; box-shadow: inset 0 -2px 0 rgba(200,162,83,.6); color: var(--ivory); font: 600 14px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; transition: color .15s, box-shadow .15s; }
+.hbrikke::after, .filterknapp::after { content: ""; position: absolute; inset: -5px -11px; }
+.filterknapp::after { inset: -3.5px; }
 .hbrikke svg { flex: none; }
 .hbrikke[aria-pressed="true"], .hbrikke.satt { color: var(--gold); box-shadow: inset 0 -3px 0 var(--gold); }
 .hbrikke.satt .x { opacity: .85; }
@@ -491,7 +493,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
 .bunnark, .liste, .vis-kart, .fane, .mer, .detalj { display: none; }
 
 @media (max-width: 720px) {
-  :root { --fane-h: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  :root { --fane-h: calc(56px + env(safe-area-inset-bottom, 0px)); }
   .panel, .reopen, .feedback, .tips-btn, .hilite-btn, .leaflet-control-zoom { display: none !important; }
   .toppfelt { display: grid; }
   .search-wrap { margin-top: 0; }
@@ -499,7 +501,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   #map .leaflet-bottom { bottom: var(--bunn-topp, 180px); }
   .toast { bottom: calc(var(--bunn-topp, 180px) + 90px); }
 
-  .nearme { right: 16px; bottom: calc(var(--bunn-topp, 180px) + 26px); width: 54px; height: 54px; padding: 0; justify-content: center; border-radius: 16px; background: var(--kort-bak); color: var(--emerald); border: 1px solid var(--kort-strek); box-shadow: 0 6px 20px rgba(9,28,20,.16); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .nearme { right: 16px; bottom: calc(var(--bunn-topp, 180px) + 26px); width: 44px; height: 44px; padding: 0; justify-content: center; border-radius: 12px; background: var(--kort-bak); color: var(--emerald); border: 1px solid var(--kort-strek); box-shadow: 0 6px 20px rgba(9,28,20,.16); backdrop-filter: none; -webkit-backdrop-filter: none; }
   .nearme span { display: none; }
   .nearme svg { width: 22px; height: 22px; color: var(--emerald); }
   .nearme:hover { background: var(--kort-bak); }
@@ -508,15 +510,15 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .pin-navn::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
   .pin-navn::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -7px; border: 7px solid transparent; border-top-color: var(--emerald); }
 
-  .bunnark { display: block; position: fixed; z-index: 1100; left: 0; right: 0; bottom: var(--fane-h); padding: 6px 20px 16px; background: var(--flate-bak); color: var(--kort-tekst); border-radius: 26px 26px 0 0; box-shadow: 0 -10px 30px rgba(9,28,20,.14); touch-action: none; }
-  .bunnark::before { content: ""; display: block; width: 40px; height: 5px; margin: 4px auto 10px; border-radius: 99px; background: #D9D1BF; }
+  .bunnark { display: block; position: fixed; z-index: 1100; left: 0; right: 0; bottom: var(--fane-h); padding: 4px 20px 10px; background: var(--flate-bak); color: var(--kort-tekst); border-radius: 20px 20px 0 0; box-shadow: 0 -10px 30px rgba(9,28,20,.14); touch-action: none; }
+  .bunnark::before { content: ""; display: block; width: 36px; height: 4px; margin: 2px auto 4px; border-radius: 99px; background: #D9D1BF; }
   .bunn-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .bunn-tall { display: flex; align-items: baseline; gap: 8px; margin: 0; font-size: 16px; color: var(--kort-dempet); }
-  .bunn-tall b { font: 600 32px/1 'Cormorant Garamond', serif; color: var(--emerald); }
+  .bunn-tall { display: flex; align-items: baseline; gap: 6px; margin: 0; font-size: 14px; color: var(--kort-dempet); }
+  .bunn-tall b { font: 600 26px/1 'Cormorant Garamond', serif; color: var(--emerald); }
   .bunn-oy { display: none; margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); }
   .bunnark.har-valgt .bunn-tall { display: none; }
   .bunnark.har-valgt .bunn-oy { display: block; }
-  .bunn-liste { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 2px; border: 0; background: none; color: var(--emerald); font: 700 16px 'Manrope', sans-serif; cursor: pointer; }
+  .bunn-liste { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 2px; border: 0; background: none; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
   .valgt { margin-top: 12px; }
 
   body.vis-liste .bunnark, body.vis-liste .nearme { display: none; }
@@ -582,7 +584,7 @@ body.panel-collapsed .hilite-btn:active { transform: translateY(1px); }
   .vis-kart svg { color: var(--gold); }
 
   .fane { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
-  .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 13px 'Manrope', sans-serif; cursor: pointer; }
+  .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 12px 'Manrope', sans-serif; cursor: pointer; }
   .fane button[aria-current="page"] { color: var(--emerald); font-weight: 800; }
   .fane button[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 50%; width: 44px; height: 3px; margin-left: -22px; border-radius: 0 0 3px 3px; background: var(--gold); }
 
