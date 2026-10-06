@@ -434,11 +434,11 @@ function initApp() {
   });
   kobleKort();
 
-  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlcohol', 'fSort'].forEach(id => {
+  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fSort'].forEach(id => {
     const x = el(id);
     if (x) x.addEventListener('input', render);
   });
-  ['fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlcohol'].forEach(function (id) {
+  ['fBydel', 'fCuisine', 'fPrice', 'fOpen'].forEach(function (id) {
     const x = el(id);
     if (x) x.addEventListener('change', foelgFilter);
   });
@@ -451,7 +451,6 @@ function initApp() {
   el('fCuisine').addEventListener('change', () => { if (el('fCuisine').value) track('filter_kjokken', { kjokken: el('fCuisine').value }); });
   if (el('fPrice')) el('fPrice').addEventListener('change', () => { if (el('fPrice').value) track('filter_pris', { pris: el('fPrice').value }); });
   if (el('fOpen')) el('fOpen').addEventListener('change', () => { if (el('fOpen').value) track('filter_apent', { status: el('fOpen').value }); });
-  if (el('fAlcohol')) el('fAlcohol').addEventListener('change', () => { if (el('fAlcohol').value) track('filter_alkohol', { alkohol: el('fAlcohol').value }); });
   if (el('fSort')) el('fSort').addEventListener('change', () => {
     const v = el('fSort').value;
     if (v) track('sortering', { modus: v });
@@ -472,10 +471,9 @@ function initApp() {
   wireShortcuts();
   wireSheets();
   render();
-  const deepLinked = applyHash();
+  applyHash();
   window.addEventListener('hashchange', function () { if (location.hash.slice(1) !== encodeURIComponent(activeId || '')) applyHash(); });
 
-  if (!deepLinked && erMobil()) setTimeout(function () { openSheet('tips', true); }, 600);
 
   setInterval(refreshOpenStates, 60000);
 }
@@ -560,7 +558,6 @@ function currentFilters() {
     cuisine: el('fCuisine').value,
     price: el('fPrice') ? el('fPrice').value : '',
     open: el('fOpen') ? el('fOpen').value : '',
-    alcohol: el('fAlcohol') ? el('fAlcohol').value : '',
     sort: el('fSort') ? el('fSort').value : ''
   };
 }
@@ -570,8 +567,6 @@ function passes(s, f) {
   if (f.price && String(s.price) !== f.price) return false;
   if (f.open === 'naa') { const st = openState(s).state; if (st !== 'open' && st !== 'soon') return false; }
   else if (f.open && openState(s).state !== f.open) return false;
-  if (f.alcohol === 'ja' && !s.alcohol) return false;
-  if (f.alcohol === 'nei' && s.alcohol) return false;
   if (f.q) {
     const raa = s.name + ' ' + s.cuisines.join(' ') + ' ' + s.cuisines.map(function (c) { return ENGELSK[c] || ''; }).join(' ') + ' ' + s.bydel + ' ' + (s.address || '');
     const bokstavrett = /[æøå]/.test(f.q);
@@ -663,7 +658,7 @@ function byggHurtigrad() {
   brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
-  const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade'], ['fAlcohol', 'Alkohol', 'alkohol']];
+  const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade']];
   felt.filter(function (d) { return el(d[0]).value; }).concat(felt.filter(function (d) { return !el(d[0]).value; }))
     .forEach(function (d) {
       const x = el(d[0]);
@@ -672,7 +667,7 @@ function byggHurtigrad() {
         brikke(esc(tekst) + IKON.x, { hurtig: d[2], satt: true, etikett: T('Fjern filteret {t}', { t: tekst }), klikk: function () {
           x.value = ''; track('filter_fjernet', { filter: d[0] }); render();
         } });
-      } else if (d[0] !== 'fAlcohol') {
+      } else {
         brikke(esc(T(d[1])) + IKON.pil, { hurtig: d[2], etikett: T('{t}, åpner filtrene', { t: T(d[1]) }), klikk: function () { apneFilterark(d[2]); } });
       }
     });
@@ -688,7 +683,6 @@ function filterTekst() {
   if (el('fCuisine').value) deler.push(sprak === 'en' ? T(el('fCuisine').value) : el('fCuisine').value.toLowerCase());
   if (el('fBydel').value) deler.push(el('fBydel').value);
   if (el('fPrice').value) deler.push('$'.repeat(+el('fPrice').value));
-  if (el('fAlcohol').value) deler.push(T(el('fAlcohol').value === 'ja' ? 'serverer alkohol' : 'uten kjent alkohol'));
   if (!deler.length) return '';
   return ' · ' + (deler.length === 1 ? deler[0] : T('{n} filtre', { n: deler.length }));
 }
@@ -760,9 +754,6 @@ function tegnFilterark(antall) {
     '<section class="fa-del" data-del="pris"><h3>' + T('Pris') + '</h3><div class="fa-pris">' + ['1', '2', '3'].map(function (v) {
       return '<button type="button" aria-pressed="' + (el('fPrice').value === v) + '" data-velg="fPrice" data-v="' + v + '" aria-label="' +
         T(['Rimelig', 'Middels', 'Dyrere'][v - 1]) + '">' + '$'.repeat(+v) + '</button>'; }).join('') + '</div></section>' +
-    '<section class="fa-del" data-del="alkohol"><h3>' + T('Alkohol') + '</h3>' +
-      segment('Alkohol', [['', 'Alle steder'], ['nei', 'Ingen kjent'], ['ja', 'Serverer']], el('fAlcohol').value, 'fAlcohol') +
-      '<p class="fa-note">' + esc(T('«Ingen kjent» betyr at vi ikke vet om stedet serverer alkohol.')) + '</p></section>' +
     '<section class="fa-del" data-del="sorter"><h3>' + T('Sortering') + '</h3>' +
       segment('Sortering', [['', 'Standard'], ['avstand', 'Nærmest'], ['navn', 'A–Å'], ['pris', 'Pris']], el('fSort').value, 'fSort') + '</section>';
 
@@ -1338,7 +1329,7 @@ function foelgFilter() {
 }
 
 // Aktive filtre
-const FILTERFELT = ['fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlcohol'];
+const FILTERFELT = ['fBydel', 'fCuisine', 'fPrice', 'fOpen'];
 
 
 // Kjeder
@@ -1461,7 +1452,7 @@ function renderHighlights() {
   if (!list) return;
   list.innerHTML = '';
   currentHighlights().forEach(function (s) {
-    const st = openState(s);
+    const tid = kortTid(s, true);
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'hrow';
@@ -1471,7 +1462,7 @@ function renderHighlights() {
         '<span class="hname">' + esc(s.name) + '</span>' +
         '<span class="hmeta">' + esc(s.bydel) + ' · ' + esc(s.cuisines.map(function (c) { return T(c); }).join(', ')) + ' · ' + priceLabel(s.price) + '</span>' +
       '</span>' +
-      (st.short ? '<span class="os ' + st.cls + '">' + esc(visTid(st.short)) + '</span>' : '');
+      (tid ? '<span class="os ' + tid.cls + '">' + esc(tid.tekst) + '</span>' : '');
     b.addEventListener('click', function () { closeSheet('hilite'); setActive(s.id, true); });
     list.appendChild(b);
   });
@@ -1492,6 +1483,7 @@ function openSheet(key, auto) {
   box.hidden = false;
   void box.offsetWidth;
   box.classList.add('open');
+  if (key === 'hilite') { const sk = el('hiliteSkjerm'); sk.hidden = false; void sk.offsetWidth; sk.classList.add('apen'); }
   if (key === 'tips') requestAnimationFrame(oppdaterTipsHint);
   track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
   startCountdown(key);
@@ -1520,10 +1512,16 @@ function closeSheet(key) {
   if (!box || !box.classList.contains('open')) return;
   clearTimeout(sheetTimer[key]);
   box.classList.remove('open', 'counting');
-  setTimeout(function () { if (!box.classList.contains('open')) box.hidden = true; }, 260);
+  if (key === 'hilite') el('hiliteSkjerm').classList.remove('apen');
+  setTimeout(function () {
+    if (box.classList.contains('open')) return;
+    box.hidden = true;
+    if (key === 'hilite') el('hiliteSkjerm').hidden = true;
+  }, 260);
 }
 
 function wireSheets() {
+  el('hiliteSkjerm').addEventListener('click', function () { closeSheet('hilite'); });
   Object.keys(SHEETS).forEach(function (key) {
     const cfg = SHEETS[key], box = el(cfg.box);
     if (!box) return;

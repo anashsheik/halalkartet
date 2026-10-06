@@ -148,6 +148,8 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hilite-head { padding: 18px 20px 12px; }
 .hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
 .hilite-head p { margin: 4px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+.hilite-skjerm { position: fixed; inset: 0; z-index: 1850; background: rgba(9,24,17,.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity .24s var(--ease-out); }
+.hilite-skjerm.apen { opacity: 1; }
 .hilite-list { padding: 0 10px; max-height: 52vh; overflow-y: auto; }
 .hrow { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 10px 10px; cursor: pointer; font: inherit; transition: background .15s; }
 .hrow:hover { background: #EFE8D6; }
@@ -734,7 +736,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
 .toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart,
 .segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
-.mono-mork, .info-head, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
+.info-head, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
   background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center;
 }
 </style>
@@ -869,6 +871,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   </div>
 </div>
 
+<div class="hilite-skjerm" id="hiliteSkjerm" hidden></div>
 <div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" data-ta="aria-label" hidden>
   <div class="hilite-bar" id="hiliteBar"></div>
   <div class="hilite-head">
@@ -910,11 +913,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     <option value="naa">Åpent nå</option>
     <option value="soon">Stenger snart</option>
     <option value="closed">Stengt</option>
-  </select>
-  <select id="fAlcohol" aria-label="Filtrer på alkoholservering">
-    <option value="">Alkohol: alle steder</option>
-    <option value="ja">Halal mat, serverer alkohol</option>
-    <option value="nei">Ingen kjent alkoholservering</option>
   </select>
   <select id="fSort" aria-label="Sorter listen">
     <option value="">Sorter etter</option>
@@ -1177,6 +1175,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=2c0adfa3"></script>
+<script src="app.js?v=c0b48e6c"></script>
 </body>
 </html>
