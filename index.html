@@ -23,6 +23,8 @@
 <style>
 :root {
   --emerald:    #0E3D2C;
+  /* stjernemønsteret på alle grønne flater, dempet så teksten er lett å lese */
+  --monster:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23C8A253' stroke-opacity='.11' stroke-width='1.2'%3E%3Crect x='24' y='24' width='24' height='24'/%3E%3Crect x='24' y='24' width='24' height='24' transform='rotate(45 36 36)'/%3E%3Cpath d='M0 36h19M53 36h19M36 0v19M36 53v19'/%3E%3C/g%3E%3C/svg%3E");
   --gold:       #C8A253;
   --gold-soft:  #DCC28A;
   --ivory:      #F2ECDE;
@@ -461,6 +463,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .apent { color: var(--kort-tekst); }
 .apent.os-soon { color: var(--soon); }
 .apent.os-closed { color: var(--closed); }
+.lkort .hjerte svg { width: 26px; height: 26px; }
 .hjerte { position: relative; z-index: 1; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 12px; background: none; color: var(--emerald); cursor: pointer; }
 .hjerte[aria-pressed="true"] svg { fill: var(--closed); stroke: var(--closed); }
 .knapp { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; padding: 0 12px; border: 1px solid var(--kort-strek); border-radius: 16px; background: var(--kort-bak); color: var(--emerald); font: 700 16px 'Manrope', sans-serif; text-decoration: none; cursor: pointer; }
@@ -714,6 +717,15 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .nearme:hover { background: var(--pill-solid-2); }
   .hilite, .info-card { background: var(--paper); }
 }
+#detaljNavn { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
+
+/* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
+.toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart,
+.segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
+.mono-mork, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
+  background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center;
+}
+@media (min-width: 721px) { .info-head { background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center; } }
 </style>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1154,6 +1166,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=a7d2b246"></script>
+<script src="app.js?v=2c0adfa3"></script>
 </body>
 </html>

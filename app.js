@@ -68,7 +68,11 @@ const ENGELSK = {
   'Ingen kjent alkoholservering': 'No known alcohol', 'Sorter etter': 'Sort by', 'Nærmest meg': 'Nearest me',
   // steder og tider
   'til {t}': 'until {t}', 'åpner {t}': 'opens {t}', 'Åpent til {t}': 'Open until {t}', 'Stenger {t}': 'Closes {t}', 'Stengt, åpner {t}': 'Closed, opens {t}',
-  'kl {t}': 'at {t}', 'kl. {t}': 'at {t}', 'til kl. {t}': 'until {t}', 'kl. {a} – kl. {b}': '{a} – {b}', 'Stenger kl. {t}': 'Closes {t}', 'Filter': 'Filters', 'Midlertidig stengt': 'Temporarily closed', 'Stengt nå': 'Closed now', 'Åpningstid ukjent': 'Opening hours unknown',
+  'kl {t}': 'at {t}', '– kl. {t}': '– {t}', '– åpner kl. {t}': '– opens {t}', 'Åpner kl. {t}': 'Opens {t}', 'Åpent nå – kl. {t}': 'Open now – {t}',
+  'Stenger snart – kl. {t}': 'Closing soon – {t}', 'Stengt – åpner kl. {t}': 'Closed – opens {t}', 'Cuisine': 'Cuisine',
+  'Bare steder vi selv har sjekket.': 'Only places we have checked ourselves.',
+  'Steder vi har sjekket, og steder der deler av menyen er halal.': 'Places we have checked, and places where part of the menu is halal.',
+  'Vis 1 verifisert sted': 'Show 1 verified place', 'Vis {n} verifiserte steder': 'Show {n} verified places', 'kl. {t}': 'at {t}', 'til kl. {t}': 'until {t}', 'kl. {a} – kl. {b}': '{a} – {b}', 'Stenger kl. {t}': 'Closes {t}', 'Filter': 'Filters', 'Midlertidig stengt': 'Temporarily closed', 'Stengt nå': 'Closed now', 'Åpningstid ukjent': 'Opening hours unknown',
   'Alle åpningstider for {navn}, i kart-appen': 'All opening hours for {navn}, in the maps app', 'Alle tider': 'All hours',
   'Veibeskrivelse': 'Directions', 'Se stedet': 'View place', 'Se hele siden': 'View full page', 'Ring': 'Call', 'Nett': 'Website',
   'Fjern {navn} fra Lagret': 'Remove {navn} from Saved', 'Lagre {navn}': 'Save {navn}', 'Lagre': 'Save',
@@ -354,9 +358,9 @@ let lastFocus = null;
 // Strenghet
 const STRICT_STEPS = [
   { label: 'Kun verifisert', tillat: ['verifisert'],
-    note: 'Bare steder vi har bekreftet som helt halal.' },
+    note: 'Bare steder vi selv har sjekket.' },
   { label: '+ delvis',       tillat: ['verifisert', 'delvis'],
-    note: 'Også steder der bare deler av menyen er halal.' },
+    note: 'Steder vi har sjekket, og steder der deler av menyen er halal.' },
   { label: '+ uavklart',     tillat: ['verifisert', 'delvis', 'uavklart'],
     note: 'Alt vi kjenner til, også steder vi ikke har rukket å sjekke ennå.' }
 ];
@@ -621,6 +625,9 @@ function plasserSok() {
   if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
 }
 
+// Mobilen sier «Cuisine» om kjøkken, også på norsk; PC sier fortsatt «Kjøkken»
+const kjokkenOrd = () => erMobil() ? 'Cuisine' : 'Kjøkken';
+
 function antallAktive() {
   return FILTERFELT.filter(function (id) { return el(id) && el(id).value; }).length + (alleStatuser() ? 0 : 1);
 }
@@ -656,7 +663,7 @@ function byggHurtigrad() {
   brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
-  const felt = [['fCuisine', 'Kjøkken', 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade'], ['fAlcohol', 'Alkohol', 'alkohol']];
+  const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade'], ['fAlcohol', 'Alkohol', 'alkohol']];
   felt.filter(function (d) { return el(d[0]).value; }).concat(felt.filter(function (d) { return !el(d[0]).value; }))
     .forEach(function (d) {
       const x = el(d[0]);
@@ -748,7 +755,7 @@ function tegnFilterark(antall) {
     '<section class="fa-del" data-del="apent"><div class="fa-rad"><div><h3>' + T('Åpent nå') + '</h3>' +
       '<p>' + T('Skjul steder som er stengt') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Åpent nå') + '" aria-checked="' + (el('fOpen').value === 'naa') + '" data-bryter="apent"></button></div></section>' +
-    '<section class="fa-del" data-del="kjokken"><h3>' + T('Kjøkken') + '</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines'), 6) + '</section>' +
+    '<section class="fa-del" data-del="kjokken"><h3>' + T(kjokkenOrd()) + '</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines'), 6) + '</section>' +
     '<section class="fa-del" data-del="omrade"><h3>' + T('Område') + '</h3>' + brikker('fBydel', 'omrade', telling('bydel'), 8) + '</section>' +
     '<section class="fa-del" data-del="pris"><h3>' + T('Pris') + '</h3><div class="fa-pris">' + ['1', '2', '3'].map(function (v) {
       return '<button type="button" aria-pressed="' + (el('fPrice').value === v) + '" data-velg="fPrice" data-v="' + v + '" aria-label="' +
@@ -768,7 +775,9 @@ function tegnFilterark(antall) {
 
   const a = antallAktive();
   el('faNull').disabled = !a;
-  el('faVis').innerHTML = '<span>' + (!antall ? T('Ingen steder passer') : antall === HALAL_SPOTS.length ? T('Vis alle {n} steder', { n: antall })
+  el('faVis').innerHTML = '<span>' + (!antall ? T('Ingen steder passer')
+    : strict === 0 ? (antall === 1 ? T('Vis 1 verifisert sted') : T('Vis {n} verifiserte steder', { n: antall }))
+    : antall === HALAL_SPOTS.length ? T('Vis alle {n} steder', { n: antall })
     : antall === 1 ? T('Vis 1 sted') : T('Vis {n} steder', { n: antall })) + '</span>' + (antall ? IKON2.pil : '');
   el('faVis').disabled = !antall;
 }
@@ -900,20 +909,20 @@ function tidNa(s) {
   return { state: st.state, cls: st.cls, label: st.label,
            stenger: stenger === null ? '' : fmtClock(stenger), apner: apner === null ? '' : fmtClock(apner) };
 }
-function kortTid(s) {
+function kortTid(s, liste) {
   const t = tidNa(s);
-  if (t.state === 'open' || t.state === 'soon') return { cls: t.cls, tekst: T('til {t}', { t: t.stenger }) };
-  if (t.state === 'closed') return { cls: t.cls, tekst: /^Åpner/.test(t.label) && t.apner ? T('åpner {t}', { t: t.apner }) : visTid(t.label) };
+  if (t.state === 'open' || t.state === 'soon') return { cls: t.cls, tekst: T(liste ? 'Stenger kl. {t}' : '– kl. {t}', { t: t.stenger }) };
+  if (t.state === 'closed') return { cls: t.cls, tekst: /^Åpner/.test(t.label) && t.apner ? T('Åpner kl. {t}', { t: t.apner }) : visTid(t.label) };
   return null;
 }
 function apentLinje(s) {
   const st = openState(s);
   const stenger = clockMinutes(s.hours);
-  if (st.state === 'open') return { cls: 'os-open', tekst: T('Åpent til {t}', { t: fmtClock(stenger) }) };
-  if (st.state === 'soon') return { cls: 'os-soon', tekst: T('Stenger {t}', { t: fmtClock(stenger) }) };
+  if (st.state === 'open') return { cls: 'os-open', tekst: T('Åpent nå – kl. {t}', { t: fmtClock(stenger) }) };
+  if (st.state === 'soon') return { cls: 'os-soon', tekst: T('Stenger snart – kl. {t}', { t: fmtClock(stenger) }) };
   if (st.state === 'closed') {
     const apner = s.opens ? clockMinutes(s.opens) : null;
-    return { cls: 'os-closed', tekst: /^Åpner/.test(st.label) && apner !== null ? T('Stengt, åpner {t}', { t: fmtClock(apner) }) : visTid(st.label) };
+    return { cls: 'os-closed', tekst: /^Åpner/.test(st.label) && apner !== null ? T('Stengt – åpner kl. {t}', { t: fmtClock(apner) }) : visTid(st.label) };
   }
   return null;
 }
@@ -966,7 +975,7 @@ function anbefalt(liste, mode) {
   return STATUS_ORDER.flatMap(function (st) { return liste.filter(function (s) { return s.halalStatus === st; }); });
 }
 function listekortHtml(s, i) {
-  const t = kortTid(s);
+  const t = kortTid(s, true);
   return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s, i) +
     '<div class="lkort-tekst">' +
       '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
@@ -1084,9 +1093,9 @@ function settFane(f) {
 function dagensTid(s) {
   const t = tidNa(s);
   let hoved, rest = '';
-  if (t.state === 'open') { hoved = T('Åpent nå'); rest = T('til kl. {t}', { t: t.stenger }); }
-  else if (t.state === 'soon') { hoved = T('Stenger snart'); rest = T('kl. {t}', { t: t.stenger }); }
-  else if (t.state === 'closed') { hoved = T(t.label === 'Midlertidig stengt' ? t.label : 'Stengt'); rest = /^Åpner/.test(t.label) && t.apner ? T('åpner {t}', { t: t.apner }) : ''; }
+  if (t.state === 'open') { hoved = T('Åpent nå'); rest = T('– kl. {t}', { t: t.stenger }); }
+  else if (t.state === 'soon') { hoved = T('Stenger snart'); rest = T('– kl. {t}', { t: t.stenger }); }
+  else if (t.state === 'closed') { hoved = T(t.label === 'Midlertidig stengt' ? t.label : 'Stengt'); rest = /^Åpner/.test(t.label) && t.apner ? T('– åpner kl. {t}', { t: t.apner }) : ''; }
   else return '';
   return '<p class="d-apent ' + t.cls + '"><b>' + hoved + '</b>' + (rest ? ' <span>' + rest + '</span>' : '') + '</p>';
 }
