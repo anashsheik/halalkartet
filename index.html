@@ -717,15 +717,26 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .nearme:hover { background: var(--pill-solid-2); }
   .hilite, .info-card { background: var(--paper); }
 }
+/* Mobil: siden du velger i Mer vises alene i en boble i midten, med grønt bånd, حلال og kryss, og alt bak uskarpt */
+@media (max-width: 720px) {
+  .info-scrim { padding: 20px 16px; background: rgba(9,24,17,.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .info-card { max-height: calc(100% - 40px); border-radius: 22px; background: #EDE7DA; box-shadow: 0 30px 80px rgba(6,20,14,.35); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .info-head { position: relative; flex: none; justify-content: center; height: 56px; padding: 0 64px; }
+  .info-tabs { display: none; }
+  .info-brand { display: block; font: 700 28px/1 'Amiri', serif; color: var(--gold); -webkit-text-fill-color: currentColor; background: none; }
+  .info-close { position: absolute; top: 50%; right: 10px; width: 44px; height: 44px; margin-top: -22px; padding: 0; color: #fff; font-size: 30px; font-weight: 300; }
+  .info-body { padding: 26px 22px 28px; }
+  .info-section h2 { margin-bottom: 14px; font-size: 32px; color: var(--emerald); }
+  .info-section p { font-size: 15px; line-height: 1.6; color: var(--kort-tekst); }
+}
 #detaljNavn { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
 
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
 .toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart,
 .segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
-.mono-mork, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
+.mono-mork, .info-head, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
   background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center;
 }
-@media (min-width: 721px) { .info-head { background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center; } }
 </style>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
