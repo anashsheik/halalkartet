@@ -340,13 +340,9 @@ const klynge = L.markerClusterGroup({
   animate: !reduceMotion,
   iconCreateFunction: function (c) {
     const n = c.getChildCount();
-    // mobil: rund mørkegrønn sirkel med gullkant og tallet inni, uten bestikk
-    if (erMobil()) return L.divIcon({ className: '', iconSize: [50, 50], iconAnchor: [25, 25],
+    // rund mørkegrønn sirkel med gullkant og tallet inni, uten bestikk
+    return L.divIcon({ className: '', iconSize: [50, 50], iconAnchor: [25, 25],
       html: '<div class="rklynge' + (n >= 10 ? ' stor' : '') + '"><span>' + n + '</span></div>' });
-    return L.divIcon({
-      className: '', iconSize: [36, 48], iconAnchor: [18, 47],
-      html: '<div class="klynge' + (n >= 10 ? ' stor' : '') + '">' + DRAAPE + '<span>' + n + '</span></div>'
-    });
   }
 });
 map.addLayer(klynge);
@@ -497,27 +493,12 @@ function nullstill() {
   el('search').focus();
 }
 
-const DRAAPE = '<svg class="pin-form" viewBox="0 0 30 40" aria-hidden="true"><path d="M15 38.5S2 24.4 2 15a13 13 0 0126 0c0 9.4-13 23.5-13 23.5z"/></svg>';
 const BESTIKK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v8M4.5 3v5a2.5 2.5 0 005 0V3M7 11v10"/><path d="M17 21V3c-2.2 1.2-3.5 3.8-3.5 7.5 0 1.8 1 3 3.5 3"/></svg>';
 // merket i hjørnet: حلال for verifisert, ! og ? for de andre
 const PINMERKE = { verifisert: 'حلال', delvis: '!', uavklart: '?' };
 
-function makeIcon(status, big, navn) {
-  const st = STATUS[status];
-  if (erMobil()) return rundPinne(status, big, navn);
-  if (big) return L.divIcon({
-    className: '', iconSize: [40, 53], iconAnchor: [20, 52],
-    html: '<div class="pin draape stor ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>' +
-      (navn ? '<span class="pin-navn under">' + esc(navn) + '</span>' : '')
-  });
-  // spissen står på stedet
-  return L.divIcon({
-    className: '', iconSize: [30, 40], iconAnchor: [15, 39],
-    html: '<div class="pin draape ' + st.pin + '">' + DRAAPE + '<span class="pin-tegn">' + st.tegn + '</span></div>'
-  });
-}
-// Mobil: rund pinne med kniv og gaffel og et lite merke i hjørnet. Valgt sted blir større, med gullkant og navnet under.
-function rundPinne(status, stor, navn) {
+// Rund pinne med kniv og gaffel og et lite merke i hjørnet, på mobil og PC. Valgt sted blir større, med gullkant og navnet under.
+function makeIcon(status, stor, navn) {
   const st = STATUS[status];
   return L.divIcon({
     className: '', iconSize: stor ? [50, 58] : [34, 40], iconAnchor: stor ? [25, 57] : [17, 39],
@@ -863,13 +844,8 @@ let detaljFra = null, detaljKart = null, merFra = null, detaljId = null;
 function kobleKort() {
   const mobil = erMobil();
   if (mobil === kortModus) return;
-  const forste = kortModus === null;
   kortModus = mobil;
   const aktiv = activeId;
-  if (!forste) {
-    HALAL_SPOTS.forEach(function (s) { if (s.id !== aktiv) markers[s.id].setIcon(makeIcon(s.halalStatus, false)); });
-    klynge.refreshClusters();
-  }
   if (!mobil) { visning = 'kart'; fane = 'utforsk'; document.body.classList.remove('vis-liste', 'fane-lagret'); }
   plasserTips();
   if (aktiv) setActive(aktiv, false);

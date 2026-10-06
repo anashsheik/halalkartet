@@ -94,27 +94,14 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 .price { font-weight: 700; letter-spacing: .04em; }
 /* Klynger */
-.klynge { position: relative; width: 36px; height: 48px; color: #fff; font: 700 14px/1 'Manrope', sans-serif; font-variant-numeric: tabular-nums; }
-.klynge .pin-form path { fill: var(--emerald); stroke: var(--gold); stroke-width: 1.8; }
-.klynge span { z-index: 1; position: absolute; left: 0; top: 0; width: 36px; height: 36px; display: grid; place-items: center; }
 .leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow { transition: transform .22s var(--ease-out), opacity .22s ease; }
 .leaflet-cluster-spider-leg { stroke: rgba(200,162,83,.7) !important; }
 
-.pin { width: 24px; height: 24px; display: grid; place-items: center; color: #fff; border: 3px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.32); }
-.pin svg { width: 12px; height: 12px; display: block; }
 .pin-verifisert { --pin-flate: #1E4D36; }
 .pin-delvis { --pin-flate: #C46F22; }
 .pin-uavklart { --pin-flate: #6F7672; }
-.pin.draape { position: relative; width: 30px; height: 40px; display: block; border: 0; background: none; box-shadow: none; }
-.pin .pin-form, .klynge .pin-form { z-index: 0; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 2px 3px rgba(9,28,20,.35)); }
-.pin-form path { fill: var(--pin-flate); stroke: #fff; stroke-width: 2.2; }
-.pin-tegn { z-index: 1; position: absolute; left: 0; top: 0; width: 30px; height: 30px; display: grid; place-items: center; }
-.pin-tegn svg { width: 13px; height: 13px; }
-.pin.draape.pin-verifisert { color: var(--gold); }
 .tegn-ar { display: block; font: 700 10px/1 'Amiri', serif; direction: rtl; white-space: nowrap; }
-.pin-tegn .tegn-ar { font-size: 11px; margin-top: -1px; }
-.pin.big .tegn-ar { font-size: 9px; }
-/* Mobil: runde pinner med kniv og gaffel */
+/* Runde pinner med kniv og gaffel */
 .rpin { position: relative; width: 34px; height: 40px; filter: drop-shadow(0 2px 3px rgba(9,28,20,.32)); }
 .rpin::after { content: ""; position: absolute; left: 50%; top: 30px; margin-left: -5px; border: 5px solid transparent; border-top: 8px solid #fff; border-bottom: 0; }
 .rpin-sirkel { position: absolute; left: 2px; top: 2px; width: 30px; height: 30px; box-sizing: border-box; display: grid; place-items: center; border: 2.5px solid #fff; border-radius: 50%; background: var(--pin-flate); color: #fff; }
@@ -515,13 +502,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 /* PC */
 .pc-topp, .pc-filter, .pc-kartinfo, .pc-liste, .pc-skuff, .pc-skjerm { display: none; }
-.pin.draape.stor { width: 40px; height: 53px; }
-.pin.draape.stor .pin-form path { stroke: var(--gold); stroke-width: 2.2; }
-.pin.draape.stor .pin-form { filter: drop-shadow(0 4px 8px rgba(9,28,20,.4)); }
-.pin.draape.stor .pin-tegn { width: 40px; height: 40px; }
-.pin.draape.stor .tegn-ar { font-size: 14px; }
-.pin.draape.stor .pin-tegn svg { width: 17px; height: 17px; }
-.pin-navn.under { position: absolute; left: 50%; top: calc(100% + 8px); transform: translateX(-50%); padding: 7px 14px; border-radius: 8px; background: var(--emerald); color: #fff; font: 700 13.5px 'Manrope', sans-serif; white-space: nowrap; box-shadow: 0 4px 14px rgba(9,28,20,.3); pointer-events: none; }
 
 @media (min-width: 721px) {
   :root { --pc-topp: 80px; --pc-filter: 68px; --pc-liste: 440px; }
@@ -1234,6 +1214,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=b3f0aa0f"></script>
+<script src="app.js?v=6d2ba178"></script>
 </body>
 </html>
