@@ -104,6 +104,8 @@ const ENGELSK = {
   'Ser du noe som er feil på et sted? Skriv hvilket sted det gjelder og hva som er feil, så sjekker vi det.': 'Is something wrong about a place? Tell us which place and what is wrong, and we will check it.',
   'Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.': 'Enter a valid email (with one @ and a dot) or a phone number, or leave the field empty.',
   'Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.': 'Thank you for letting us know. Your message has been sent, and we will reply as soon as we can.',
+  'Støtt Halalkartet': 'Support Halalkartet', 'Velg beløp': 'Choose amount', 'Gi {b} kr med Vipps': 'Give {b} kr with Vipps',
+  'Vipps er ikke koblet til ennå. Vi sier fra her når det er klart.': 'Vipps is not connected yet. We will say so here when it is ready.',
   'Sender': 'Sending', 'Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.': 'Unfortunately we cannot receive forms right now. Your text is still here.',
   'Beklager, noe gikk galt. Prøv igjen om litt.': 'Sorry, something went wrong. Please try again shortly.',
   'Halalkartet · Finn halal mat i Oslo': 'Halalkartet · Find halal food in Oslo',
@@ -465,6 +467,7 @@ function initApp() {
   wireNearMe();
   wireInfo();
   wireContactForm();
+  wireStott();
   wireTipsForm();
   merkSkjemaUtenMottak();
   wirePopupActions();
@@ -1297,6 +1300,7 @@ function wireMobil() {
     lukkMer();
     el('faneMer').focus({ preventScroll: true });
     if (b.dataset.mer === 'hilite') openSheet('hilite', false);
+    else if (b.dataset.mer === 'tips') openSheet('tips', false);
     else openInfo(b.dataset.mer);
   });
 
@@ -1678,6 +1682,7 @@ function showInfo(section) {
       : 'Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.');
     el('kontaktTittel').dataset.feil = feil ? 'ja' : 'nei';
   }
+  if (section === 'stott') tegnStott();
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
   document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
   el('infoBody').scrollTop = 0;
@@ -1696,6 +1701,30 @@ function trapFocus(e) {
 // Skjemaer
 const SKJEMA_ENDEPUNKT = 'https://formspree.io/f/meaeqdlj';
 const SKJEMA_EPOST = '';
+
+// Støtt Halalkartet: lim inn betalingslenken fra Vipps her. Står den tom, er Gi-knappen avslått og sier fra.
+const VIPPS_LENKE = '';
+let stottBelop = 50;
+const HJERTE_GI = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg>';
+function tegnStott() {
+  document.querySelectorAll('.stott-belop [data-belop]').forEach(function (b) { b.setAttribute('aria-checked', String(+b.dataset.belop === stottBelop)); });
+  const gi = el('stottGi');
+  if (!gi) return;
+  gi.innerHTML = HJERTE_GI + '<span>' + esc(T('Gi {b} kr med Vipps', { b: stottBelop })) + '</span>';
+  gi.disabled = !VIPPS_LENKE;
+  el('stottSnart').hidden = !!VIPPS_LENKE;
+}
+function wireStott() {
+  document.querySelectorAll('.stott-belop [data-belop]').forEach(function (b) {
+    b.addEventListener('click', function () { stottBelop = +b.dataset.belop; tegnStott(); });
+  });
+  el('stottGi').addEventListener('click', function () {
+    if (!VIPPS_LENKE) return;
+    track('stott', { belop: stottBelop });
+    window.open(VIPPS_LENKE, '_blank', 'noopener');
+  });
+  tegnStott();
+}
 
 function skjemaVirker() { return !!(SKJEMA_ENDEPUNKT || SKJEMA_EPOST); }
 

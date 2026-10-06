@@ -731,10 +731,24 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .info-section h2 { margin-bottom: 14px; font-size: 32px; color: var(--emerald); }
   .info-section p { font-size: 15px; line-height: 1.6; color: var(--kort-tekst); }
 }
+.stott-punkter { margin: 18px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--kort-strek); }
+.stott-punkter li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--kort-strek); }
+.stott-nr { display: grid; place-items: center; width: 38px; height: 38px; border: 1.5px solid var(--gold); border-radius: 50%; font: 600 20px/1 'Cormorant Garamond', serif; color: var(--gull-tekst); }
+.info-section .stott-punkter h3 { margin: 0 0 4px; font-size: 17px; font-weight: 700; color: var(--emerald); }
+.info-section .stott-punkter p { margin: 0; }
+.stott-etikett { margin: 22px 0 10px !important; font-size: 12.5px !important; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst) !important; }
+.stott-belop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stott-belop button { min-height: 52px; border: 1px solid #D9D2C1; border-radius: 12px; background: #fff; color: var(--kort-tekst); font: 700 16px 'Manrope', sans-serif; cursor: pointer; }
+.stott-belop button[aria-checked="true"] { border: 2px solid var(--emerald); background: #F4F1E8; color: var(--emerald); }
+.stott-gi { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; margin-top: 14px; border: 0; border-radius: 16px; color: var(--ivory); font: 700 17px 'Manrope', sans-serif; cursor: pointer; }
+.stott-gi svg { color: var(--gold); }
+.stott-gi:disabled { opacity: .55; cursor: default; }
+.stott-snart { margin: 10px 0 0 !important; font-size: 13.5px !important; color: var(--kort-dempet) !important; text-align: center; }
+.mer-liste .mer-stott { color: var(--emerald); font-weight: 800; }
 #detaljNavn { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
 
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
-.toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart,
+.toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart, body.vis-liste:not(.fane-lagret) .vis-kart, .stott-gi,
 .segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
 .info-head, .kf-send, .pc-topp, .pc-skuff-topp, .pc-valgt, .tips-mer {
   background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center;
@@ -809,6 +823,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     </button>
   </div>
   <ul class="pc-skuff-liste">
+    <li><button type="button" data-side="stott" data-t>Støtt Halalkartet</button></li>
     <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
     <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
     <li><button type="button" data-side="faq" data-t>FAQ</button></li>
@@ -936,6 +951,32 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <button class="info-close" id="infoClose" aria-label="Lukk" data-ta="aria-label">×</button>
     </div>
     <div class="info-body" id="infoBody">
+      <section class="info-section" data-section="stott">
+        <div data-sprak="nb">
+          <h2>Støtt Halalkartet</h2>
+          <p>Halalkartet er gratis å bruke, og ingen steder kan betale seg til en bedre status. Det skal det fortsette å være. Derfor drives kartet av frivillige og av gaver fra folk som deg.</p>
+          <ol class="stott-punkter">
+            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Alt går til driften</h3><p>Gaven din går til det som holder kartet oppe: server, kartdata, domene og arbeidet med å sjekke steder og holde informasjonen riktig. De som eier og vedlikeholder nettsiden og appen, tjener 0 kr på dette.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Overskuddet gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre som donasjon til land og mennesker som trenger det mest.</p></div></li>
+          </ol>
+        </div>
+        <div data-sprak="en" lang="en" hidden>
+          <h2>Support Halalkartet</h2>
+          <p>Halalkartet is free to use, and no place can pay for a better status. It will stay that way. That is why the map is run by volunteers and by gifts from people like you.</p>
+          <ol class="stott-punkter">
+            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Everything goes to running the map</h3><p>Your gift pays for what keeps the map going: server, map data, domain and the work of checking places and keeping the information correct. The people who own and maintain the website and the app earn nothing from it.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The surplus is given away</h3><p>Whatever is left when the running costs are paid, we pass on as a donation to the countries and people who need it most.</p></div></li>
+          </ol>
+        </div>
+        <p class="stott-etikett" id="stottEtikett" data-t>Velg beløp</p>
+        <div class="stott-belop" role="radiogroup" aria-labelledby="stottEtikett">
+          <button type="button" role="radio" aria-checked="false" data-belop="10">10 kr</button>
+          <button type="button" role="radio" aria-checked="true" data-belop="50">50 kr</button>
+          <button type="button" role="radio" aria-checked="false" data-belop="100">100 kr</button>
+        </div>
+        <button type="button" class="stott-gi" id="stottGi"></button>
+        <p class="stott-snart" id="stottSnart" hidden data-t>Vipps er ikke koblet til ennå. Vi sier fra her når det er klart.</p>
+      </section>
       <section class="info-section active" data-section="om">
         <div data-sprak="nb">
           <h2>Om oss</h2>
@@ -1159,12 +1200,15 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       </button>
     </header>
     <ul class="mer-liste">
-      <li><button type="button" data-mer="hilite" data-t>Utvalgte steder</button></li>
-      <li><button type="button" data-mer="kontakt" data-t>Si ifra eller kontakt oss</button></li>
-      <li><button type="button" data-mer="om" data-t>Om oss</button></li>
+      <li><button type="button" data-mer="stott" class="mer-stott" data-t>Støtt Halalkartet</button></li>
+      <li><button type="button" data-mer="tips" data-t>Tips oss om et sted</button></li>
+      <li><button type="button" data-mer="feil" data-t>Si ifra om feil</button></li>
       <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
       <li><button type="button" data-mer="personvern" data-t>Personvern</button></li>
       <li><button type="button" data-mer="vilkar" data-t>Vilkår</button></li>
+      <li><button type="button" data-mer="om" data-t>Om oss</button></li>
+      <li><button type="button" data-mer="kontakt" data-t>Kontakt oss</button></li>
+      <li><button type="button" data-mer="hilite" data-t>Utvalgte steder</button></li>
     </ul>
   </div>
 </div>
@@ -1175,6 +1219,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=c0b48e6c"></script>
+<script src="app.js?v=94fb6cf0"></script>
 </body>
 </html>
