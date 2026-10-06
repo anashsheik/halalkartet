@@ -93,9 +93,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 /* Strenghetsskive */
 
 .price { font-weight: 700; letter-spacing: .04em; }
-.hmeta .pris-1 { color: var(--open); }
-.hmeta .pris-2 { color: var(--soon); }
-.hmeta .pris-3 { color: var(--closed); }
 /* Klynger */
 .klynge { position: relative; width: 36px; height: 48px; color: #fff; font: 700 14px/1 'Manrope', sans-serif; font-variant-numeric: tabular-nums; }
 .klynge .pin-form path { fill: var(--emerald); stroke: var(--gold); stroke-width: 1.8; }
@@ -148,22 +145,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hilite-head { padding: 18px 20px 12px; }
 .hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
 .hilite-head p { margin: 4px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
-.hilite-skjerm { position: fixed; inset: 0; z-index: 1850; background: rgba(9,24,17,.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity .24s var(--ease-out); }
-.hilite-skjerm.apen { opacity: 1; }
-.hilite-list { padding: 0 10px; max-height: 52vh; overflow-y: auto; }
-.hrow { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; background: none; border: 0; border-radius: 10px; padding: 10px 10px; cursor: pointer; font: inherit; transition: background .15s; }
-.hrow:hover { background: #EFE8D6; }
-.hdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
-.hdot[data-s="verifisert"] { background: var(--cert); }
-.hdot[data-s="delvis"] { background: var(--self); }
-.hdot[data-s="uavklart"] { background: var(--owned); }
 .hmain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.hname { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
-.hmeta { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hrow .os { font-size: 11px; font-weight: 700; flex: none; white-space: nowrap; }
-.hrow .os-open { color: var(--open); }
-.hrow .os-soon { color: var(--soon); }
-.hrow .os-closed { color: var(--closed); }
 .hilite-foot { padding: 10px 20px 18px; }
 .hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
 .hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
@@ -412,7 +394,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   body.vis-liste:not(.fane-lagret) .vis-kart { display: inline-flex; position: fixed; z-index: 1200; left: 50%; bottom: calc(var(--fane-h) + 18px); transform: translateX(-50%); align-items: center; gap: 12px; min-height: 50px; padding: 0 24px; border: 0; border-radius: 99px; background: var(--emerald); color: var(--ivory); font: 700 17px 'Manrope', sans-serif; box-shadow: 0 10px 26px rgba(9,28,20,.3); cursor: pointer; }
   .vis-kart svg { color: var(--gold); }
 
-  .fane { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
+  .fane { display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; z-index: 1300; left: 0; right: 0; bottom: 0; height: var(--fane-h); padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--flate-bak); border-top: 1px solid var(--kort-strek); }
   .fane button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 0; border: 0; background: none; color: var(--kort-dempet); font: 600 11px 'Manrope', sans-serif; cursor: pointer; }
   .fane svg { width: 22px; height: 22px; }
   .fane .fane-sprak { color: var(--emerald); font-weight: 800; letter-spacing: .04em; }
@@ -452,11 +434,11 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: none) {
   .knapp, .dknapp, .d-rund, .hjerte, .filterknapp, .fane button, .hbrikke, .fa-brikker button, .fa-pris button, .segment button, .fa-vis,
-  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .hilite-lukk, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .hrow, .topp-merke, .d-merke {
+  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .hilite-lukk, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .topp-merke, .d-merke {
     transition: transform .12s var(--ease-out), opacity .12s var(--ease-out);
   }
   .knapp:active, .dknapp:active, .d-rund:active, .hjerte:active, .filterknapp:active, .fa-brikker button:active, .fa-pris button:active,
-  .fa-vis:active, .nearme:active, .hilite-lukk:active, .kf-send:active, .hrow:active { transform: scale(.96); transition-duration: 0s; }
+  .fa-vis:active, .nearme:active, .hilite-lukk:active, .kf-send:active { transform: scale(.96); transition-duration: 0s; }
   body.vis-liste:not(.fane-lagret) .vis-kart:active { transform: translateX(-50%) scale(.96); transition-duration: 0s; }
   .fane button:active, .hbrikke:active, .segment button:active, .bunn-liste:active, .mer-liste button:active, .fa-null:active, .fa-lukk:active,
   .d-lenke:active, .d-alletider:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
@@ -549,8 +531,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .leaflet-control-zoom { margin: 16px 16px 0 0 !important; border-radius: 12px; }
   .leaflet-control-zoom a { width: 42px !important; height: 42px !important; line-height: 42px !important; font-size: 20px !important; }
 
-  .pc-topp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 620px) minmax(0, 1fr); align-items: center; gap: 24px; position: fixed; z-index: 1200; top: 0; left: 0; right: 0; height: var(--pc-topp); padding: 0 32px; background: var(--emerald); color: var(--ivory); }
-  .pc-venstre { display: flex; align-items: center; gap: 26px; min-width: 0; }
+  .pc-topp { display: grid; grid-template-columns: minmax(auto, 1fr) minmax(280px, 620px) minmax(0, 1fr); align-items: center; gap: 24px; position: fixed; z-index: 1200; top: 0; left: 0; right: 0; height: var(--pc-topp); padding: 0 32px; background: var(--emerald); color: var(--ivory); }
+  .pc-venstre { display: flex; align-items: center; gap: 26px; min-width: max-content; }
   .pc-menyknapp { flex: none; width: 42px; height: 42px; display: grid; place-items: center; padding: 0; border: 1.5px solid rgba(200,162,83,.75); border-radius: 10px; background: transparent; color: var(--gold); cursor: pointer; transition: background .15s; }
   .pc-menyknapp:hover { background: rgba(200,162,83,.12); }
   .pc-lenke { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ivory); font: 500 15px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; }
@@ -599,7 +581,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-sprak { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--emerald); font: 800 15px 'Manrope', sans-serif; letter-spacing: .04em; white-space: nowrap; cursor: pointer; }
   .pc-sprak span { padding-bottom: 3px; border-bottom: 3px solid transparent; }
   .pc-sprak:hover span { border-color: var(--kort-strek); }
-  .pc-nullstill { margin-left: auto; min-height: 44px; padding: 0; border: 0; background: none; color: var(--gull-tekst); font: 600 15px 'Manrope', sans-serif; text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 6px; cursor: pointer; }
+  .pc-nullstill { margin-left: auto; min-height: 44px; padding: 0; border: 0; background: none; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; text-decoration: underline wavy var(--emerald); text-decoration-thickness: 1.5px; text-underline-offset: 7px; cursor: pointer; }
   .pc-nullstill:disabled { opacity: .5; cursor: default; }
 
   .pc-kartinfo { display: block; position: fixed; z-index: 500; top: calc(var(--pc-topp) + var(--pc-filter) + 36px); left: 36px; padding: 14px 20px 16px; border-radius: 14px; background: var(--kort-bak); box-shadow: 0 6px 22px rgba(9,28,20,.12); }
@@ -653,7 +635,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-valgt-knapper button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: var(--ivory); }
   .pc-valgt-knapper button:hover { background: rgba(255,255,255,.06); }
 
-  .pc-skjerm { display: block; position: fixed; inset: 0; z-index: 2050; background: rgba(36,56,46,.5); opacity: 0; transition: opacity .25s; }
+  .pc-skjerm { display: block; position: fixed; inset: 0; z-index: 2050; background: rgba(36,56,46,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity .25s; }
   .pc-skjerm.apen { opacity: 1; }
   .pc-skuff { display: flex; flex-direction: column; position: fixed; z-index: 2060; top: 0; left: 0; bottom: 0; width: 460px; max-width: 92vw; background: var(--flate-bak); box-shadow: 24px 0 60px rgba(6,20,14,.28); transform: translateX(-100%); transition: transform .32s var(--ease-drawer); }
   .pc-skuff.apen { transform: none; }
@@ -664,8 +646,13 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-skuff-liste li:last-child button { border-bottom: 0; }
   .pc-skuff-liste button::after { content: ""; flex: none; width: 9px; height: 9px; border-top: 2px solid var(--gull-tekst); border-right: 2px solid var(--gull-tekst); transform: rotate(45deg); transition: transform .15s; }
   .pc-skuff-liste button:hover::after { transform: translateX(4px) rotate(45deg); }
+  .pc-skuff-liste .skuff-stott { color: var(--gull-tekst); }
+  .pc-skuff-liste .skuff-stott::after { display: none; }
+  .pc-skuff-liste .skuff-stott svg { flex: none; margin-right: 2px; color: var(--gold); }
+  .pc-stott { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); }
+  .pc-valgt h3 { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 7px; text-decoration-skip-ink: none; }
 
-  .info-scrim { z-index: 2100; align-items: flex-start; padding: 70px 20px 30px; background: rgba(36,56,46,.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .info-scrim { z-index: 2100; align-items: flex-start; padding: 70px 20px 30px; background: rgba(36,56,46,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .info-card { max-width: 680px; max-height: calc(100vh - 100px); border-radius: 20px; background: #EDE7DA; box-shadow: 0 30px 80px rgba(6,20,14,.35); }
   .info-head { position: relative; justify-content: center; height: 64px; padding: 0 70px; background: var(--emerald); }
   .info-tabs { display: none; }
@@ -688,6 +675,11 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .d-hero { padding-top: 96px; }
   .detalj :focus-visible, .pc-topp :focus-visible, .pc-filter :focus-visible, .pc-liste :focus-visible, .pc-skuff :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; box-shadow: none; }
 }
+/* med Støtt oss i topplinja er det ikke plass til slagordet før skjermen er bred */
+@media (min-width: 721px) and (max-width: 1380px) {
+  .pc-merke .pc-slagord { display: none; }
+  .pc-merke .pc-ar { padding-left: 0; border-left: 0; }
+}
 @media (min-width: 721px) and (max-width: 1180px) {
   :root { --pc-liste: 380px; }
   .pc-topp { grid-template-columns: auto minmax(0, 1fr) auto; gap: 20px; padding: 0 20px; }
@@ -699,6 +691,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 @media (min-width: 721px) and (max-width: 940px) {
   :root { --pc-liste: 320px; }
   .pc-venstre { gap: 16px; }
+  .pc-stott span { display: none; }
   .pc-sokknapp { padding: 0 16px; }
   .pc-st-navn { display: none; }
   .pc-filter, .pc-statusgruppe, .pc-valggruppe { gap: 14px; }
@@ -744,7 +737,26 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .stott-gi svg { color: var(--gold); }
 .stott-gi:disabled { opacity: .55; cursor: default; }
 .stott-snart { margin: 10px 0 0 !important; font-size: 13.5px !important; color: var(--kort-dempet) !important; text-align: center; }
-.mer-liste .mer-stott { color: var(--emerald); font-weight: 800; }
+.mer-liste .mer-stott { display: flex; align-items: center; justify-content: space-between; color: var(--gull-tekst); font-weight: 800; }
+.mer-liste .mer-stott svg { flex: none; margin-left: auto; color: var(--gold); }
+.mer-liste .mer-stott::after { display: none; }
+.stott-merk { margin: 16px 0 0 !important; font-size: 13.5px !important; color: var(--kort-dempet) !important; }
+.stott-frivillig { margin: 12px 0 0 !important; font-size: 13.5px !important; color: var(--kort-dempet) !important; text-align: center; }
+.stott-takk { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--kort-strek); text-align: center; }
+.stott-takk p { margin: 0 !important; font: italic 500 19px/1.4 'Cormorant Garamond', serif !important; color: var(--kort-tekst) !important; }
+.info-section .stott-takk .stott-dua { margin-bottom: 6px !important; font: 700 30px/1.3 'Amiri', serif !important; color: var(--gull-tekst) !important; }
+.utv-sub { margin-bottom: 6px !important; }
+.utv-liste { border-top: 1px solid var(--kort-strek); }
+.utv-rad { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; min-height: 72px; padding: 10px 0; border: 0; border-bottom: 1px solid var(--kort-strek); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.utv-rad:last-child { border-bottom: 0; }
+.utv-rad:hover, .utv-rad:active { background: rgba(14,61,44,.05); }
+.utv-rad .mono { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 10px; font: 600 26px/1 'Cormorant Garamond', serif; }
+.utv-rad .mono-mork { background: var(--emerald); color: var(--gold); }
+.utv-navn { display: block; font: 600 21px/1.15 'Cormorant Garamond', serif; color: var(--ink); }
+.utv-meta { display: block; margin-top: 2px; font-size: 13.5px; color: var(--kort-dempet); }
+.utv-rad .skjold, .utv-rad .skjold > svg { width: 20px; height: 22px; }
+.fane .fane-stott { color: var(--gull-tekst); font-weight: 800; }
+.fane .fane-stott svg { color: var(--gold); }
 #detaljNavn { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
 
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
@@ -770,8 +782,9 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     </button>
     <button class="pc-lenke" id="pcNaer" type="button" data-t>Nær meg</button>
     <button class="pc-lenke" id="pcTips" type="button" data-t>Tips oss</button>
+    <button class="pc-lenke pc-stott" id="pcStott" type="button" aria-label="Støtt oss" data-ta="aria-label"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg><span data-t>Støtt oss</span></button>
     <button class="pc-lenke pc-hjerte" id="pcLagret" type="button" aria-pressed="false" aria-label="Lagrede steder" data-ta="aria-label">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-4.2-5.5 4.2z"/></svg>
       <span class="pc-lagret-tall" id="pcLagretTall" hidden></span>
     </button>
   </div>
@@ -823,7 +836,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     </button>
   </div>
   <ul class="pc-skuff-liste">
-    <li><button type="button" data-side="stott" data-t>Støtt Halalkartet</button></li>
+    <li><button type="button" data-side="stott" class="skuff-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
+    <li><button type="button" data-side="utvalgte" data-t>Utvalgte steder</button></li>
     <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
     <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
     <li><button type="button" data-side="faq" data-t>FAQ</button></li>
@@ -840,7 +854,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 </button>
 
 <div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" data-ta="aria-label" hidden>
-  <div class="hilite-bar" id="tipsBar"></div>
   <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
   <div class="hilite-head">
     <h2 data-t>Kjenner du et sted?</h2>
@@ -883,19 +896,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   <div class="hilite-foot tips-foot">
     <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
     <button class="hilite-lukk" id="tipsLukk" type="button" data-t>Lukk</button>
-  </div>
-</div>
-
-<div class="hilite-skjerm" id="hiliteSkjerm" hidden></div>
-<div class="hilite" id="hilite" role="dialog" aria-label="Utvalgte steder" data-ta="aria-label" hidden>
-  <div class="hilite-bar" id="hiliteBar"></div>
-  <div class="hilite-head">
-    <h2 data-t>Utvalgte steder</h2>
-    <p id="hiliteSub">Fem utvalgte steder som vi mener du burde prøve.</p>
-  </div>
-  <div class="hilite-list" id="hiliteList"></div>
-  <div class="hilite-foot">
-    <button class="hilite-lukk" id="hiliteLukk" type="button" data-t>Lukk</button>
   </div>
 </div>
 
@@ -951,22 +951,29 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <button class="info-close" id="infoClose" aria-label="Lukk" data-ta="aria-label">×</button>
     </div>
     <div class="info-body" id="infoBody">
+      <section class="info-section" data-section="utvalgte">
+        <h2 data-t>Utvalgte steder</h2>
+        <p class="utv-sub" id="utvalgtSub"></p>
+        <div class="utv-liste" id="utvalgtListe"></div>
+      </section>
       <section class="info-section" data-section="stott">
         <div data-sprak="nb">
           <h2>Støtt Halalkartet</h2>
           <p>Halalkartet er gratis å bruke, og ingen steder kan betale seg til en bedre status. Det skal det fortsette å være. Derfor drives kartet av frivillige og av gaver fra folk som deg.</p>
           <ol class="stott-punkter">
             <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Alt går til driften</h3><p>Gaven din går til det som holder kartet oppe: server, kartdata, domene og arbeidet med å sjekke steder og holde informasjonen riktig. De som eier og vedlikeholder nettsiden og appen, tjener 0 kr på dette.</p></div></li>
-            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Overskuddet gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre som donasjon til land og mennesker som trenger det mest.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Overskuddet gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre som donasjon til land og mennesker som trenger det mest, gjennom hjelpeorganisasjoner.</p></div></li>
           </ol>
+          <p class="stott-merk">Vi kommer til å legge ut en oversikt over hva vi har fått inn, og hvor pengene har gått.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Support Halalkartet</h2>
           <p>Halalkartet is free to use, and no place can pay for a better status. It will stay that way. That is why the map is run by volunteers and by gifts from people like you.</p>
           <ol class="stott-punkter">
             <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Everything goes to running the map</h3><p>Your gift pays for what keeps the map going: server, map data, domain and the work of checking places and keeping the information correct. The people who own and maintain the website and the app earn nothing from it.</p></div></li>
-            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The surplus is given away</h3><p>Whatever is left when the running costs are paid, we pass on as a donation to the countries and people who need it most.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The surplus is given away</h3><p>Whatever is left when the running costs are paid, we pass on as a donation to the countries and people who need it most, through aid organisations.</p></div></li>
           </ol>
+          <p class="stott-merk">We will publish an overview of what we have received and where the money has gone.</p>
         </div>
         <p class="stott-etikett" id="stottEtikett" data-t>Velg beløp</p>
         <div class="stott-belop" role="radiogroup" aria-labelledby="stottEtikett">
@@ -976,6 +983,13 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
         </div>
         <button type="button" class="stott-gi" id="stottGi"></button>
         <p class="stott-snart" id="stottSnart" hidden data-t>Vipps er ikke koblet til ennå. Vi sier fra her når det er klart.</p>
+        <p class="stott-frivillig" data-sprak="nb">Gaven er frivillig og gir ingen fordeler på kartet.</p>
+        <p class="stott-frivillig" data-sprak="en" lang="en" hidden>The gift is voluntary and gives no advantages on the map.</p>
+        <div class="stott-takk">
+          <p class="stott-dua" lang="ar" dir="rtl">جزاك الله خيرا</p>
+          <p data-sprak="nb">Takk for at du er med og holder kartet levende.</p>
+          <p data-sprak="en" lang="en" hidden>Thank you for being part of this and keeping the map alive.</p>
+        </div>
       </section>
       <section class="info-section active" data-section="om">
         <div data-sprak="nb">
@@ -1185,9 +1199,10 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <nav class="fane" id="fane" aria-label="Hovedmeny" data-ta="aria-label">
   <button type="button" data-fane="utforsk" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-t>Kart</span></button>
-  <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0112 7.3a4.3 4.3 0 017.5 2.5C19.5 15.4 12 20 12 20z"/></svg><span data-t>Lagret</span></button>
+  <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-4.2-5.5 4.2z"/></svg><span data-t>Lagret</span></button>
   <button type="button" data-fane="tips"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-t="Tips oss (fane)">Tips oss</span></button>
   <button type="button" data-fane="sprak" id="faneSprak" class="fane-sprak">EN</button>
+  <button type="button" data-fane="stott" class="fane-stott"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg><span data-t>Støtt oss</span></button>
   <button type="button" data-fane="mer" id="faneMer" aria-haspopup="dialog"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M4 15h16"/></svg><span data-t>Mer</span></button>
 </nav>
 
@@ -1200,7 +1215,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       </button>
     </header>
     <ul class="mer-liste">
-      <li><button type="button" data-mer="stott" class="mer-stott" data-t>Støtt Halalkartet</button></li>
+      <li><button type="button" data-mer="stott" class="mer-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
+      <li><button type="button" data-mer="utvalgte" data-t>Utvalgte steder</button></li>
       <li><button type="button" data-mer="tips" data-t>Tips oss om et sted</button></li>
       <li><button type="button" data-mer="feil" data-t>Si ifra om feil</button></li>
       <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
@@ -1208,7 +1224,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <li><button type="button" data-mer="vilkar" data-t>Vilkår</button></li>
       <li><button type="button" data-mer="om" data-t>Om oss</button></li>
       <li><button type="button" data-mer="kontakt" data-t>Kontakt oss</button></li>
-      <li><button type="button" data-mer="hilite" data-t>Utvalgte steder</button></li>
     </ul>
   </div>
 </div>
@@ -1219,6 +1234,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=94fb6cf0"></script>
+<script src="app.js?v=b3f0aa0f"></script>
 </body>
 </html>

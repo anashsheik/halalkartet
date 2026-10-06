@@ -104,7 +104,7 @@ const ENGELSK = {
   'Ser du noe som er feil på et sted? Skriv hvilket sted det gjelder og hva som er feil, så sjekker vi det.': 'Is something wrong about a place? Tell us which place and what is wrong, and we will check it.',
   'Skriv en gyldig e-post (med én @ og et punktum) eller et telefonnummer, eller la feltet stå tomt.': 'Enter a valid email (with one @ and a dot) or a phone number, or leave the field empty.',
   'Takk for at du sier fra. Meldingen din er sendt, og vi svarer så snart vi kan.': 'Thank you for letting us know. Your message has been sent, and we will reply as soon as we can.',
-  'Støtt Halalkartet': 'Support Halalkartet', 'Velg beløp': 'Choose amount', 'Gi {b} kr med Vipps': 'Give {b} kr with Vipps',
+  'Støtt Halalkartet': 'Support Halalkartet', 'Støtt oss': 'Support us', 'Åpent – kl. {t}': 'Open – {t}', 'Velg beløp': 'Choose amount', 'Gi {b} kr med Vipps': 'Give {b} kr with Vipps',
   'Vipps er ikke koblet til ennå. Vi sier fra her når det er klart.': 'Vipps is not connected yet. We will say so here when it is ready.',
   'Sender': 'Sending', 'Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.': 'Unfortunately we cannot receive forms right now. Your text is still here.',
   'Beklager, noe gikk galt. Prøv igjen om litt.': 'Sorry, something went wrong. Please try again shortly.',
@@ -198,7 +198,6 @@ function byttSprak() {
   plasserSok();
   if (el('kontaktTittel')) showInfo(el('kontaktTittel').dataset.feil === 'ja' ? 'feil' : document.querySelector('.info-section.active').dataset.section);
   render();
-  if (el('hilite') && el('hilite').classList.contains('open')) renderHighlights();
   if (!el('detalj').hidden && detaljId && byId(detaljId)) {
     if (detaljKart) { detaljKart.remove(); detaljKart = null; }
     el('detalj').innerHTML = detaljHtml(byId(detaljId));
@@ -623,8 +622,8 @@ function plasserSok() {
   if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
 }
 
-// Mobilen sier «Cuisine» om kjøkken, også på norsk; PC sier fortsatt «Kjøkken»
-const kjokkenOrd = () => erMobil() ? 'Cuisine' : 'Kjøkken';
+// Kjøkken heter «Cuisine», også på norsk
+const kjokkenOrd = () => 'Cuisine';
 
 function antallAktive() {
   return FILTERFELT.filter(function (id) { return el(id) && el(id).value; }).length + (alleStatuser() ? 0 : 1);
@@ -912,7 +911,7 @@ function kortTid(s, liste) {
 function apentLinje(s) {
   const st = openState(s);
   const stenger = clockMinutes(s.hours);
-  if (st.state === 'open') return { cls: 'os-open', tekst: T('Åpent nå – kl. {t}', { t: fmtClock(stenger) }) };
+  if (st.state === 'open') return { cls: 'os-open', tekst: T('Åpent – kl. {t}', { t: fmtClock(stenger) }) };
   if (st.state === 'soon') return { cls: 'os-soon', tekst: T('Stenger snart – kl. {t}', { t: fmtClock(stenger) }) };
   if (st.state === 'closed') {
     const apner = s.opens ? clockMinutes(s.opens) : null;
@@ -1247,6 +1246,7 @@ function wireMobil() {
     const f = b.dataset.fane;
     if (f === 'tips') openSheet('tips', false);
     else if (f === 'sprak') byttSprak();
+    else if (f === 'stott') openInfo('stott');
     else if (f === 'mer') apneMer();
     else if (f === 'lagret') settFane('lagret');
     else settFane('utforsk');
@@ -1261,6 +1261,8 @@ function wireMobil() {
     if (det) { e.preventDefault(); apneDetalj(det.dataset.detalj); return; }
     if (t.closest('#detaljTilbake')) { lukkDetalj(); return; }
     if (t.closest('[data-faq]')) { lukkDetalj(); setTimeout(function () { openInfo('faq'); }, 60); return; }
+    const utv = t.closest('[data-utvalgt]');
+    if (utv) { closeInfo(); lukkMer(); lukkSkuff(); setActive(utv.dataset.utvalgt, true); return; }
     const sifra = t.closest('[data-sifra]');
     if (sifra) {
       const sted = byId(sifra.dataset.sifra);
@@ -1299,8 +1301,7 @@ function wireMobil() {
     if (!b) return;
     lukkMer();
     el('faneMer').focus({ preventScroll: true });
-    if (b.dataset.mer === 'hilite') openSheet('hilite', false);
-    else if (b.dataset.mer === 'tips') openSheet('tips', false);
+    if (b.dataset.mer === 'tips') openSheet('tips', false);
     else openInfo(b.dataset.mer);
   });
 
@@ -1444,98 +1445,48 @@ function applyHash() {
   return false;
 }
 
-// Utvalgte og tipsboksen
+// Tipsboksen på mobil. Den lukker seg ikke av seg selv.
 const SHEETS = {
-  tips:   { box: 'tips',   bar: 'tipsBar',   lukk: 'tipsLukk',   ms: 5000, hendelse: 'tips_apnet' },
-  hilite: { box: 'hilite', bar: 'hiliteBar', lukk: 'hiliteLukk', ms: 3000, hendelse: 'utvalgte_apnet', foer: renderHighlights }
+  tips: { box: 'tips', lukk: 'tipsLukk', hendelse: 'tips_apnet' }
 };
-const sheetTimer = {};
 
-function renderHighlights() {
-  const list = el('hiliteList');
+// Utvalgte steder vises i en boble, som de andre sidene, og blir stående til du lukker den
+function tegnUtvalgte() {
+  const list = el('utvalgtListe');
   if (!list) return;
-  list.innerHTML = '';
-  currentHighlights().forEach(function (s) {
-    const tid = kortTid(s, true);
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'hrow';
-    b.innerHTML =
-      '<span class="hdot" data-s="' + esc(s.halalStatus) + '"></span>' +
-      '<span class="hmain">' +
-        '<span class="hname">' + esc(s.name) + '</span>' +
-        '<span class="hmeta">' + esc(s.bydel) + ' · ' + esc(s.cuisines.map(function (c) { return T(c); }).join(', ')) + ' · ' + priceLabel(s.price) + '</span>' +
-      '</span>' +
-      (tid ? '<span class="os ' + tid.cls + '">' + esc(tid.tekst) + '</span>' : '');
-    b.addEventListener('click', function () { closeSheet('hilite'); setActive(s.id, true); });
-    list.appendChild(b);
-  });
-  const sub = el('hiliteSub');
-  if (sub) {
-    const d = daysUntilRotation();
-    sub.textContent = d === 1 ? T('Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.')
-      : T('Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.', { n: d });
-  }
+  list.innerHTML = currentHighlights().map(function (s) {
+    return '<button type="button" class="utv-rad" data-utvalgt="' + esc(s.id) + '">' + monogram(s, 0) +
+      '<span><span class="utv-navn">' + esc(s.name) + '</span>' +
+      '<span class="utv-meta">' + esc([s.cuisines[0] ? T(s.cuisines[0]) : '', s.bydel].filter(Boolean).join(' · ')) + '</span></span>' +
+      skjold(s) + '</button>';
+  }).join('');
+  const d = daysUntilRotation();
+  el('utvalgtSub').textContent = d === 1 ? T('Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.')
+    : T('Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.', { n: d });
 }
 
 function openSheet(key, auto) {
   if (key === 'tips' && !erMobil()) { openInfo('tips'); return; }
   const cfg = SHEETS[key], box = el(cfg.box);
   if (!box) return;
-  Object.keys(SHEETS).forEach(function (k) { if (k !== key) closeSheet(k); });
-  if (cfg.foer) cfg.foer();
   box.hidden = false;
   void box.offsetWidth;
   box.classList.add('open');
-  if (key === 'hilite') { const sk = el('hiliteSkjerm'); sk.hidden = false; void sk.offsetWidth; sk.classList.add('apen'); }
   if (key === 'tips') requestAnimationFrame(oppdaterTipsHint);
   track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
-  startCountdown(key);
-}
-
-function startCountdown(key) {
-  const cfg = SHEETS[key], box = el(cfg.box);
-  clearTimeout(sheetTimer[key]);
-  box.classList.remove('counting');
-  if (reduceMotion) {
-    sheetTimer[key] = setTimeout(function () { closeSheet(key); }, cfg.ms);
-  } else {
-    void box.offsetWidth;
-    box.classList.add('counting');
-  }
-}
-
-function stopCountdown(key) {
-  const box = el(SHEETS[key].box);
-  clearTimeout(sheetTimer[key]);
-  if (box) box.classList.remove('counting');
 }
 
 function closeSheet(key) {
-  const cfg = SHEETS[key], box = el(cfg.box);
+  const box = el(SHEETS[key].box);
   if (!box || !box.classList.contains('open')) return;
-  clearTimeout(sheetTimer[key]);
-  box.classList.remove('open', 'counting');
-  if (key === 'hilite') el('hiliteSkjerm').classList.remove('apen');
-  setTimeout(function () {
-    if (box.classList.contains('open')) return;
-    box.hidden = true;
-    if (key === 'hilite') el('hiliteSkjerm').hidden = true;
-  }, 260);
+  box.classList.remove('open');
+  setTimeout(function () { if (!box.classList.contains('open')) box.hidden = true; }, 260);
 }
 
 function wireSheets() {
-  el('hiliteSkjerm').addEventListener('click', function () { closeSheet('hilite'); });
   Object.keys(SHEETS).forEach(function (key) {
-    const cfg = SHEETS[key], box = el(cfg.box);
-    if (!box) return;
-    const lukk = el(cfg.lukk);
+    const lukk = el(SHEETS[key].lukk);
     if (lukk) lukk.addEventListener('click', function () { closeSheet(key); });
-    const bar = el(cfg.bar);
-    if (bar) bar.addEventListener('animationend', function () { closeSheet(key); });
-    ['focusin', 'input'].forEach(function (ev) {
-      box.addEventListener(ev, function () { stopCountdown(key); });
-    });
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
@@ -1544,7 +1495,6 @@ function wireSheets() {
 }
 
 function refreshOpenStates() {
-  if (el('hilite') && el('hilite').classList.contains('open')) renderHighlights();
   if (erMobil()) tegnMobil();
   else tegnPc();
 }
@@ -1683,6 +1633,7 @@ function showInfo(section) {
     el('kontaktTittel').dataset.feil = feil ? 'ja' : 'nei';
   }
   if (section === 'stott') tegnStott();
+  if (section === 'utvalgte') tegnUtvalgte();
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
   document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
   el('infoBody').scrollTop = 0;
@@ -1816,7 +1767,6 @@ function wireTipsForm() {
   if (!f) return;
   f.addEventListener('submit', function (e) {
     e.preventDefault();
-    stopCountdown('tips');
     sendSkjema(f, el('tipsSend'), function () {
       track('tips_sendt');
       el('tipsForm').hidden = true;
@@ -1852,7 +1802,7 @@ function wireContactForm() {
 // PC: topplinje, filterlinje, liste og meny
 let pcApen = null, pcGruppe = true, pcVisLagret = false, skuffFra = null;
 const PC_VALG = [
-  { del: 'kjokken', id: 'fCuisine', navn: 'Kjøkken', alle: 'Alle kjøkken' },
+  { del: 'kjokken', id: 'fCuisine', navn: 'Cuisine', alle: 'Alle kjøkken' },
   { del: 'omrade', id: 'fBydel', navn: 'Område', alle: 'Alle områder' },
   { del: 'pris', id: 'fPrice', navn: 'Pris', alle: 'Alle priser' }
 ];
@@ -1934,7 +1884,7 @@ function tegnPcKartinfo() {
 }
 
 function pcRad(s) {
-  const t = kortTid(s);
+  const t = kortTid(s, true);
   return '<button type="button" class="pc-rad" data-pcvelg="' + esc(s.id) + '">' + skjold(s) +
     '<span class="pc-rad-tekst"><span class="pc-rad-navn">' + esc(s.name) + '</span>' +
     '<span class="pc-rad-meta">' + esc(s.cuisines[0] ? T(s.cuisines[0]) : '') + ' · ' + '$'.repeat(s.price) + '</span></span>' +
@@ -1962,7 +1912,7 @@ function pcValgtKort(s) {
 function pcKjede(g) {
   const apen = !!kjedeApen[kjedeNokkel(g)] || g.filialer.some(function (s) { return s.id === activeId; });
   const omrader = [...new Set(g.filialer.map(function (s) { return s.bydel; }))];
-  const tider = [...new Set(g.filialer.map(function (s) { const t = kortTid(s); return t ? t.tekst : ''; }))];
+  const tider = [...new Set(g.filialer.map(function (s) { const t = kortTid(s, true); return t ? t.tekst : ''; }))];
   return '<div class="pc-kjede' + (apen ? ' apen' : '') + '">' +
     '<button type="button" class="pc-rad" data-pckjede="' + esc(kjedeNokkel(g)) + '" data-antall="' + g.filialer.length + '" aria-expanded="' + apen + '">' + skjold(g.filialer[0]) +
       '<span class="pc-rad-tekst"><span class="pc-rad-navn">' + esc(g.navn) + '</span>' +
@@ -2081,6 +2031,7 @@ function wirePc() {
   });
   el('pcNaer').addEventListener('click', locateUser);
   el('pcTips').addEventListener('click', function () { openInfo('tips'); });
+  el('pcStott').addEventListener('click', function () { openInfo('stott'); });
   el('pcLagret').addEventListener('click', function () {
     pcVisLagret = !pcVisLagret;
     track('lagret_pc', { vis: pcVisLagret });
