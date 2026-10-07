@@ -107,7 +107,7 @@ const ENGELSK = {
   'Vipps er ikke koblet til ennå. Vi sier fra her når det er klart.': 'Vipps is not connected yet. We will say so here when it is ready.',
   'Sender': 'Sending', 'Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.': 'Unfortunately we cannot receive forms right now. Your text is still here.',
   'Beklager, noe gikk galt. Prøv igjen om litt.': 'Sorry, something went wrong. Please try again shortly.',
-  'Halalkartet · Finn halal mat i Oslo': 'Halalkartet · Find halal food in Oslo',
+  'Halalkart over hele Norge': 'Halal map of all of Norway',
   // kjøkken
   'Arabisk': 'Arabic', 'Asiatisk': 'Asian', 'Bakeri': 'Bakery', 'Balkansk': 'Balkan', 'Dessert': 'Dessert', 'Falafel': 'Falafel', 'Gresk': 'Greek',
   'Grill': 'Grill', 'Hamburger': 'Burgers', 'Hurtigmat': 'Fast food', 'Indisk': 'Indian', 'Kafé': 'Café', 'Kebab': 'Kebab', 'Koreansk': 'Korean',
@@ -166,7 +166,7 @@ function sprakknapp(kls, attr) {
 function oversettStatisk() {
   const en = sprak === 'en';
   document.documentElement.lang = en ? 'en' : 'no';
-  document.title = T('Halalkartet · Finn halal mat i Oslo');
+  document.title = T('Halalkart over hele Norge');
   document.querySelectorAll('[data-t]').forEach(function (x) {
     if (x.dataset.nb === undefined) x.dataset.nb = x.textContent;
     // data-t="nøkkel" gir en egen oversettelse når samme norske ord trenger kortere engelsk
