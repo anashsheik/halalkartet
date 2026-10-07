@@ -10,7 +10,8 @@ Kart over halal mat i Norge, på [halalkartet.no](https://halalkartet.no). Stati
 | `app.js` | Kart, liste, filtre, søk og skjemaer |
 | `analytics.js` | Google Analytics uten cookies |
 | `spots.json` | Stedene |
-| `favicon.svg`, `apple-touch-icon.png` | Ikonet i fanen og på hjemskjermen |
+| `halal_kartet_logo.svg` | Ikonet i fanen: حلال i gull, uten bakgrunn |
+| `hjemskjerm_logo.png` | Ikonet på hjemskjermen, med grønn bakgrunn fordi iPhone gjør gjennomsiktig til svart |
 | `CNAME` | Domenet for GitHub Pages |
 
 ## Kjøre lokalt

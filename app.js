@@ -27,7 +27,7 @@ const ENGELSK = {
   'Anbefalt': 'Recommended', 'Nærmest': 'Nearest', 'Navn A–Å': 'Name A–Z', 'Pris lav–høy': 'Price low–high',
   'Lukk menyen': 'Close menu', 'Tips oss om et sted': 'Suggest a place', 'Si ifra om feil': 'Report an error', 'FAQ': 'FAQ',
   'Personvern': 'Privacy', 'Vilkår': 'Terms', 'Om oss': 'About us', 'Kontakt oss': 'Contact us', 'Kontakt': 'Contact',
-  'Finn steder nær meg': 'Find places near me', 'Hva har du lyst på? Søk sted, kjøkken eller adresse': 'What are you craving? Search place, cuisine or address',
+  'Finn steder nær meg': 'Find places near me', 'Hva har du lyst på? Søk sted, cuisine eller adresse': 'What are you craving? Search place, cuisine or address',
   'Halalkartet, start på nytt': 'Halalkartet, start over', 'Hurtigfiltre': 'Quick filters', 'Åpne filtrene': 'Open filters',
   'Åpne filtrene, {n} på': 'Open filters, {n} on', 'Lukk filtrene': 'Close filters', 'Nullstill': 'Reset', 'Vis steder': 'Show places',
   'Steder på kartet': 'Places on the map', 'Valgt sted': 'Selected place', 'Vis liste': 'Show list', 'Steder': 'Places', 'Steder i {b}': 'Places in {b}',
@@ -52,7 +52,7 @@ const ENGELSK = {
   'Også steder der bare deler av menyen er halal.': 'Also places where only part of the menu is halal.',
   'Alt vi kjenner til, også steder vi ikke har rukket å sjekke ennå.': 'Everything we know of, including places we have not checked yet.',
   'Et eget utvalg av statuser.': 'A custom selection of statuses.', '{s}, {n} steder': '{s}, {n} places',
-  'Åpent nå': 'Open now', 'Skjul steder som er stengt': 'Hide places that are closed', 'Kjøkken': 'Cuisine', 'Pris': 'Price', 'Område': 'Area',
+  'Åpent nå': 'Open now', 'Skjul steder som er stengt': 'Hide places that are closed', 'Pris': 'Price', 'Område': 'Area',
   'Alkohol': 'Alcohol', 'Rimelig': 'Inexpensive', 'Middels': 'Moderate', 'Dyrere': 'Pricier', 'Ingen kjent': 'None known', 'Serverer': 'Serves',
   '«Ingen kjent» betyr at vi ikke vet om stedet serverer alkohol.': '“None known” means we do not know whether the place serves alcohol.',
   'Sortering': 'Sorting', 'Sorter': 'Sort', 'Ingen grupper': 'No groups', 'Grupper listen': 'Group the list', 'Finn de nærmeste stedene': 'Find the nearest places', 'Standard': 'Default', 'A–Å': 'A–Z', 'Vis færre': 'Show fewer', 'Vis alle {n}': 'Show all {n}',
@@ -60,7 +60,7 @@ const ENGELSK = {
   'Fjern filteret {t}': 'Remove filter {t}', '{t}, åpner filtrene': '{t}, opens filters', '{n} filtre': '{n} filters',
   'kun verifisert': 'verified only', 'uten uavklarte': 'without unconfirmed', 'utvalgte statuser': 'selected statuses',
   'serverer alkohol': 'serves alcohol', 'uten kjent alkohol': 'no known alcohol', 'åpent nå': 'open now', 'stenger snart': 'closing soon', 'stengt': 'closed',
-  'Filtrer på område': 'Filter by area', 'Alle områder': 'All areas', 'Filtrer på kjøkken': 'Filter by cuisine', 'Alle kjøkken': 'All cuisines',
+  'Filtrer på område': 'Filter by area', 'Alle områder': 'All areas', 'Filtrer på cuisine': 'Filter by cuisine',
   'Filtrer på prisnivå': 'Filter by price', 'Alle priser': 'All prices', '$ · Rimelig': '$ · Inexpensive', '$$ · Middels': '$$ · Moderate', '$$$ · Dyrere': '$$$ · Pricier',
   'Filtrer på åpningstid': 'Filter by opening hours', 'Alle åpningstider': 'Any opening hours', 'Stenger snart': 'Closing soon', 'Stengt': 'Closed',
   'Filtrer på alkoholservering': 'Filter by alcohol', 'Alkohol: alle steder': 'Alcohol: all places', 'Halal mat, serverer alkohol': 'Halal food, serves alcohol',
@@ -658,7 +658,7 @@ function plasserSok() {
   if (!sok || !kort || !pc) return;
   if (erMobil()) { if (sok.parentElement !== kort) kort.appendChild(sok); }
   else if (sok.parentElement !== pc) pc.insertBefore(sok, pc.firstChild);
-  el('search').placeholder = erMobil() ? T('Søk') : T('Hva har du lyst på? Søk sted, kjøkken eller adresse');
+  el('search').placeholder = erMobil() ? T('Søk') : T('Hva har du lyst på? Søk sted, cuisine eller adresse');
   el('search').setAttribute('aria-label', T('Søk'));
   const t = el('toppfelt');
   if (t && erMobil()) document.documentElement.style.setProperty('--toppfelt-h', Math.round(t.getBoundingClientRect().height + 6) + 'px');
@@ -1839,7 +1839,7 @@ function wireContactForm() {
 // PC: topplinje, filterlinje, liste og meny
 let pcApen = null, pcGruppe = true, pcVisLagret = false, skuffFra = null;
 const PC_VALG = [
-  { del: 'kjokken', id: 'fCuisine', navn: 'Cuisine', alle: 'Alle kjøkken' },
+  { del: 'kjokken', id: 'fCuisine', navn: 'Cuisine', alle: 'Alle' },
   { del: 'omrade', id: 'fBydel', navn: 'Område', alle: 'Alle områder' },
   { del: 'pris', id: 'fPrice', navn: 'Pris', alle: 'Alle priser' }
 ];
