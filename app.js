@@ -23,8 +23,8 @@ const MANGLER = new Set();
 const ENGELSK = {
   // toppen, menyen og lista
   'Meny': 'Menu', 'Nær meg': 'Near me', 'Tips oss': 'Suggest a place', 'Tips oss (fane)': 'Suggest', 'Lagrede steder': 'Saved places', 'Søk': 'Search',
-  'Finn halal nær deg': 'Find halal near you', 'Filtre': 'Filters', 'I kartet nå': 'On the map now', 'Sorter listen': 'Sort the list',
-  'Etter bydel': 'By area', 'Anbefalt': 'Recommended', 'Nærmest': 'Nearest', 'Navn A–Å': 'Name A–Z', 'Pris lav–høy': 'Price low–high',
+  'Finn halal nær deg': 'Find halal near you', 'Filtre': 'Filters', 'Sorter listen': 'Sort the list',
+  'Anbefalt': 'Recommended', 'Nærmest': 'Nearest', 'Navn A–Å': 'Name A–Z', 'Pris lav–høy': 'Price low–high',
   'Lukk menyen': 'Close menu', 'Tips oss om et sted': 'Suggest a place', 'Si ifra om feil': 'Report an error', 'FAQ': 'FAQ',
   'Personvern': 'Privacy', 'Vilkår': 'Terms', 'Om oss': 'About us', 'Kontakt oss': 'Contact us', 'Kontakt': 'Contact',
   'Finn steder nær meg': 'Find places near me', 'Hva har du lyst på? Søk sted, kjøkken eller adresse': 'What are you craving? Search place, cuisine or address',
@@ -37,7 +37,6 @@ const ENGELSK = {
   'Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.': 'Five places we have confirmed as fully halal. New selection tomorrow.',
   'Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.': 'Five places we have confirmed as fully halal. New selection in {n} days.',
   'sted': 'place', 'steder': 'places', '1 sted': '1 place', '{n} steder': '{n} places', 'av {n} steder': 'of {n} places',
-  'av {n} steder passer': 'of {n} places match', 'av {n} steder er åpne': 'of {n} places are open', 'av {n} steder er åpent': 'of {n} places is open',
   'Alle steder': 'All places', 'Alle {n} steder': 'All {n} places', '{n} steder · {o}': '{n} places · {o}', ' og ': ' and ', '{n} områder': '{n} areas',
   'Ingen treff': 'No results', 'Prøv å fjerne et filter eller søk på noe annet.': 'Try removing a filter or searching for something else.',
   'Ingen lagrede steder ennå': 'No saved places yet',
@@ -56,7 +55,7 @@ const ENGELSK = {
   'Åpent nå': 'Open now', 'Skjul steder som er stengt': 'Hide places that are closed', 'Kjøkken': 'Cuisine', 'Pris': 'Price', 'Område': 'Area',
   'Alkohol': 'Alcohol', 'Rimelig': 'Inexpensive', 'Middels': 'Moderate', 'Dyrere': 'Pricier', 'Ingen kjent': 'None known', 'Serverer': 'Serves',
   '«Ingen kjent» betyr at vi ikke vet om stedet serverer alkohol.': '“None known” means we do not know whether the place serves alcohol.',
-  'Sortering': 'Sorting', 'Standard': 'Default', 'A–Å': 'A–Z', 'Vis færre': 'Show fewer', 'Vis alle {n}': 'Show all {n}',
+  'Sortering': 'Sorting', 'Sorter': 'Sort', 'Ingen grupper': 'No groups', 'Grupper listen': 'Group the list', 'Finn de nærmeste stedene': 'Find the nearest places', 'Standard': 'Default', 'A–Å': 'A–Z', 'Vis færre': 'Show fewer', 'Vis alle {n}': 'Show all {n}',
   'Ingen steder passer': 'No places match', 'Vis alle {n} steder': 'Show all {n} places', 'Vis {n} steder': 'Show {n} places', 'Vis 1 sted': 'Show 1 place',
   'Fjern filteret {t}': 'Remove filter {t}', '{t}, åpner filtrene': '{t}, opens filters', '{n} filtre': '{n} filters',
   'kun verifisert': 'verified only', 'uten uavklarte': 'without unconfirmed', 'utvalgte statuser': 'selected statuses',
@@ -514,6 +513,7 @@ function initApp() {
     if (v) track('sortering', { modus: v });
     if (v === 'avstand' && !userLoc) locateUser();
   });
+  leggTilNaermest();
   oversettStatisk();
   document.addEventListener('touchstart', function () {}, { passive: true });
   wireMobilskall();
@@ -747,7 +747,7 @@ function oppdaterSkall() {
 }
 
 // Filterarket
-const BAKGRUNN = ['map', 'pcTopp', 'pcFilter', 'pcListe', 'pcKartinfo', 'toppfelt', 'nearme', 'bunnark', 'liste', 'visKart', 'fane'];
+const BAKGRUNN = ['map', 'pcTopp', 'pcFilter', 'pcListe', 'toppfelt', 'nearme', 'bunnark', 'liste', 'visKart', 'fane'];
 let faApnetFra = null, faVisAlle = { kjokken: false, omrade: false };
 
 function velgEn(id, verdi) {
@@ -1443,8 +1443,8 @@ function trygtOmrade() {
     return { venstre: 10, hoyre: W - 10, topp: (t ? t.getBoundingClientRect().bottom : 0) + 10,
              bunn: H - bunnTopp() - 90 };
   }
-  // regnet fra kartkortets hjørne: «I kartet nå» øverst til venstre, zoom til høyre
-  return { venstre: 0, hoyre: W - 60, topp: 100, bunn: H - 30 };
+  // regnet fra kartkortets hjørne: zoom øverst til høyre, Nærmest nede til venstre
+  return { venstre: 0, hoyre: W - 60, topp: 20, bunn: H - 80 };
 }
 function visPopup(id, ferdig) {
   const m = markers[id];
@@ -1600,7 +1600,7 @@ function dist(s) { return userLoc ? haversine(userLoc.lat, userLoc.lng, s.lat, s
 function fmtDist(km) { return km < 1 ? Math.round(km * 1000) + ' m' : km.toFixed(1) + ' km'; }
 function wireNearMe() { el('nearme').addEventListener('click', locateUser); }
 function locateUser() {
-  const knapper = [el('nearme'), el('pcNaer')].filter(Boolean);
+  const knapper = [el('nearme'), el('pcNaer'), el('pcNaermest')].filter(Boolean);
   const laster = paa => knapper.forEach(k => k.classList.toggle('loading', paa));
   track('naer_meg');
   if (!navigator.geolocation) { toast(T('Nettleseren din støtter ikke posisjon.')); return; }
@@ -1619,7 +1619,7 @@ function locateUser() {
     laster(false);
     if (el('fSort') && !el('fSort').value) {
       el('fSort').value = 'avstand';
-      pcGruppe = false; el('pcSort').value = 'avstand';
+      pcGruppe = false; el('pcSort').value = '';
     }
     render();
   }, () => {
@@ -1843,6 +1843,7 @@ const PC_VALG = [
   { del: 'omrade', id: 'fBydel', navn: 'Område', alle: 'Alle områder' },
   { del: 'pris', id: 'fPrice', navn: 'Pris', alle: 'Alle priser' }
 ];
+const PC_SORT = [['', 'Standard'], ['avstand', 'Nærmest'], ['navn', 'A–Å'], ['pris', 'Pris']];
 const CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
 
 function skjoldFor(st) {
@@ -1852,7 +1853,6 @@ function skjoldFor(st) {
 function tegnPc() {
   if (erMobil() || !el('pcFilter') || !HALAL_SPOTS.length) return;
   tegnPcFilter();
-  tegnPcKartinfo();
   tegnPcListe();
   const n = lagrede().filter(byId).length, t = el('pcLagretTall');
   t.hidden = !n; t.textContent = n;
@@ -1864,15 +1864,20 @@ function tegnPcFilter() {
   const f = currentFilters();
   const passer = HALAL_SPOTS.filter(function (s) { return passes(s, f); });
   const fokus = document.activeElement && boks.contains(document.activeElement)
-    ? ['status', 'valg', 'v', 'pc'].map(function (a) { return document.activeElement.dataset[a]; }) : null;
+    ? ['status', 'valg', 'v', 'pc', 'pcsort'].map(function (a) { return document.activeElement.dataset[a]; }) : null;
 
   const status = STATUS_ORDER.map(function (st) {
     const n = passer.filter(function (s) { return s.halalStatus === st; }).length;
     return '<button type="button" class="pc-status" data-status="' + st + '" aria-pressed="' + layerOn[st] + '" aria-label="' + T('{s}, {n} steder', { s: T(STATUS[st].label), n: n }) + '">' +
-      skjoldFor(st) + '<span class="pc-st-navn">' + T(STATUS[st].kort) + '</span><span class="pc-st-tall">' + n + '</span></button>';
+      skjoldFor(st) + '<span class="pc-st-tall">' + n + '</span></button>';
   }).join('');
 
   const apent = el('fOpen').value === 'naa';
+  const sort = el('fSort').value;
+  const sorter = PC_SORT.map(function ([v, navn]) {
+    return '<button type="button" class="pc-sortknapp" data-pcsort="' + v + '" aria-pressed="' + (sort === v) + '">' + T(navn) + '</button>';
+  }).join('');
+  const treff = passer.filter(function (s) { return layerOn[s.halalStatus]; }).length;
   const valg = PC_VALG.map(function (v) {
     const x = el(v.id), satt = !!x.value;
     const tekst = satt ? (v.id === 'fPrice' ? '$'.repeat(+x.value) : v.id === 'fCuisine' ? T(x.value) : x.value) : T(v.navn);
@@ -1900,24 +1905,18 @@ function tegnPcFilter() {
     '</div>' +
     '<span class="pc-skille" aria-hidden="true"></span>' +
     sprakknapp('pc-sprak', 'data-pc="sprak"') +
-    '<button type="button" class="pc-nullstill" data-pc="nullstill"' + (antallAktive() || f.q || pcVisLagret || activeId ? '' : ' disabled') + '>' + T('Nullstill') + '</button>';
+    '<span class="pc-skille pc-brudd" aria-hidden="true"></span>' +
+    '<div class="pc-sortgruppe" role="group" aria-label="' + T('Sorter listen') + '"><span class="pc-sort-etikett" aria-hidden="true">' + T('Sorter') + '</span>' + sorter + '</div>' +
+    '<p class="pc-treff" aria-live="polite"><b>' + treff + '</b> ' + (sprak === 'en' ? (treff === 1 ? 'result' : 'results') : 'treff') + '</p>' +
+    '<button type="button" class="pc-nullstill" data-pc="nullstill"' + (antallAktive() || f.q || f.sort || !pcGruppe || pcVisLagret || activeId ? '' : ' disabled') + '>' + T('Nullstill') + '</button>';
 
   if (fokus) {
-    const [st, vg, v, pc] = fokus;
-    let sel = st ? '[data-status="' + st + '"]' : pc ? '[data-pc="' + pc + '"]' : vg ? '.pc-valgknapp[data-valg="' + vg + '"]' : null;
+    const [st, vg, v, pc, so] = fokus;
+    let sel = st ? '[data-status="' + st + '"]' : pc ? '[data-pc="' + pc + '"]' : vg ? '.pc-valgknapp[data-valg="' + vg + '"]' : so !== undefined ? '[data-pcsort="' + so + '"]' : null;
     if (pc === 'velg') sel = '[data-pc="velg"][data-valg="' + vg + '"][data-v="' + CSS.escape(v || '') + '"]';
     const ny = sel && boks.querySelector(sel);
     if (ny) ny.focus({ preventScroll: true });
   }
-}
-
-function tegnPcKartinfo() {
-  const f = currentFilters();
-  const n = HALAL_SPOTS.filter(function (s) { return passes(s, f) && layerOn[s.halalStatus]; }).length, alle = HALAL_SPOTS.length;
-  const bareApent = f.open === 'naa' && antallAktive() === 1 && !f.q;
-  el('pcKiTall').textContent = n;
-  el('pcKiTekst').textContent = n === alle ? T(n === 1 ? 'sted' : 'steder')
-    : T(bareApent ? (n === 1 ? 'av {n} steder er åpent' : 'av {n} steder er åpne') : 'av {n} steder passer', { n: alle });
 }
 
 function pcRad(s) {
@@ -1935,7 +1934,7 @@ function pcValgtKort(s) {
   const apent = apentLinje(s);
   if (apent) meta.push(esc(apent.tekst));
   return '<article class="pc-valgt" tabindex="-1" data-id="' + esc(s.id) + '" aria-label="' + esc(s.name) + '">' +
-    '<div class="pc-valgt-topp">' + skjold(s) + hjerte(s, 'pc-valgt-hjerte') + '</div>' +
+    hjerte(s, 'pc-valgt-hjerte') +
     '<h3>' + esc(s.name) + '</h3>' +
     '<p class="pc-valgt-meta">' + meta.join(' · ') + '</p>' +
     '<dl class="pc-valgt-info"><div><dt>' + T('Adresse') + '</dt><dd>' + esc(gate) + '</dd></div>' +
@@ -2020,7 +2019,7 @@ function apneSkuff() {
   const sk = el('pcSkuff'), sj = el('pcSkjerm');
   skuffFra = document.activeElement;
   sk.hidden = false; sj.hidden = false;
-  ['pcTopp', 'pcFilter', 'pcListe', 'pcKartinfo', 'map'].forEach(function (id) { el(id).inert = true; });
+  ['pcTopp', 'pcFilter', 'pcListe', 'map'].forEach(function (id) { el(id).inert = true; });
   void sk.offsetWidth;
   sk.classList.add('apen'); sj.classList.add('apen');
   el('pcMenyknapp').setAttribute('aria-expanded', 'true');
@@ -2032,7 +2031,7 @@ function lukkSkuff() {
   if (sk.hidden) return;
   sk.classList.remove('apen');
   if (el('detalj').hidden) sj.classList.remove('apen');
-  ['pcTopp', 'pcFilter', 'pcListe', 'pcKartinfo', 'map'].forEach(function (id) { el(id).inert = false; });
+  ['pcTopp', 'pcFilter', 'pcListe', 'map'].forEach(function (id) { el(id).inert = false; });
   el('pcMenyknapp').setAttribute('aria-expanded', 'false');
   setTimeout(function () {
     if (sk.classList.contains('apen')) return;
@@ -2056,6 +2055,23 @@ function plasserTips() {
   } else if (form.parentElement !== plass) {
     plass.append(form, send, ok, regler);
   }
+}
+
+// PC: «Nærmest» nede til venstre på kartet finner posisjonen og sorterer lista etter avstand. Mobilen har sin egen knapp.
+function leggTilNaermest() {
+  const Naermest = L.Control.extend({
+    options: { position: 'bottomleft' },
+    onAdd: function () {
+      const b = L.DomUtil.create('button', 'pc-naermest');
+      b.type = 'button'; b.id = 'pcNaermest';
+      b.setAttribute('aria-label', 'Finn de nærmeste stedene'); b.dataset.ta = 'aria-label';
+      b.innerHTML = IKON2.rute + '<span data-t>Nærmest</span>';
+      L.DomEvent.disableClickPropagation(b);
+      L.DomEvent.on(b, 'click', locateUser);
+      return b;
+    }
+  });
+  new Naermest().addTo(map);
 }
 
 function wirePc() {
@@ -2082,10 +2098,8 @@ function wirePc() {
     el('search').blur();
   });
   el('pcSort').addEventListener('change', function () {
-    const v = el('pcSort').value;
-    pcGruppe = v === 'bydel';
-    el('fSort').value = pcGruppe ? '' : v;
-    el('fSort').dispatchEvent(new Event('change'));
+    pcGruppe = el('pcSort').value === 'bydel';
+    track('grupper_pc', { bydel: pcGruppe });
     render();
   });
 
@@ -2111,6 +2125,13 @@ function wirePc() {
       render();
       const k = el('pcFilter').querySelector('.pc-valgknapp[data-valg="' + v.del + '"]');
       if (k) k.focus({ preventScroll: true });
+    } else if (b.dataset.pcsort !== undefined) {
+      const v = b.dataset.pcsort;
+      el('fSort').value = v;
+      // nærmest gir mest mening som én lang liste, ikke delt på områder
+      if (v === 'avstand') { pcGruppe = false; el('pcSort').value = ''; }
+      el('fSort').dispatchEvent(new Event('change'));
+      render();
     } else if (b.dataset.valg) {
       pcApen = pcApen === b.dataset.valg ? null : b.dataset.valg;
       tegnPcFilter();
