@@ -436,13 +436,9 @@ const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 // Sporing
+// Hendelser telles i GoatCounter gjennom analytics.js
 function track(name, props) {
-  try {
-    if (typeof window.gtag === 'function') window.gtag('event', name, props || {});
-    else if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined);
-    else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name, props || {});
-    else if (window.fathom && typeof window.fathom.trackEvent === 'function') window.fathom.trackEvent(name);
-  } catch (e) {}
+  try { if (typeof window.halalTell === 'function') window.halalTell(name, props); } catch (e) {}
 }
 
 (async function boot() {

@@ -8,7 +8,7 @@ Kart over halal mat i Norge, på [halalkartet.no](https://halalkartet.no). Stati
 |---|---|
 | `index.html` | Markup og CSS |
 | `app.js` | Kart, liste, filtre, søk og skjemaer |
-| `analytics.js` | Google Analytics uten cookies |
+| `analytics.js` | Besøkstelling med GoatCounter, uten cookies |
 | `spots.json` | Stedene |
 | `halal_kartet_logo.svg` | Ikonet i fanen: حلال i gull, uten bakgrunn |
 | `hjemskjerm_logo.png` | Ikonet på hjemskjermen, med grønn bakgrunn fordi iPhone gjør gjennomsiktig til svart |
@@ -39,6 +39,10 @@ Lastes ikke MapLibre eller stilen innen ti sekunder, bruker kartet OpenStreetMap
 ## Språk
 
 Siden er på norsk, og knappen «EN» bytter til engelsk («NO» bytter tilbake). Valget huskes i nettleseren. Engelsken står i ordlista `ENGELSK` øverst i `app.js`, der nøkkelen er den norske teksten. Legger du til et nytt kjøkken, en ny beskrivelse eller en ny tekst i `verification` i `spots.json`, må du også legge inn den engelske teksten der. Ellers står den på norsk, og testen i `tests/sprak.js` sier hvilken tekst som mangler. De lange sidene (Om oss, Personvern, Vilkår, FAQ) har en norsk og en engelsk blokk hver i `index.html`.
+
+## Statistikk
+
+Besøkene telles med [GoatCounter](https://www.goatcounter.com), og tallene står på halalkartet.goatcounter.com. Det er ingen cookies, ingenting lagres i nettleseren, og GoatCounter lagrer ikke IP-adressen. Derfor trengs ingen samtykke-banner. `analytics.js` sender selv en liten forespørsel til GoatCounter, så siden laster ikke skript fra andre. Den sender bare siden, domenet besøket kom fra, og navnet på hendelser fra `track()` i `app.js`, for eksempel `filter_kjokken: Indisk`. Bare besøk på halalkartet.no telles, ikke lokale kopier eller testene.
 
 ## Skjemaene
 
