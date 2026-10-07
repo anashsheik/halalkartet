@@ -29,6 +29,12 @@ GitHub Pages bygger fra `main` med `.github/workflows/static.yml`. Det er ingen 
 
 GitHub Pages lar nettleseren huske filene i ti minutter. Derfor lastes `app.js` og `analytics.js` med et versjonsnummer, `app.js?v=…`. Endrer du en av dem, må du også bytte tallet etter `?v=` i `index.html`. Ellers kan en besøkende få ny `index.html` sammen med gammel `app.js`, og da virker ikke siden.
 
+## Kartet
+
+Bakgrunnskartet er vektorfliser fra [OpenFreeMap](https://openfreemap.org), stilen Positron med varmere farger. Det trengs ingen nøkkel eller konto, og det er ingen grense på antall visninger. [MapLibre](https://maplibre.org) tegner flisene, og [maplibre-gl-leaflet](https://github.com/maplibre/maplibre-gl-leaflet) legger dem under Leaflet-kartet. Begge hentes fra jsDelivr når pinnene står, med `integrity`-sjekk. Versjonene, adressene og fargene står i `MAPLIBRE` og `KART_FARGER` i `app.js`. Bytter du versjon, må du også bytte `sha384`-verdien.
+
+Lastes ikke MapLibre eller stilen innen ti sekunder, bruker kartet OpenStreetMaps egne fliser i stedet. Det er ment som reserve, ikke som fast løsning, fordi OpenStreetMap ikke tåler mye trafikk fra andre sider.
+
 ## Språk
 
 Siden er på norsk, og knappen «EN» bytter til engelsk («NO» bytter tilbake). Valget huskes i nettleseren. Engelsken står i ordlista `ENGELSK` øverst i `app.js`, der nøkkelen er den norske teksten. Legger du til et nytt kjøkken, en ny beskrivelse eller en ny tekst i `verification` i `spots.json`, må du også legge inn den engelske teksten der. Ellers står den på norsk, og testen i `tests/sprak.js` sier hvilken tekst som mangler. De lange sidene (Om oss, Personvern, Vilkår, FAQ) har en norsk og en engelsk blokk hver i `index.html`.

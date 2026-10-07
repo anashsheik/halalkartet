@@ -313,16 +313,77 @@ function currentHighlights() {
   return out;
 }
 
-const map = L.map('map', { zoomControl: false, scrollWheelZoom: true }).setView([59.9139, 10.7522], 13.5);
+const map = L.map('map', { zoomControl: false, scrollWheelZoom: true, maxZoom: 20 }).setView([59.9139, 10.7522], 13.5);
 L.control.zoom({ position: 'topright' }).addTo(map);
 
 // Kartlag
-// Stadia godkjenner domenet (halalkartet.no). Virker ikke det, lim inn en API-nøkkel fra Stadia her.
-const STADIA_NOKKEL = '';
-const flisUrl = () => 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png' +
-  (STADIA_NOKKEL ? '?api_key=' + encodeURIComponent(STADIA_NOKKEL) : '');
-const FLIS_KILDE = '&copy; <a href="https://stadiamaps.com/" target="_blank" rel="noopener">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
-const flislag = L.tileLayer(flisUrl(), { attribution: FLIS_KILDE, maxZoom: 20 }).addTo(map);
+// Bakgrunnskartet er vektorfliser fra OpenFreeMap: gratis, uten nøkkel og uten grense.
+// MapLibre tegner dem og hentes først når pinnene står, så siden ikke venter på det.
+// Lastes ikke MapLibre eller stilen, brukes OpenStreetMaps egne fliser i stedet.
+const KART_STIL = 'https://tiles.openfreemap.org/styles/positron';
+const MAPLIBRE = [
+  ['link', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css', 'sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK'],
+  ['script', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js', 'sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp'],
+  ['script', 'https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js', 'sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS']
+];
+const KART_KILDE = '<a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+const RESERVE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+const RESERVE_KILDE = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+// Varme farger i stedet for Positrons kalde grå. Bakgrunnen er den samme som #map har mens kartet lastes.
+const KART_FARGER = {
+  'background': ['background-color', '#EAE4D6'],
+  'landuse_residential': ['fill-color', '#E5DFD1'],
+  'building': ['fill-color', '#DFD8CA'],
+  'park': ['fill-color', '#DCE3D0'],
+  'landcover_wood': ['fill-color', '#D3DCC6'],
+  'water': ['fill-color', '#C3D5DB'],
+  'waterway': ['line-color', '#C3D5DB'],
+  'road_area_pier': ['fill-color', '#EAE4D6'],
+  'road_pier': ['line-color', '#EAE4D6']
+};
+
+let maplibreLastes = null;
+function lastMaplibre() {
+  if (!maplibreLastes) maplibreLastes = MAPLIBRE.reduce(function (forrige, [tag, url, sri]) {
+    return forrige.then(function () {
+      return new Promise(function (ok, feil) {
+        const e = document.createElement(tag);
+        if (tag === 'link') { e.rel = 'stylesheet'; e.href = url; } else e.src = url;
+        e.integrity = sri; e.crossOrigin = 'anonymous';
+        // stilarket trengs ikke for å tegne, så vi venter bare på skriptene
+        if (tag === 'link') ok(); else { e.onload = ok; e.onerror = feil; }
+        document.head.appendChild(e);
+      });
+    });
+  }, Promise.resolve()).then(function () { if (!window.maplibregl || !L.maplibreGL) throw new Error('MapLibre mangler'); });
+  return maplibreLastes;
+}
+// Varme farger, og stedsnavn på norsk der Positron ville vist de engelske
+function fargelegg(gl) {
+  Object.entries(KART_FARGER).forEach(function ([lag, [egenskap, farge]]) { if (gl.getLayer(lag)) gl.setPaintProperty(lag, egenskap, farge); });
+  gl.getStyle().layers.forEach(function (l) {
+    if (l.type === 'symbol' && /name_en/.test(JSON.stringify(gl.getLayoutProperty(l.id, 'text-field') || '')))
+      gl.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name'], ['get', 'name:latin']]);
+  });
+}
+function leggTilBakgrunn(kart) {
+  const reserve = function () {
+    if (kart.getContainer().isConnected) L.tileLayer(RESERVE_URL, { attribution: RESERVE_KILDE, maxZoom: 19 }).addTo(kart);
+  };
+  lastMaplibre().then(function () {
+    if (!kart.getContainer().isConnected) return;
+    let lag, klar = false;
+    const gaOver = function () { if (klar) return; klar = true; clearTimeout(vakt); if (lag) kart.removeLayer(lag); reserve(); };
+    const vakt = setTimeout(gaOver, 10000);
+    try {
+      lag = L.maplibreGL({ style: KART_STIL, attributionControl: { customAttribution: KART_KILDE } }).addTo(kart);
+    } catch (e) { lag = null; gaOver(); return; }
+    const gl = lag.getMaplibreMap();
+    gl.once('style.load', function () { if (klar) return; klar = true; clearTimeout(vakt); fargelegg(gl); });
+    gl.on('error', function () { if (!klar) gaOver(); });
+  }).catch(reserve);
+}
+leggTilBakgrunn(map);
 map.attributionControl.setPrefix('<a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> ·');
 
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1139,7 +1200,7 @@ function tegnDetaljKart(s) {
   detaljKart = L.map(boks, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
     boxZoom: false, keyboard: false, touchZoom: false, tap: false }).setView([s.lat, s.lng], 16);
   detaljKart.attributionControl.setPrefix(false);
-  L.tileLayer(flisUrl(), { maxZoom: 20, attribution: '&copy; Stadia Maps &copy; OpenMapTiles &copy; OpenStreetMap' }).addTo(detaljKart);
+  leggTilBakgrunn(detaljKart);
   L.marker([s.lat, s.lng], { icon: STEDSPRIKK, keyboard: false, interactive: false }).addTo(detaljKart);
 }
 function apneDetalj(id) {

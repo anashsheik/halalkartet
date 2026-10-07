@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://tiles.stadiamaps.com https://cdnjs.cloudflare.com; connect-src 'self' https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com https://tile.openstreetmap.org https://cdnjs.cloudflare.com; connect-src 'self' https://tiles.openfreemap.org https://formspree.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; worker-src blob:; child-src blob:; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NT96KQTVS"></script>
@@ -17,7 +17,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://tiles.stadiamaps.com">
+<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -1039,7 +1040,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
           <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
           <p>Skjemaene sendes gjennom Formspree, som videresender dem til oss på e-post. Formspree tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
           <h3>Kart og drift</h3>
-          <p>Siden driftes av GitHub Pages. Kartflisene lastes fra Stadia Maps, som bygger dem på data fra OpenStreetMap og OpenMapTiles. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
+          <p>Siden driftes av GitHub Pages. Kartflisene lastes fra OpenFreeMap, som bygger dem på data fra OpenStreetMap og OpenMapTiles, og kartbiblioteket MapLibre hentes fra jsDelivr. Virker ikke det, hentes kartet fra OpenStreetMap. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere kartet og holde siden i gang.</p>
           <p class="muted">Sist oppdatert oktober 2026.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
@@ -1057,7 +1058,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
           <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, let us know and we will.</p>
           <p>The forms are sent through Formspree, which forwards them to us by email. Formspree keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
           <h3>Map and hosting</h3>
-          <p>The site is hosted on GitHub Pages. The map tiles are loaded from Stadia Maps, which builds them from OpenStreetMap and OpenMapTiles data. These services may see technical details such as IP address in order to deliver the map and keep the site running.</p>
+          <p>The site is hosted on GitHub Pages. The map tiles are loaded from OpenFreeMap, which builds them from OpenStreetMap and OpenMapTiles data, and the MapLibre map library is loaded from jsDelivr. If that fails, the map is loaded from OpenStreetMap. These services may see technical details such as IP address in order to deliver the map and keep the site running.</p>
           <p class="muted">Last updated October 2026.</p>
         </div>
       </section>
@@ -1214,6 +1215,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=349f20cb"></script>
+<script src="app.js?v=3621f471"></script>
 </body>
 </html>
