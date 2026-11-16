@@ -53,6 +53,7 @@ const ENGELSK = {
   'Alt vi kjenner til, også steder vi ikke har rukket å sjekke ennå.': 'Everything we know of, including places we have not checked yet.',
   'Et eget utvalg av statuser.': 'A custom selection of statuses.', '{s}, {n} steder': '{s}, {n} places',
   'Åpent nå': 'Open now', 'Skjul steder som er stengt': 'Hide places that are closed', 'Pris': 'Price', 'Område': 'Area',
+  'Uten alkohol': 'No alcohol', 'Skjul steder som serverer alkohol': 'Hide places that serve alcohol', 'Uten kjent alkoholservering': 'No known alcohol service',
   'Alkohol': 'Alcohol', 'Rimelig': 'Inexpensive', 'Middels': 'Moderate', 'Dyrere': 'Pricier', 'Ingen kjent': 'None known', 'Serverer': 'Serves',
   '«Ingen kjent» betyr at vi ikke vet om stedet serverer alkohol.': '“None known” means we do not know whether the place serves alcohol.',
   'Sortering': 'Sorting', 'Sorter': 'Sort', 'Ingen grupper': 'No groups', 'Grupper listen': 'Group the list', 'Finn de nærmeste stedene': 'Find the nearest places', 'Standard': 'Default', 'A–Å': 'A–Z', 'Vis færre': 'Show fewer', 'Vis alle {n}': 'Show all {n}',
@@ -87,7 +88,6 @@ const ENGELSK = {
   'Nettleseren din støtter ikke posisjon.': 'Your browser does not support location.',
   'Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.': 'Could not find your location. Check that the browser has access to location.',
   // skjemaene
-  'Tips oss om en restaurant': 'Suggest a restaurant', 'Kjenner du et sted?': 'Know a place?',
   'Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.': 'We are just getting started and are building the map together with you. Tell us about a restaurant you believe is halal, and we will check it.',
   'Restaurantens navn': 'Name of the restaurant', 'påkrevd': 'required', 'frivillig': 'optional', 'Adresse eller by/bydel': 'Address or city/area',
   'F.eks. Oslo, Bergen, Trondheim eller Storgata 17': 'E.g. Oslo, Bergen, Trondheim or Storgata 17', 'Hva vet du om stedet?': 'What do you know about the place?',
@@ -427,11 +427,6 @@ function applyStrict() {
   const t = STRICT_STEPS[strict].tillat;
   STATUS_ORDER.forEach(st => { layerOn[st] = t.indexOf(st) >= 0; });
 }
-// PC slår statusene av og på hver for seg; -1 betyr et utvalg som ikke er ett av trinnene
-function synkStrict() {
-  const paa = STATUS_ORDER.filter(st => layerOn[st]).join(',');
-  strict = STRICT_STEPS.findIndex(steg => steg.tillat.join(',') === paa);
-}
 const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
@@ -487,11 +482,11 @@ function initApp() {
   });
   kobleKort();
 
-  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fSort'].forEach(id => {
+  ['search', 'fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlkohol', 'fSort'].forEach(id => {
     const x = el(id);
     if (x) x.addEventListener('input', render);
   });
-  ['fBydel', 'fCuisine', 'fPrice', 'fOpen'].forEach(function (id) {
+  ['fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlkohol'].forEach(function (id) {
     const x = el(id);
     if (x) x.addEventListener('change', foelgFilter);
   });
@@ -515,7 +510,6 @@ function initApp() {
   wireMobilskall();
   wirePc();
   wireMobil();
-  wireTipsHint();
   wireNearMe();
   wireInfo();
   wireContactForm();
@@ -524,7 +518,6 @@ function initApp() {
   merkSkjemaUtenMottak();
   wirePopupActions();
   wireShortcuts();
-  wireSheets();
   render();
   applyHash();
   window.addEventListener('hashchange', function () { if (location.hash.slice(1) !== encodeURIComponent(activeId || '')) applyHash(); });
@@ -598,6 +591,7 @@ function currentFilters() {
     cuisine: el('fCuisine').value,
     price: el('fPrice') ? el('fPrice').value : '',
     open: el('fOpen') ? el('fOpen').value : '',
+    alkohol: el('fAlkohol') ? el('fAlkohol').value : '',
     sort: el('fSort') ? el('fSort').value : ''
   };
 }
@@ -607,6 +601,7 @@ function passes(s, f) {
   if (f.price && String(s.price) !== f.price) return false;
   if (f.open === 'naa') { const st = openState(s).state; if (st !== 'open' && st !== 'soon') return false; }
   else if (f.open && openState(s).state !== f.open) return false;
+  if (f.alkohol === 'uten' && s.alcohol) return false;
   if (f.q) {
     const raa = s.name + ' ' + s.cuisines.join(' ') + ' ' + s.cuisines.map(function (c) { return ENGELSK[c] || ''; }).join(' ') + ' ' + s.bydel + ' ' + (s.address || '');
     const bokstavrett = /[æøå]/.test(f.q);
@@ -719,6 +714,7 @@ function filterTekst() {
   const sok = el('search').value.trim();
   if (sok) deler.push('«' + sok + '»');
   if (el('fOpen').value) deler.push(valgtTekst(el('fOpen')).toLowerCase());
+  if (el('fAlkohol').value) deler.push(T('uten kjent alkohol'));
   if (!alleStatuser()) deler.push(T(strict === 0 ? 'kun verifisert' : strict === 1 ? 'uten uavklarte' : 'utvalgte statuser'));
   if (el('fCuisine').value) deler.push(sprak === 'en' ? T(el('fCuisine').value) : el('fCuisine').value.toLowerCase());
   if (el('fBydel').value) deler.push(el('fBydel').value);
@@ -789,6 +785,9 @@ function tegnFilterark(antall) {
     '<section class="fa-del" data-del="apent"><div class="fa-rad"><div><h3>' + T('Åpent nå') + '</h3>' +
       '<p>' + T('Skjul steder som er stengt') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Åpent nå') + '" aria-checked="' + (el('fOpen').value === 'naa') + '" data-bryter="apent"></button></div></section>' +
+    '<section class="fa-del" data-del="alkohol"><div class="fa-rad"><div><h3>' + T('Uten alkohol') + '</h3>' +
+      '<p>' + T('Skjul steder som serverer alkohol') + '</p></div>' +
+      '<button type="button" class="bryter" role="switch" aria-label="' + T('Uten alkohol') + '" aria-checked="' + (el('fAlkohol').value === 'uten') + '" data-bryter="alkohol"></button></div></section>' +
     '<section class="fa-del" data-del="kjokken"><h3>' + T(kjokkenOrd()) + '</h3>' + brikker('fCuisine', 'kjokken', telling('cuisines'), 6) + '</section>' +
     '<section class="fa-del" data-del="omrade"><h3>' + T('Område') + '</h3>' + brikker('fBydel', 'omrade', telling('bydel'), 8) + '</section>' +
     '<section class="fa-del" data-del="pris"><h3>' + T('Pris') + '</h3><div class="fa-pris">' + ['1', '2', '3'].map(function (v) {
@@ -853,6 +852,7 @@ function wireMobilskall() {
     if (b.dataset.velg) velgEn(b.dataset.velg, b.dataset.v);
     else if (b.dataset.flere) { faVisAlle[b.dataset.flere] = !faVisAlle[b.dataset.flere]; oppdaterSkall(); }
     else if (b.dataset.bryter === 'apent') { el('fOpen').value = el('fOpen').value === 'naa' ? '' : 'naa'; render(); }
+    else if (b.dataset.bryter === 'alkohol') { el('fAlkohol').value = el('fAlkohol').value ? '' : 'uten'; track('filter_ark', { filter: 'fAlkohol' }); render(); }
     else if (b.dataset.seg === 'strict') { strict = +b.dataset.v; applyStrict(); track('strenghet', { trinn: STRICT_STEPS[strict].label }); render(); }
     else if (b.dataset.seg) {
       el(b.dataset.seg).value = b.dataset.v;
@@ -904,7 +904,6 @@ function kobleKort() {
   kortModus = mobil;
   const aktiv = activeId;
   if (!mobil) { visning = 'kart'; fane = 'utforsk'; document.body.classList.remove('vis-liste', 'fane-lagret'); }
-  plasserTips();
   if (aktiv) setActive(aktiv, false);
 }
 
@@ -1006,7 +1005,7 @@ function listekortHtml(s, i) {
     '<div class="lkort-tekst">' +
       '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
       '<p class="lkort-meta">' + skjold(s) + '<span>' + metaTekst(s, ' · ') +
-        (t ? '<span class="skraa"> · </span><span class="apent ' + t.cls + '">' + esc(t.tekst) + '</span>' : '') + '</span></p>' +
+        (t ? '<span class="apent ' + t.cls + '">' + esc(t.tekst) + '</span>' : '') + '</span></p>' +
     '</div>' + hjerte(s) + '</article>';
 }
 function tegnListe() {
@@ -1133,6 +1132,18 @@ function adresseLinjer(s) {
   const linje2 = !by || by === s.bydel ? s.bydel : s.bydel + ', ' + by;
   return esc(gate) + '<br>' + esc(linje2);
 }
+// Stempelet på stedssiden og i kortet på PC: bare for steder som er verifisert.
+// Begge kan stå på siden samtidig på PC, så sirkelen teksten følger, får eget navn per sted.
+function stempel(hvor) {
+  const sti = 'stempelSti' + (hvor ? '-' + hvor : '');
+  return '<svg class="stempel" role="img" aria-label="' + T('Verifisert halal') + '" viewBox="0 0 100 100">' +
+    '<defs><path id="' + sti + '" d="M50 50 m-34.5 0 a34.5 34.5 0 1 1 69 0 a34.5 34.5 0 1 1 -69 0"/></defs>' +
+    '<g fill="none" stroke="currentColor"><path d="M94.40 50.00 A5.4 5.4 0 0 1 93.29 59.88 A5.4 5.4 0 0 1 90.00 69.26 A5.4 5.4 0 0 1 84.71 77.68 A5.4 5.4 0 0 1 77.68 84.71 A5.4 5.4 0 0 1 69.26 90.00 A5.4 5.4 0 0 1 59.88 93.29 A5.4 5.4 0 0 1 50.00 94.40 A5.4 5.4 0 0 1 40.12 93.29 A5.4 5.4 0 0 1 30.74 90.00 A5.4 5.4 0 0 1 22.32 84.71 A5.4 5.4 0 0 1 15.29 77.68 A5.4 5.4 0 0 1 10.00 69.26 A5.4 5.4 0 0 1 6.71 59.88 A5.4 5.4 0 0 1 5.60 50.00 A5.4 5.4 0 0 1 6.71 40.12 A5.4 5.4 0 0 1 10.00 30.74 A5.4 5.4 0 0 1 15.29 22.32 A5.4 5.4 0 0 1 22.32 15.29 A5.4 5.4 0 0 1 30.74 10.00 A5.4 5.4 0 0 1 40.12 6.71 A5.4 5.4 0 0 1 50.00 5.60 A5.4 5.4 0 0 1 59.88 6.71 A5.4 5.4 0 0 1 69.26 10.00 A5.4 5.4 0 0 1 77.68 15.29 A5.4 5.4 0 0 1 84.71 22.32 A5.4 5.4 0 0 1 90.00 30.74 A5.4 5.4 0 0 1 93.29 40.12 A5.4 5.4 0 0 1 94.40 50.00 Z" stroke-width="1.7" stroke-linejoin="round"/>' +
+    '<circle cx="50" cy="50" r="40.6"/><circle cx="50" cy="50" r="27.6"/></g>' +
+    '<text font-family="Manrope, sans-serif" font-weight="700" font-size="7.6" fill="currentColor"><textPath href="#' + sti + '" textLength="213" lengthAdjust="spacing">' +
+      T('Verifisert').toUpperCase() + ' • HALALKARTET • </textPath></text>' +
+    '<text x="50" y="57.5" text-anchor="middle" font-family="Amiri, serif" font-weight="700" font-size="24" fill="currentColor" direction="rtl">حلال</text></svg>';
+}
 function detaljHtml(s) {
   const tel = s.phone ? String(s.phone).replace(/\s+/g, '') : '';
   const site = safeUrl(s.website);
@@ -1167,8 +1178,8 @@ function detaljHtml(s) {
       hjerte(s, 'd-rund') +
       '<a class="d-merke" href="./" aria-label="' + T('Halalkartet, start på nytt') + '">حلال</a>' +
     '</div>' +
-    '<header class="d-hero">' +
-      '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s) + '</p>' +
+    '<header class="d-hero' + (s.halalStatus === 'verifisert' ? ' har-stempel' : '') + '">' +
+      (s.halalStatus === 'verifisert' ? stempel('side') : '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s) + '</p>') +
       '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
     '</header>' +
@@ -1277,7 +1288,7 @@ function wireMobil() {
     const b = e.target.closest('[data-fane]');
     if (!b) return;
     const f = b.dataset.fane;
-    if (f === 'tips') openSheet('tips', false);
+    if (f === 'tips') openInfo('tips');
     else if (f === 'sprak') byttSprak();
     else if (f === 'stott') openInfo('stott');
     else if (f === 'mer') apneMer();
@@ -1334,8 +1345,7 @@ function wireMobil() {
     if (!b) return;
     lukkMer();
     el('faneMer').focus({ preventScroll: true });
-    if (b.dataset.mer === 'tips') openSheet('tips', false);
-    else openInfo(b.dataset.mer);
+    openInfo(b.dataset.mer);
   });
 
   document.addEventListener('keydown', function (e) {
@@ -1367,7 +1377,7 @@ function foelgFilter() {
 }
 
 // Aktive filtre
-const FILTERFELT = ['fBydel', 'fCuisine', 'fPrice', 'fOpen'];
+const FILTERFELT = ['fBydel', 'fCuisine', 'fPrice', 'fOpen', 'fAlkohol'];
 
 
 // Kjeder
@@ -1478,11 +1488,6 @@ function applyHash() {
   return false;
 }
 
-// Tipsboksen på mobil. Den lukker seg ikke av seg selv.
-const SHEETS = {
-  tips: { box: 'tips', lukk: 'tipsLukk', hendelse: 'tips_apnet' }
-};
-
 // Utvalgte steder vises i en boble, som de andre sidene, og blir stående til du lukker den
 function tegnUtvalgte() {
   const list = el('utvalgtListe');
@@ -1496,35 +1501,6 @@ function tegnUtvalgte() {
   const d = daysUntilRotation();
   el('utvalgtSub').textContent = d === 1 ? T('Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.')
     : T('Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.', { n: d });
-}
-
-function openSheet(key, auto) {
-  if (key === 'tips' && !erMobil()) { openInfo('tips'); return; }
-  const cfg = SHEETS[key], box = el(cfg.box);
-  if (!box) return;
-  box.hidden = false;
-  void box.offsetWidth;
-  box.classList.add('open');
-  if (key === 'tips') requestAnimationFrame(oppdaterTipsHint);
-  track(cfg.hendelse, { hvordan: auto ? 'automatisk' : 'knapp' });
-}
-
-function closeSheet(key) {
-  const box = el(SHEETS[key].box);
-  if (!box || !box.classList.contains('open')) return;
-  box.classList.remove('open');
-  setTimeout(function () { if (!box.classList.contains('open')) box.hidden = true; }, 260);
-}
-
-function wireSheets() {
-  Object.keys(SHEETS).forEach(function (key) {
-    const lukk = el(SHEETS[key].lukk);
-    if (lukk) lukk.addEventListener('click', function () { closeSheet(key); });
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape') return;
-    Object.keys(SHEETS).forEach(function (k) { closeSheet(k); });
-  });
 }
 
 function refreshOpenStates() {
@@ -1778,23 +1754,6 @@ function sendSkjema(f, btn, onOk) {
 }
 
 // Tipsskjema
-function oppdaterTipsHint() {
-  const kropp = el('tipsBody');
-  if (!kropp) return;
-  const wrap = kropp.parentElement;
-  const rest = kropp.scrollHeight - kropp.clientHeight;
-  wrap.dataset.topp = kropp.scrollTop > 6 ? 'ja' : 'nei';
-  wrap.dataset.bunn = (rest > 6 && kropp.scrollTop < rest - 6) ? 'ja' : 'nei';
-}
-
-function wireTipsHint() {
-  const kropp = el('tipsBody');
-  if (!kropp) return;
-  kropp.addEventListener('scroll', oppdaterTipsHint, { passive: true });
-  window.addEventListener('resize', oppdaterTipsHint);
-  oppdaterTipsHint();
-}
-
 function wireTipsForm() {
   const f = el('tipsForm');
   if (!f) return;
@@ -1842,10 +1801,6 @@ const PC_VALG = [
 const PC_SORT = [['', 'Standard'], ['avstand', 'Nærmest'], ['navn', 'A–Å'], ['pris', 'Pris']];
 const CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
 
-function skjoldFor(st) {
-  return '<span class="skjold" data-s="' + st + '" aria-hidden="true">' + SKJOLD + '<span class="skjold-tegn">' + STATUS[st].tegn + '</span></span>';
-}
-
 function tegnPc() {
   if (erMobil() || !el('pcFilter') || !HALAL_SPOTS.length) return;
   tegnPcFilter();
@@ -1862,13 +1817,13 @@ function tegnPcFilter() {
   const fokus = document.activeElement && boks.contains(document.activeElement)
     ? ['status', 'valg', 'v', 'pc', 'pcsort'].map(function (a) { return document.activeElement.dataset[a]; }) : null;
 
-  const status = STATUS_ORDER.map(function (st) {
-    const n = passer.filter(function (s) { return s.halalStatus === st; }).length;
-    return '<button type="button" class="pc-status" data-status="' + st + '" aria-pressed="' + layerOn[st] + '" aria-label="' + T('{s}, {n} steder', { s: T(STATUS[st].label), n: n }) + '">' +
-      skjoldFor(st) + '<span class="pc-st-tall">' + n + '</span></button>';
-  }).join('');
+  // tre av/på-knapper: Kun verifisert, Åpent nå og Uten alkohol, som på mobil
+  const apent = el('fOpen').value === 'naa', utenAlkohol = el('fAlkohol').value === 'uten';
+  const status =
+    '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"><span>' + T('Kun verifisert') + '</span></button>' +
+    '<button type="button" class="pc-valgknapp" data-pc="apent" aria-pressed="' + apent + '"><span>' + T('Åpent nå') + '</span></button>' +
+    '<button type="button" class="pc-valgknapp" data-pc="alkohol" aria-pressed="' + utenAlkohol + '" aria-label="' + T('Uten kjent alkoholservering') + '"><span>' + T('Uten alkohol') + '</span></button>';
 
-  const apent = el('fOpen').value === 'naa';
   const sort = el('fSort').value;
   const sorter = PC_SORT.map(function ([v, navn]) {
     return '<button type="button" class="pc-sortknapp" data-pcsort="' + v + '" aria-pressed="' + (sort === v) + '">' + T(navn) + '</button>';
@@ -1893,12 +1848,9 @@ function tegnPcFilter() {
   }).join('');
 
   boks.innerHTML =
-    '<div class="pc-statusgruppe" role="group" aria-label="' + T('Halal-status') + '">' + status + '</div>' +
+    '<div class="pc-statusgruppe" role="group" aria-label="' + T('Filtre') + '">' + status + '</div>' +
     '<span class="pc-skille" aria-hidden="true"></span>' +
-    '<div class="pc-valggruppe">' +
-      '<button type="button" class="pc-valgknapp" data-pc="apent" aria-pressed="' + apent + '"><span>' + T('Åpent nå') + '</span></button>' +
-      valg +
-    '</div>' +
+    '<div class="pc-valggruppe">' + valg + '</div>' +
     '<span class="pc-skille" aria-hidden="true"></span>' +
     sprakknapp('pc-sprak', 'data-pc="sprak"') +
     '<span class="pc-skille pc-brudd" aria-hidden="true"></span>' +
@@ -1929,8 +1881,9 @@ function pcValgtKort(s) {
   const meta = [esc(s.cuisines[0] ? T(s.cuisines[0]) : ''), '$'.repeat(s.price)];
   const apent = apentLinje(s);
   if (apent) meta.push(esc(apent.tekst));
-  return '<article class="pc-valgt" tabindex="-1" data-id="' + esc(s.id) + '" aria-label="' + esc(s.name) + '">' +
-    hjerte(s, 'pc-valgt-hjerte') +
+  const verifisert = s.halalStatus === 'verifisert';
+  return '<article class="pc-valgt' + (verifisert ? ' har-stempel' : '') + '" tabindex="-1" data-id="' + esc(s.id) + '" aria-label="' + esc(s.name) + '">' +
+    hjerte(s, 'pc-valgt-hjerte') + (verifisert ? stempel('kort') : '') +
     '<h3>' + esc(s.name) + '</h3>' +
     '<p class="pc-valgt-meta">' + meta.join(' · ') + '</p>' +
     '<dl class="pc-valgt-info"><div><dt>' + T('Adresse') + '</dt><dd>' + esc(gate) + '</dd></div>' +
@@ -2037,22 +1990,6 @@ function lukkSkuff() {
   if (skuffFra && document.contains(skuffFra)) skuffFra.focus({ preventScroll: true });
 }
 
-// Tipsskjemaet står i tipsboksen på mobil og i et vindu på PC
-let tipsHjem = null;
-function plasserTips() {
-  const form = el('tipsForm'), send = el('tipsSend'), ok = el('tipsOk'), regler = document.querySelector('.tips-rules');
-  const plass = el('pcTipsplass');
-  if (!form || !plass) return;
-  if (!tipsHjem) tipsHjem = { kropp: el('tipsBody'), fot: send.parentElement };
-  if (erMobil()) {
-    if (form.parentElement === tipsHjem.kropp) return;
-    tipsHjem.kropp.prepend(form, ok, regler);
-    tipsHjem.fot.prepend(send);
-  } else if (form.parentElement !== plass) {
-    plass.append(form, send, ok, regler);
-  }
-}
-
 // PC: «Nærmest» nede til venstre på kartet finner posisjonen og sorterer lista etter avstand. Mobilen har sin egen knapp.
 function leggTilNaermest() {
   const Naermest = L.Control.extend({
@@ -2102,16 +2039,19 @@ function wirePc() {
   el('pcFilter').addEventListener('click', function (e) {
     const b = e.target.closest('button');
     if (!b) return;
-    if (b.dataset.status) {
-      layerOn[b.dataset.status] = !layerOn[b.dataset.status];
-      synkStrict();
-      track('status_pc', { status: b.dataset.status, paa: layerOn[b.dataset.status] });
+    if (b.dataset.pc === 'verifisert') {
+      strict = strict === 0 ? 2 : 0; applyStrict();
+      track('hurtigfilter', { filter: 'kun_verifisert' });
       render(); foelgFilter();
     } else if (b.dataset.pc === 'sprak') {
       byttSprak();
     } else if (b.dataset.pc === 'apent') {
       el('fOpen').value = el('fOpen').value === 'naa' ? '' : 'naa';
       el('fOpen').dispatchEvent(new Event('change'));
+      render();
+    } else if (b.dataset.pc === 'alkohol') {
+      el('fAlkohol').value = el('fAlkohol').value ? '' : 'uten';
+      el('fAlkohol').dispatchEvent(new Event('change'));
       render();
     } else if (b.dataset.pc === 'velg') {
       const v = PC_VALG.find(function (x) { return x.del === b.dataset.valg; });
@@ -2155,6 +2095,5 @@ function wirePc() {
       el('pcFilter').querySelector('.pc-valgknapp[data-valg="' + del + '"]').focus();
     } else if (!el('pcSkuff').hidden) lukkSkuff();
   });
-  window.addEventListener('resize', function () { plasserTips(); if (!erMobil()) tegnPc(); else lukkSkuff(); });
-  plasserTips();
+  window.addEventListener('resize', function () { if (!erMobil()) tegnPc(); else lukkSkuff(); });
 }

@@ -121,42 +121,11 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .d-punkt { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: rgba(62,74,66,.18); }
 .d-punkt::after { content: ""; width: 18px; height: 18px; box-sizing: border-box; border: 4px solid var(--emerald); border-radius: 50%; background: var(--gold); }
 
-/* Verifisering i kortet */
-
-.hilite { position: fixed; z-index: 1900; left: 50%; top: 50%; width: 384px; max-width: calc(100vw - 28px); background: rgba(247,242,231,.90); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass); border-radius: 20px; box-shadow: var(--shadow-float), var(--rim-light); overflow: hidden; opacity: 0; transform: translate(-50%, -50%) scale(.96); pointer-events: none; transition: opacity .24s var(--ease-out), transform .24s var(--ease-out); }
-.hilite.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
-.hilite-bar { height: 3px; background: var(--gold); transform-origin: left; }
-.hilite.counting .hilite-bar { animation: hbar 3s linear forwards; }
-.hilite:hover .hilite-bar, .hilite:focus-within .hilite-bar { animation-play-state: paused; }
-@keyframes hbar { to { transform: scaleX(0); } }
-.hilite-head { padding: 18px 20px 12px; }
-.hilite-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; margin: 0; color: var(--ink); line-height: 1.1; }
-.hilite-head p { margin: 4px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
-.hmain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.hilite-foot { padding: 10px 20px 18px; }
-.hilite-lukk { width: 100%; padding: 11px; border: 1px solid #d8d2c4; border-radius: 10px; background: #fff; color: var(--emerald); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
-.hilite-lukk:hover, .hilite-lukk:focus-visible { background: var(--cert); border-color: var(--cert); color: #fff; }
-
-
-.tips { width: 412px; max-height: 88vh; display: flex; flex-direction: column; }
-.tips.counting .hilite-bar { animation-duration: 5s; }
+/* Tipsskjemaet: boksen om hvor vi helst vil ha steder, og reglene under knappen */
 .tips-lead { margin: 0; padding: 11px 20px; background: rgba(200,162,83,.16); border-bottom: 1px solid rgba(200,162,83,.28); font-size: 12.5px; line-height: 1.5; color: #6b551d; }
 .tips-lead strong { color: var(--ink); font-weight: 700; }
-.tips-lead, .tips .hilite-head, .tips .hilite-foot, .tips .hilite-bar { flex: none; }
-.tips-body { padding: 0 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; position: relative; }
-.tips-scroll { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
-.tips-scroll::before, .tips-scroll::after { content: ""; position: absolute; left: 0; right: 0; height: 26px; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .18s var(--ease-out); }
-.tips-scroll::before { top: 0; background: linear-gradient(rgba(247,242,231,.96), rgba(247,242,231,0)); }
-.tips-scroll::after { bottom: 0; background: linear-gradient(rgba(247,242,231,0), rgba(247,242,231,.96)); }
-.tips-scroll[data-topp="ja"]::before { opacity: 1; }
-.tips-scroll[data-bunn="ja"]::after { opacity: 1; }
-.tips-mer { position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); z-index: 3; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--emerald); color: var(--ivory); box-shadow: 0 2px 8px rgba(9,28,20,.28); pointer-events: none; opacity: 0; transition: opacity .18s var(--ease-out); }
-.tips-scroll[data-bunn="ja"] .tips-mer { opacity: 1; }
-.tips .kf-field { font-size: 12.5px; margin-bottom: 11px; }
-.tips .kf-field input, .tips .kf-field textarea, .tips .kf-select { font-size: 13.5px; padding: 9px 11px; }
 .kf-select { display: block; width: 100%; margin-top: 6px; font: inherit; color: var(--ink); background: #fff; border: 1px solid #d8d2c4; border-radius: 9px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235f6b63' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; padding-right: 30px; }
 .kf-select:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
-.tips-foot { display: flex; flex-direction: column; gap: 8px; }
 .tips-send { width: 100%; }
 .tips-rules { margin: 13px 0 4px; padding: 11px 13px; background: rgba(200,162,83,.12); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0; font-size: 11.5px; line-height: 1.5; color: var(--ink-soft); }
 
@@ -199,7 +168,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hbrikke[data-hurtig="apent"] svg, .hbrikke[data-hurtig="verifisert"] svg { display: none; }
 /* Kun verifisert, valgt: en takket gullsirkel rundt, som et segl */
 .hbrikke[data-hurtig="verifisert"][aria-pressed="true"] { margin: 0 -6px; padding: 0 24px; box-shadow: none; font-weight: 800; }
-.hbrikke[data-hurtig="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -8px 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpolygon points='198.0 30.0 189.3 32.6 195.2 36.7 184.2 37.6 186.8 43.0 174.1 42.2 173.4 48.6 159.7 46.1 155.7 53.0 141.8 49.0 134.8 56.2 121.5 50.9 111.8 57.8 100.0 51.5 88.2 57.8 78.5 50.9 65.2 56.2 58.2 49.0 44.3 53.0 40.3 46.1 26.6 48.6 25.9 42.2 13.2 43.0 15.8 37.6 4.8 36.7 10.7 32.6 2.0 30.0 10.7 27.4 4.8 23.3 15.8 22.4 13.2 17.0 25.9 17.8 26.6 11.4 40.3 13.9 44.3 7.0 58.2 11.0 65.2 3.8 78.5 9.1 88.2 2.2 100.0 8.5 111.8 2.2 121.5 9.1 134.8 3.8 141.8 11.0 155.7 7.0 159.7 13.9 173.4 11.4 174.1 17.8 186.8 17.0 184.2 22.4 195.2 23.3 189.3 27.4' fill='none' stroke='%23C8A253' stroke-width='2' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; pointer-events: none; }
+.hbrikke[data-hurtig="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -8px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
 
 /* Filterarket */
 .filterark { position: fixed; inset: 0; z-index: 2600; display: flex; flex-direction: column; background: var(--flate-bak); color: var(--kort-tekst); transform: translateY(100%); transition: transform .34s var(--ease-drawer); }
@@ -239,16 +208,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 
 /* Mobil */
 @media (max-width: 720px) {
-  .tips { max-height: 88vh; max-height: 88dvh; }
-  .tips-lead { padding: 7px 18px; font-size: 11.5px; line-height: 1.4; }
-  .tips .hilite-head { padding: 10px 18px 6px; }
-  .tips .hilite-head h2 { font-size: 18px; }
-  .tips .hilite-head p { font-size: 11.5px; line-height: 1.4; margin-top: 3px; }
-  .tips-body { padding: 0 18px; }
-  .tips .hilite-foot { padding: 9px 18px 12px; }
-  .tips-foot { flex-direction: row-reverse; gap: 9px; align-items: stretch; }
-  .tips-foot .kf-send { flex: 1 1 auto; width: auto; margin-top: 0; padding: 13px 22px; }
-  .tips-foot .hilite-lukk { flex: 0 0 auto; width: auto; padding: 13px 22px; }
   .kf-field { margin-bottom: 9px; }
 }
 
@@ -298,10 +257,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .kf-err { margin: -7px 0 12px; color: #b3261e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
 .info-badge { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 520px) { .info-brand { display: none; } .info-body { padding: 20px 18px 22px; } }
-@media (max-height: 700px) and (max-width: 720px) {
-  .tips .hilite-head p { display: none; }
-  .tips-lead { padding: 6px 18px; font-size: 11px; }
-}
 
 /* Mobil: kart, liste, lagret og detaljer */
 .bunnark, .liste, .vis-kart, .fane, .mer, .detalj { display: none; }
@@ -421,11 +376,11 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: none) {
   .knapp, .dknapp, .d-rund, .hjerte, .filterknapp, .fane button, .hbrikke, .fa-brikker button, .fa-pris button, .segment button, .fa-vis,
-  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .hilite-lukk, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .topp-merke, .d-merke {
+  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .topp-merke, .d-merke {
     transition: transform .12s var(--ease-out), opacity .12s var(--ease-out);
   }
   .knapp:active, .dknapp:active, .d-rund:active, .hjerte:active, .filterknapp:active, .fa-brikker button:active, .fa-pris button:active,
-  .fa-vis:active, .nearme:active, .hilite-lukk:active, .kf-send:active { transform: scale(.96); transition-duration: 0s; }
+  .fa-vis:active, .nearme:active, .kf-send:active { transform: scale(.96); transition-duration: 0s; }
   body.vis-liste:not(.fane-lagret) .vis-kart:active { transform: translateX(-50%) scale(.96); transition-duration: 0s; }
   .fane button:active, .hbrikke:active, .segment button:active, .bunn-liste:active, .mer-liste button:active, .fa-null:active, .fa-lukk:active,
   .d-lenke:active, .d-alletider:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
@@ -506,7 +461,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 @media (min-width: 721px) {
   :root { --pc-topp: 80px; --pc-filter: 68px; --pc-liste: 440px; }
   body { background: var(--flate-bak); }
-  .hilite, .nearme { display: none !important; }
+  .nearme { display: none !important; }
   #map { top: calc(var(--pc-topp) + var(--pc-filter) + 16px); left: 16px; right: calc(var(--pc-liste) + 8px); bottom: 16px; border-radius: 22px; overflow: hidden; box-shadow: 0 8px 30px rgba(9,28,20,.08); }
   .leaflet-control-zoom { margin: 16px 16px 0 0 !important; border-radius: 12px; }
   .leaflet-control-zoom a { width: 42px !important; height: 42px !important; line-height: 42px !important; font-size: 20px !important; }
@@ -536,14 +491,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
   .pc-filter { display: flex; align-items: center; gap: 26px; position: fixed; z-index: 1100; top: var(--pc-topp); left: 0; right: 0; height: var(--pc-filter); padding: 0 40px; background: var(--flate-bak); border-bottom: 1px solid var(--kort-strek); }
   .pc-statusgruppe, .pc-valggruppe { display: flex; align-items: center; gap: 26px; }
-  .pc-status { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0; border: 0; background: none; color: #646B67; font: 500 15px 'Manrope', sans-serif; cursor: pointer; }
-  .pc-status .skjold, .pc-status .skjold > svg { width: 18px; height: 20px; }
-  .pc-status .skjold .tegn-ar { font-size: 6.5px; }
-  .pc-status .skjold-tegn svg { width: 9px; height: 9px; }
-  .pc-st-tall { padding-bottom: 3px; border-bottom: 2px solid transparent; font-variant-numeric: tabular-nums; }
-  .pc-status[aria-pressed="true"] { color: var(--emerald); }
-  .pc-status[aria-pressed="true"] .pc-st-tall { font-weight: 700; border-color: currentColor; }
-  .pc-status[aria-pressed="false"] .skjold { opacity: .45; }
   .pc-skille { flex: none; width: 1px; height: 28px; background: var(--kort-strek); }
   .pc-valg { position: relative; }
   .pc-valgknapp { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--kort-tekst); font: 500 15px 'Manrope', sans-serif; white-space: nowrap; cursor: pointer; }
@@ -639,7 +586,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-skuff-liste .skuff-stott::after { display: none; }
   .pc-skuff-liste .skuff-stott svg { flex: none; margin-right: 2px; color: var(--gold); }
   .pc-stott { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); }
-  .pc-valgt h3 { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 7px; text-decoration-skip-ink: none; }
 
   .info-scrim { z-index: 2100; align-items: flex-start; padding: 70px 20px 30px; background: rgba(36,56,46,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .info-card { max-width: 680px; max-height: calc(100vh - 100px); border-radius: 20px; background: #EDE7DA; box-shadow: 0 30px 80px rgba(6,20,14,.35); }
@@ -697,18 +643,17 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 @media (prefers-reduced-motion: reduce) {
   .pc-skuff, .pc-skjerm, .detalj, .pc-valgknapp svg { transition: none; }
-  .hilite, .hilite.open { transform: translate(-50%, -50%); transition: opacity .2s var(--ease-out); }
   .toast, .toast.show { transform: translate(-50%, 0); transition: opacity .2s var(--ease-out); }
   .nearme:active { transform: none; }
   .filterark { transition: opacity .2s var(--ease-out); transform: none; opacity: 0; }
   .filterark.apen { opacity: 1; }
-  .nearme.loading svg, .hilite.counting .hilite-bar { animation: none; }
+  .nearme.loading svg { animation: none; }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .nearme { background: var(--pill-solid); }
   .nearme:hover { background: var(--pill-solid-2); }
-  .hilite, .info-card { background: var(--paper); }
+  .info-card { background: var(--paper); }
 }
 /* Mobil: siden du velger i Mer vises alene i en boble i midten, med grønt bånd, حلال og kryss, og alt bak uskarpt */
 @media (max-width: 720px) {
@@ -755,13 +700,62 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .utv-rad .skjold, .utv-rad .skjold > svg { width: 20px; height: 22px; }
 .fane .fane-stott { color: var(--gull-tekst); font-weight: 800; }
 .fane .fane-stott svg { color: var(--gold); }
-#detaljNavn { text-decoration: underline wavy var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 9px; text-decoration-skip-ink: none; }
 
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
 .toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart, body.vis-liste:not(.fane-lagret) .vis-kart, .stott-gi,
 .segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
-.info-head, .kf-send, .pc-topp, .pc-skuff-topp, .tips-mer {
+.info-head, .kf-send, .pc-topp, .pc-skuff-topp {
   background-color: var(--emerald); background-image: var(--monster); background-size: 56px 56px; background-position: center;
+}
+
+/* ===== Design november 2026 ===== */
+
+/* 1. Toppene: stor åttekantet stjerne i grønt på grønt, som toner ut mot midten.
+      Erstatter --monster på toppfeltet, PC-toppen, toppen i PC-menyen, vindustoppene og toppen på stedssiden.
+      Knapper og valgte brikker beholder --monster. */
+:root {
+  --stjerne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='78' height='78'%3E%3Cg fill='none' stroke='%233F7E5B' stroke-opacity='.6'%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2'/%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2' transform='rotate(45 39 39)'/%3E%3Crect x='25.7' y='25.7' width='26.5' height='26.5' transform='rotate(22.5 39 39)'/%3E%3C/g%3E%3C/svg%3E");
+  --stjerne-ut: linear-gradient(90deg, #000 0, #000 10%, transparent 34%, transparent 66%, #000 88%, #000 100%);
+  /* den takkede gullringen rundt Kun verifisert når den er på */
+  --segl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpolygon points='198.0 30.0 189.3 32.6 195.2 36.7 184.2 37.6 186.8 43.0 174.1 42.2 173.4 48.6 159.7 46.1 155.7 53.0 141.8 49.0 134.8 56.2 121.5 50.9 111.8 57.8 100.0 51.5 88.2 57.8 78.5 50.9 65.2 56.2 58.2 49.0 44.3 53.0 40.3 46.1 26.6 48.6 25.9 42.2 13.2 43.0 15.8 37.6 4.8 36.7 10.7 32.6 2.0 30.0 10.7 27.4 4.8 23.3 15.8 22.4 13.2 17.0 25.9 17.8 26.6 11.4 40.3 13.9 44.3 7.0 58.2 11.0 65.2 3.8 78.5 9.1 88.2 2.2 100.0 8.5 111.8 2.2 121.5 9.1 134.8 3.8 141.8 11.0 155.7 7.0 159.7 13.9 173.4 11.4 174.1 17.8 186.8 17.0 184.2 22.4 195.2 23.3 189.3 27.4' fill='none' stroke='%23C8A253' stroke-width='2' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+}
+.toppfelt, .pc-topp, .pc-skuff-topp, .info-head, .d-hero, .detalj.rullet .d-topp { background-image: none; }
+.toppfelt, .pc-topp, .pc-skuff-topp, .info-head, .d-hero { isolation: isolate; }
+.pc-skuff-topp, .d-hero { position: relative; }
+.toppfelt::before, .pc-topp::before, .pc-skuff-topp::before, .info-head::before, .d-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: var(--stjerne) center / 78px 78px;
+  -webkit-mask-image: var(--stjerne-ut); mask-image: var(--stjerne-ut);
+}
+.pc-skuff-topp::before { -webkit-mask-image: linear-gradient(90deg, #000 0, #000 31%, transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 31%, transparent 100%); }
+
+/* 2. Stempelet: bare på steder som er verifisert (100 % halal). Det tar plassen til det lille gullskjoldet over navnet. */
+.stempel { position: absolute; right: 14px; bottom: 16px; width: 94px; height: 94px; color: var(--gold); transform: rotate(-10deg); pointer-events: none; }
+.d-hero.har-stempel h2, .d-hero.har-stempel .d-meta { padding-right: 104px; }
+
+/* 3. Lista på mobil: stengetiden står på egen linje, uten skilletegn foran */
+.lkort .lkort-meta .apent { display: block; }
+
+/* 4. Tips oss står i det samme vinduet som de andre skjemaene, også på mobil */
+@media (min-width: 721px) { .info-section .tips-lead { display: none; } }
+@media (max-width: 720px) {
+  .info-section .tips-lead { margin: 0 0 18px; padding: 10px 14px; border: 1px solid rgba(200,162,83,.28); border-radius: 12px; font-size: 13.5px; line-height: 1.5; color: #6b551d; }
+  .info-section .tips-rules { margin: 14px 0 0; font-size: 12.5px; }
+  .info-section .tips-send { min-height: 52px; font-size: 15px; border-radius: 12px; }
+  .info-section .kf-select { padding: 10px 30px 10px 12px; }
+  /* 5. Skjemaene på mobil: 16 px i feltene, så iPhone ikke zoomer inn når man trykker i dem */
+  .kf-field input, .kf-field textarea, .kf-select { font-size: 16px; }
+}
+
+/* 6. PC: filterraden fyller hele bredden, Kun verifisert får den takkede gullringen når den er på,
+      og stempelet står i kortet for valgt sted. */
+@media (min-width: 721px) {
+  .pc-skille { margin: 0 auto; }
+  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"] { position: relative; margin: 0 -8px; padding: 0 20px; font-weight: 800; color: var(--emerald); }
+  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"] span { border-color: transparent; }
+  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -3px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
+  .pc-valgt .stempel { right: 64px; top: 9px; bottom: auto; width: 76px; height: 76px; }
+  .pc-valgt.har-stempel h3, .pc-valgt.har-stempel .pc-valgt-meta { padding-right: 84px; }
 }
 </style>
   <link rel="icon" type="image/svg+xml" href="halal_kartet_logo.svg">
@@ -843,52 +837,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   <span data-t>Nær meg</span>
 </button>
 
-<div class="hilite tips" id="tips" role="dialog" aria-label="Tips oss om en restaurant" data-ta="aria-label" hidden>
-  <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
-  <div class="hilite-head">
-    <h2 data-t>Kjenner du et sted?</h2>
-    <p data-t>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
-  </div>
-  <div class="tips-scroll">
-  <div class="tips-body" id="tipsBody">
-    <form name="restauranttips" method="POST" id="tipsForm" class="kf">
-      <input type="hidden" name="form-name" value="restauranttips">
-      <input type="hidden" name="_subject" value="Nytt tips til Halalkartet">
-      <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
-      <label class="kf-field"><span data-t>Restaurantens navn</span> <span class="kf-req" data-t>påkrevd</span>
-        <input type="text" name="restaurant" required autocomplete="off">
-      </label>
-      <label class="kf-field"><span data-t>Adresse eller by/bydel</span> <span class="kf-opt" data-t>frivillig</span>
-        <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17" data-ta="placeholder">
-      </label>
-      <label class="kf-field"><span data-t>Hva vet du om stedet?</span> <span class="kf-req" data-t>påkrevd</span>
-        <select name="vurdering" class="kf-select" required>
-          <option value="" data-t>Velg ett</option>
-          <option value="Helt halal" data-t>Helt halal</option>
-          <option value="Halal mat, men serverer alkohol som drikke" data-t>Halal mat, men serverer alkohol som drikke</option>
-          <option value="Delvis halal – deler av menyen er ikke halal" data-t>Delvis halal – deler av menyen er ikke halal</option>
-          <option value="Serverer svinekjøtt" data-t>Serverer svinekjøtt</option>
-          <option value="Usikker – vil gjerne at dere sjekker" data-t>Usikker – vil gjerne at dere sjekker</option>
-        </select>
-      </label>
-      <label class="kf-field"><span data-t>Hvordan vet du det?</span> <span class="kf-opt" data-t>frivillig</span>
-        <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …" data-ta="placeholder"></textarea>
-      </label>
-      <label class="kf-field"><span data-t>Telefon eller e-post</span> <span class="kf-opt" data-t>frivillig</span>
-        <input type="text" name="kontakt" autocomplete="email">
-      </label>
-    </form>
-    <p class="kf-ok" id="tipsOk" hidden data-t>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
-    <p class="tips-rules" data-t>Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
-  </div>
-  <span class="tips-mer" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
-  </div>
-  <div class="hilite-foot tips-foot">
-    <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
-    <button class="hilite-lukk" id="tipsLukk" type="button" data-t>Lukk</button>
-  </div>
-</div>
-
 <div class="toppfelt" id="toppfelt">
   <div class="sokekort" id="sokekort">
     <button class="filterknapp" id="filterknapp" type="button" aria-label="Åpne filtrene" aria-haspopup="dialog">
@@ -918,6 +866,10 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     <option value="naa">Åpent nå</option>
     <option value="soon">Stenger snart</option>
     <option value="closed">Stengt</option>
+  </select>
+  <select id="fAlkohol" aria-label="Filtrer på alkoholservering">
+    <option value="">Alkohol: alle steder</option>
+    <option value="uten">Ingen kjent alkoholservering</option>
   </select>
   <select id="fSort" aria-label="Sorter listen">
     <option value="">Sorter etter</option>
@@ -1006,7 +958,39 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <section class="info-section" data-section="tips">
         <h2 data-t>Tips oss om et sted</h2>
         <p data-t>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
-        <div class="pc-tipsplass" id="pcTipsplass"></div>
+        <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
+        <div class="pc-tipsplass" id="pcTipsplass">
+          <form name="restauranttips" method="POST" id="tipsForm" class="kf">
+            <input type="hidden" name="form-name" value="restauranttips">
+            <input type="hidden" name="_subject" value="Nytt tips til Halalkartet">
+            <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+            <label class="kf-field"><span data-t>Restaurantens navn</span> <span class="kf-req" data-t>påkrevd</span>
+              <input type="text" name="restaurant" required autocomplete="off">
+            </label>
+            <label class="kf-field"><span data-t>Adresse eller by/bydel</span> <span class="kf-opt" data-t>frivillig</span>
+              <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17" data-ta="placeholder">
+            </label>
+            <label class="kf-field"><span data-t>Hva vet du om stedet?</span> <span class="kf-req" data-t>påkrevd</span>
+              <select name="vurdering" class="kf-select" required>
+                <option value="" data-t>Velg ett</option>
+                <option value="Helt halal" data-t>Helt halal</option>
+                <option value="Halal mat, men serverer alkohol som drikke" data-t>Halal mat, men serverer alkohol som drikke</option>
+                <option value="Delvis halal – deler av menyen er ikke halal" data-t>Delvis halal – deler av menyen er ikke halal</option>
+                <option value="Serverer svinekjøtt" data-t>Serverer svinekjøtt</option>
+                <option value="Usikker – vil gjerne at dere sjekker" data-t>Usikker – vil gjerne at dere sjekker</option>
+              </select>
+            </label>
+            <label class="kf-field"><span data-t>Hvordan vet du det?</span> <span class="kf-opt" data-t>frivillig</span>
+              <textarea name="melding" rows="2" placeholder="Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …" data-ta="placeholder"></textarea>
+            </label>
+            <label class="kf-field"><span data-t>Telefon eller e-post</span> <span class="kf-opt" data-t>frivillig</span>
+              <input type="text" name="kontakt" autocomplete="email">
+            </label>
+          </form>
+          <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
+          <p class="kf-ok" id="tipsOk" hidden data-t>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
+          <p class="tips-rules" data-t>Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
+        </div>
       </section>
       <section class="info-section" data-section="kontakt">
         <h2 id="kontaktTittel">Kontakt oss</h2>
@@ -1226,6 +1210,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=d655be4b"></script>
+<script src="app.js?v=c74ab3c7"></script>
 </body>
 </html>
