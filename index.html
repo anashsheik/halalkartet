@@ -37,7 +37,6 @@
   --self:       #D9600F;
   --owned:      #636B67;
   --open:       #1F6340;
-  --soon:       #8A5C10;
   --closed:     #B3261E;
   --pill:       rgba(17,90,64,.86);
   --pill-hover: rgba(24,112,80,.92);
@@ -165,7 +164,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hbrikke svg { flex: none; }
 .hbrikke[aria-pressed="true"], .hbrikke.satt { color: var(--gold); box-shadow: inset 0 -3px 0 var(--gold); }
 .hbrikke.satt .x { opacity: .85; }
-.hbrikke[data-hurtig="apent"] svg, .hbrikke[data-hurtig="verifisert"] svg { display: none; }
+.hbrikke[data-hurtig="verifisert"] svg { display: none; }
 /* Kun verifisert, valgt: en takket gullsirkel rundt, som et segl */
 .hbrikke[data-hurtig="verifisert"][aria-pressed="true"] { margin: 0 -6px; padding: 0 24px; box-shadow: none; font-weight: 800; }
 .hbrikke[data-hurtig="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -8px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
@@ -318,8 +317,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .lkort-meta { margin: 4px 0 0; font-size: 15px; color: var(--kort-dempet); }
   .lkort .lkort-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; }
   .lkort-meta .price { color: inherit; font-weight: 600; }
-  .lkort-meta .apent { font-weight: 700; white-space: nowrap; }
-  .lkort-meta .apent.os-open { color: var(--merke-v); }
   .lkort .skjold { width: 18px; height: 20px; }
   .lkort .skjold > svg { width: 18px; height: 20px; }
   .lkort .skjold-tegn svg { width: 9px; height: 9px; }
@@ -376,19 +373,16 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: none) {
   .knapp, .dknapp, .d-rund, .hjerte, .filterknapp, .fane button, .hbrikke, .fa-brikker button, .fa-pris button, .segment button, .fa-vis,
-  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .kf-send, .fa-null, .fa-lukk, .d-lenke, .d-alletider, .topp-merke, .d-merke {
+  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .kf-send, .fa-null, .fa-lukk, .d-lenke, .tider-lenke, .topp-merke, .d-merke {
     transition: transform .12s var(--ease-out), opacity .12s var(--ease-out);
   }
   .knapp:active, .dknapp:active, .d-rund:active, .hjerte:active, .filterknapp:active, .fa-brikker button:active, .fa-pris button:active,
   .fa-vis:active, .nearme:active, .kf-send:active { transform: scale(.96); transition-duration: 0s; }
   body.vis-liste:not(.fane-lagret) .vis-kart:active { transform: translateX(-50%) scale(.96); transition-duration: 0s; }
   .fane button:active, .hbrikke:active, .segment button:active, .bunn-liste:active, .mer-liste button:active, .fa-null:active, .fa-lukk:active,
-  .d-lenke:active, .d-alletider:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
+  .d-lenke:active, .tider-lenke:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
   .lkort:active { background: rgba(14,61,44,.06); }
 }
-.apent { color: var(--kort-tekst); }
-.apent.os-soon { color: var(--soon); }
-.apent.os-closed { color: var(--closed); }
 .lkort .hjerte svg { width: 26px; height: 26px; }
 .hjerte { position: relative; z-index: 1; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 12px; background: none; color: var(--emerald); cursor: pointer; }
 .hjerte[aria-pressed="true"] svg { fill: var(--closed); stroke: var(--closed); }
@@ -414,14 +408,10 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .d-hero .d-meta { margin: 0; font-size: 17px; color: #D5DDD7; }
 .d-hero .skraa { color: var(--gold); }
 .d-kropp { padding: 22px 20px calc(env(safe-area-inset-bottom, 0px) + 28px); }
-.d-apent { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 18px; color: var(--kort-tekst); }
-.d-apent b { font-weight: 700; }
-.d-tidrad { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.d-alletider { flex: none; display: inline-flex; align-items: center; min-height: 44px; color: var(--emerald); font: 700 16px 'Manrope', sans-serif; text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 6px; }
-.d-apent span { color: var(--kort-dempet); }
-.d-apent.os-open { color: var(--merke-v); }
-.d-apent.os-soon { color: var(--soon); }
-.d-apent.os-closed { color: var(--closed); }
+/* Åpningstider: lenken åpner stedet i Google Maps */
+.tider-lenke { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--emerald); font: 700 16px 'Manrope', sans-serif; text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.tider-lenke svg { flex: none; width: 15px; height: 15px; color: var(--gull-tekst); }
+.d-info .tider-lenke { min-height: 0; }
 .d-beskr { margin: 14px 0 0; font-size: 16px; line-height: 1.5; color: var(--kort-dempet); }
 .d-knapper { display: grid; gap: 10px; margin: 22px 0; }
 .d-knapper.k1 { grid-template-columns: 1fr; }
@@ -442,7 +432,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .d-kilde { color: #5B5546; }
 .d-lenke { min-height: 44px; padding: 0; border: 0; background: none; color: var(--emerald); font: 700 14px 'Manrope', sans-serif; cursor: pointer; }
 .d-info { margin: 22px 0; }
-.d-info > div { display: grid; grid-template-columns: 104px 1fr; gap: 12px; padding: 14px 0; border-top: 1px solid var(--kort-strek); }
+.d-info > div { display: grid; grid-template-columns: 136px 1fr; gap: 12px; padding: 14px 0; border-top: 1px solid var(--kort-strek); }
 .d-info > div:last-child { border-bottom: 1px solid var(--kort-strek); }
 .d-info dt { font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); padding-top: 3px; }
 .d-info dd { margin: 0; font-size: 16px; line-height: 1.4; color: var(--kort-tekst); }
@@ -533,14 +523,11 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-gruppe-hode { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 24px 0 6px; }
   .pc-gruppe-hode h3 { margin: 0; font: italic 600 30px/1.1 'Cormorant Garamond', serif; color: var(--emerald); }
   .pc-gruppe-tall { flex: none; font: 800 12px 'Manrope', sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); }
-  .pc-rad { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 0 16px; width: 100%; padding: 14px 0; border: 0; border-top: 1px solid var(--kort-strek); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .pc-rad { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: center; gap: 0 16px; width: 100%; padding: 14px 0; border: 0; border-top: 1px solid var(--kort-strek); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
   .pc-gruppe-hode + .pc-rad, .pc-gruppe-hode + .pc-kjede > .pc-rad { border-top-color: transparent; }
   .pc-rad:hover .pc-rad-navn { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
   .pc-rad-navn { display: block; font: 600 24px/1.15 'Cormorant Garamond', serif; color: var(--emerald); }
   .pc-rad-meta { display: block; margin-top: 2px; font-size: 14px; color: var(--kort-dempet); }
-  .pc-rad-tid { font-size: 14px; font-weight: 700; color: var(--emerald); white-space: nowrap; }
-  .pc-rad-tid.os-soon { color: var(--soon); }
-  .pc-rad-tid.os-closed { color: var(--closed); }
   .pc-filialer { margin: 0 0 8px 38px; }
   .pc-filialer .pc-rad-navn { font-size: 21px; }
   .pc-tom { margin-top: 20px; padding: 28px 22px; border: 1px solid var(--kort-strek); border-radius: 16px; background: var(--kort-bak); text-align: center; font-size: 15px; line-height: 1.5; color: var(--kort-dempet); }
@@ -563,6 +550,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-valgt-info dd { margin: 6px 0 0; font-size: 15px; color: var(--ivory); }
   .pc-valgt-info a { color: var(--ivory); text-decoration: none; }
   .pc-valgt-info a:hover { text-decoration: underline; }
+  .pc-tider { display: inline-flex; align-items: center; gap: 5px; }
+  .pc-tider svg { width: 13px; height: 13px; color: var(--gold); }
   .pc-valgt-knapper { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12px; }
   .pc-valgt-knapper a, .pc-valgt-knapper button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 12px; border-radius: 10px; font: 700 15px 'Manrope', sans-serif; text-decoration: none; cursor: pointer; }
   .pc-valgt-knapper svg { width: 18px; height: 18px; }
@@ -733,21 +722,18 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .stempel { position: absolute; right: 14px; bottom: 16px; width: 94px; height: 94px; color: var(--gold); transform: rotate(-10deg); pointer-events: none; }
 .d-hero.har-stempel h2, .d-hero.har-stempel .d-meta { padding-right: 104px; }
 
-/* 3. Lista på mobil: stengetiden står på egen linje, uten skilletegn foran */
-.lkort .lkort-meta .apent { display: block; }
-
-/* 4. Tips oss står i det samme vinduet som de andre skjemaene, også på mobil */
+/* 3. Tips oss står i det samme vinduet som de andre skjemaene, også på mobil */
 @media (min-width: 721px) { .info-section .tips-lead { display: none; } }
 @media (max-width: 720px) {
   .info-section .tips-lead { margin: 0 0 18px; padding: 10px 14px; border: 1px solid rgba(200,162,83,.28); border-radius: 12px; font-size: 13.5px; line-height: 1.5; color: #6b551d; }
   .info-section .tips-rules { margin: 14px 0 0; font-size: 12.5px; }
   .info-section .tips-send { min-height: 52px; font-size: 15px; border-radius: 12px; }
   .info-section .kf-select { padding: 10px 30px 10px 12px; }
-  /* 5. Skjemaene på mobil: 16 px i feltene, så iPhone ikke zoomer inn når man trykker i dem */
+  /* 4. Skjemaene på mobil: 16 px i feltene, så iPhone ikke zoomer inn når man trykker i dem */
   .kf-field input, .kf-field textarea, .kf-select { font-size: 16px; }
 }
 
-/* 6. PC: filterraden fyller hele bredden, Kun verifisert får den takkede gullringen når den er på,
+/* 5. PC: filterraden fyller hele bredden, Kun verifisert får den takkede gullringen når den er på,
       og stempelet står i kortet for valgt sted. */
 @media (min-width: 721px) {
   .pc-skille { margin: 0 auto; }
@@ -861,12 +847,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
     <option value="2">$$ · Middels</option>
     <option value="3">$$$ · Dyrere</option>
   </select>
-  <select id="fOpen" aria-label="Filtrer på åpningstid">
-    <option value="">Alle åpningstider</option>
-    <option value="naa">Åpent nå</option>
-    <option value="soon">Stenger snart</option>
-    <option value="closed">Stengt</option>
-  </select>
   <select id="fAlkohol" aria-label="Filtrer på alkoholservering">
     <option value="">Alkohol: alle steder</option>
     <option value="uten">Ingen kjent alkoholservering</option>
@@ -901,21 +881,21 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <section class="info-section" data-section="stott">
         <div data-sprak="nb">
           <h2>Støtt Halalkartet</h2>
-          <p>Halalkartet er gratis å bruke, og ingen steder kan betale seg til en bedre status. Det skal det fortsette å være. Derfor drives kartet av frivillige og av gaver fra folk som deg.</p>
+          <p>Halalkartet er gratis å bruke, og ingen steder kan kjøpe seg en halal-status. Det skal det fortsette å være. Derfor drives kartet av frivillige og av gaver fra folk som deg.</p>
           <ol class="stott-punkter">
-            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Alt går til driften</h3><p>Gaven din går til det som holder kartet oppe: server, kartdata, domene og arbeidet med å sjekke steder og holde informasjonen riktig. De som eier og vedlikeholder nettsiden og appen, tjener 0 kr på dette.</p></div></li>
-            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Overskuddet gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre som donasjon til land og mennesker som trenger det mest, gjennom hjelpeorganisasjoner.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Først til driften</h3><p>Gaven din betaler det som holder kartet oppe: server, kartdata, domene, utviklerkontoer og varemerke. Ingen av gavene går til eiere, utviklere eller andre i teamet.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Resten gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre til hjelpeorganisasjoner som hjelper der behovet er størst.</p></div></li>
           </ol>
-          <p class="stott-merk">Vi kommer til å legge ut en oversikt over hva vi har fått inn, og hvor pengene har gått.</p>
+          <p class="stott-merk">Gavene holdes på en egen konto, adskilt fra alt annet. Vi kommer til å legge ut en oversikt over hva vi har fått inn, og hvor pengene har gått.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Support Halalkartet</h2>
-          <p>Halalkartet is free to use, and no place can pay for a better status. It will stay that way. That is why the map is run by volunteers and by gifts from people like you.</p>
+          <p>Halalkartet is free to use, and no place can buy a halal status. It will stay that way. That is why the map is run by volunteers and by gifts from people like you.</p>
           <ol class="stott-punkter">
-            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Everything goes to running the map</h3><p>Your gift pays for what keeps the map going: server, map data, domain and the work of checking places and keeping the information correct. The people who own and maintain the website and the app earn nothing from it.</p></div></li>
-            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The surplus is given away</h3><p>Whatever is left when the running costs are paid, we pass on as a donation to the countries and people who need it most, through aid organisations.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Running costs first</h3><p>Your gift pays for what keeps the map going: server, map data, domain, developer accounts and trademark. None of the gifts go to the owners, the developers or anyone else on the team.</p></div></li>
+            <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The rest is given away</h3><p>Whatever is left when the running costs are paid, we pass on to aid organisations that help where the need is greatest.</p></div></li>
           </ol>
-          <p class="stott-merk">We will publish an overview of what we have received and where the money has gone.</p>
+          <p class="stott-merk">Gifts are kept in a separate account, apart from everything else. We will publish an overview of what we have received and where the money has gone.</p>
         </div>
         <p class="stott-etikett" id="stottEtikett" data-t>Velg beløp</p>
         <div class="stott-belop" role="radiogroup" aria-labelledby="stottEtikett">
@@ -1085,9 +1065,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
           <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå, og det står i kortet.</p>
           <h3>Hva betyr dollartegnene?</h3>
           <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå.</p>
-          <h3>Hvor pålitelige er åpningstidene?</h3>
-          <p>Klokkeslettene følger norsk tid uansett hvor du selv befinner deg. Grønt betyr åpent, gult at det stenger om under en time, og rødt at det er stengt.</p>
-          <p>Vær oppmerksom på at vi foreløpig bare har registrert når stedene <em>stenger</em>, ikke når de åpner. Tidlig på dagen kan et sted derfor vises som åpent selv om det ikke har åpnet ennå. Ring gjerne først hvis du er ute i god tid.</p>
+          <h3>Hvor finner jeg åpningstidene?</h3>
+          <p>Trykk Åpningstider på stedet, så åpnes det i Google Maps. Der står tidene restauranten selv har lagt inn, og de er oftere oppdatert enn noe vi kan holde styr på. Ring gjerne først hvis du skal komme sent eller på en helligdag.</p>
           <h3>Hva er «Utvalgte steder»?</h3>
           <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
           <h3>Kan jeg dele et sted med noen?</h3>
@@ -1112,9 +1091,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
           <p><b>Halalkartet does not certify places itself.</b> We show the source, the date and who said it, so you can judge for yourself. If a place has no date, we have not confirmed it yet, and the card says so.</p>
           <h3>What do the dollar signs mean?</h3>
           <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
-          <h3>How reliable are the opening hours?</h3>
-          <p>The times follow Norwegian time wherever you are. Green means open, yellow that it closes within an hour, and red that it is closed.</p>
-          <p>Please note that so far we have only recorded when places <em>close</em>, not when they open. Early in the day a place may therefore show as open even if it has not opened yet. Feel free to call first if you are out early.</p>
+          <h3>Where do I find the opening hours?</h3>
+          <p>Tap Opening hours on the place, and it opens in Google Maps. There you see the hours the restaurant has entered itself, which are more often up to date than anything we can keep track of. Feel free to call first if you are going late or on a public holiday.</p>
           <h3>What are “Featured places”?</h3>
           <p>Five places from the map shown at a time, changed every fifth day. The selection is the same for everyone and goes through the whole list in turn.</p>
           <h3>Can I share a place with someone?</h3>
@@ -1210,6 +1188,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=c74ab3c7"></script>
+<script src="app.js?v=515a825c"></script>
 </body>
 </html>
