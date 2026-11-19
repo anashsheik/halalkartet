@@ -16,9 +16,20 @@ const priceLabel = p => '<span class="price pris-' + p + '">' + '$'.repeat(p) + 
 const el = id => document.getElementById(id);
 const erMobil = () => window.innerWidth <= 720;
 
+// Appen
+// Inne i iPhone-appen har halalkartet-app lagt inn window.HalalNative før denne fila kjører. Da brukes telefonens
+// egen posisjon, deling, statuslinje og vibrasjon, og stedene hentes ferske fra halalkartet.no.
+// På nettsiden finnes den ikke. Da er APP null, og alt er som før.
+const APP = window.HalalNative || null;
+if (APP) document.documentElement.classList.add('i-app');
+
 // Språk: norsk er grunnspråket, engelsk slås opp her. Nøkkelen er den norske teksten.
+// Nettsiden starter på norsk. Appen følger språket på telefonen til du velger selv.
 const SPRAK_NOKKEL = 'halalkartet-sprak';
-let sprak = (function () { try { return localStorage.getItem(SPRAK_NOKKEL) === 'en' ? 'en' : 'nb'; } catch (e) { return 'nb'; } })();
+let sprak = (function () {
+  try { const valgt = localStorage.getItem(SPRAK_NOKKEL); if (valgt === 'en' || valgt === 'nb') return valgt; } catch (e) {}
+  return APP && !/^(nb|nn|no)\b/i.test(navigator.language || 'nb') ? 'en' : 'nb';
+})();
 const MANGLER = new Set();
 const ENGELSK = {
   // toppen, menyen og lista
@@ -44,6 +55,9 @@ const ENGELSK = {
   'Trykk på hjertet på et sted for å lagre det her.': 'Tap the heart on a place to save it here.',
   'Fant ikke dataene': 'Could not load the data', 'Prøv å laste siden på nytt.': 'Try reloading the page.',
   'Kartet venter på data': 'The map is waiting for data',
+  'Appen fikk ikke lastet stedene. Lukk appen og åpne den igjen.': 'The app could not load the places. Close the app and open it again.',
+  'Lukk appen og åpne den igjen.': 'Close the app and open it again.',
+  'Du er uten nett. Kartet og nye steder kommer når du er på nett igjen.': 'You are offline. The map and new places will load when you are back online.',
   'Appen fikk ikke lastet {f}. Prøv å laste siden på nytt. Hjelper ikke det, står feilen i nettleserkonsollen.': 'The app could not load {f}. Try reloading the page. If that does not help, the error is shown in the browser console.',
   // status og filtre
   'Verifisert halal': 'Verified halal', 'Delvis halal': 'Partly halal', 'Uavklart': 'Unconfirmed', 'Verifisert': 'Verified', 'Delvis': 'Partly',
@@ -84,6 +98,9 @@ const ENGELSK = {
   'Lenke kopiert': 'Link copied', 'Kunne ikke kopiere lenken': 'Could not copy the link', 'Kopier lenken fra adressefeltet': 'Copy the link from the address bar',
   'Nettleseren din støtter ikke posisjon.': 'Your browser does not support location.',
   'Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.': 'Could not find your location. Check that the browser has access to location.',
+  'Halalkartet har ikke tilgang til posisjonen din. Trykk her for å åpne Innstillinger.': 'Halalkartet does not have access to your location. Tap here to open Settings.',
+  'Stedstjenester er slått av på telefonen. Slå dem på i Innstillinger for å se steder nær deg.': 'Location Services are turned off on your phone. Turn them on in Settings to see places near you.',
+  'Fant ikke posisjonen din akkurat nå. Prøv igjen om litt.': 'Could not find your location right now. Try again in a moment.',
   // skjemaene
   'Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.': 'We are just getting started and are building the map together with you. Tell us about a restaurant you believe is halal, and we will check it.',
   'Restaurantens navn': 'Name of the restaurant', 'påkrevd': 'required', 'frivillig': 'optional', 'Adresse eller by/bydel': 'Address or city/area',
@@ -266,7 +283,12 @@ L.control.zoom({ position: 'topright' }).addTo(map);
 // MapLibre tegner dem og hentes først når pinnene står, så siden ikke venter på det.
 // Lastes ikke MapLibre eller stilen, brukes OpenStreetMaps egne fliser i stedet.
 const KART_STIL = 'https://tiles.openfreemap.org/styles/positron';
-const MAPLIBRE = [
+// I appen ligger MapLibre i appen selv, i de samme versjonene, så kartet ikke venter på en ekstra nedlasting.
+const MAPLIBRE = APP ? [
+  ['link', 'vendor/maplibre-gl.css'],
+  ['script', 'vendor/maplibre-gl.js'],
+  ['script', 'vendor/leaflet-maplibre-gl.js']
+] : [
   ['link', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css', 'sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK'],
   ['script', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js', 'sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp'],
   ['script', 'https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js', 'sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS']
@@ -294,7 +316,7 @@ function lastMaplibre() {
       return new Promise(function (ok, feil) {
         const e = document.createElement(tag);
         if (tag === 'link') { e.rel = 'stylesheet'; e.href = url; } else e.src = url;
-        e.integrity = sri; e.crossOrigin = 'anonymous';
+        if (sri) { e.integrity = sri; e.crossOrigin = 'anonymous'; }
         // stilarket trengs ikke for å tegne, så vi venter bare på skriptene
         if (tag === 'link') ok(); else { e.onload = ok; e.onerror = feil; }
         document.head.appendChild(e);
@@ -311,9 +333,10 @@ function fargelegg(gl) {
       gl.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name'], ['get', 'name:latin']]);
   });
 }
+const RESERVER = new WeakMap();
 function leggTilBakgrunn(kart) {
   const reserve = function () {
-    if (kart.getContainer().isConnected) L.tileLayer(RESERVE_URL, { attribution: RESERVE_KILDE, maxZoom: 19 }).addTo(kart);
+    if (kart.getContainer().isConnected) RESERVER.set(kart, L.tileLayer(RESERVE_URL, { attribution: RESERVE_KILDE, maxZoom: 19 }).addTo(kart));
   };
   lastMaplibre().then(function () {
     if (!kart.getContainer().isConnected) return;
@@ -327,6 +350,14 @@ function leggTilBakgrunn(kart) {
     gl.once('style.load', function () { if (klar) return; klar = true; clearTimeout(vakt); fargelegg(gl); });
     gl.on('error', function () { if (!klar) gaOver(); });
   }).catch(reserve);
+}
+// Appen kan bli åpnet uten nett. Da står kartet på reserveflisene, og det riktige kartet prøves igjen når nettet er tilbake.
+function provBakgrunnIgjen(kart) {
+  const lag = RESERVER.get(kart);
+  if (!lag) return;
+  kart.removeLayer(lag);
+  RESERVER.delete(kart);
+  leggTilBakgrunn(kart);
 }
 leggTilBakgrunn(map);
 map.attributionControl.setPrefix('<a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> ·');
@@ -382,18 +413,83 @@ function track(name, props) {
   try { if (typeof window.plausible === 'function') window.plausible(name, props ? { props: props } : undefined); } catch (e) {}
 }
 
+// Stedene
+// Et sted må ha det kartet trenger. Mangler noe, eller har stedet en status denne utgaven ikke kjenner,
+// hoppes det over i stedet for at hele kartet stopper. Appen kan få nyere data enn den selv er laget for.
+function gyldigSted(s) {
+  return !!s && typeof s.id === 'string' && !!s.id && typeof s.name === 'string' && !!s.name &&
+    Number.isFinite(s.lat) && Number.isFinite(s.lng) && Object.prototype.hasOwnProperty.call(STATUS, s.halalStatus) &&
+    typeof s.bydel === 'string' && Array.isArray(s.cuisines) && s.cuisines.every(c => typeof c === 'string') &&
+    (s.address == null || typeof s.address === 'string') &&
+    (s.price == null || (Number.isInteger(s.price) && s.price >= 0 && s.price <= 5));
+}
+async function hentFil(url) {
+  const res = await fetch(url, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+// Appen henter stedene ferske fra halalkartet.no hver gang den åpnes, så et sted som mister statusen sin
+// ikke blir stående til appen oppdateres. Svarer ikke nettet fort nok, brukes lista fra forrige gang,
+// og har appen aldri vært på nett, lista som fulgte med den.
+const STEDER_URL = 'https://halalkartet.no/spots.json';
+const STEDER_NOKKEL = 'halalkartet-steder';
+const APNE_NOKKEL = 'halalkartet-apne';
+const STEDER_VENT = 2500;              // så lenge venter appen på ferske steder før den starter med dem den har
+const STEDER_PAUSE = 30 * 60 * 1000;   // så lenge etter forrige sjekk ser appen etter nye steder
+let stederVist = '', stederSjekket = 0, nyeStederVenter = false;
+
+// En liste appen kan stole på: nok steder, og de aller fleste hele
+function gyldigListe(liste) {
+  if (!Array.isArray(liste)) return false;
+  const hele = liste.filter(gyldigSted).length;
+  return hele >= 50 && hele >= liste.length * 0.8;
+}
+// Gir null når nettet ikke svarer, eller når lista ikke er til å stole på.
+// Går ikke den vanlige forespørselen gjennom, prøves det én gang til med en adresse ingen mellomlagre har sett før.
+function hentFerske() {
+  const hent = function (url, valg) { return fetch(url, valg).then(function (r) { return r.ok ? r.json() : null; }); };
+  return hent(STEDER_URL, { cache: 'no-cache' })
+    .catch(function () { return hent(STEDER_URL + '?t=' + Date.now()); })
+    .then(function (liste) {
+      if (!gyldigListe(liste)) return null;
+      stederSjekket = Date.now();
+      try { localStorage.setItem(STEDER_NOKKEL, JSON.stringify({ hentet: stederSjekket, steder: liste })); } catch (e) {}
+      return liste;
+    })
+    .catch(function () { return null; });
+}
+function lagredeSteder() {
+  try {
+    const lagret = JSON.parse(localStorage.getItem(STEDER_NOKKEL));
+    // etter en oppdatering av appen er lista som fulgte med, nyere enn den som ble hentet før
+    if (lagret && lagret.hentet > (APP.bygget || 0) && gyldigListe(lagret.steder)) return lagret.steder;
+  } catch (e) {}
+  return null;
+}
+async function hentSteder() {
+  if (!APP) return hentFil('spots.json');
+  const ferske = hentFerske();
+  let liste = navigator.onLine === false ? null
+    : await Promise.race([ferske, new Promise(function (ok) { setTimeout(ok, STEDER_VENT, null); })]);
+  if (!liste) liste = lagredeSteder() || await hentFil('spots.json');
+  stederVist = JSON.stringify(liste);
+  // kom de ferske stedene for sent til starten, vises de neste gang appen hentes fram
+  ferske.then(function (sene) { if (sene && JSON.stringify(sene) !== stederVist) nyeStederVenter = true; });
+  return liste;
+}
+
 (async function boot() {
   try {
-    const res = await fetch('spots.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const alle = await res.json();
+    const alle = await hentSteder();
     if (!Array.isArray(alle)) throw new Error('ikke en liste');
-    // et sted uten koordinater ville stoppet hele kartet
-    HALAL_SPOTS = alle.filter(s => s && Number.isFinite(s.lat) && Number.isFinite(s.lng));
-    if (HALAL_SPOTS.length < alle.length) console.warn('Halalkartet: hopper over ' + (alle.length - HALAL_SPOTS.length) + ' steder uten koordinater');
+    HALAL_SPOTS = alle.filter(gyldigSted);
+    if (HALAL_SPOTS.length < alle.length) console.warn('Halalkartet: hopper over ' + (alle.length - HALAL_SPOTS.length) + ' steder som mangler noe');
     if (!HALAL_SPOTS.length) throw new Error('tomt');
-  } catch (e) { showLoadError(e); return; }
+  } catch (e) { showLoadError(e); if (APP) APP.klar(); return; }
   initApp();
+  // oppstartsbildet i appen blir stående til kartet og stedene er tegnet
+  if (APP) APP.klar();
 })();
 
 function showLoadError(err) {
@@ -402,14 +498,15 @@ function showLoadError(err) {
   el('bunnTekst').textContent = T('Fant ikke dataene');
   const overlay = document.createElement('div');
   overlay.className = 'map-overlay';
-  overlay.innerHTML =
-    '<div class="box"><h2>' + T('Kartet venter på data') + '</h2>' +
+  overlay.innerHTML = APP
+    ? '<div class="box"><h2>' + T('Kartet venter på data') + '</h2><p>' + T('Appen fikk ikke lastet stedene. Lukk appen og åpne den igjen.') + '</p></div>'
+    : '<div class="box"><h2>' + T('Kartet venter på data') + '</h2>' +
     '<p>' + T('Appen fikk ikke lastet {f}. Prøv å laste siden på nytt. Hjelper ikke det, står feilen i nettleserkonsollen.', { f: '<code>spots.json</code>' }) + '</p>' +
     '<p>Utvikler du lokalt, husk at filen må serveres over http. Nettlesere blokkerer henting av lokale filer:</p>' +
     '<p><code>python3 -m http.server</code></p>' +
     '<p>Gå så til <code>http://localhost:8000</code>.</p></div>';
   el('map').appendChild(overlay);
-  if (el('pcListeInnhold')) el('pcListeInnhold').innerHTML = '<div class="pc-tom"><b>' + T('Fant ikke dataene') + '</b>' + T('Prøv å laste siden på nytt.') + '</div>';
+  if (el('pcListeInnhold')) el('pcListeInnhold').innerHTML = '<div class="pc-tom"><b>' + T('Fant ikke dataene') + '</b>' + T(APP ? 'Lukk appen og åpne den igjen.' : 'Prøv å laste siden på nytt.') + '</div>';
 }
 
 function initApp() {
@@ -463,10 +560,79 @@ function initApp() {
   merkSkjemaUtenMottak();
   wirePopupActions();
   wireShortcuts();
+  wireApp();
   render();
   applyHash();
   window.addEventListener('hashchange', function () { if (location.hash.slice(1) !== encodeURIComponent(activeId || '')) applyHash(); });
+  apneIgjen();
 
+}
+
+// Appen: statuslinje, vibrasjon, nye steder og nett som kommer og går
+// Statuslinja øverst får mørk tekst over lyse flater (filterarket og Lagret) og lys tekst over grønt
+let statusLys = null;
+function oppdaterStatuslinje() {
+  const lyst = !el('filterark').hidden || (document.body.classList.contains('fane-lagret') && el('detalj').hidden);
+  if (lyst === statusLys) return;
+  statusLys = lyst;
+  APP.statuslinje(lyst ? 'mork' : 'lys');
+}
+// teksten «Om stedet: » som appen selv legger inn i Si ifra om feil, teller ikke som påbegynt
+function skjemaPabegynt() {
+  return [...document.querySelectorAll('.kf-field input, .kf-field textarea')].some(function (x) { return x.value.trim() && x.value !== x.dataset.forslag; });
+}
+// Laster appen på nytt med de nye stedene. Stedssiden du har oppe åpnes igjen, og et skjema du har begynt på får stå i fred.
+function visNyeSteder() {
+  if (skjemaPabegynt()) { nyeStederVenter = true; return; }
+  try { if (!el('detalj').hidden && detaljId) sessionStorage.setItem(APNE_NOKKEL, detaljId); } catch (e) {}
+  location.reload();
+}
+// straks: bytt med en gang. Ellers venter de nye stedene til neste gang appen hentes fram.
+function sjekkNyeSteder(straks) {
+  hentFerske().then(function (liste) {
+    if (!liste || JSON.stringify(liste) === stederVist) return;
+    if (straks) visNyeSteder(); else nyeStederVenter = true;
+  });
+}
+function apneIgjen() {
+  if (!APP) return;
+  let id = null;
+  try { id = sessionStorage.getItem(APNE_NOKKEL); sessionStorage.removeItem(APNE_NOKKEL); } catch (e) {}
+  if (id && byId(id)) apneDetalj(id);
+}
+function utenNett() { toast(T('Du er uten nett. Kartet og nye steder kommer når du er på nett igjen.')); }
+function wireApp() {
+  if (!APP) return;
+  const obs = new MutationObserver(oppdaterStatuslinje);
+  obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  ['filterark', 'detalj'].forEach(function (id) { obs.observe(el(id), { attributes: true, attributeFilter: ['hidden'] }); });
+  oppdaterStatuslinje();
+
+  // et lite dunk i hånda når man lagrer et sted eller slår et filter av og på
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-lagre], .hbrikke, .bryter, .segment button, .fa-brikker button, .fa-pris button')) APP.vibrer();
+  });
+
+  // Når appen hentes fram igjen, ser den etter nye steder hvis det er en stund siden sist.
+  // Telefonen sier fra på to måter, så «borte» sørger for at det bare skjer én gang.
+  let borte = false;
+  const gikkBort = function () { borte = true; };
+  const komTilbake = function () {
+    if (!borte) return;
+    borte = false;
+    if (nyeStederVenter) { nyeStederVenter = false; visNyeSteder(); }
+    else if (Date.now() - stederSjekket >= STEDER_PAUSE) sjekkNyeSteder(true);
+  };
+  document.addEventListener('visibilitychange', function () { if (document.hidden) gikkBort(); else komTilbake(); });
+  document.addEventListener('pause', gikkBort);
+  document.addEventListener('resume', komTilbake);
+
+  window.addEventListener('online', function () {
+    provBakgrunnIgjen(map);
+    if (Date.now() - stederSjekket >= STEDER_PAUSE) sjekkNyeSteder(false);
+  });
+  window.addEventListener('offline', utenNett);
+  if (navigator.onLine === false) utenNett();
 }
 
 // Nullstill tar alt tilbake til start uten å laste siden på nytt; kartet blir stående der det er
@@ -1212,7 +1378,7 @@ function wireMobil() {
       setTimeout(function () {
         openInfo('feil');
         const felt = document.querySelector('#kontaktForm textarea[name="melding"]');
-        if (felt && sted && !felt.value) felt.value = T('Om {navn}: ', { navn: sted.name });
+        if (felt && sted && !felt.value) { felt.value = T('Om {navn}: ', { navn: sted.name }); felt.dataset.forslag = felt.value; }
       }, 60);
     }
   });
@@ -1414,8 +1580,13 @@ function wirePopupActions() {
   });
 }
 function shareSpot(s) {
-  const url = location.origin + location.pathname + '#' + encodeURIComponent(s.id);
+  // appen deler en lenke til nettsiden, så den virker også for dem som ikke har appen
+  const url = (APP ? 'https://halalkartet.no/' : location.origin + location.pathname) + '#' + encodeURIComponent(s.id);
   track('del_sted', { navn: s.name });
+  if (APP) {
+    APP.del({ title: s.name, text: s.name + ' – ' + T(STATUS[s.halalStatus].label), url: url }).catch(function () {});
+    return;
+  }
   if (navigator.share) {
     navigator.share({ title: s.name, text: s.name + ' – ' + T(STATUS[s.halalStatus].label), url: url })
       .catch(function () {});
@@ -1430,7 +1601,8 @@ function shareSpot(s) {
 }
 
 let toastTimer = null;
-function toast(msg) {
+// handling: det som skjer når man trykker på meldingen. Da blir den stående lenger.
+function toast(msg, handling) {
   let t = el('toast');
   if (!t) {
     t = document.createElement('div');
@@ -1438,9 +1610,11 @@ function toast(msg) {
     document.body.appendChild(t);
   }
   t.textContent = msg;
+  t.onclick = handling || null;
+  t.classList.toggle('trykk', !!handling);
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, handling ? 6000 : 2600);
 }
 
 // Tastatur
@@ -1469,11 +1643,11 @@ function locateUser() {
   const knapper = [el('nearme'), el('pcNaer'), el('pcNaermest')].filter(Boolean);
   const laster = paa => knapper.forEach(k => k.classList.toggle('loading', paa));
   track('naer_meg');
-  if (!navigator.geolocation) { toast(T('Nettleseren din støtter ikke posisjon.')); return; }
+  if (!APP && !navigator.geolocation) { toast(T('Nettleseren din støtter ikke posisjon.')); return; }
   laster(true);
   // svarer man aldri på spørsmålet om posisjon, skal knappen ikke bli stående låst
   const slipp = setTimeout(() => laster(false), 15000);
-  navigator.geolocation.getCurrentPosition(pos => {
+  const funnet = pos => {
     clearTimeout(slipp);
     userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
     if (userMarker) map.removeLayer(userMarker);
@@ -1488,7 +1662,8 @@ function locateUser() {
       pcGruppe = false; el('pcSort').value = '';
     }
     render();
-  }, () => {
+  };
+  const ikkeFunnet = feil => {
     clearTimeout(slipp);
     laster(false);
     track('naer_meg_avslag');
@@ -1496,8 +1671,16 @@ function locateUser() {
       el('fSort').value = '';
       pcGruppe = true; el('pcSort').value = 'bydel';
     }
-    toast(T('Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.'));
-  }, { enableHighAccuracy: true, timeout: 10000 });
+    // appen vet hvorfor det ikke gikk, og kan sende deg rett til Innstillinger
+    const grunn = APP && feil ? feil.grunn : null;
+    if (grunn === 'nektet') toast(T('Halalkartet har ikke tilgang til posisjonen din. Trykk her for å åpne Innstillinger.'), APP.innstillinger);
+    else if (grunn === 'av') toast(T('Stedstjenester er slått av på telefonen. Slå dem på i Innstillinger for å se steder nær deg.'));
+    else if (APP) toast(T('Fant ikke posisjonen din akkurat nå. Prøv igjen om litt.'));
+    else toast(T('Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.'));
+  };
+  // i appen spør telefonen selv om lov første gang, med appens egen forklaring
+  if (APP) APP.posisjon().then(funnet, ikkeFunnet);
+  else navigator.geolocation.getCurrentPosition(funnet, ikkeFunnet, { enableHighAccuracy: true, timeout: 10000 });
 }
 
 // Infovinduet
@@ -1512,6 +1695,8 @@ function wireInfo() {
   });
 }
 function openInfo(section) {
+  // Støtt oss er tatt ut av appen inntil videre
+  if (APP && section === 'stott') return;
   lastFocus = document.activeElement;
   track('apnet_side', { side: section });
   el('infoScrim').classList.add('open');
@@ -1619,6 +1804,7 @@ function sendSkjema(f, btn, onOk) {
   const kontakt = String(data.get('kontakt') || '').trim();
   // da kan vi svare rett fra e-posten
   if (kontakt.indexOf('@') > 0) data.set('_replyto', kontakt);
+  if (APP) data.set('sendt fra', 'iPhone-appen');
   const body = new URLSearchParams(data).toString();
   btn.disabled = true; btn.textContent = T('Sender');
   fetch(SKJEMA_ENDEPUNKT, {

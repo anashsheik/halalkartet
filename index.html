@@ -390,7 +390,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .knapp.primar { background: var(--emerald); border-color: var(--emerald); color: var(--ivory); }
 .knapp.primar svg { color: var(--gold); }
 .hjerte.knapp-hjerte { width: 54px; height: 54px; border: 1px solid var(--kort-strek); border-radius: 16px; background: var(--kort-bak); }
-.d-topp { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; margin-bottom: -70px; padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px; pointer-events: none; transition: background .2s, box-shadow .2s; }
+.d-topp { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; margin-bottom: calc(-70px - env(safe-area-inset-top, 0px)); padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 12px; pointer-events: none; transition: background .2s, box-shadow .2s; }
 .detalj.rullet .d-topp { background: var(--emerald); box-shadow: 0 4px 16px rgba(9,28,20,.25); }
 .d-topp > * { pointer-events: auto; }
 .d-luft { flex: 1; }
@@ -689,6 +689,24 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .utv-rad .skjold, .utv-rad .skjold > svg { width: 20px; height: 22px; }
 .fane .fane-stott { color: var(--gull-tekst); font-weight: 800; }
 .fane .fane-stott svg { color: var(--gold); }
+
+/* ===== Appen ===== */
+/* Klassen i-app finnes bare inne i iPhone-appen. På nettsiden gjør ingenting av dette noe. */
+/* Støtt oss er tatt ut av appen inntil videre, så fanelinja har fem faner */
+.i-app .fane-stott, .i-app .mer-stott, .i-app .skuff-stott, .i-app .pc-stott, .i-app .info-section[data-section="stott"] { display: none !important; }
+@media (max-width: 720px) { .i-app .fane { grid-template-columns: repeat(5, 1fr); } }
+/* tekst som bare gjelder nettsiden, eller bare appen */
+html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
+/* I en app markerer man ikke knapper og menyer ved å holde fingeren på dem. Teksten på stedssiden og i infovinduet kan fortsatt kopieres. */
+.i-app body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.i-app input, .i-app textarea, .i-app .d-kropp, .i-app .info-body { -webkit-user-select: text; user-select: text; }
+/* infovinduet holder seg unna statuslinja og hjemstreken */
+@media (max-width: 720px) {
+  .i-app .info-scrim { padding-top: calc(env(safe-area-inset-top, 0px) + 12px); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px); }
+  .i-app .info-card { max-height: 100%; }
+}
+/* en melding man kan trykke på */
+.toast.trykk.show { pointer-events: auto; cursor: pointer; }
 
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
 .toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart, body.vis-liste:not(.fane-lagret) .vis-kart, .stott-gi,
@@ -1000,39 +1018,53 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
       <section class="info-section" data-section="personvern">
         <div data-sprak="nb">
           <h2>Personvern</h2>
-          <p>Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
+          <p class="kun-nett">Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
+          <p class="kun-app">Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker appen.</p>
           <h3>Ingen konto og ingen sporing</h3>
-          <p>Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
-          <h3>Besøksstatistikk</h3>
-          <p>Vi teller besøk med en tjeneste for besøkstelling som har servere i EU. Den bruker ingen informasjonskapsler, lagrer ingenting i nettleseren din og lagrer ikke IP-adressen din. Vi ser hvilke sider som åpnes, hvilket nettsted du eventuelt kom fra, land, nettleser og hvilke knapper og filtre som brukes. Ikke det du søker på, og ikke det du skriver i skjemaene. Tallene er samlet, og vi kan ikke se hvem du er.</p>
+          <p class="kun-nett">Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
+          <p class="kun-app">Du trenger ingen konto for å bruke Halalkartet. Appen sporer deg ikke, teller ikke hva du gjør og viser ingen reklame. Fra App Store får vi bare samlede tall, som hvor mange som har lastet ned appen.</p>
+          <h3 class="kun-app">Lagret på telefonen</h3>
+          <p class="kun-app">Stedene du lagrer og språket du velger, lagres bare på telefonen din. Sletter du appen, slettes de også.</p>
+          <h3 class="kun-nett">Besøksstatistikk</h3>
+          <p class="kun-nett">Vi teller besøk med en tjeneste for besøkstelling som har servere i EU. Den bruker ingen informasjonskapsler, lagrer ingenting i nettleseren din og lagrer ikke IP-adressen din. Vi ser hvilke sider som åpnes, hvilket nettsted du eventuelt kom fra, land, nettleser og hvilke knapper og filtre som brukes. Ikke det du søker på, og ikke det du skriver i skjemaene. Tallene er samlet, og vi kan ikke se hvem du er.</p>
           <h3>Posisjon</h3>
-          <p>Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
+          <p class="kun-nett">Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
+          <p class="kun-app">Trykker du på Nær meg, spør telefonen om appen kan bruke posisjonen din for å vise steder i nærheten. Posisjonen brukes bare på telefonen din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
           <h3>Veibeskrivelse</h3>
-          <p>Trykker du på Veibeskrivelse eller Åpne i kart-appen, åpnes en karttjeneste i en ny fane med adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
+          <p class="kun-nett">Trykker du på Veibeskrivelse, Åpningstider eller Åpne i kart-appen, åpnes en karttjeneste i en ny fane med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
+          <p class="kun-app">Trykker du på Veibeskrivelse, Åpningstider eller Åpne i kart-appen, åpnes en karttjeneste utenfor Halalkartet med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
           <h3>Skjemaene</h3>
           <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
           <p>Skjemaene sendes gjennom en skjematjeneste som videresender dem til oss på e-post. Den tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
           <h3>Kart og drift</h3>
-          <p>Siden ligger hos en leverandør av nettsidedrift, og kartet og kartbiblioteket hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere siden og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
-          <p class="muted">Sist oppdatert oktober 2026.</p>
+          <p class="kun-nett">Siden ligger hos en leverandør av nettsidedrift, og kartet og kartbiblioteket hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere siden og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
+          <p class="kun-app">Appen henter oppdaterte steder fra halalkartet.no, og kartet hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere stedene og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
+          <p class="muted">Sist oppdatert november 2026.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Privacy</h2>
-          <p>Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the site.</p>
+          <p class="kun-nett">Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the site.</p>
+          <p class="kun-app">Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the app.</p>
           <h3>No account and no tracking</h3>
-          <p>You do not need an account to use Halalkartet. We use no tracking cookies and show no ads.</p>
-          <h3>Visitor statistics</h3>
-          <p>We count visits with a visitor counting service that has servers in the EU. It uses no cookies, stores nothing in your browser and does not store your IP address. We see which pages are opened, which website you came from, if any, country, browser and which buttons and filters are used. Not what you search for, and not what you write in the forms. The numbers are aggregated, and we cannot see who you are.</p>
+          <p class="kun-nett">You do not need an account to use Halalkartet. We use no tracking cookies and show no ads.</p>
+          <p class="kun-app">You do not need an account to use Halalkartet. The app does not track you, does not count what you do and shows no ads. From the App Store we only get aggregated numbers, such as how many people have downloaded the app.</p>
+          <h3 class="kun-app">Stored on your phone</h3>
+          <p class="kun-app">The places you save and the language you choose are only stored on your phone. If you delete the app, they are deleted too.</p>
+          <h3 class="kun-nett">Visitor statistics</h3>
+          <p class="kun-nett">We count visits with a visitor counting service that has servers in the EU. It uses no cookies, stores nothing in your browser and does not store your IP address. We see which pages are opened, which website you came from, if any, country, browser and which buttons and filters are used. Not what you search for, and not what you write in the forms. The numbers are aggregated, and we cannot see who you are.</p>
           <h3>Location</h3>
-          <p>If you tap Near me, the browser asks for your location to show places nearby. The location is only used in your browser there and then. It is not stored, and it is not sent to us.</p>
+          <p class="kun-nett">If you tap Near me, the browser asks for your location to show places nearby. The location is only used in your browser there and then. It is not stored, and it is not sent to us.</p>
+          <p class="kun-app">If you tap Near me, your phone asks whether the app may use your location to show places nearby. The location is only used on your phone there and then. It is not stored, and it is not sent to us.</p>
           <h3>Directions</h3>
-          <p>If you tap Directions or Open in maps app, a map service opens in a new tab with the address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
+          <p class="kun-nett">If you tap Directions, Opening hours or Open in maps app, a map service opens in a new tab with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
+          <p class="kun-app">If you tap Directions, Opening hours or Open in maps app, a map service opens outside Halalkartet with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
           <h3>The forms</h3>
           <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, let us know and we will.</p>
           <p>The forms are sent through a form service that forwards them to us by email. It keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
           <h3>Map and hosting</h3>
-          <p>The site is hosted by a web hosting provider, and the map and map library are loaded from external map providers. These services may see technical details such as IP address in order to deliver the site and the map. We do not share personal data with anyone for advertising or sale.</p>
-          <p class="muted">Last updated October 2026.</p>
+          <p class="kun-nett">The site is hosted by a web hosting provider, and the map and map library are loaded from external map providers. These services may see technical details such as IP address in order to deliver the site and the map. We do not share personal data with anyone for advertising or sale.</p>
+          <p class="kun-app">The app fetches updated places from halalkartet.no, and the map is loaded from external map providers. These services may see technical details such as IP address in order to deliver the places and the map. We do not share personal data with anyone for advertising or sale.</p>
+          <p class="muted">Last updated November 2026.</p>
         </div>
       </section>
       <section class="info-section" data-section="vilkar">
@@ -1188,6 +1220,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=515a825c"></script>
+<script src="app.js?v=4d3207d1"></script>
 </body>
 </html>
