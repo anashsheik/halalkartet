@@ -708,6 +708,15 @@ html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
 /* en melding man kan trykke på */
 .toast.trykk.show { pointer-events: auto; cursor: pointer; }
 
+/* ===== Etter første prøve på telefon ===== */
+/* Nær meg: pila fylles når kartet vet hvor du er */
+.nearme.aktiv svg { fill: currentColor; }
+/* Del-knappen på stedssiden har tekst, så den er lett å finne */
+.d-rund.d-del { display: inline-flex; align-items: center; gap: 7px; width: auto; padding: 0 14px 0 12px; font: 700 14px 'Manrope', sans-serif; }
+/* Send et tips til, under takkemeldingen */
+.tips-ny { display: block; width: 100%; min-height: 48px; margin-top: 12px; padding: 0 20px; border: 1px solid var(--emerald); border-radius: 12px; background: transparent; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
+.tips-ny:active { transform: scale(.98); }
+
 /* Stjernemønsteret på alle grønne flater. Pinnene, klyngene og navnelappene er for små og står uten. */
 .toppfelt, .d-hero, .detalj.rullet .d-topp, .knapp.primar, .dknapp.primar, .fa-vis, .vis-kart, body.vis-liste:not(.fane-lagret) .vis-kart, .stott-gi,
 .segment button[aria-checked="true"], .fa-brikker button[aria-pressed="true"], .fa-pris button[aria-pressed="true"],
@@ -987,6 +996,7 @@ html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
           </form>
           <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
           <p class="kf-ok" id="tipsOk" hidden data-t>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
+          <button type="button" class="tips-ny" id="tipsNy" hidden data-t>Send et tips til</button>
           <p class="tips-rules" data-t>Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
         </div>
       </section>
@@ -1220,6 +1230,6 @@ html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=4d3207d1"></script>
+<script src="app.js?v=68f5dbea"></script>
 </body>
 </html>

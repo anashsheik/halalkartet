@@ -91,7 +91,7 @@ const ENGELSK = {
   'Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.': 'We have not yet written down how the status was confirmed.',
   'Ikke bekreftet med dato': 'Not confirmed with a date', 'Sist bekreftet {d}': 'Last confirmed {d}', ', over et halvår siden': ', more than six months ago',
   'Adresse': 'Address', 'Telefon': 'Phone', 'Serveres': 'Served', 'Ingen kjent servering': 'None known',
-  'Tilbake': 'Back', 'Del {navn}': 'Share {navn}', 'Om halal-statusen': 'About the halal status',
+  'Tilbake': 'Back', 'Del {navn}': 'Share {navn}', 'Del': 'Share', 'Send et tips til': 'Suggest another place', 'Om halal-statusen': 'About the halal status',
   'Halalkartet sertifiserer ikke selv.': 'Halalkartet does not certify places itself.', 'Hva betyr statusene?': 'What do the statuses mean?',
   'Åpne i kart-appen': 'Open in maps app', 'Ser du noe som er feil?': 'Something wrong?', 'Si ifra, så sjekker vi stedet på nytt.': 'Let us know, and we will check the place again.',
   'Si ifra': 'Report', 'Om {navn}: ': 'About {navn}: ',
@@ -289,8 +289,8 @@ const MAPLIBRE = APP ? [
   ['script', 'vendor/maplibre-gl.js'],
   ['script', 'vendor/leaflet-maplibre-gl.js']
 ] : [
-  ['link', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.css', 'sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK'],
-  ['script', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.0/dist/maplibre-gl.js', 'sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp'],
+  ['link', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.1/dist/maplibre-gl.css', 'sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK'],
+  ['script', 'https://cdn.jsdelivr.net/npm/maplibre-gl@5.24.1/dist/maplibre-gl.js', 'sha384-nXMl9YiLoSG5KBPTFgvxVuIqQQcqIvo0bFrvoEaGJC6r7IibIzF1S36Zbf/sKBtL'],
   ['script', 'https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js', 'sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS']
 ];
 const KART_KILDE = '<a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
@@ -1240,7 +1240,7 @@ function detaljHtml(s) {
   return '<div class="d-topp">' +
       '<button type="button" class="d-rund" id="detaljTilbake" aria-label="' + T('Tilbake') + '">' + IKON2.tilbake + '</button>' +
       '<span class="d-luft"></span>' +
-      '<button type="button" class="d-rund" data-act="del" data-id="' + esc(s.id) + '" aria-label="' + esc(T('Del {navn}', { navn: s.name })) + '">' + IKON2.del + '</button>' +
+      '<button type="button" class="d-rund d-del" data-act="del" data-id="' + esc(s.id) + '" aria-label="' + esc(T('Del {navn}', { navn: s.name })) + '">' + IKON2.del + '<span>' + T('Del') + '</span></button>' +
       hjerte(s, 'd-rund') +
       '<a class="d-merke" href="./" aria-label="' + T('Halalkartet, start på nytt') + '">حلال</a>' +
     '</div>' +
@@ -1649,18 +1649,20 @@ function locateUser() {
   const slipp = setTimeout(() => laster(false), 15000);
   const funnet = pos => {
     clearTimeout(slipp);
-    userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-    if (userMarker) map.removeLayer(userMarker);
-    userMarker = L.marker([userLoc.lat, userLoc.lng], {
-      icon: L.divIcon({ className: '', html: '<div class="userloc"></div>', iconSize: [16,16], iconAnchor: [8,8] }),
-      zIndexOffset: 1000
-    }).addTo(map);
-    goTo(userLoc.lat, userLoc.lng, 14.5);
+    // knappen slippes først, så den aldri blir stående låst om noe under skulle gå galt
     laster(false);
+    visPosisjon(pos);
+    goTo(userLoc.lat, userLoc.lng, 14.5);
     if (el('fSort') && !el('fSort').value) {
       el('fSort').value = 'avstand';
       pcGruppe = false; el('pcSort').value = '';
     }
+    render();
+  };
+  // Appen svarer først raskt og så nøyaktigere. Da flyttes prikken, og kartet bare hvis prikken havnet utenfor bildet.
+  const finere = pos => {
+    visPosisjon(pos);
+    if (!map.getBounds().contains([userLoc.lat, userLoc.lng])) goTo(userLoc.lat, userLoc.lng, map.getZoom());
     render();
   };
   const ikkeFunnet = feil => {
@@ -1679,8 +1681,18 @@ function locateUser() {
     else toast(T('Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.'));
   };
   // i appen spør telefonen selv om lov første gang, med appens egen forklaring
-  if (APP) APP.posisjon().then(funnet, ikkeFunnet);
+  if (APP) APP.posisjon(finere).then(funnet, ikkeFunnet);
   else navigator.geolocation.getCurrentPosition(funnet, ikkeFunnet, { enableHighAccuracy: true, timeout: 10000 });
+}
+// Setter den blå prikken der du står. Pila på knappen fylles, så det synes at kartet vet hvor du er.
+function visPosisjon(pos) {
+  userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+  if (userMarker) map.removeLayer(userMarker);
+  userMarker = L.marker([userLoc.lat, userLoc.lng], {
+    icon: L.divIcon({ className: '', html: '<div class="userloc"></div>', iconSize: [16,16], iconAnchor: [8,8] }),
+    zIndexOffset: 1000
+  }).addTo(map);
+  el('nearme').classList.add('aktiv');
 }
 
 // Infovinduet
@@ -1699,6 +1711,8 @@ function openInfo(section) {
   if (APP && section === 'stott') return;
   lastFocus = document.activeElement;
   track('apnet_side', { side: section });
+  if (!el('tipsOk').hidden) nyttTips();
+  el('kontaktOk').hidden = true;
   el('infoScrim').classList.add('open');
   showInfo(section);
   el('infoClose').focus();
@@ -1844,8 +1858,20 @@ function wireTipsForm() {
       el('tipsForm').hidden = true;
       el('tipsSend').hidden = true;
       el('tipsOk').hidden = false;
+      el('tipsNy').hidden = false;
     });
   });
+  el('tipsNy').addEventListener('click', function () {
+    nyttTips();
+    f.querySelector('input[name="restaurant"]').focus();
+  });
+}
+// Tar fram tipsskjemaet igjen etter et sendt tips
+function nyttTips() {
+  el('tipsOk').hidden = true;
+  el('tipsNy').hidden = true;
+  el('tipsForm').hidden = false;
+  el('tipsSend').hidden = false;
 }
 
 // Kontaktskjema
