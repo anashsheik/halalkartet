@@ -696,7 +696,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .i-app .fane-stott, .i-app .mer-stott, .i-app .skuff-stott, .i-app .pc-stott, .i-app .info-section[data-section="stott"] { display: none !important; }
 @media (max-width: 720px) { .i-app .fane { grid-template-columns: repeat(5, 1fr); } }
 /* tekst som bare gjelder nettsiden, eller bare appen */
-html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
+html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-nett { display: none !important; }
 /* I en app markerer man ikke knapper og menyer ved å holde fingeren på dem. Teksten på stedssiden og i infovinduet kan fortsatt kopieres. */
 .i-app body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 .i-app input, .i-app textarea, .i-app .d-kropp, .i-app .info-body { -webkit-user-select: text; user-select: text; }
@@ -769,6 +769,23 @@ html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
   .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -3px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
   .pc-valgt .stempel { right: 64px; top: 9px; bottom: auto; width: 76px; height: 76px; }
   .pc-valgt.har-stempel h3, .pc-valgt.har-stempel .pc-valgt-meta { padding-right: 84px; }
+}
+
+/* ===== Smale skjermer: den første iPhone SE er 320 punkter bred ===== */
+@media (max-width: 340px) {
+  /* valgt sted: knappene deler plassen uten å stikke utenfor */
+  .vkort-knapper { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 48px; gap: 8px; }
+  .vkort-knapper .knapp { gap: 6px; padding: 0 8px; font-size: 14.5px; }
+  .hjerte.knapp-hjerte { width: 48px; }
+  /* stedssiden: Veibeskrivelse på egen rad, med Ring og Nett under */
+  .d-knapper.k3 { grid-template-columns: 1fr 1fr; }
+  .d-knapper.k3 .primar { grid-column: 1 / -1; }
+  /* navnet og stempelet får plass ved siden av hverandre */
+  .d-hero h2 { font-size: 32px; overflow-wrap: anywhere; }
+  .stempel { right: 10px; width: 74px; height: 74px; }
+  .d-hero.har-stempel h2, .d-hero.har-stempel .d-meta { padding-right: 82px; }
+  /* raden med merkelapp og verdi trenger mindre luft */
+  .d-info > div { grid-template-columns: 112px 1fr; }
 }
 </style>
   <link rel="icon" type="image/svg+xml" href="halal_kartet_logo.svg">
@@ -1230,6 +1247,6 @@ html:not(.i-app) .kun-app, .i-app .kun-nett { display: none !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=68f5dbea"></script>
+<script src="app.js?v=8866a1dc"></script>
 </body>
 </html>

@@ -388,6 +388,9 @@ let HALAL_SPOTS = [];
 const markers = {};
 let activeId = null;
 let userLoc = null, userMarker = null;
+// når posisjonen sist ble funnet, og hvor lenge den regnes som fersk nok til å flytte kartet uten å vente
+let posisjonTid = 0;
+const POSISJON_FERSK = 2 * 60 * 1000;
 let lastFocus = null;
 // Strenghet
 const STRICT_STEPS = [
@@ -1545,10 +1548,25 @@ function visPopup(id, ferdig) {
   forsok(4);
 }
 
+// Lenker rett til en infoside: halalkartet.no/#personvern åpner Personvern, og #kontakt åpner Kontakt oss.
+// De engelske navnene bytter også til engelsk. Med -app bak vises teksten slik den står i appen,
+// og det er den adressen App Store peker på.
+const INFOLENKER = {
+  'personvern': ['personvern'], 'vilkar': ['vilkar'], 'faq': ['faq'], 'om': ['om'], 'kontakt': ['kontakt'], 'tips': ['tips'],
+  'privacy': ['personvern', 'en'], 'terms': ['vilkar', 'en'], 'about': ['om', 'en'], 'contact': ['kontakt', 'en'],
+  'personvern-app': ['personvern', '', true], 'privacy-app': ['personvern', 'en', true]
+};
+function infolenke(id) { return Object.prototype.hasOwnProperty.call(INFOLENKER, id) ? INFOLENKER[id] : null; }
 function applyHash() {
   let id = '';
   try { id = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { return false; }
   if (id && byId(id)) { setActive(id, true); return true; }
+  const side = infolenke(id);
+  if (side) {
+    if (side[1] === 'en' && sprak !== 'en') byttSprak();
+    openInfo(side[0], side[2] === true);
+    return true;
+  }
   return false;
 }
 
@@ -1644,15 +1662,20 @@ function locateUser() {
   const laster = paa => knapper.forEach(k => k.classList.toggle('loading', paa));
   track('naer_meg');
   if (!APP && !navigator.geolocation) { toast(T('Nettleseren din støtter ikke posisjon.')); return; }
-  laster(true);
+  // Vet kartet allerede hvor du er, flytter det seg dit med en gang, og posisjonen friskes opp i bakgrunnen.
+  // Ellers snurrer knappen til telefonen har svart.
+  const kjent = !!userLoc && Date.now() - posisjonTid < POSISJON_FERSK;
+  if (kjent) goTo(userLoc.lat, userLoc.lng, 14.5); else laster(true);
   // svarer man aldri på spørsmålet om posisjon, skal knappen ikke bli stående låst
   const slipp = setTimeout(() => laster(false), 15000);
+  const utenfor = () => !map.getBounds().contains([userLoc.lat, userLoc.lng]);
   const funnet = pos => {
     clearTimeout(slipp);
     // knappen slippes først, så den aldri blir stående låst om noe under skulle gå galt
     laster(false);
     visPosisjon(pos);
-    goTo(userLoc.lat, userLoc.lng, 14.5);
+    if (!kjent) goTo(userLoc.lat, userLoc.lng, 14.5);
+    else if (utenfor()) goTo(userLoc.lat, userLoc.lng, map.getZoom());
     if (el('fSort') && !el('fSort').value) {
       el('fSort').value = 'avstand';
       pcGruppe = false; el('pcSort').value = '';
@@ -1662,12 +1685,14 @@ function locateUser() {
   // Appen svarer først raskt og så nøyaktigere. Da flyttes prikken, og kartet bare hvis prikken havnet utenfor bildet.
   const finere = pos => {
     visPosisjon(pos);
-    if (!map.getBounds().contains([userLoc.lat, userLoc.lng])) goTo(userLoc.lat, userLoc.lng, map.getZoom());
+    if (utenfor()) goTo(userLoc.lat, userLoc.lng, map.getZoom());
     render();
   };
   const ikkeFunnet = feil => {
     clearTimeout(slipp);
     laster(false);
+    // kartet står allerede på posisjonen fra i sted. Da sier vi bare fra hvis appen har mistet lov til å bruke posisjon.
+    if (kjent && !(feil && (feil.grunn === 'nektet' || feil.grunn === 'av' || feil.code === 1))) return;
     track('naer_meg_avslag');
     if (el('fSort') && el('fSort').value === 'avstand') {
       el('fSort').value = '';
@@ -1687,6 +1712,7 @@ function locateUser() {
 // Setter den blå prikken der du står. Pila på knappen fylles, så det synes at kartet vet hvor du er.
 function visPosisjon(pos) {
   userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+  posisjonTid = Date.now();
   if (userMarker) map.removeLayer(userMarker);
   userMarker = L.marker([userLoc.lat, userLoc.lng], {
     icon: L.divIcon({ className: '', html: '<div class="userloc"></div>', iconSize: [16,16], iconAnchor: [8,8] }),
@@ -1706,9 +1732,11 @@ function wireInfo() {
     if (e.key === 'Tab') trapFocus(e);
   });
 }
-function openInfo(section) {
+function openInfo(section, appTekst) {
   // Støtt oss er tatt ut av appen inntil videre
   if (APP && section === 'stott') return;
+  // på nettsiden vises appens utgave av teksten bare når lenken ber om det
+  document.documentElement.classList.toggle('app-tekst', appTekst === true);
   lastFocus = document.activeElement;
   track('apnet_side', { side: section });
   if (!el('tipsOk').hidden) nyttTips();
@@ -1721,6 +1749,11 @@ function closeInfo() {
   const scrim = el('infoScrim');
   if (!scrim.classList.contains('open')) return;
   scrim.classList.remove('open');
+  document.documentElement.classList.remove('app-tekst');
+  // kom man hit med en lenke til infosiden, ryddes den bort fra adressen når vinduet lukkes
+  let hash = '';
+  try { hash = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+  if (infolenke(hash)) history.replaceState(history.state, '', location.pathname + location.search);
   if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
   lastFocus = null;
 }
