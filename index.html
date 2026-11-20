@@ -1067,6 +1067,9 @@ html:not(.i-app) #faneNaer { display: none !important; }
   /* den første iPhone SE: Veibeskrivelse uten pil, så ordet får plass */
   .vkort-knapper .knapp.primar svg { display: none; }
 }
+
+/* Utvalgte steder på de smaleste telefonene: delene av linja under navnet kan brytes inni seg, så prisen ikke klippes bort */
+@media (max-width: 340px) { .utv-topp .utv-meta { font-size: 13.5px; } .utv-topp .fakta > span > * { white-space: normal; } }
 </style>
   <link rel="icon" type="image/svg+xml" href="halal_kartet_logo.svg">
   <link rel="apple-touch-icon" href="hjemskjerm_logo.png">
