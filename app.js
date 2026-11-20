@@ -135,7 +135,7 @@ const ENGELSK = {
   'Menyen er halal, men stedet serverer også svin.': 'The menu is halal, but the place also serves pork.', 'Deler av menyen er ikke halal.': 'Parts of the menu are not halal.',
   'Alt unntatt én rett er halal.': 'Everything except one dish is halal.', 'Alt er halal bortsett fra and og reinsdyr.': 'Everything is halal except duck and reindeer.',
   'Kun kylling og biff er halal.': 'Only chicken and beef are halal.', 'Halal-retter finnes, men spør i disken.': 'Halal dishes are available, but ask at the counter.',
-  'Registrert som helt halal mat. Serverer alkoholholdig drikke.': 'Registered as fully halal food. Serves alcoholic drinks.',
+  'Registrert som helt halal mat. Serverer alkoholholdig drikke.': 'Registered as fully halal food. Serves alcoholic drinks.', 'Serverer alkoholholdig drikke.': 'Serves alcoholic drinks.',
   'Kun burgerne er halal.': 'Only the burgers are halal.', 'Må sjekkes – uavklart inntil videre.': 'Needs checking – unconfirmed for now.',
   'Alt er halal bortsett fra svinerettene.': 'Everything is halal except the pork dishes.',
   // beskrivelser
@@ -1272,7 +1272,11 @@ function detaljHtml(s) {
     tekst.replace(/([.!?])\s+/g, '$1\u0001').split('\u0001').filter(Boolean).forEach(function (setning) { punkter.push(esc(setning)); });
     if (v.kilde) punkter.push(T('Kilde: {k}', { k: esc(v.kilde) }));
   });
-  const bevis = s.halalStatus === 'verifisert' ? '' : '<div class="d-vet"><h4>' + T('Dette vet vi') + '</h4>' +
+  // Verifiserte steder har ikke boksen, unntatt de som serverer alkohol: der skal merknaden stå.
+  // Sier ikke teksten om stedet noe om alkohol, legges setningen til, så merknaden alltid er der.
+  const medAlkohol = s.halalStatus === 'verifisert' && !!s.alcohol;
+  if (medAlkohol && !liste.some(function (v) { return /alkohol/i.test(v.tekst || ''); })) punkter.push(esc(T('Serverer alkoholholdig drikke.')));
+  const bevis = s.halalStatus === 'verifisert' && !medAlkohol ? '' : '<div class="d-vet"><h4>' + T('Dette vet vi') + '</h4>' +
     (punkter.length ? '<ul>' + punkter.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>'
       : '<p>' + T('Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.') + '</p>') + '</div>';
   const d = dagerSiden(s.lastVerified);
@@ -1714,7 +1718,7 @@ function tegnUtvalgte() {
     steder.map(function (s, i) {
       return '<article class="utv-kort" aria-label="' + esc(s.name + ', ' + T('{i} av {n}', { i: i + 1, n: steder.length })) + '">' +
         '<header class="utv-topp">' + stempel('utv' + i) +
-          '<h3>' + esc(s.name) + '</h3>' +
+          '<h3>' + esc(s.name).replace(/\//g, '/<wbr>') + '</h3>' +
           '<p class="utv-meta">' + metaTekst(s) + '</p>' +
         '</header>' +
         '<div class="utv-kropp">' +
@@ -1901,6 +1905,8 @@ function wireInfo() {
   });
 }
 function openInfo(section, appTekst) {
+  // Støtt oss er tatt ut av appen inntil videre
+  if (APP && section === 'stott') return;
   // på nettsiden vises appens utgave av teksten bare når lenken ber om det
   document.documentElement.classList.toggle('app-tekst', appTekst === true);
   lastFocus = document.activeElement;
@@ -1938,7 +1944,23 @@ function showInfo(section) {
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
   document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
   el('infoBody').scrollTop = 0;
+  if (section === 'utvalgte') requestAnimationFrame(tilpassUtvNavn);
 }
+// Utvalgte steder: navnet krymper til det lengste ordet får plass ved siden av stempelet (31 px ned til 22 px)
+function tilpassUtvNavn() {
+  document.querySelectorAll('.utv-topp h3').forEach(function (h3) {
+    h3.style.fontSize = '';
+    if (!h3.clientWidth) return;
+    // målt uten orddeling, så navnet krymper før et ord deles
+    h3.style.overflowWrap = 'normal'; h3.style.webkitHyphens = h3.style.hyphens = 'manual';
+    let fs = parseFloat(getComputedStyle(h3).fontSize);
+    while (h3.scrollWidth > h3.clientWidth + 1 && fs > 22) { fs -= 1; h3.style.fontSize = fs + 'px'; }
+    // Ord deles bare når et ord fortsatt er for langt i minste skrift. Ellers står delingen av, slik den gjør under målingen:
+    // da deler ikke nettleseren ord som har plass, og et ord som er en brøkdel av et punkt for bredt, blir ikke brutt.
+    if (h3.scrollWidth > h3.clientWidth + 1) h3.style.overflowWrap = h3.style.webkitHyphens = h3.style.hyphens = '';
+  });
+}
+window.addEventListener('resize', function () { if (document.querySelector('.utv-topp h3')) tilpassUtvNavn(); });
 function trapFocus(e) {
   const scrim = el('infoScrim');
   if (!scrim.classList.contains('open')) return;
