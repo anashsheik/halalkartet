@@ -165,9 +165,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .hbrikke[aria-pressed="true"], .hbrikke.satt { color: var(--gold); box-shadow: inset 0 -3px 0 var(--gold); }
 .hbrikke.satt .x { opacity: .85; }
 .hbrikke[data-hurtig="verifisert"] svg { display: none; }
-/* Kun verifisert, valgt: en takket gullsirkel rundt, som et segl */
-.hbrikke[data-hurtig="verifisert"][aria-pressed="true"] { margin: 0 -6px; padding: 0 24px; box-shadow: none; font-weight: 800; }
-.hbrikke[data-hurtig="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -8px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
+/* Kun verifisert, valgt: gull tekst og gull linje under ordet, som de andre valgte filtrene */
 
 /* Filterarket */
 .filterark { position: fixed; inset: 0; z-index: 2600; display: flex; flex-direction: column; background: var(--flate-bak); color: var(--kort-tekst); transform: translateY(100%); transition: transform .34s var(--ease-drawer); }
@@ -281,10 +279,9 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .bunn-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .bunn-tall { display: flex; align-items: baseline; gap: 6px; margin: 0; font-size: 14px; color: var(--kort-dempet); }
   .bunn-tall b { font: 600 26px/1 'Cormorant Garamond', serif; color: var(--emerald); }
-  .bunn-oy { display: none; margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); }
   .bunnark.har-valgt { padding-bottom: 12px; }
   .bunnark.har-valgt .bunn-tall { display: none; }
-  .bunnark.har-valgt .bunn-oy { display: block; }
+  .bunnark.har-valgt .bunn-liste { margin-left: auto; }
   .bunn-liste { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: -3px 0; padding: 0 2px; border: 0; background: none; color: var(--emerald); font: 700 15px 'Manrope', sans-serif; cursor: pointer; }
   .valgt { margin-top: 12px; }
 
@@ -325,8 +322,8 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
   .vkort { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 0 18px; align-items: center; }
   .vkort-status { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin: 16px 0 0; font-size: 16px; font-weight: 700; }
   .vkort-status .skjold-tekst { color: var(--merke-v); margin-left: 0; }
-  .vkort-status .skjold[data-s="delvis"] + .skjold-tekst { color: #9A4F0F; }
-  .vkort-status .skjold[data-s="uavklart"] + .skjold-tekst { color: #5F6662; }
+  .vkort-status .skjold-tekst[data-s="delvis"] { color: #9A4F0F; }
+  .vkort-status .skjold-tekst[data-s="uavklart"] { color: #5F6662; }
   .skille { width: 1px; height: 20px; background: var(--kort-strek); }
   .vkort-knapper { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 54px; gap: 10px; margin-top: 16px; }
 
@@ -368,7 +365,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .skjold[data-s="verifisert"] { color: var(--merke-v); }
 .skjold[data-s="delvis"] { color: #B05E14; }
 .skjold[data-s="uavklart"] { color: #6B726E; }
-.skjold-tekst { margin-left: 8px; }
+.skjold-tekst { margin-right: 8px; }
 /* Raskere trykk: ingen ventetid på dobbelttrykk-zoom og ingen grå blink, men et tydelig svar idet fingeren treffer */
 button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: none) {
@@ -523,7 +520,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-gruppe-hode { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 24px 0 6px; }
   .pc-gruppe-hode h3 { margin: 0; font: italic 600 30px/1.1 'Cormorant Garamond', serif; color: var(--emerald); }
   .pc-gruppe-tall { flex: none; font: 800 12px 'Manrope', sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--gull-tekst); }
-  .pc-rad { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: center; gap: 0 16px; width: 100%; padding: 14px 0; border: 0; border-top: 1px solid var(--kort-strek); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .pc-rad { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 0 16px; width: 100%; padding: 14px 0; border: 0; border-top: 1px solid var(--kort-strek); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
   .pc-gruppe-hode + .pc-rad, .pc-gruppe-hode + .pc-kjede > .pc-rad { border-top-color: transparent; }
   .pc-rad:hover .pc-rad-navn { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
   .pc-rad-navn { display: block; font: 600 24px/1.15 'Cormorant Garamond', serif; color: var(--emerald); }
@@ -573,7 +570,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
   .pc-skuff-liste button:hover::after { transform: translateX(4px) rotate(45deg); }
   .pc-skuff-liste .skuff-stott { color: var(--gull-tekst); }
   .pc-skuff-liste .skuff-stott::after { display: none; }
-  .pc-skuff-liste .skuff-stott svg { flex: none; margin-right: 2px; color: var(--gold); }
+  .pc-skuff-liste .skuff-stott svg { flex: none; order: 1; width: 28px; height: 28px; margin-left: auto; color: var(--gold); }
   .pc-stott { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); }
 
   .info-scrim { z-index: 2100; align-items: flex-start; padding: 70px 20px 30px; background: rgba(36,56,46,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
@@ -692,9 +689,11 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
 /* ===== Appen ===== */
 /* Klassen i-app finnes bare inne i iPhone-appen. På nettsiden gjør ingenting av dette noe. */
-/* Støtt oss er tatt ut av appen inntil videre, så fanelinja har fem faner */
-.i-app .fane-stott, .i-app .mer-stott, .i-app .skuff-stott, .i-app .pc-stott, .i-app .info-section[data-section="stott"] { display: none !important; }
-@media (max-width: 720px) { .i-app .fane { grid-template-columns: repeat(5, 1fr); } }
+/* Støtt oss i appen: raden øverst i Mer og vinduet er med. Fanen og knappene på PC er skjult.
+   Skal Støtt oss ut av appen igjen, for eksempel før innsending til Apple, legges disse to tilbake i regelen under:
+   .i-app .mer-stott, .i-app .info-section[data-section="stott"] */
+.i-app .fane-stott, .i-app .skuff-stott, .i-app .pc-stott { display: none !important; }
+/* I appen: Støtt oss er ute, Nær meg er inne, så fanelinja har fortsatt seks faner */
 /* tekst som bare gjelder nettsiden, eller bare appen */
 html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-nett { display: none !important; }
 /* I en app markerer man ikke knapper og menyer ved å holde fingeren på dem. Teksten på stedssiden og i infovinduet kan fortsatt kopieres. */
@@ -726,12 +725,11 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
 
 /* ===== Design november 2026 ===== */
 
-/* 1. Toppene: stor åttekantet stjerne i grønt på grønt, som toner ut mot midten.
+/* 1. Toppene: stor åttekantet stjerne i grønt på grønt, over hele flaten.
       Erstatter --monster på toppfeltet, PC-toppen, toppen i PC-menyen, vindustoppene og toppen på stedssiden.
       Knapper og valgte brikker beholder --monster. */
 :root {
-  --stjerne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='78' height='78'%3E%3Cg fill='none' stroke='%233F7E5B' stroke-opacity='.6'%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2'/%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2' transform='rotate(45 39 39)'/%3E%3Crect x='25.7' y='25.7' width='26.5' height='26.5' transform='rotate(22.5 39 39)'/%3E%3C/g%3E%3C/svg%3E");
-  --stjerne-ut: linear-gradient(90deg, #000 0, #000 10%, transparent 34%, transparent 66%, #000 88%, #000 100%);
+  --stjerne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='78' height='78'%3E%3Cg fill='none' stroke='%233F7E5B' stroke-opacity='.3'%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2'/%3E%3Crect x='11.4' y='11.4' width='55.2' height='55.2' transform='rotate(45 39 39)'/%3E%3Crect x='25.7' y='25.7' width='26.5' height='26.5' transform='rotate(22.5 39 39)'/%3E%3C/g%3E%3C/svg%3E");
   /* den takkede gullringen rundt Kun verifisert når den er på */
   --segl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpolygon points='198.0 30.0 189.3 32.6 195.2 36.7 184.2 37.6 186.8 43.0 174.1 42.2 173.4 48.6 159.7 46.1 155.7 53.0 141.8 49.0 134.8 56.2 121.5 50.9 111.8 57.8 100.0 51.5 88.2 57.8 78.5 50.9 65.2 56.2 58.2 49.0 44.3 53.0 40.3 46.1 26.6 48.6 25.9 42.2 13.2 43.0 15.8 37.6 4.8 36.7 10.7 32.6 2.0 30.0 10.7 27.4 4.8 23.3 15.8 22.4 13.2 17.0 25.9 17.8 26.6 11.4 40.3 13.9 44.3 7.0 58.2 11.0 65.2 3.8 78.5 9.1 88.2 2.2 100.0 8.5 111.8 2.2 121.5 9.1 134.8 3.8 141.8 11.0 155.7 7.0 159.7 13.9 173.4 11.4 174.1 17.8 186.8 17.0 184.2 22.4 195.2 23.3 189.3 27.4' fill='none' stroke='%23C8A253' stroke-width='2' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
 }
@@ -740,10 +738,8 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
 .pc-skuff-topp, .d-hero { position: relative; }
 .toppfelt::before, .pc-topp::before, .pc-skuff-topp::before, .info-head::before, .d-hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-  background: var(--stjerne) center / 78px 78px;
-  -webkit-mask-image: var(--stjerne-ut); mask-image: var(--stjerne-ut);
+  background: var(--monster) center / 56px 56px;
 }
-.pc-skuff-topp::before { -webkit-mask-image: linear-gradient(90deg, #000 0, #000 31%, transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 31%, transparent 100%); }
 
 /* 2. Stempelet: bare på steder som er verifisert (100 % halal). Det tar plassen til det lille gullskjoldet over navnet. */
 .stempel { position: absolute; right: 14px; bottom: 16px; width: 94px; height: 94px; color: var(--gold); transform: rotate(-10deg); pointer-events: none; }
@@ -764,9 +760,6 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
       og stempelet står i kortet for valgt sted. */
 @media (min-width: 721px) {
   .pc-skille { margin: 0 auto; }
-  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"] { position: relative; margin: 0 -8px; padding: 0 20px; font-weight: 800; color: var(--emerald); }
-  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"] span { border-color: transparent; }
-  .pc-valgknapp[data-pc="verifisert"][aria-pressed="true"]::before { content: ""; position: absolute; inset: -3px 0; background: var(--segl) center / 100% 100% no-repeat; pointer-events: none; }
   .pc-valgt .stempel { right: 64px; top: 9px; bottom: auto; width: 76px; height: 76px; }
   .pc-valgt.har-stempel h3, .pc-valgt.har-stempel .pc-valgt-meta { padding-right: 84px; }
 }
@@ -786,6 +779,274 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
   .d-hero.har-stempel h2, .d-hero.har-stempel .d-meta { padding-right: 82px; }
   /* raden med merkelapp og verdi trenger mindre luft */
   .d-info > div { grid-template-columns: 112px 1fr; }
+}
+
+/* ===== Forbedringer november 2026, runde 2 ===== */
+
+/* Linja med avstand, mat, område og pris brytes bare mellom opplysningene.
+   Skilletegnet står i luften foran hver opplysning, og det første på hver linje faller utenfor og skjules. */
+.fakta { display: block; overflow: hidden; }
+.fakta > span { display: flex; flex-wrap: wrap; margin-left: -.79em; }
+.fakta > span > * { position: relative; max-width: 100%; padding-left: .79em; font-weight: inherit; white-space: nowrap; }
+.fakta > span > *::before { content: "/"; position: absolute; left: 0; width: .79em; text-align: center; font-weight: 400; color: #B8AE98; }
+.fakta > span > .fakta-mat { white-space: normal; }
+.fakta.prikk > span { margin-left: -.63em; }
+.fakta.prikk > span > * { padding-left: .63em; }
+.fakta.prikk > span > *::before { content: "·"; width: .63em; }
+.d-hero .fakta > span > *::before { color: var(--gold); }
+/* Lista: avstanden er uthevet, og skjoldet står ved første linje */
+.lkort .lkort-meta { align-items: flex-start; }
+.lkort .lkort-meta .skjold { margin-top: -1px; }
+.lkort .fakta { flex: 1; min-width: 0; }
+.lkort .fakta b { font-weight: 700; color: var(--kort-tekst); }
+
+/* Stedssiden: i boksen «Om halal-statusen» står skjoldet i statusens farge hos steder som ikke er verifisert. حلال står bare hos de verifiserte. */
+.d-om-status { flex: none; display: inline-flex; }
+.d-om-status .skjold, .d-om-status .skjold > svg { width: 30px; height: 33px; }
+.d-om-status .skjold-tegn svg { width: 15px; height: 15px; }
+
+/* Tomme lister: ikon, tekst og knapper som fører videre */
+.tom > svg { display: block; width: 30px; height: 30px; margin: 0 auto 10px; color: var(--gull-tekst); }
+.tom p { margin: 0; }
+.tom .knapp { display: flex; width: 100%; min-height: 50px; margin-top: 10px; }
+.tom p + .knapp { margin-top: 20px; }
+
+/* Meldingen nederst: bruker bredden på skjermen, så teksten får plass på én eller to linjer */
+.toast { left: 18px; right: 18px; width: fit-content; max-width: 520px; margin: 0 auto; padding: 12px 18px; border-radius: 18px; line-height: 1.4; text-wrap: balance; transform: translateY(14px); }
+.toast.show { transform: none; }
+@media (prefers-reduced-motion: reduce) { .toast, .toast.show { transform: none; } }
+
+/* Skjemaene: «Velg ett» står med vanlig skrift som de andre feltene, og er grå til man har valgt */
+.kf-select { font-weight: 400; }
+.kf-select:required:invalid { color: #7A7F7B; }
+
+@media (max-width: 720px) {
+  /* Send-knappen er lik i alle skjemaene: full bredde og 52 px høy, som i Tips oss */
+  .info-section .kf-send { display: block; width: 100%; min-height: 52px; margin-top: 6px; font-size: 15px; border-radius: 12px; }
+  /* Sorteringen i filteret på engelsk: knappene følger teksten, så «Recommended» får plass */
+  html:lang(en) .fa-del[data-del="sorter"] .segment button { flex: 1 1 auto; padding: 0 6px; font-size: 15px; }
+}
+
+/* Smale skjermer (320 punkter): tittelen i statusboksen får plass på én linje ved siden av حلال */
+@media (max-width: 340px) {
+  .d-om h3 { font-size: 23px; }
+  .d-ar { font-size: 28px; }
+}
+
+/* ===== Kommentarer 20. november 2026 ===== */
+
+/* Uavklart-stempelet: samme form som gullstempelet, i lys grå, med spørsmålstegn i midten */
+.stempel[data-s="uavklart"] { color: #111; }
+.stempel[data-s="delvis"] { color: #E2683C; }
+
+/* Under kartet på stedssiden: to lenker ved siden av hverandre når Apple Kart er med */
+.d-kartvalg { display: flex; border-top: 1px solid var(--kort-strek); }
+.d-kartvalg .d-kartlenke { flex: 1; border-top: 0; font-size: 16px; }
+.d-kartvalg .d-kartlenke + .d-kartlenke { border-left: 1px solid var(--kort-strek); }
+
+/* Skjemaene: en stjerne foran «påkrevd», i samme farge som ordet */
+.kf-req::before { content: "*"; margin-right: 2px; }
+
+/* Appen: bunnen og figurene der er litt større enn på nettsiden */
+@media (max-width: 720px) {
+  html.i-app { --fane-h: calc(70px + env(safe-area-inset-bottom, 0px)); }
+  .i-app .fane button { gap: 5px; font-size: 13.5px; }
+  .i-app .fane svg { width: 32px; height: 32px; }
+  .i-app .fane button[aria-current="page"]::before { width: 58px; margin-left: -29px; }
+  .i-app .bunnark { padding: 16px 20px 8px; }
+  .i-app .bunn-tall { font-size: 15px; }
+  .i-app .bunn-tall b { font-size: 29px; }
+  .i-app .bunn-liste { flex: none; min-height: 48px; font-size: 16.5px; white-space: nowrap; }
+  .i-app .bunn-liste svg { width: 21px; height: 21px; }
+}
+
+/* Mer-arket: større rader med gull hake, som i menyen på PC */
+@media (max-width: 720px) {
+  .mer-ark { padding: 10px 22px calc(env(safe-area-inset-bottom, 0px) + 20px); }
+  .mer-hode { padding: 10px 0 8px; }
+  .mer-hode h2 { font-size: 40px; }
+  .mer-liste button { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 66px; padding: 0 6px 0 2px; font-size: 19px; }
+  .mer-liste button::after { content: ""; flex: none; width: 10px; height: 10px; border-top: 2px solid var(--gull-tekst); border-right: 2px solid var(--gull-tekst); transform: rotate(45deg); }
+  .mer-liste li:last-child button { border-bottom: 0; }
+}
+
+/* Ofte stilte spørsmål: grupper, og ett spørsmål per rad som åpnes */
+.info-section .faq-gruppe { margin: 30px 0 6px; font: 600 25px/1.15 'Cormorant Garamond', serif; color: var(--gull-tekst); }
+.info-section h2 + .faq-gruppe { margin-top: 4px; }
+.faq { border-bottom: 1px solid var(--kort-strek); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; padding: 10px 2px; font: 700 16.5px/1.3 'Manrope', sans-serif; color: var(--emerald); cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 9px; height: 9px; margin: -5px 6px 0; border-right: 2px solid var(--gull-tekst); border-bottom: 2px solid var(--gull-tekst); transform: rotate(45deg); transition: transform .2s; }
+.faq[open] summary::after { margin-top: 5px; transform: rotate(-135deg); }
+.faq summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.faq-svar { padding: 0 2px 20px; }
+.info-section .faq-svar p { margin: 0 0 10px; }
+.info-section .faq-svar p:last-child { margin-bottom: 0; }
+.faq-farger, .faq-punkter { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.faq-farger li { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; }
+.faq-farger .skjold, .faq-farger .skjold > svg { width: 30px; height: 33px; }
+.faq-farger .skjold-tegn svg { width: 15px; height: 15px; }
+.faq-farger b, .faq-punkter b { display: block; color: var(--ink); }
+.faq-merke { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; font: 800 18px/1 'Manrope', sans-serif; }
+.faq-merke[data-s="verifisert"] { background: #1E4D36; color: #E7C778; font: 700 14px/1 'Amiri', serif; padding-bottom: 3px; }
+.faq-merke[data-s="delvis"] { background: #C46F22; }
+.faq-merke[data-s="uavklart"] { background: #6F7672; }
+.faq-punkter li { padding-left: 16px; border-left: 2px solid var(--gold); }
+
+/* Utvalgte steder: ett sted om gangen i en boks, og man sveiper til neste */
+.utv-liste { margin: 0 -24px; border-top: 0; }
+.utv-bane { position: relative; display: flex; gap: 12px; padding: 6px 24px 8px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 24px; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.utv-bane::-webkit-scrollbar { display: none; }
+.utv-bane:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
+.utv-kort { flex: 0 0 calc(100% - 34px); display: flex; flex-direction: column; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; border: 1px solid var(--kort-strek); border-radius: 20px; background: var(--kort-bak); }
+.utv-kort:only-child { flex-basis: 100%; }
+.utv-topp { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; min-height: 168px; padding: 22px 104px 20px 20px; background: var(--emerald); color: var(--ivory); }
+.utv-topp::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--monster) center / 56px 56px; pointer-events: none; }
+.utv-topp h3 { margin: 0; font: 600 31px/1.05 'Cormorant Garamond', serif; color: #fff; }
+.utv-topp .utv-meta { display: block; margin: 9px 0 0; font-size: 14.5px; color: rgba(242,236,222,.88); }
+.utv-topp .skraa, .utv-topp .fakta > span > *::before { color: var(--gold); }
+.utv-topp .stempel { right: 12px; bottom: 16px; width: 86px; height: 86px; }
+.utv-kropp { flex: 1; display: flex; flex-direction: column; padding: 16px 18px 18px; }
+.info-section .utv-om { margin: 0 0 8px; font-size: 15.5px; line-height: 1.45; color: var(--kort-tekst); }
+.info-section .utv-adr { margin: 0 0 16px; font-size: 14.5px; color: var(--kort-dempet); }
+.utv-knapper { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: auto; }
+.utv-knapper .knapp { min-height: 50px; padding: 0 6px; font-size: 14.5px; white-space: nowrap; }
+.utv-prikker { display: flex; justify-content: center; gap: 2px; padding: 8px 0 0; }
+.utv-prikker button { display: grid; place-items: center; width: 26px; height: 30px; padding: 0; border: 0; background: none; cursor: pointer; }
+.utv-prikker button::before { content: ""; width: 8px; height: 8px; border-radius: 99px; background: #CFC6B2; transition: width .2s, background .2s; }
+.utv-prikker button[aria-current="true"]::before { width: 22px; background: var(--gold); }
+@media (max-width: 520px) { .utv-liste { margin: 0 -18px; } .utv-bane { padding-inline: 18px; scroll-padding-inline: 18px; } }
+@media (max-width: 340px) { .utv-knapper { grid-template-columns: 1fr; } .utv-topp { padding-right: 92px; } .utv-topp h3 { font-size: 27px; } }
+@media (min-width: 721px) { .utv-liste { margin: 0 -28px; } .utv-bane { padding-inline: 28px; scroll-padding-inline: 28px; } .utv-kort { flex-basis: calc(100% - 60px); } }
+
+/* Bunnarket har tre stillinger: lavt, midt og høyt. Et drag flytter bare arket. */
+@media (max-width: 720px) {
+  .bunnark { transition: transform .28s cubic-bezier(.2, .8, .2, 1); }
+  .bunnark::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 100vh; background: inherit; }   /* arket henger sammen med bunnen mens det dras opp */
+  .liste-hode { touch-action: none; }
+  body.vis-liste:not(.fane-lagret) .liste { border-radius: 20px 20px 0 0; transition: top .28s cubic-bezier(.2, .8, .2, 1); }
+  body.vis-liste:not(.fane-lagret) .liste::before { content: ""; position: absolute; top: 36px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 99px; background: #D9D1BF; }
+  /* lista nevnes med samme vekt som regelen over, ellers vinner glidingen og lista henger etter fingeren */
+  body.ark-drar .bunnark, body.ark-drar.vis-liste:not(.fane-lagret) .liste, body.ark-drar .detalj { transition: none; }
+  /* midt: lista dekker nedre halvdel, og kartet synes over */
+  body.liste-halv .liste { top: 50%; padding-top: 30px; box-shadow: 0 -10px 30px rgba(9,28,20,.14); }
+  body.liste-halv .liste::before { top: 8px; }
+  body.liste-halv .vis-kart { display: none !important; }
+  body.vis-liste.liste-halv .nearme { display: inline-flex; }
+  /* lavt, med valgt sted: bare navnet */
+  .bunnark.kort-lavt { padding-bottom: 12px; }
+  .bunnark.kort-lavt .bunn-hode, .bunnark.kort-lavt .vkort-status, .bunnark.kort-lavt .vkort-knapper { display: none; }
+  .bunnark.kort-lavt .valgt { margin-top: 6px; }
+  .bunnark.kort-lavt .vkort { grid-template-columns: 48px minmax(0, 1fr); gap: 0 14px; }
+  .bunnark.kort-lavt .vkort .mono { width: 48px; height: 48px; border-radius: 12px; font-size: 28px; }
+  .bunnark.kort-lavt .vkort h3 { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .bunnark, body.vis-liste .liste { transition: none !important; } }
+
+/* Appen: Nær meg står i fanelinja, mellom Kart og Lagret. Knappen på kartet er da borte. */
+@media (max-width: 720px) {
+  .i-app .nearme { display: none !important; }
+  .i-app .toast { bottom: calc(var(--bunn-topp, 180px) + 34px); }   /* meldingen trenger ikke lenger gå klar av knappen */
+  .fane #faneNaer.aktiv svg { fill: currentColor; }
+  .fane #faneNaer.aktiv { color: var(--emerald); }
+  .fane #faneNaer.loading { opacity: .55; pointer-events: none; }
+}
+@media (max-width: 340px) { .i-app .fane button { font-size: 12px; } .i-app .fane svg { width: 29px; height: 29px; } }
+
+/* Draget: toppen av lista er håndtaket, og stedssiden har et håndtak øverst */
+@media (max-width: 720px) {
+  body.vis-liste:not(.fane-lagret) .liste-hode { margin-top: -44px; padding-top: 44px; }
+  body.liste-halv .liste-hode { margin-top: -30px; padding-top: 30px; }
+  .d-grep { position: absolute; z-index: 2; top: env(safe-area-inset-top, 0px); left: 50%; width: 132px; height: 30px; margin-left: -66px; pointer-events: auto; touch-action: none; }
+  .d-grep::before { content: ""; position: absolute; top: 7px; left: 50%; width: 36px; height: 4px; margin-left: -18px; border-radius: 99px; background: rgba(242,236,222,.5); }
+}
+@media (min-width: 721px) { .d-grep { display: none; } }
+
+/* Fanen Nær meg finnes bare i appen, også når nettsiden viser appens tekster */
+html:not(.i-app) #faneNaer { display: none !important; }
+/* Nær meg i fanelinja: papirflyet har gull kant og ingen fyll */
+.fane #faneNaer svg, .fane #faneNaer.aktiv svg { fill: none; stroke: var(--gold); stroke-width: 2; }
+
+/* Valgt sted: «Utforsk andre steder» er litt mindre og står helt ut mot høyre */
+@media (max-width: 720px) {
+  .bunnark.har-valgt .bunn-liste { min-height: 40px; margin-right: -8px; font-size: 14.5px; }
+  .bunnark.har-valgt .bunn-liste svg { width: 17px; height: 17px; }
+}
+
+/* Verifisert-merket står litt større enn skjoldet, så haken synes */
+.skjold[data-s="verifisert"] > svg { inset: -1px; width: calc(100% + 2px); height: calc(100% + 2px); }
+
+/* Kortet til valgt sted: ordet og merket holdes sammen, og lenken går på neste linje hvis det ikke er plass */
+@media (max-width: 720px) {
+  .vkort-status { flex-wrap: wrap; row-gap: 8px; }
+  .vkort-status .skjold-tekst { margin-right: -4px; }
+  .vkort-status > * { white-space: nowrap; }
+}
+@media (max-width: 360px) { .vkort-status { font-size: 15px; } .vkort-status .skille { display: none; } }
+
+/* Logoen حلال litt større på mobil */
+@media (max-width: 720px) {
+  .sokemerke { font-size: 31px; }
+  .d-merke { font-size: 31px; min-width: 52px; }
+  .info-brand { font-size: 33px; }
+}
+
+/* Linja nederst: bare ordene «kun verifisert» er uthevet */
+.bunn-kun { font-style: normal; font-weight: 700; color: var(--emerald); white-space: nowrap; }
+
+/* Ofte stilte spørsmål åpnet fra stedssiden legger seg over den */
+.info-scrim.over-side { z-index: 2300; }
+/* Boksen «Om halal-statusen» for delvis halal: én setning med statusen i stempelets farge */
+.d-om .d-status-setning { margin: 14px 0 6px; font-size: 19px; font-weight: 600; line-height: 1.35; color: var(--emerald); }
+.d-status-setning strong { font-weight: 800; color: #E2683C; }
+.d-status-setning[data-s="uavklart"] strong { color: #111; }
+
+/* Mer-arket: feitere hake til høyre */
+@media (max-width: 720px) {
+  .mer-liste button::after { width: 11px; height: 11px; border-top-width: 3px; border-right-width: 3px; border-radius: 1px; margin-right: 3px; }
+}
+
+/* Linja nederst: «Vis liste» i samme størrelse som «Utforsk andre steder», og teksten til venstre på én linje */
+@media (max-width: 720px) {
+  .i-app .bunn-liste { min-height: 40px; margin-right: -8px; gap: 3px; font-size: 14px; }
+  .i-app .bunn-liste svg { width: 16px; height: 16px; }
+  .i-app .bunn-tall { min-width: 0; gap: 5px; font-size: 14px; letter-spacing: -.1px; white-space: nowrap; }
+  .i-app .bunn-tall b { font-size: 27px; }
+  .i-app .bunn-hode { gap: 8px; }
+}
+/* Smale telefoner: teksten går over to linjer, men «kun verifisert» holdes samlet */
+@media (max-width: 380px) {
+  .i-app .bunn-tall { white-space: normal; }
+}
+
+/* «Dette vet vi»: en lys boks inni den beige boksen, én setning per linje uten strek foran */
+.d-om .d-vet { margin: 14px 0 12px; padding: 16px 18px; border-radius: 14px; background: #FAF7F0; border: 1px solid rgba(200,162,83,.35); }
+.d-om .d-vet h4 { margin: 0 0 8px; font: 800 12px/1.2 'Manrope', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--gull-tekst); }
+.d-om .d-vet ul { margin: 0; padding: 0; list-style: none; }
+.d-om .d-vet li { margin: 6px 0 0; font-size: 16.5px; line-height: 1.45; color: var(--kort-tekst); }
+.d-om .d-vet p { margin: 0; font-size: 16px; }
+
+/* Mer-arket: Støtt oss øverst, i gull, med hånden med hjertet til høyre der de andre radene har haken */
+@media (max-width: 720px) {
+  .mer-liste .mer-stott::after { display: none; }
+  .mer-liste .mer-stott svg { width: 26px; height: 26px; margin-left: auto; margin-right: -2px; }
+}
+
+/* Boksen «Om halal-statusen»: datoen øverst, lenken «Hva betyr statusene?» på linja under */
+.d-om-fot { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 6px; }
+
+/* PC: statuslinja i kortet til valgt sted, på grønn bunn */
+@media (min-width: 721px) {
+  .pc-valgt-status { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: 15px; font-weight: 700; color: var(--ivory); }
+  .pc-valgt-status .skjold-tekst { margin-right: 0; }
+  .pc-valgt-status .skjold[data-s="verifisert"] { color: var(--gold); }
+  .pc-valgt-status .skjold[data-s="verifisert"] path[stroke] { stroke: var(--emerald); }
+  .pc-valgt-status .skjold-tekst[data-s="delvis"] { color: #F08A5E; }
+  .pc-valgt-status .skjold-tekst[data-s="uavklart"] { color: #C9CFCA; }
+  .pc-skuff-liste button::after { width: 10px; height: 10px; border-top-width: 3px; border-right-width: 3px; border-radius: 1px; }
+  .pc-treff .bunn-kun { color: var(--emerald); }
+  .pc-treff:has(.bunn-kun) { gap: 5px; font-size: 13.5px; }
+  .pc-treff:has(.bunn-kun) + .pc-nullstill { margin-left: 10px; }
 }
 </style>
   <link rel="icon" type="image/svg+xml" href="halal_kartet_logo.svg">
@@ -925,7 +1186,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
       <section class="info-section" data-section="stott">
         <div data-sprak="nb">
           <h2>Støtt Halalkartet</h2>
-          <p>Halalkartet er gratis å bruke, og ingen steder kan kjøpe seg en halal-status. Det skal det fortsette å være. Derfor drives kartet av frivillige og av gaver fra folk som deg.</p>
+          <p>Halalkartet er gratis å bruke, og ingen steder kan kjøpe seg en halal-status. Kartet drives av frivillige og av gaver fra folk som meg og deg.</p>
           <ol class="stott-punkter">
             <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Først til driften</h3><p>Gaven din betaler det som holder kartet oppe: server, kartdata, domene, utviklerkontoer og varemerke. Ingen av gavene går til eiere, utviklere eller andre i teamet.</p></div></li>
             <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>Resten gis bort</h3><p>Det som er igjen når driften er betalt, gir vi videre til hjelpeorganisasjoner som hjelper der behovet er størst.</p></div></li>
@@ -934,7 +1195,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Support Halalkartet</h2>
-          <p>Halalkartet is free to use, and no place can buy a halal status. It will stay that way. That is why the map is run by volunteers and by gifts from people like you.</p>
+          <p>Halalkartet is free to use, and no place can buy a halal status. The map is run by volunteers and by gifts from people like you and me.</p>
           <ol class="stott-punkter">
             <li><span class="stott-nr" aria-hidden="true">1</span><div><h3>Running costs first</h3><p>Your gift pays for what keeps the map going: server, map data, domain, developer accounts and trademark. None of the gifts go to the owners, the developers or anyone else on the team.</p></div></li>
             <li><span class="stott-nr" aria-hidden="true">2</span><div><h3>The rest is given away</h3><p>Whatever is left when the running costs are paid, we pass on to aid organisations that help where the need is greatest.</p></div></li>
@@ -982,7 +1243,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
       <section class="info-section" data-section="tips">
         <h2 data-t>Tips oss om et sted</h2>
         <p data-t>Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.</p>
-        <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest steder i <strong>Oslo, Bergen, Trondheim og Stavanger</strong>. Det er der flest leter.</p>
+        <p class="tips-lead" data-th="tipsLead">Vi ønsker oss aller mest restauranter og andre spisesteder i <strong>storbyene</strong>, men du kan også gjerne tipse oss om et sted hvor som helst i landet.</p>
         <div class="pc-tipsplass" id="pcTipsplass">
           <form name="restauranttips" method="POST" id="tipsForm" class="kf">
             <input type="hidden" name="form-name" value="restauranttips">
@@ -992,7 +1253,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
               <input type="text" name="restaurant" required autocomplete="off">
             </label>
             <label class="kf-field"><span data-t>Adresse eller by/bydel</span> <span class="kf-opt" data-t>frivillig</span>
-              <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo, Bergen, Trondheim eller Storgata 17" data-ta="placeholder">
+              <input type="text" name="sted" autocomplete="off" placeholder="F.eks. Oslo eller Storgata 17" data-ta="placeholder">
             </label>
             <label class="kf-field"><span data-t>Hva vet du om stedet?</span> <span class="kf-req" data-t>påkrevd</span>
               <select name="vurdering" class="kf-select" required>
@@ -1014,7 +1275,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
           <button type="submit" form="tipsForm" class="kf-send tips-send" id="tipsSend" data-t>Send inn tips</button>
           <p class="kf-ok" id="tipsOk" hidden data-t>Takk. Vi ser på stedet og legger det inn når vi har sjekket det.</p>
           <button type="button" class="tips-ny" id="tipsNy" hidden data-t>Send et tips til</button>
-          <p class="tips-rules" data-t>Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
+          <p class="tips-rules" data-t>Vennligst ikke send oss steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
         </div>
       </section>
       <section class="info-section" data-section="kontakt">
@@ -1058,8 +1319,8 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
           <p class="kun-nett">Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
           <p class="kun-app">Trykker du på Nær meg, spør telefonen om appen kan bruke posisjonen din for å vise steder i nærheten. Posisjonen brukes bare på telefonen din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
           <h3>Veibeskrivelse</h3>
-          <p class="kun-nett">Trykker du på Veibeskrivelse, Åpningstider eller Åpne i kart-appen, åpnes en karttjeneste i en ny fane med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
-          <p class="kun-app">Trykker du på Veibeskrivelse, Åpningstider eller Åpne i kart-appen, åpnes en karttjeneste utenfor Halalkartet med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
+          <p class="kun-nett">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste i en ny fane med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
+          <p class="kun-app">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste utenfor Halalkartet med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
           <h3>Skjemaene</h3>
           <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
           <p>Skjemaene sendes gjennom en skjematjeneste som videresender dem til oss på e-post. Den tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
@@ -1083,8 +1344,8 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
           <p class="kun-nett">If you tap Near me, the browser asks for your location to show places nearby. The location is only used in your browser there and then. It is not stored, and it is not sent to us.</p>
           <p class="kun-app">If you tap Near me, your phone asks whether the app may use your location to show places nearby. The location is only used on your phone there and then. It is not stored, and it is not sent to us.</p>
           <h3>Directions</h3>
-          <p class="kun-nett">If you tap Directions, Opening hours or Open in maps app, a map service opens in a new tab with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
-          <p class="kun-app">If you tap Directions, Opening hours or Open in maps app, a map service opens outside Halalkartet with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
+          <p class="kun-nett">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens in a new tab with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
+          <p class="kun-app">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens outside Halalkartet with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
           <h3>The forms</h3>
           <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, let us know and we will.</p>
           <p>The forms are sent through a form service that forwards them to us by email. It keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
@@ -1117,55 +1378,155 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
       <section class="info-section" data-section="faq">
         <div data-sprak="nb">
           <h2>Ofte stilte spørsmål</h2>
-          <h3>Hva betyr fargene på kartet?</h3>
-          <p>Grønn betyr bekreftet hundre prosent halal. Oransje betyr at deler av menyen ikke er halal. Grå betyr at vi ikke har bekreftet halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at vi ikke vet. Tegnene i pinnene skiller nivåene også: حلال, utropstegn og spørsmålstegn.</p>
-          <h3>Hvordan vet dere at et sted er halal?</h3>
-          <p>Vi sjekker hvert sted så godt vi kan, for eksempel om det henger et synlig sertifikat, hva personalet sier, eller om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
-          <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå, og det står i kortet.</p>
-          <h3>Hva betyr dollartegnene?</h3>
-          <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på prisnivå.</p>
-          <h3>Hvor finner jeg åpningstidene?</h3>
-          <p>Trykk Åpningstider på stedet, så åpnes det i Google Maps. Der står tidene restauranten selv har lagt inn, og de er oftere oppdatert enn noe vi kan holde styr på. Ring gjerne først hvis du skal komme sent eller på en helligdag.</p>
-          <h3>Hva er «Utvalgte steder»?</h3>
-          <p>Fem steder fra kartet som vises fram om gangen, og som byttes ut hver femte dag. Utvalget er det samme for alle og går etter tur gjennom hele lista.</p>
-          <h3>Kan jeg dele et sted med noen?</h3>
-          <p>Ja. Åpne stedet på kartet og trykk Del, så får du en lenke som åpner kartet rett på det stedet.</p>
-          <h3>Kan jeg foreslå et sted eller melde fra om en feil?</h3>
-          <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> nede til venstre på kartet, eller bruk skjemaet på kontaktsiden.</p>
-          <h3>Hvilke steder kommer med på kartet?</h3>
-          <p>Serverer stedet både halal mat og svin, kommer det med som <b>delvis halal</b> og merkes oransje, med en linje i kortet om hva som ikke er halal. Da kan du avgjøre selv om det er greit for deg. Steder uten noe halal på menyen kommer ikke med.</p>
-          <p>Serverer de alkohol å drikke, men ikke bruker det i maten, kan stedet merkes halal. Da står det en tydelig merknad i kortet om at de serverer halal mat, men også alkoholholdig drikke, så du kan bestemme selv.</p>
-          <p>Det samme gjelder når bare deler av menyen er halal av andre grunner: stedet merkes oransje, og kortet sier hva som gjelder.</p>
-          <h3>Dekker dere hele Norge?</h3>
-          <p>Ja. Kartet viser halal mat over hele Norge. De fleste stedene er foreløpig i Oslo, men vi har også steder i blant annet Bergen og Drammen, og legger til flere hele tiden.</p>
-          <h3>Koster det noe?</h3>
-          <p>Nei, Halalkartet er helt gratis å bruke.</p>
+          <h3 class="faq-gruppe">Halal-statusene</h3>
+          <details class="faq" open>
+            <summary>Hva betyr fargene på kartet?</summary>
+            <div class="faq-svar">
+              <ul class="faq-farger">
+                <li><span class="skjold" data-s="verifisert" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="none" d="M12.00 0.60L14.38 3.11L17.70 2.13L18.51 5.49L21.87 6.30L20.89 9.62L23.40 12.00L20.89 14.38L21.87 17.70L18.51 18.51L17.70 21.87L14.38 20.89L12.00 23.40L9.62 20.89L6.30 21.87L5.49 18.51L2.13 17.70L3.11 14.38L0.60 12.00L3.11 9.62L2.13 6.30L5.49 5.49L6.30 2.13L9.62 3.11Z"/><path d="M7.7 12.5l2.9 2.7 5.7-6.4" fill="none" stroke="#C8A253" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Grønn er verifisert halal.</b> Vi har bekreftet at alt er halal.</span></li>
+                <li><span class="skjold" data-s="delvis" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/></svg><span class="skjold-tegn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><path d="M12 5v8.5"/><circle cx="12" cy="19" r=".5"/></svg></span></span><span><b>Oransje er delvis halal.</b> Deler av menyen er ikke halal. Kortet sier hva.</span></li>
+                <li><span class="skjold" data-s="uavklart" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/></svg><span class="skjold-tegn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.8a3.5 3.5 0 016.8 1.1c0 2.3-3.4 2.9-3.4 5.1"/><circle cx="12" cy="19.2" r=".6" fill="currentColor"/></svg></span></span><span><b>Grå er uavklart.</b> Vi har ikke bekreftet statusen ennå. Det betyr ikke at stedet ikke er halal, bare at vi ikke vet.</span></li>
+              </ul>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Hvordan vet dere at et sted er halal?</summary>
+            <div class="faq-svar">
+              <p>Vi sjekker hvert sted så godt vi kan. Vi ser etter et synlig sertifikat, spør personalet, og ser om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+              <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Hvilke steder kommer med på kartet?</summary>
+            <div class="faq-svar">
+              <ul class="faq-punkter">
+                <li><b>Halal mat og svin på samme meny:</b> stedet kommer med som delvis halal og merkes oransje. Kortet sier hva som ikke er halal.</li>
+                <li><b>Bare deler av menyen er halal:</b> det samme gjelder. Stedet merkes oransje, og kortet sier hva som gjelder.</li>
+                <li><b>Halal mat, men alkohol å drikke:</b> stedet kan merkes halal når alkoholen ikke brukes i maten. Kortet har da en tydelig merknad.</li>
+                <li><b>Ingenting halal på menyen:</b> stedet kommer ikke med.</li>
+              </ul>
+            </div>
+          </details>
+          <h3 class="faq-gruppe">Slik bruker du kartet</h3>
+          <details class="faq">
+            <summary>Hvor finner jeg åpningstidene?</summary>
+            <div class="faq-svar">
+              <p>Trykk Åpningstider på stedet, så åpnes det i Google Maps. Der står tidene restauranten selv har lagt inn. Ring gjerne først hvis du skal komme sent eller på en helligdag.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Hva betyr dollartegnene?</summary>
+            <div class="faq-svar">
+              <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på pris.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Hva er «Utvalgte steder»?</summary>
+            <div class="faq-svar">
+              <p>Fem steder fra kartet som vises fram om gangen. Utvalget byttes hver femte dag, er likt for alle og går etter tur gjennom hele lista.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Kan jeg dele et sted med noen?</summary>
+            <div class="faq-svar">
+              <p>Ja. Åpne stedet og trykk Del. Da får du en lenke som åpner kartet rett på det stedet.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Kan jeg foreslå et sted eller melde fra om en feil?</summary>
+            <div class="faq-svar">
+              <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> for å foreslå et sted. Ser du en feil, trykker du <em>Si ifra</em> på stedet.</p>
+            </div>
+          </details>
+          <h3 class="faq-gruppe">Om Halalkartet</h3>
+          <details class="faq">
+            <summary>Dekker dere hele Norge?</summary>
+            <div class="faq-svar">
+              <p>Ja. De fleste stedene er foreløpig i Oslo, men vi har også steder i blant annet Bergen og Drammen, og legger til flere hele tiden.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Koster det noe?</summary>
+            <div class="faq-svar">
+              <p>Nei. Halalkartet er helt gratis å bruke.</p>
+            </div>
+          </details>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Frequently asked questions</h2>
-          <h3>What do the colours on the map mean?</h3>
-          <p>Green means confirmed one hundred percent halal. Orange means parts of the menu are not halal. Grey means we have not confirmed the halal status yet. It does not mean the place is not halal, only that we do not know. The symbols in the pins also tell the levels apart: حلال, an exclamation mark and a question mark.</p>
-          <h3>How do you know a place is halal?</h3>
-          <p>We check each place as well as we can, for example whether a certificate is visible, what the staff say, or whether the place is well known for being halal. If we are unsure, we mark the place grey.</p>
-          <p><b>Halalkartet does not certify places itself.</b> We show the source, the date and who said it, so you can judge for yourself. If a place has no date, we have not confirmed it yet, and the card says so.</p>
-          <h3>What do the dollar signs mean?</h3>
-          <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
-          <h3>Where do I find the opening hours?</h3>
-          <p>Tap Opening hours on the place, and it opens in Google Maps. There you see the hours the restaurant has entered itself, which are more often up to date than anything we can keep track of. Feel free to call first if you are going late or on a public holiday.</p>
-          <h3>What are “Featured places”?</h3>
-          <p>Five places from the map shown at a time, changed every fifth day. The selection is the same for everyone and goes through the whole list in turn.</p>
-          <h3>Can I share a place with someone?</h3>
-          <p>Yes. Open the place on the map and tap Share, and you get a link that opens the map right on that place.</p>
-          <h3>Can I suggest a place or report an error?</h3>
-          <p>Yes, and we really appreciate it. Tap <em>Suggest a place</em> on the map, or use the form on the contact page.</p>
-          <h3>Which places are included on the map?</h3>
-          <p>If a place serves both halal food and pork, it is included as <b>partly halal</b> and marked orange, with a line in the card about what is not halal. Then you can decide for yourself whether it is fine for you. Places with nothing halal on the menu are not included.</p>
-          <p>If they serve alcohol to drink but do not use it in the food, the place can be marked halal. The card then has a clear note that they serve halal food but also alcoholic drinks, so you can decide for yourself.</p>
-          <p>The same applies when only parts of the menu are halal for other reasons: the place is marked orange, and the card says what applies.</p>
-          <h3>Do you cover all of Norway?</h3>
-          <p>Yes. The map shows halal food across Norway. Most places are in Oslo for now, but we also have places in Bergen and Drammen, among others, and keep adding more.</p>
-          <h3>Does it cost anything?</h3>
-          <p>No, Halalkartet is completely free to use.</p>
+          <h3 class="faq-gruppe">The halal statuses</h3>
+          <details class="faq" open>
+            <summary>What do the colours on the map mean?</summary>
+            <div class="faq-svar">
+              <ul class="faq-farger">
+                <li><span class="skjold" data-s="verifisert" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="none" d="M12.00 0.60L14.38 3.11L17.70 2.13L18.51 5.49L21.87 6.30L20.89 9.62L23.40 12.00L20.89 14.38L21.87 17.70L18.51 18.51L17.70 21.87L14.38 20.89L12.00 23.40L9.62 20.89L6.30 21.87L5.49 18.51L2.13 17.70L3.11 14.38L0.60 12.00L3.11 9.62L2.13 6.30L5.49 5.49L6.30 2.13L9.62 3.11Z"/><path d="M7.7 12.5l2.9 2.7 5.7-6.4" fill="none" stroke="#C8A253" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Green is verified halal.</b> We have confirmed that everything is halal.</span></li>
+                <li><span class="skjold" data-s="delvis" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/></svg><span class="skjold-tegn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><path d="M12 5v8.5"/><circle cx="12" cy="19" r=".5"/></svg></span></span><span><b>Orange is partly halal.</b> Parts of the menu are not halal. The card says which.</span></li>
+                <li><span class="skjold" data-s="uavklart" aria-hidden="true"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/></svg><span class="skjold-tegn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.8a3.5 3.5 0 016.8 1.1c0 2.3-3.4 2.9-3.4 5.1"/><circle cx="12" cy="19.2" r=".6" fill="currentColor"/></svg></span></span><span><b>Grey is unconfirmed.</b> We have not confirmed the status yet. It does not mean the place is not halal, only that we do not know.</span></li>
+              </ul>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>How do you know a place is halal?</summary>
+            <div class="faq-svar">
+              <p>We check each place as well as we can. We look for a visible certificate, ask the staff, and see whether the place is well known for being halal. If we are unsure, we mark the place grey.</p>
+              <p><b>Halalkartet does not certify places itself.</b> We show the source, the date and who said it, so you can judge for yourself. If a place has no date, we have not confirmed it yet.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Which places are included on the map?</summary>
+            <div class="faq-svar">
+              <ul class="faq-punkter">
+                <li><b>Halal food and pork on the same menu:</b> the place is included as partly halal and marked orange. The card says what is not halal.</li>
+                <li><b>Only parts of the menu are halal:</b> the same applies. The place is marked orange, and the card says what applies.</li>
+                <li><b>Halal food, but alcohol to drink:</b> the place can be marked halal when the alcohol is not used in the food. The card then has a clear note.</li>
+                <li><b>Nothing halal on the menu:</b> the place is not included.</li>
+              </ul>
+            </div>
+          </details>
+          <h3 class="faq-gruppe">Using the map</h3>
+          <details class="faq">
+            <summary>Where do I find the opening hours?</summary>
+            <div class="faq-svar">
+              <p>Tap Opening hours on the place, and it opens in Google Maps. There you see the hours the restaurant has entered itself. Feel free to call first if you are going late or on a public holiday.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>What do the dollar signs mean?</summary>
+            <div class="faq-svar">
+              <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>What are “Featured places”?</summary>
+            <div class="faq-svar">
+              <p>Five places from the map shown at a time. The selection changes every fifth day, is the same for everyone and goes through the whole list in turn.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Can I share a place with someone?</summary>
+            <div class="faq-svar">
+              <p>Yes. Open the place and tap Share. You get a link that opens the map right on that place.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Can I suggest a place or report an error?</summary>
+            <div class="faq-svar">
+              <p>Yes, and we really appreciate it. Tap <em>Suggest a place</em> to suggest one. If you see an error, tap <em>Report</em> on the place.</p>
+            </div>
+          </details>
+          <h3 class="faq-gruppe">About Halalkartet</h3>
+          <details class="faq">
+            <summary>Do you cover all of Norway?</summary>
+            <div class="faq-svar">
+              <p>Yes. Most places are in Oslo for now, but we also have places in Bergen and Drammen, among others, and keep adding more.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Does it cost anything?</summary>
+            <div class="faq-svar">
+              <p>No. Halalkartet is completely free to use.</p>
+            </div>
+          </details>
         </div>
       </section>
     </div>
@@ -1187,7 +1548,6 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
 <section class="bunnark" id="bunnark" aria-label="Steder på kartet" data-ta="aria-label">
   <div class="bunn-hode">
     <p class="bunn-tall"><b id="bunnTall">–</b> <span id="bunnTekst">steder</span></p>
-    <p class="bunn-oy" data-t>Valgt sted</p>
     <button class="bunn-liste" id="visListe" type="button">Vis liste</button>
   </div>
   <div class="valgt" id="valgt" hidden></div>
@@ -1212,6 +1572,7 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
 
 <nav class="fane" id="fane" aria-label="Hovedmeny" data-ta="aria-label">
   <button type="button" data-fane="utforsk" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span data-t>Kart</span></button>
+  <button type="button" class="kun-app" data-fane="naer" id="faneNaer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg><span data-t>Nær meg</span></button>
   <button type="button" data-fane="lagret"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-4.2-5.5 4.2z"/></svg><span data-t>Lagret</span></button>
   <button type="button" data-fane="tips"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-t="Tips oss (fane)">Tips oss</span></button>
   <button type="button" data-fane="sprak" id="faneSprak" class="fane-sprak">EN</button>
@@ -1247,6 +1608,6 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=8866a1dc"></script>
+<script src="app.js?v=6ce22ee5"></script>
 </body>
 </html>

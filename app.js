@@ -41,14 +41,14 @@ const ENGELSK = {
   'Finn steder nær meg': 'Find places near me', 'Hva har du lyst på? Søk sted, cuisine eller adresse': 'What are you craving? Search place, cuisine or address',
   'Halalkartet, start på nytt': 'Halalkartet, start over', 'Hurtigfiltre': 'Quick filters', 'Åpne filtrene': 'Open filters',
   'Åpne filtrene, {n} på': 'Open filters, {n} on', 'Lukk filtrene': 'Close filters', 'Nullstill': 'Reset', 'Vis steder': 'Show places',
-  'Steder på kartet': 'Places on the map', 'Valgt sted': 'Selected place', 'Vis liste': 'Show list', 'Steder': 'Places', 'Steder i {b}': 'Places in {b}',
+  'Steder på kartet': 'Places on the map', 'Vis liste': 'Show list', 'Steder': 'Places', 'Steder i {b}': 'Places in {b}',
   'Sorter:': 'Sort:', 'Kart': 'Map', 'Hovedmeny': 'Main menu', 'Lagret': 'Saved', 'Mer': 'More', 'Lukk': 'Close', 'Informasjon': 'Information',
   'Si ifra eller kontakt oss': 'Report an error or contact us', 'Ofte stilte spørsmål': 'Frequently asked questions',
   'Utvalgte steder': 'Featured places', 'Fem utvalgte steder som vi mener du burde prøve.': 'Five featured places we think you should try.',
-  'Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.': 'Five places we have confirmed as fully halal. New selection tomorrow.',
-  'Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.': 'Five places we have confirmed as fully halal. New selection in {n} days.',
+  'Mat det er verdt å ta turen for. Sveip deg gjennom og finn ditt neste favorittmåltid.': 'Food worth the trip. Swipe through and find your next favourite meal.',
+  
   'sted': 'place', 'steder': 'places', '1 sted': '1 place', '{n} steder': '{n} places', 'av {n} steder': 'of {n} places',
-  'Alle steder': 'All places', 'Alle {n} steder': 'All {n} places', '{n} steder · {o}': '{n} places · {o}', ' og ': ' and ', '{n} områder': '{n} areas',
+  'Alle steder': 'All places', 'Utforsk andre steder': 'Explore other places', '{n} steder · {o}': '{n} places · {o}', ' og ': ' and ', '{n} områder': '{n} areas',
   'Ingen treff': 'No results', 'Prøv å fjerne et filter eller søk på noe annet.': 'Try removing a filter or searching for something else.',
   'Ingen lagrede steder ennå': 'No saved places yet',
   'Trykk på hjertet ved et sted for å lagre det. Lagrede steder ligger bare på denne enheten.': 'Tap the heart on a place to save it. Saved places are only stored on this device.',
@@ -60,13 +60,13 @@ const ENGELSK = {
   'Du er uten nett. Kartet og nye steder kommer når du er på nett igjen.': 'You are offline. The map and new places will load when you are back online.',
   'Appen fikk ikke lastet {f}. Prøv å laste siden på nytt. Hjelper ikke det, står feilen i nettleserkonsollen.': 'The app could not load {f}. Try reloading the page. If that does not help, the error is shown in the browser console.',
   // status og filtre
-  'Verifisert halal': 'Verified halal', 'Delvis halal': 'Partly halal', 'Uavklart': 'Unconfirmed', 'Verifisert': 'Verified', 'Delvis': 'Partly',
+  'Verifisert halal': 'Verified halal', 'Delvis halal': 'Partly halal', 'Dette vet vi': 'What we know', 'Kilde: {k}': 'Source: {k}', 'Denne restauranten er': 'This restaurant is', 'delvis halal': 'partly halal', 'uavklart': 'unconfirmed', 'Uavklart': 'Unconfirmed', 'Verifisert': 'Verified', 'Delvis': 'Partly',
   'Halal-status': 'Halal status', 'Kun verifisert': 'Verified only', '+ delvis': '+ partly', '+ uavklart': '+ unconfirmed', '+ Delvis': '+ Partly', 'Alle': 'All',
   'Bare steder vi har bekreftet som helt halal.': 'Only places we have confirmed as fully halal.',
   'Også steder der bare deler av menyen er halal.': 'Also places where only part of the menu is halal.',
   'Alt vi kjenner til, også steder vi ikke har rukket å sjekke ennå.': 'Everything we know of, including places we have not checked yet.',
   'Et eget utvalg av statuser.': 'A custom selection of statuses.', '{s}, {n} steder': '{s}, {n} places',
-  'Pris': 'Price', 'Område': 'Area', 'Åpningstider': 'Opening hours', 'Se på Google': 'See on Google',
+  'Pris': 'Price', 'Område': 'Area', 'Åpningstider': 'Opening hours', 'Se på Google': 'See on Google', 'Se åpningstider': 'See opening hours',
   'Åpningstider for {navn} på Google Maps': 'Opening hours for {navn} on Google Maps',
   'Uten alkohol': 'No alcohol', 'Skjul steder som serverer alkohol': 'Hide places that serve alcohol', 'Uten kjent alkoholservering': 'No known alcohol service',
   'Alkohol': 'Alcohol', 'Rimelig': 'Inexpensive', 'Middels': 'Moderate', 'Dyrere': 'Pricier', 'Ingen kjent': 'None known', 'Serverer': 'Serves',
@@ -74,7 +74,7 @@ const ENGELSK = {
   'Sortering': 'Sorting', 'Sorter': 'Sort', 'Ingen grupper': 'No groups', 'Grupper listen': 'Group the list', 'Finn de nærmeste stedene': 'Find the nearest places', 'Standard': 'Default', 'A–Å': 'A–Z', 'Vis færre': 'Show fewer', 'Vis alle {n}': 'Show all {n}',
   'Ingen steder passer': 'No places match', 'Vis alle {n} steder': 'Show all {n} places', 'Vis {n} steder': 'Show {n} places', 'Vis 1 sted': 'Show 1 place',
   'Fjern filteret {t}': 'Remove filter {t}', '{t}, åpner filtrene': '{t}, opens filters', '{n} filtre': '{n} filters',
-  'kun verifisert': 'verified only', 'uten uavklarte': 'without unconfirmed', 'utvalgte statuser': 'selected statuses',
+  'kun verifisert': 'verified only', 'av {n} steder som er': 'of {n} places that are', 'uten uavklarte': 'without unconfirmed', 'utvalgte statuser': 'selected statuses',
   'serverer alkohol': 'serves alcohol', 'uten kjent alkohol': 'no known alcohol',
   'Filtrer på område': 'Filter by area', 'Alle områder': 'All areas', 'Filtrer på cuisine': 'Filter by cuisine',
   'Filtrer på prisnivå': 'Filter by price', 'Alle priser': 'All prices', '$ · Rimelig': '$ · Inexpensive', '$$ · Middels': '$$ · Moderate', '$$$ · Dyrere': '$$$ · Pricier',
@@ -91,10 +91,10 @@ const ENGELSK = {
   'Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.': 'We have not yet written down how the status was confirmed.',
   'Ikke bekreftet med dato': 'Not confirmed with a date', 'Sist bekreftet {d}': 'Last confirmed {d}', ', over et halvår siden': ', more than six months ago',
   'Adresse': 'Address', 'Telefon': 'Phone', 'Serveres': 'Served', 'Ingen kjent servering': 'None known',
-  'Tilbake': 'Back', 'Del {navn}': 'Share {navn}', 'Del': 'Share', 'Send et tips til': 'Suggest another place', 'Om halal-statusen': 'About the halal status',
+  'Tilbake': 'Back', 'Del {navn}': 'Share {navn}', 'Del': 'Share', 'Send et tips til': 'Suggest another place', 'Om halal-statusen': 'Halal status',
   'Halalkartet sertifiserer ikke selv.': 'Halalkartet does not certify places itself.', 'Hva betyr statusene?': 'What do the statuses mean?',
-  'Åpne i kart-appen': 'Open in maps app', 'Ser du noe som er feil?': 'Something wrong?', 'Si ifra, så sjekker vi stedet på nytt.': 'Let us know, and we will check the place again.',
-  'Si ifra': 'Report', 'Om {navn}: ': 'About {navn}: ',
+  'Åpne i {app}': 'Open in {app}', 'Apple Kart': 'Apple Maps', 'Ser du noe som er feil?': 'Something wrong?', 'Si ifra, så sjekker vi stedet på nytt.': 'Let us know, and we will check the place again.',
+  'Si ifra': 'Report', 'Si ifra!': 'Report it!', 'Om {navn}: ': 'About {navn}: ',
   'Lenke kopiert': 'Link copied', 'Kunne ikke kopiere lenken': 'Could not copy the link', 'Kopier lenken fra adressefeltet': 'Copy the link from the address bar',
   'Nettleseren din støtter ikke posisjon.': 'Your browser does not support location.',
   'Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.': 'Could not find your location. Check that the browser has access to location.',
@@ -104,13 +104,13 @@ const ENGELSK = {
   // skjemaene
   'Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.': 'We are just getting started and are building the map together with you. Tell us about a restaurant you believe is halal, and we will check it.',
   'Restaurantens navn': 'Name of the restaurant', 'påkrevd': 'required', 'frivillig': 'optional', 'Adresse eller by/bydel': 'Address or city/area',
-  'F.eks. Oslo, Bergen, Trondheim eller Storgata 17': 'E.g. Oslo, Bergen, Trondheim or Storgata 17', 'Hva vet du om stedet?': 'What do you know about the place?',
+  'F.eks. Oslo eller Storgata 17': 'E.g. Oslo or Storgata 17', 'Hva vet du om stedet?': 'What do you know about the place?',
   'Velg ett': 'Choose one', 'Helt halal': 'Fully halal', 'Halal mat, men serverer alkohol som drikke': 'Halal food, but serves alcoholic drinks',
   'Delvis halal – deler av menyen er ikke halal': 'Partly halal – parts of the menu are not halal', 'Serverer svinekjøtt': 'Serves pork',
   'Usikker – vil gjerne at dere sjekker': 'Not sure – please check', 'Hvordan vet du det?': 'How do you know?',
   'Sertifikat i lokalet, personalet har sagt det, eller du spiser der ofte …': 'A certificate on the wall, the staff told you, or you eat there often …',
   'Telefon eller e-post': 'Phone or email', 'Takk. Vi ser på stedet og legger det inn når vi har sjekket det.': 'Thank you. We will look into the place and add it once we have checked it.',
-  'Send oss helst ikke steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.': 'Please do not send us places with nothing halal on the menu, or purely vegetarian and vegan restaurants.',
+  'Vennligst ikke send oss steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.': 'Please do not send us places with nothing halal on the menu, or purely vegetarian and vegan restaurants.',
   'Send inn tips': 'Send tip', 'Send inn': 'Send', 'Navn': 'Name', 'Hvor kommer du fra? By eller bydel': 'Where are you from? City or area', 'Meldingen din': 'Your message',
   'Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.': 'Do you have a tip about a place, found an error, or just want to tell us what you think? We would love to hear from you. Fill in the form below.',
   'Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.': 'Name and where you are from are optional, but they help us a lot. If you leave a phone number or email, we can get back to you.',
@@ -122,6 +122,8 @@ const ENGELSK = {
   'Sender': 'Sending', 'Vi får dessverre ikke tatt imot skjemaer akkurat nå. Teksten din står igjen.': 'Unfortunately we cannot receive forms right now. Your text is still here.',
   'Beklager, noe gikk galt. Prøv igjen om litt.': 'Sorry, something went wrong. Please try again shortly.',
   'Halalkartet · Utforsk halal mat over hele Norge': 'Halalkartet · Explore halal food across Norway',
+  'Mangler vi et sted, kan du tipse oss.': 'If a place is missing, you can suggest it.', 'Finn steder på kartet': 'Find places on the map',
+  'Vis på kartet': 'Show on map', '{i} av {n}': '{i} of {n}',
   // kjøkken
   'Arabisk': 'Arabic', 'Asiatisk': 'Asian', 'Bakeri': 'Bakery', 'Balkansk': 'Balkan', 'Dessert': 'Dessert', 'Falafel': 'Falafel', 'Gresk': 'Greek',
   'Grill': 'Grill', 'Hamburger': 'Burgers', 'Hurtigmat': 'Fast food', 'Indisk': 'Indian', 'Kafé': 'Café', 'Kebab': 'Kebab', 'Koreansk': 'Korean',
@@ -146,7 +148,7 @@ const ENGELSK = {
 };
 // tekster med markup, slått opp med en egen nøkkel
 const ENGELSK_HTML = {
-  tipsLead: 'We would most like places in <strong>Oslo, Bergen, Trondheim and Stavanger</strong>. That is where most people look.'
+  tipsLead: 'We would most like restaurants and other places to eat in <strong>the big cities</strong>, but you are also welcome to suggest a place anywhere in the country.'
 };
 function T(nb, verdier) {
   let s = nb;
@@ -830,8 +832,14 @@ function oppdaterSkall() {
   const f = currentFilters();
   const n = HALAL_SPOTS.filter(function (s) { return passes(s, f) && layerOn[s.halalStatus]; }).length;
   el('bunnTall').textContent = n;
-  el('bunnTekst').textContent = n < HALAL_SPOTS.length
-    ? T('av {n} steder', { n: HALAL_SPOTS.length }) + filterTekst() : T(n === 1 ? 'sted' : 'steder');
+  // Bare «kun verifisert» på: «av 188 steder som er kun verifisert», med de to siste ordene uthevet
+  const bareKun = strict === 0 && !alleStatuser() && filterTekst() === ' · ' + T('kun verifisert');
+  if (n < HALAL_SPOTS.length && bareKun) {
+    el('bunnTekst').innerHTML = esc(T('av {n} steder som er', { n: HALAL_SPOTS.length })) + ' <em class="bunn-kun">' + esc(T('kun verifisert')) + '</em>';
+  } else {
+    el('bunnTekst').textContent = n < HALAL_SPOTS.length
+      ? T('av {n} steder', { n: HALAL_SPOTS.length }) + filterTekst() : T(n === 1 ? 'sted' : 'steder');
+  }
   tegnBunnHode();
   const a = antallAktive(), t = el('filterTeller');
   if (t) { t.hidden = !a; t.textContent = a; }
@@ -894,7 +902,7 @@ function tegnFilterark(antall) {
       return '<button type="button" aria-pressed="' + (el('fPrice').value === v) + '" data-velg="fPrice" data-v="' + v + '" aria-label="' +
         T(['Rimelig', 'Middels', 'Dyrere'][v - 1]) + '">' + '$'.repeat(+v) + '</button>'; }).join('') + '</div></section>' +
     '<section class="fa-del" data-del="sorter"><h3>' + T('Sortering') + '</h3>' +
-      segment('Sortering', [['', 'Standard'], ['avstand', 'Nærmest'], ['navn', 'A–Å'], ['pris', 'Pris']], el('fSort').value, 'fSort') + '</section>';
+      segment('Sortering', [['', 'Anbefalt'], ['avstand', 'Nærmest'], ['navn', 'A–Å'], ['pris', 'Pris']], el('fSort').value, 'fSort') + '</section>';
 
   k.scrollTop = rull;
   if (nokkel) {
@@ -1009,23 +1017,32 @@ function ruteUrl(s) {
   return 'https://www.google.com/maps/dir/?api=1&destination=' +
     encodeURIComponent(s.address ? s.name + ', ' + s.address : s.lat + ',' + s.lng);
 }
-function kartAppUrl(s) {
+// Lenkene under kartet på stedssiden. Google Maps står for alle. På iPhone, iPad og Mac med berøring står Apple Kart ved siden av.
+function kartLenker(s) {
   const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  return ios ? 'https://maps.apple.com/?q=' + encodeURIComponent(s.name) + '&ll=' + s.lat + ',' + s.lng
-    : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + (s.address ? ', ' + s.address : ''));
+  const lenke = function (url, navn) {
+    return '<a class="d-kartlenke" href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + esc(T('Åpne i {app}', { app: navn })) + '">' + esc(navn) + IKON2.utpil + '</a>';
+  };
+  return '<div class="d-kartvalg">' +
+    (ios ? lenke('https://maps.apple.com/?q=' + encodeURIComponent(s.name) + '&ll=' + s.lat + ',' + s.lng, T('Apple Kart')) : '') +
+    lenke('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + (s.address ? ', ' + s.address : '')), 'Google Maps') + '</div>';
 }
 
 const SKJOLD = SVG(20, '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/>');
+// Verifiserte steder: et takket merke med hake, i stedet for skjoldet
+const MERKE_V = '<svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="none" d="M12.00 0.60L14.38 3.11L17.70 2.13L18.51 5.49L21.87 6.30L20.89 9.62L23.40 12.00L20.89 14.38L21.87 17.70L18.51 18.51L17.70 21.87L14.38 20.89L12.00 23.40L9.62 20.89L6.30 21.87L5.49 18.51L2.13 17.70L3.11 14.38L0.60 12.00L3.11 9.62L2.13 6.30L5.49 5.49L6.30 2.13L9.62 3.11Z"/><path d="M7.7 12.5l2.9 2.7 5.7-6.4" fill="none" stroke="#C8A253" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function skjold(s, medTekst) {
   const st = STATUS[s.halalStatus];
-  return '<span class="skjold" data-s="' + esc(s.halalStatus) + '"' + (medTekst ? '' : ' role="img" aria-label="' + T(st.label) + '"') + '>' +
-    SKJOLD + '<span class="skjold-tegn" aria-hidden="true">' + st.tegn + '</span></span>' + (medTekst ? '<span class="skjold-tekst">' + T(st.label) + '</span>' : '');
+  const merke = '<span class="skjold" data-s="' + esc(s.halalStatus) + '"' + (medTekst ? ' aria-hidden="true"' : ' role="img" aria-label="' + T(st.label) + '"') + '>' +
+    (s.halalStatus === 'verifisert' ? MERKE_V : SKJOLD) + (s.halalStatus === 'verifisert' ? '' : '<span class="skjold-tegn" aria-hidden="true">' + st.tegn + '</span>') + '</span>';
+  // med tekst: ordet først, så merket etter
+  return medTekst ? '<span class="skjold-tekst" data-s="' + esc(s.halalStatus) + '">' + T(st.label) + '</span>' + merke : merke;
 }
-function monogram(s, i) {
+// Flisa følger statusen: mørk med gull bokstav for verifiserte steder, lys for de andre.
+// I lista er alle fliser like (noyt), så lista ikke sier noe om statusen.
+function monogram(s, noyt) {
   const m = /[A-Za-zÀ-ÿÆØÅæøå0-9]/.exec(s.name);
-  let h = i;
-  if (h === undefined) { h = 0; for (const c of s.id) h = (h * 31 + c.charCodeAt(0)) >>> 0; }
-  return '<span class="mono ' + (h % 2 ? 'mono-lys' : 'mono-mork') + '" aria-hidden="true">' + (m ? m[0].toUpperCase() : '?') + '</span>';
+  return '<span class="mono ' + (noyt || s.halalStatus === 'verifisert' ? 'mono-mork' : 'mono-lys') + '"' + (noyt ? '' : ' data-s="' + esc(s.halalStatus) + '"') + ' aria-hidden="true">' + (m ? m[0].toUpperCase() : '?') + '</span>';
 }
 // Åpningstidene vises ikke i appen. Lenken åpner stedet i Google Maps, der står tidene restauranten selv har lagt inn.
 function tiderUrl(s) {
@@ -1035,12 +1052,15 @@ function tiderLenke(s, tekst, kls) {
   return '<a class="' + (kls || 'tider-lenke') + '" href="' + esc(tiderUrl(s)) + '" target="_blank" rel="noopener" data-act="tider" data-id="' + esc(s.id) + '"' +
     ' aria-label="' + esc(T('Åpningstider for {navn} på Google Maps', { navn: s.name })) + '">' + T(tekst) + IKON2.utpil + '</a>';
 }
+// Linja med avstand, mat, område og pris. Hver opplysning holdes samlet, og området og prisen følger hverandre.
+// Stilarket skjuler skilletegnet foran den første opplysningen på hver linje, så linja aldri begynner eller slutter med et skilletegn.
 function metaTekst(s, skille) {
   const sk = '<span class="skraa">' + (skille || ' / ') + '</span>';
   const deler = [];
-  if (userLoc) deler.push(fmtDist(dist(s)));
-  deler.push(s.cuisines.slice(0, 2).map(function (c) { return T(c); }).join(', '), s.bydel);
-  return deler.map(esc).join(sk) + sk + priceLabel(s.price);
+  if (userLoc) deler.push('<b>' + esc(fmtDist(dist(s))) + '</b>');
+  deler.push('<span class="fakta-mat">' + esc(s.cuisines.slice(0, 2).map(function (c) { return T(c); }).join(', ')) + '</span>');
+  deler.push('<span>' + esc(s.bydel) + sk + priceLabel(s.price) + '</span>');
+  return '<span class="fakta' + (skille ? ' prikk' : '') + '"><span>' + deler.join('') + '</span></span>';
 }
 
 // Lagret
@@ -1084,10 +1104,10 @@ function anbefalt(liste, mode) {
   return STATUS_ORDER.flatMap(function (st) { return liste.filter(function (s) { return s.halalStatus === st; }); });
 }
 function listekortHtml(s, i) {
-  return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s, i) +
+  return '<article class="lkort" data-id="' + esc(s.id) + '">' + monogram(s, true) +
     '<div class="lkort-tekst">' +
       '<h3><button type="button" class="lkort-navn" data-detalj="' + esc(s.id) + '">' + esc(s.name) + '</button></h3>' +
-      '<p class="lkort-meta">' + skjold(s) + '<span>' + metaTekst(s, ' · ') + '</span></p>' +
+      '<p class="lkort-meta">' + metaTekst(s, ' · ') + '</p>' +
     '</div>' + hjerte(s) + '</article>';
 }
 function tegnListe() {
@@ -1100,17 +1120,28 @@ function tegnListe() {
   el('listeSort').value = el('fSort').value;
   if (!liste.length) {
     boks.innerHTML = lagretVis
-      ? '<div class="tom"><b>' + T('Ingen lagrede steder ennå') + '</b>' + T('Trykk på hjertet ved et sted for å lagre det. Lagrede steder ligger bare på denne enheten.') + '</div>'
-      : '<div class="tom"><b>' + T('Ingen treff') + '</b>' + T('Prøv å fjerne et filter eller søk på noe annet.') + '</div>';
+      ? '<div class="tom">' + IKON2.hjerte + '<b>' + T('Ingen lagrede steder ennå') + '</b>' +
+          '<p>' + T('Trykk på hjertet ved et sted for å lagre det. Lagrede steder ligger bare på denne enheten.') + '</p>' +
+          '<button type="button" class="knapp primar" data-tom="kart">' + T('Finn steder på kartet') + '</button></div>'
+      : '<div class="tom"><b>' + T('Ingen treff') + '</b>' +
+          '<p>' + T('Prøv å fjerne et filter eller søk på noe annet.') + ' ' + T('Mangler vi et sted, kan du tipse oss.') + '</p>' +
+          '<button type="button" class="knapp primar" data-tom="nullstill">' + T('Nullstill') + '</button>' +
+          '<button type="button" class="knapp" data-tom="tips">' + T('Tips oss om et sted') + '</button></div>';
     return;
   }
   boks.innerHTML = liste.map(function (s, i) { return listekortHtml(s, i); }).join('');
 }
 
 // Kortet i bunnarket
+// Bunnarket har tre stillinger: lavt, midt og høyt.
+// Uten valgt sted: lavt = linja med antall og «Vis liste», midt = lista over nedre halvdel, høyt = hele lista.
+// Med valgt sted:  lavt = bare navnet, midt = kortet, høyt = stedssiden.
+let listeHalv = false, kortLavt = false;
+const MIDT = .5;   // lista i midtstilling begynner midt på skjermen
 function bunnTopp() {
   const b = el('bunnark');
-  if (b && b.getClientRects().length) return Math.round(window.innerHeight - b.getBoundingClientRect().top);
+  if (b && b.getClientRects().length) return Math.round(window.innerHeight - b.getBoundingClientRect().top - (new DOMMatrixReadOnly(getComputedStyle(b).transform)).m42);
+  if (document.body.classList.contains('liste-halv')) return Math.round(window.innerHeight * (1 - MIDT));
   const f = el('fane');
   return f && f.getClientRects().length ? Math.round(window.innerHeight - f.getBoundingClientRect().top) : 0;
 }
@@ -1146,7 +1177,7 @@ function tegnValgt() {
         '<h3 id="valgtNavn">' + esc(s.name) + '</h3>' +
         '<p class="lkort-meta">' + metaTekst(s) + '</p>' +
       '</div>' +
-      '<p class="vkort-status">' + skjold(s, true) + '<span class="skille" aria-hidden="true"></span>' + tiderLenke(s, 'Åpningstider') + '</p>' +
+      '<p class="vkort-status">' + skjold(s, true) + '<span class="skille" aria-hidden="true"></span>' + tiderLenke(s, 'Se åpningstider') + '</p>' +
       '<div class="vkort-knapper">' +
         '<a class="knapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + T('Veibeskrivelse') + '</a>' +
         '<button type="button" class="knapp" data-detalj="' + esc(s.id) + '">' + T('Se stedet') + '</button>' +
@@ -1160,7 +1191,8 @@ function tegnBunnHode() {
   const b = el('bunnark');
   if (!b) return;
   b.classList.toggle('har-valgt', valgt);
-  el('visListe').innerHTML = (valgt ? T('Alle {n} steder', { n: el('bunnTall').textContent }) : T('Vis liste')) + IKON2.pil;
+  b.classList.toggle('kort-lavt', valgt && kortLavt);
+  el('visListe').innerHTML = (valgt ? T('Utforsk andre steder') : T('Vis liste')) + IKON2.pil;
 }
 function tegnMobil() {
   if (!erMobil() || !el('bunnark')) return;
@@ -1175,6 +1207,7 @@ function maalToppfelt() {
 function oppdaterVisning() {
   const liste = fane === 'lagret' || visning === 'liste';
   document.body.classList.toggle('vis-liste', liste);
+  document.body.classList.toggle('liste-halv', liste && listeHalv && fane !== 'lagret');
   document.body.classList.toggle('fane-lagret', fane === 'lagret');
   document.querySelectorAll('#fane [data-fane]').forEach(function (b) {
     if (b.dataset.fane === fane) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -1182,9 +1215,9 @@ function oppdaterVisning() {
   if (liste) tegnListe();
   requestAnimationFrame(function () { maalToppfelt(); etterKortet(); if (!liste) map.invalidateSize(); });
 }
-function settVisning(v) {
+function settVisning(v, halv) {
   if (!erMobil()) return;
-  visning = v; fane = 'utforsk';
+  visning = v; fane = 'utforsk'; listeHalv = v === 'liste' && halv === true;
   oppdaterVisning();
   track('visning', { visning: v });
 }
@@ -1204,17 +1237,22 @@ function adresseLinjer(s) {
   const linje2 = !by || by === s.bydel ? s.bydel : s.bydel + ', ' + by;
   return esc(gate) + '<br>' + esc(linje2);
 }
-// Stempelet på stedssiden og i kortet på PC: bare for steder som er verifisert.
+// Stempelet på stedssiden og i kortet på PC. Verifiserte steder har gullstempelet med حلال.
+// Uavklarte steder har et grått stempel med spørsmålstegn på stedssiden. Delvis halal har ikke stempel.
 // Begge kan stå på siden samtidig på PC, så sirkelen teksten følger, får eget navn per sted.
-function stempel(hvor) {
+function stempel(hvor, status) {
+  const uavklart = status === 'uavklart', delvis = status === 'delvis';
   const sti = 'stempelSti' + (hvor ? '-' + hvor : '');
-  return '<svg class="stempel" role="img" aria-label="' + T('Verifisert halal') + '" viewBox="0 0 100 100">' +
+  const navn = uavklart ? 'Uavklart' : delvis ? 'Delvis halal' : 'Verifisert halal';
+  return '<svg class="stempel"' + (uavklart || delvis ? ' data-s="' + status + '"' : '') + ' role="img" aria-label="' + T(navn) + '" viewBox="0 0 100 100">' +
     '<defs><path id="' + sti + '" d="M50 50 m-34.5 0 a34.5 34.5 0 1 1 69 0 a34.5 34.5 0 1 1 -69 0"/></defs>' +
     '<g fill="none" stroke="currentColor"><path d="M94.40 50.00 A5.4 5.4 0 0 1 93.29 59.88 A5.4 5.4 0 0 1 90.00 69.26 A5.4 5.4 0 0 1 84.71 77.68 A5.4 5.4 0 0 1 77.68 84.71 A5.4 5.4 0 0 1 69.26 90.00 A5.4 5.4 0 0 1 59.88 93.29 A5.4 5.4 0 0 1 50.00 94.40 A5.4 5.4 0 0 1 40.12 93.29 A5.4 5.4 0 0 1 30.74 90.00 A5.4 5.4 0 0 1 22.32 84.71 A5.4 5.4 0 0 1 15.29 77.68 A5.4 5.4 0 0 1 10.00 69.26 A5.4 5.4 0 0 1 6.71 59.88 A5.4 5.4 0 0 1 5.60 50.00 A5.4 5.4 0 0 1 6.71 40.12 A5.4 5.4 0 0 1 10.00 30.74 A5.4 5.4 0 0 1 15.29 22.32 A5.4 5.4 0 0 1 22.32 15.29 A5.4 5.4 0 0 1 30.74 10.00 A5.4 5.4 0 0 1 40.12 6.71 A5.4 5.4 0 0 1 50.00 5.60 A5.4 5.4 0 0 1 59.88 6.71 A5.4 5.4 0 0 1 69.26 10.00 A5.4 5.4 0 0 1 77.68 15.29 A5.4 5.4 0 0 1 84.71 22.32 A5.4 5.4 0 0 1 90.00 30.74 A5.4 5.4 0 0 1 93.29 40.12 A5.4 5.4 0 0 1 94.40 50.00 Z" stroke-width="1.7" stroke-linejoin="round"/>' +
     '<circle cx="50" cy="50" r="40.6"/><circle cx="50" cy="50" r="27.6"/></g>' +
     '<text font-family="Manrope, sans-serif" font-weight="700" font-size="7.6" fill="currentColor"><textPath href="#' + sti + '" textLength="213" lengthAdjust="spacing">' +
-      T('Verifisert').toUpperCase() + ' • HALALKARTET • </textPath></text>' +
-    '<text x="50" y="57.5" text-anchor="middle" font-family="Amiri, serif" font-weight="700" font-size="24" fill="currentColor" direction="rtl">حلال</text></svg>';
+      T(uavklart ? 'Uavklart' : delvis ? 'Delvis halal' : 'Verifisert').toUpperCase() + ' • HALALKARTET • </textPath></text>' +
+    (uavklart || delvis
+      ? '<text x="50" y="62.5" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="800" font-size="35" fill="currentColor">' + (delvis ? '!' : '?') + '</text>'
+      : '<text x="50" y="57.5" text-anchor="middle" font-family="Amiri, serif" font-weight="700" font-size="24" fill="currentColor" direction="rtl">حلال</text>') + '</svg>';
 }
 function detaljHtml(s) {
   const tel = s.phone ? String(s.phone).replace(/\s+/g, '') : '';
@@ -1226,46 +1264,55 @@ function detaljHtml(s) {
   ].filter(Boolean);
 
   const liste = Array.isArray(s.verification) ? s.verification : (s.verification ? [{ tekst: s.verification }] : []);
-  const bevis = liste.map(function (v) {
-    return '<p>' + esc(v.tekst ? T(v.tekst) : '') + (v.kilde ? ' <span class="d-kilde">' + esc(v.kilde) + '</span>' : '') + '</p>';
-  }).join('') || '<p>' + T('Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.') + '</p>';
+  // Det vi vet, som en liste: én setning per punkt, og kilden til slutt
+  const punkter = [];
+  liste.forEach(function (v) {
+    const tekst = v.tekst ? T(v.tekst) : '';
+    // delt etter punktum, utropstegn og spørsmålstegn. Skrevet uten «lookbehind», som eldre iPhone-er ikke forstår
+    tekst.replace(/([.!?])\s+/g, '$1\u0001').split('\u0001').filter(Boolean).forEach(function (setning) { punkter.push(esc(setning)); });
+    if (v.kilde) punkter.push(T('Kilde: {k}', { k: esc(v.kilde) }));
+  });
+  const bevis = s.halalStatus === 'verifisert' ? '' : '<div class="d-vet"><h4>' + T('Dette vet vi') + '</h4>' +
+    (punkter.length ? '<ul>' + punkter.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>'
+      : '<p>' + T('Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.') + '</p>') + '</div>';
   const d = dagerSiden(s.lastVerified);
   const naar = d === null ? T('Ikke bekreftet med dato') : T('Sist bekreftet {d}', { d: fmtDato(s.lastVerified) }) + (d > 180 ? T(', over et halvår siden') : '');
 
   const rad = function (navn, verdi) { return '<div><dt>' + T(navn) + '</dt><dd>' + verdi + '</dd></div>'; };
   const rader = [
     rad('Adresse', adresseLinjer(s)),
-    rad('Åpningstider', tiderLenke(s, 'Se på Google')),
+    rad('Åpningstider', tiderLenke(s, 'Se åpningstider')),
     rad('Alkohol', T(s.alcohol ? 'Serveres' : 'Ingen kjent servering'))
   ];
   if (tel) rader.push(rad('Telefon', '<a href="tel:' + esc(tel) + '">' + esc(s.phone) + '</a>'));
 
-  return '<div class="d-topp">' +
+  return '<div class="d-topp"><span class="d-grep" aria-hidden="true"></span>' +
       '<button type="button" class="d-rund" id="detaljTilbake" aria-label="' + T('Tilbake') + '">' + IKON2.tilbake + '</button>' +
       '<span class="d-luft"></span>' +
       '<button type="button" class="d-rund d-del" data-act="del" data-id="' + esc(s.id) + '" aria-label="' + esc(T('Del {navn}', { navn: s.name })) + '">' + IKON2.del + '<span>' + T('Del') + '</span></button>' +
       hjerte(s, 'd-rund') +
       '<a class="d-merke" href="./" aria-label="' + T('Halalkartet, start på nytt') + '">حلال</a>' +
     '</div>' +
-    '<header class="d-hero' + (s.halalStatus === 'verifisert' ? ' har-stempel' : '') + '">' +
-      (s.halalStatus === 'verifisert' ? stempel('side') : '<p class="d-oy" data-s="' + esc(s.halalStatus) + '">' + skjold(s) + '</p>') +
+    '<header class="d-hero har-stempel">' +
+      stempel('side', s.halalStatus) +
       '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
     '</header>' +
     '<div class="d-kropp">' +
-      (s.description ? '<p class="d-beskr">' + esc(T(s.description)) + '</p>' : '') +
       '<div class="d-knapper k' + knapper.length + '">' + knapper.join('') + '</div>' +
       '<section class="d-om" aria-labelledby="dOmTittel">' +
-        '<div class="d-om-hode"><h3 id="dOmTittel">' + T('Om halal-statusen') + '</h3><span class="d-ar" aria-hidden="true">حلال</span></div>' +
+        '<div class="d-om-hode"><h3 id="dOmTittel">' + T('Om halal-statusen') + '</h3>' +
+          (s.halalStatus === 'verifisert' ? '<span class="d-ar" aria-hidden="true">حلال</span>' : '<span class="d-om-status">' + skjold(s) + '</span>') + '</div>' +
+        (s.halalStatus !== 'verifisert' ? '<p class="d-status-setning" data-s="' + esc(s.halalStatus) + '">' + T('Denne restauranten er') + ' <strong>' + T(s.halalStatus === 'delvis' ? 'delvis halal' : 'uavklart') + '</strong>.</p>' : '') +
         bevis +
         '<p class="d-forbehold">' + T('Halalkartet sertifiserer ikke selv.') + '</p>' +
         '<div class="d-om-fot"><span class="d-naar">' + naar + '</span><button type="button" class="d-lenke" data-faq>' + T('Hva betyr statusene?') + '</button></div>' +
       '</section>' +
       '<dl class="d-info">' + rader.join('') + '</dl>' +
       '<div class="d-kartboks"><div class="d-kart" id="detaljKart"></div>' +
-        '<a class="d-kartlenke" href="' + esc(kartAppUrl(s)) + '" target="_blank" rel="noopener">' + T('Åpne i kart-appen') + IKON2.utpil + '</a></div>' +
+        kartLenker(s) + '</div>' +
       '<div class="d-feil"><div><h3>' + T('Ser du noe som er feil?') + '</h3><p>' + T('Si ifra, så sjekker vi stedet på nytt.') + '</p></div>' +
-        '<button type="button" class="knapp" data-sifra="' + esc(s.id) + '">' + T('Si ifra') + '</button></div>' +
+        '<button type="button" class="knapp" data-sifra="' + esc(s.id) + '">' + T('Si ifra!') + '</button></div>' +
     '</div>';
 }
 function tegnDetaljKart(s) {
@@ -1360,6 +1407,7 @@ function wireMobil() {
     else if (f === 'stott') openInfo('stott');
     else if (f === 'mer') apneMer();
     else if (f === 'lagret') settFane('lagret');
+    else if (f === 'naer') { settVisning('kart'); locateUser(); }
     else settFane('utforsk');
   });
 
@@ -1370,8 +1418,16 @@ function wireMobil() {
     if (lagre) { e.preventDefault(); byttLagret(lagre.dataset.lagre); return; }
     const det = t.closest('[data-detalj]');
     if (det) { e.preventDefault(); apneDetalj(det.dataset.detalj); return; }
+    // knappene i tomme lister
+    const tom = t.closest('[data-tom]');
+    if (tom) {
+      if (tom.dataset.tom === 'nullstill') { nullstill(); el('search').blur(); }
+      else if (tom.dataset.tom === 'tips') openInfo('tips');
+      else settVisning('kart');
+      return;
+    }
     if (t.closest('#detaljTilbake')) { lukkDetalj(); return; }
-    if (t.closest('[data-faq]')) { lukkDetalj(); setTimeout(function () { openInfo('faq'); }, 60); return; }
+    if (t.closest('[data-faq]')) { openInfo('faq'); el('infoScrim').classList.add('over-side'); return; }
     const utv = t.closest('[data-utvalgt]');
     if (utv) { closeInfo(); lukkMer(); lukkSkuff(); setActive(utv.dataset.utvalgt, true); return; }
     const sifra = t.closest('[data-sifra]');
@@ -1393,17 +1449,91 @@ function wireMobil() {
     if (!el('detalj').hidden && !(history.state && history.state.detalj)) lukkDetalj(true);
   });
 
-  const bunn = el('bunnark');
-  let y0 = null;
-  bunn.addEventListener('pointerdown', function (e) { if (!e.target.closest('a, button')) y0 = e.clientY; });
-  bunn.addEventListener('pointerup', function (e) {
-    if (y0 === null) return;
-    const dy = e.clientY - y0;
-    y0 = null;
-    if (dy < -40) settVisning('liste');
-    else if (dy > 40 && activeId) setActive(null);
+  // Et drag flytter bare arket. Det følger fingeren opp og ned og stopper i én av tre stillinger når fingeren slipper.
+  // Kartet står stille imens, og ingenting lukkes: et valgt sted lukkes med «Utforsk andre steder» eller et trykk på kartet.
+  const bunn = el('bunnark'), listeEl = el('liste'), side = el('detalj');
+  const STILLINGER = ['lav', 'midt', 'hoy'];
+  let drag = null, sisteDrag = 0;
+  const hoyTopp = function () { return (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--toppfelt-h')) || 120) - 30; };
+  const midtTopp = function () { return Math.round(window.innerHeight * MIDT); };
+  const demp = function (v, min, maks) { return v < min ? min + (v - min) * .25 : v > maks ? maks + (v - maks) * .25 : v; };
+  function dragStart(e, hva) {
+    if (e.button || !erMobil() || fane === 'lagret') return;
+    const elm = hva === 'liste' ? listeEl : hva === 'side' ? side : bunn;
+    drag = { hva: hva, y0: e.clientY, spor: [[e.timeStamp, e.clientY]], fart: 0, iGang: false, topp0: elm.getBoundingClientRect().top,
+             fra: hva === 'linje' ? 'lav' : hva === 'liste' ? (listeHalv ? 'midt' : 'hoy') : hva === 'side' ? 'hoy' : (kortLavt ? 'lav' : 'midt'),
+             lav: window.innerHeight - el('fane').getBoundingClientRect().height - 62 };
+  }
+  bunn.addEventListener('pointerdown', function (e) { dragStart(e, activeId ? 'kort' : 'linje'); });
+  listeEl.querySelector('.liste-hode').addEventListener('pointerdown', function (e) { if (!e.target.closest('select')) dragStart(e, 'liste'); });
+  side.addEventListener('pointerdown', function (e) { if (e.target.closest('.d-grep') && side.scrollTop <= 0) dragStart(e, 'side'); });
+  window.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    const dy = e.clientY - drag.y0;
+    if (!drag.iGang) {
+      if (Math.abs(dy) < 8 || (drag.hva === 'linje' && dy > 0) || (drag.hva === 'side' && dy < 0)) return;
+      drag.iGang = true;
+      document.body.classList.add('ark-drar');
+      if (drag.hva === 'linje') {                       // lista kommer opp under fingeren
+        visning = 'liste'; listeHalv = false;
+        document.body.classList.add('vis-liste');
+        tegnListe();
+      }
+    }
+    drag.spor.push([e.timeStamp, e.clientY]);
+    while (drag.spor.length > 2 && e.timeStamp - drag.spor[0][0] > 80) drag.spor.shift();
+    drag.fart = (e.clientY - drag.spor[0][1]) / Math.max(1, e.timeStamp - drag.spor[0][0]);
+    if (drag.hva === 'kort') bunn.style.transform = 'translateY(' + demp(dy, kortLavt ? -200 : -70, kortLavt ? 0 : 200) + 'px)';
+    else if (drag.hva === 'side') side.style.transform = 'translateY(' + Math.max(0, dy) + 'px)';
+    else listeEl.style.top = demp(drag.topp0 + dy, hoyTopp(), drag.lav) + 'px';
   });
-  bunn.addEventListener('pointercancel', function () { y0 = null; });
+  function slipp(e) {
+    if (!drag) return;
+    const d = drag;
+    drag = null;
+    if (!d.iGang) return;                               // et vanlig trykk
+    sisteDrag = e.timeStamp;
+    const dy = e.clientY - d.y0, rask = Math.abs(d.fart) > .5, opp = d.fart < 0;
+    const etter = function (ms, fn) { setTimeout(fn, reduceMotion ? 0 : ms); };
+    if (d.hva === 'kort') {
+      // der arket står nå, så det glir derfra til den nye stillingen
+      const naa = bunn.getBoundingClientRect().top;
+      if (kortLavt) { if (dy < -40 || (rask && opp)) kortLavt = false; }
+      else if (dy > 60 || (rask && !opp)) kortLavt = true;
+      else if (dy < -50 || (rask && opp)) apneDetalj(activeId);
+      bunn.style.transform = '';
+      tegnBunnHode();
+      bunn.style.transform = 'translateY(' + (naa - bunn.getBoundingClientRect().top) + 'px)';
+      void bunn.offsetWidth;
+      document.body.classList.remove('ark-drar');
+      bunn.style.transform = '';
+      etter(280, function () { etterKortet(function () { if (activeId) holdPunktFritt(activeId); }); });
+    } else if (d.hva === 'side') {
+      document.body.classList.remove('ark-drar');
+      side.style.transform = '';
+      if (dy > 110 || (rask && !opp)) lukkDetalj();
+    } else {
+      const y = listeEl.getBoundingClientRect().top;
+      const stopp = { hoy: hoyTopp(), midt: midtTopp(), lav: d.lav };
+      let til = STILLINGER.reduce(function (a, b) { return Math.abs(stopp[b] - y) < Math.abs(stopp[a] - y) ? b : a; });
+      if (rask) til = STILLINGER[Math.max(0, Math.min(2, STILLINGER.indexOf(d.fra) + (opp ? 1 : -1)))];
+      document.body.classList.remove('ark-drar');
+      if (til === 'lav') {
+        listeEl.style.top = d.lav + 'px';
+        etter(260, function () { listeEl.style.top = ''; settVisning('kart'); });
+      } else {
+        listeEl.style.top = '';
+        settVisning('liste', til === 'midt');
+        etterKortet();
+      }
+    }
+  }
+  window.addEventListener('pointerup', slipp);
+  window.addEventListener('pointercancel', slipp);
+  // et drag skal ikke også bli et trykk på knappen som lå under fingeren
+  [bunn, listeEl, side].forEach(function (x) {
+    x.addEventListener('click', function (e) { if (e.timeStamp - sisteDrag < 350) { e.stopPropagation(); e.preventDefault(); } }, true);
+  });
 
   el('merLukk').addEventListener('click', lukkMer);
   el('mer').addEventListener('click', function (e) {
@@ -1417,7 +1547,7 @@ function wireMobil() {
 
   document.addEventListener('keydown', function (e) {
     const d = el('detalj'), m = el('mer');
-    if (!d.hidden) { if (e.key === 'Escape') { e.preventDefault(); lukkDetalj(); } else fangTab(e, d); return; }
+    if (!d.hidden && !el('infoScrim').classList.contains('over-side')) { if (e.key === 'Escape') { e.preventDefault(); lukkDetalj(); } else fangTab(e, d); return; }
     if (!m.hidden) { if (e.key === 'Escape') { e.preventDefault(); lukkMer(); } else fangTab(e, m); return; }
     if (e.key === 'Escape' && erMobil() && activeId) setActive(null);
   });
@@ -1476,6 +1606,10 @@ function setActive(id, fromList) {
     if (forrige.id !== id) { map.removeLayer(m); if (vises(forrige)) klynge.addLayer(m); }
   }
   activeId = id;
+  if (id) {
+    kortLavt = false;                                   // et nytt valgt sted kommer alltid opp som kort, i midtstilling
+    if (listeHalv && erMobil() && !fromList) settVisning('kart');
+  }
   if (id && markers[id] && byId(id)) { klynge.removeLayer(markers[id]); markers[id].addTo(map); }
   if (id) {
     const s = byId(id);
@@ -1570,19 +1704,48 @@ function applyHash() {
   return false;
 }
 
-// Utvalgte steder vises i en boble, som de andre sidene, og blir stående til du lukker den
+// Utvalgte steder: ett sted om gangen i en boks. Man sveiper sidelengs til neste, eller trykker på prikkene under.
 function tegnUtvalgte() {
   const list = el('utvalgtListe');
   if (!list) return;
-  list.innerHTML = currentHighlights().map(function (s) {
-    return '<button type="button" class="utv-rad" data-utvalgt="' + esc(s.id) + '">' + monogram(s, 0) +
-      '<span><span class="utv-navn">' + esc(s.name) + '</span>' +
-      '<span class="utv-meta">' + esc([s.cuisines[0] ? T(s.cuisines[0]) : '', s.bydel].filter(Boolean).join(' · ')) + '</span></span>' +
-      skjold(s) + '</button>';
-  }).join('');
-  const d = daysUntilRotation();
-  el('utvalgtSub').textContent = d === 1 ? T('Fem steder vi har bekreftet som helt halal. Nytt utvalg i morgen.')
-    : T('Fem steder vi har bekreftet som helt halal. Nytt utvalg om {n} dager.', { n: d });
+  const steder = currentHighlights();
+  list.innerHTML =
+    '<div class="utv-bane" id="utvBane" tabindex="0" role="group" aria-label="' + T('Utvalgte steder') + '">' +
+    steder.map(function (s, i) {
+      return '<article class="utv-kort" aria-label="' + esc(s.name + ', ' + T('{i} av {n}', { i: i + 1, n: steder.length })) + '">' +
+        '<header class="utv-topp">' + stempel('utv' + i) +
+          '<h3>' + esc(s.name) + '</h3>' +
+          '<p class="utv-meta">' + metaTekst(s) + '</p>' +
+        '</header>' +
+        '<div class="utv-kropp">' +
+          (s.description ? '<p class="utv-om">' + esc(T(s.description)) + '</p>' : '') +
+          (s.address ? '<p class="utv-adr">' + esc(s.address) + '</p>' : '') +
+          '<div class="utv-knapper">' +
+            '<a class="knapp primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + T('Veibeskrivelse') + '</a>' +
+            '<button type="button" class="knapp" data-utvalgt="' + esc(s.id) + '">' + T('Vis på kartet') + '</button>' +
+          '</div>' +
+        '</div></article>';
+    }).join('') + '</div>' +
+    '<div class="utv-prikker">' + steder.map(function (s, i) {
+      return '<button type="button" data-utv="' + i + '" aria-label="' + esc(T('{i} av {n}', { i: i + 1, n: steder.length })) + '"' + (i ? '' : ' aria-current="true"') + '></button>';
+    }).join('') + '</div>';
+  el('utvalgtSub').textContent = T('Mat det er verdt å ta turen for. Sveip deg gjennom og finn ditt neste favorittmåltid.');
+  // prikkene følger boksen som står fremme
+  const bane = el('utvBane'), prikker = list.querySelectorAll('.utv-prikker button');
+  let vent = 0;
+  bane.addEventListener('scroll', function () {
+    cancelAnimationFrame(vent);
+    vent = requestAnimationFrame(function () {
+      const midt = bane.scrollLeft + bane.clientWidth / 2;
+      let naa = 0;
+      Array.prototype.forEach.call(bane.children, function (k, i) { if (k.offsetLeft <= midt) naa = i; });
+      prikker.forEach(function (p, i) { if (i === naa) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current'); });
+    });
+  }, { passive: true });
+  list.querySelector('.utv-prikker').addEventListener('click', function (e) {
+    const p = e.target.closest('[data-utv]');
+    if (p) bane.children[+p.dataset.utv].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+  });
 }
 
 // Deling
@@ -1658,7 +1821,7 @@ function dist(s) { return userLoc ? haversine(userLoc.lat, userLoc.lng, s.lat, s
 function fmtDist(km) { return km < 1 ? Math.round(km * 1000) + ' m' : km.toFixed(1) + ' km'; }
 function wireNearMe() { el('nearme').addEventListener('click', locateUser); }
 function locateUser() {
-  const knapper = [el('nearme'), el('pcNaer'), el('pcNaermest')].filter(Boolean);
+  const knapper = [el('nearme'), el('faneNaer'), el('pcNaer'), el('pcNaermest')].filter(Boolean);
   const laster = paa => knapper.forEach(k => k.classList.toggle('loading', paa));
   track('naer_meg');
   if (!APP && !navigator.geolocation) { toast(T('Nettleseren din støtter ikke posisjon.')); return; }
@@ -1719,6 +1882,7 @@ function visPosisjon(pos) {
     zIndexOffset: 1000
   }).addTo(map);
   el('nearme').classList.add('aktiv');
+  if (el('faneNaer')) el('faneNaer').classList.add('aktiv');
 }
 
 // Infovinduet
@@ -1727,14 +1891,16 @@ function wireInfo() {
     t.addEventListener('click', () => showInfo(t.dataset.tab)));
   el('infoClose').addEventListener('click', closeInfo);
   el('infoScrim').addEventListener('click', e => { if (e.target === el('infoScrim')) closeInfo(); });
+  // Esc med spørsmålsboblen over stedssiden: lukk bare boblen, ikke stedssiden under
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && el('infoScrim').classList.contains('over-side')) { e.stopPropagation(); closeInfo(); }
+  }, true);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeInfo(); return; }
     if (e.key === 'Tab') trapFocus(e);
   });
 }
 function openInfo(section, appTekst) {
-  // Støtt oss er tatt ut av appen inntil videre
-  if (APP && section === 'stott') return;
   // på nettsiden vises appens utgave av teksten bare når lenken ber om det
   document.documentElement.classList.toggle('app-tekst', appTekst === true);
   lastFocus = document.activeElement;
@@ -1748,7 +1914,7 @@ function openInfo(section, appTekst) {
 function closeInfo() {
   const scrim = el('infoScrim');
   if (!scrim.classList.contains('open')) return;
-  scrim.classList.remove('open');
+  scrim.classList.remove('open', 'over-side');
   document.documentElement.classList.remove('app-tekst');
   // kom man hit med en lenke til infosiden, ryddes den bort fra adressen når vinduet lukkes
   let hash = '';
@@ -1993,7 +2159,9 @@ function tegnPcFilter() {
     sprakknapp('pc-sprak', 'data-pc="sprak"') +
     '<span class="pc-skille pc-brudd" aria-hidden="true"></span>' +
     '<div class="pc-sortgruppe" role="group" aria-label="' + T('Sorter listen') + '"><span class="pc-sort-etikett" aria-hidden="true">' + T('Sorter') + '</span>' + sorter + '</div>' +
-    '<p class="pc-treff" aria-live="polite"><b>' + treff + '</b> ' + (sprak === 'en' ? (treff === 1 ? 'result' : 'results') : 'treff') + '</p>' +
+    '<p class="pc-treff" aria-live="polite"><b>' + treff + '</b> ' + (strict === 0 && !pcVisLagret && treff < HALAL_SPOTS.length && filterTekst() === ' · ' + T('kun verifisert')
+      ? esc(T('av {n} steder som er', { n: HALAL_SPOTS.length })) + ' <em class="bunn-kun">' + esc(T('kun verifisert')) + '</em>'
+      : (sprak === 'en' ? (treff === 1 ? 'result' : 'results') : 'treff')) + '</p>' +
     '<button type="button" class="pc-nullstill" data-pc="nullstill"' + (antallAktive() || f.q || f.sort || !pcGruppe || pcVisLagret || activeId ? '' : ' disabled') + '>' + T('Nullstill') + '</button>';
 
   if (fokus) {
@@ -2006,7 +2174,7 @@ function tegnPcFilter() {
 }
 
 function pcRad(s) {
-  return '<button type="button" class="pc-rad" data-pcvelg="' + esc(s.id) + '">' + skjold(s) +
+  return '<button type="button" class="pc-rad" data-pcvelg="' + esc(s.id) + '">' +
     '<span class="pc-rad-tekst"><span class="pc-rad-navn">' + esc(s.name) + '</span>' +
     '<span class="pc-rad-meta">' + esc(s.cuisines[0] ? T(s.cuisines[0]) : '') + ' · ' + '$'.repeat(s.price) + '</span></span></button>';
 }
@@ -2020,9 +2188,10 @@ function pcValgtKort(s) {
     hjerte(s, 'pc-valgt-hjerte') + (verifisert ? stempel('kort') : '') +
     '<h3>' + esc(s.name) + '</h3>' +
     '<p class="pc-valgt-meta">' + meta.join(' · ') + '</p>' +
+    '<p class="pc-valgt-status">' + skjold(s, true) + '</p>' +
     '<dl class="pc-valgt-info"><div><dt>' + T('Adresse') + '</dt><dd>' + esc(gate) + '</dd></div>' +
       (tel ? '<div><dt>' + T('Telefon') + '</dt><dd><a href="tel:' + esc(tel) + '">' + esc(s.phone) + '</a></dd></div>' : '') +
-      '<div><dt>' + T('Åpningstider') + '</dt><dd>' + tiderLenke(s, 'Se på Google', 'pc-tider') + '</dd></div></dl>' +
+      '<div><dt>' + T('Åpningstider') + '</dt><dd>' + tiderLenke(s, 'Se åpningstider', 'pc-tider') + '</dd></div></dl>' +
     '<div class="pc-valgt-knapper">' +
       '<a class="primar" href="' + esc(ruteUrl(s)) + '" target="_blank" rel="noopener" data-act="rute" data-id="' + esc(s.id) + '">' + IKON2.rute + T('Veibeskrivelse') + '</a>' +
       '<button type="button" data-detalj="' + esc(s.id) + '">' + T('Se hele siden') + '</button>' +
@@ -2033,7 +2202,7 @@ function pcKjede(g) {
   const apen = !!kjedeApen[kjedeNokkel(g)] || g.filialer.some(function (s) { return s.id === activeId; });
   const omrader = [...new Set(g.filialer.map(function (s) { return s.bydel; }))];
   return '<div class="pc-kjede' + (apen ? ' apen' : '') + '">' +
-    '<button type="button" class="pc-rad" data-pckjede="' + esc(kjedeNokkel(g)) + '" data-antall="' + g.filialer.length + '" aria-expanded="' + apen + '">' + skjold(g.filialer[0]) +
+    '<button type="button" class="pc-rad" data-pckjede="' + esc(kjedeNokkel(g)) + '" data-antall="' + g.filialer.length + '" aria-expanded="' + apen + '">' +
       '<span class="pc-rad-tekst"><span class="pc-rad-navn">' + esc(g.navn) + '</span>' +
       '<span class="pc-rad-meta">' + T('{n} steder', { n: g.filialer.length }) + ' · ' + esc(omrader.length <= 2 ? omrader.join(T(' og ')) : T('{n} områder', { n: omrader.length })) + '</span></span></button>' +
     (apen ? '<div class="pc-filialer">' + g.filialer.map(function (s) { return s.id === activeId ? pcValgtKort(s) : pcRad(s); }).join('') + '</div>' : '') +
