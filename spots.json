@@ -7,12 +7,12 @@
     "address": "Møllergata 10, 0179 Oslo",
     "lat": 59.914463,
     "lng": 10.7470942,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -33,12 +33,12 @@
     "address": "Storgata 17, 0184 Oslo",
     "lat": 59.9137557,
     "lng": 10.7498851,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -59,12 +59,12 @@
     "address": "Hovinveien 39, 0661 Oslo",
     "lat": 59.9198946,
     "lng": 10.7913278,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -111,12 +111,12 @@
     "address": "Motzfeldts gate 7, 0187 Oslo",
     "lat": 59.914093,
     "lng": 10.7632166,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -137,12 +137,12 @@
     "address": "Grønlandsleiret 37, 0190 Oslo",
     "lat": 59.9110746,
     "lng": 10.7668704,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -163,12 +163,12 @@
     "address": "Stovner Senter 3, 0985 Oslo",
     "lat": 59.9618135,
     "lng": 10.9233817,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -190,12 +190,12 @@
     "address": "Grønlandsleiret 16A, 0190 Oslo",
     "lat": 59.9123407,
     "lng": 10.7653533,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -217,12 +217,12 @@
     "address": "Trondheimsveien 6A, 0560 Oslo",
     "lat": 59.9191861,
     "lng": 10.7633571,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -269,12 +269,12 @@
     "address": "Torggata 34, 0183 Oslo",
     "lat": 59.9172643,
     "lng": 10.7535635,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -296,12 +296,12 @@
     "address": "Trondheimsveien 13, 0560 Oslo",
     "lat": 59.919193,
     "lng": 10.7643854,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -322,12 +322,12 @@
     "address": "Trondheimsveien 14, 0560 Oslo",
     "lat": 59.9195989,
     "lng": 10.7648225,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -348,12 +348,12 @@
     "address": "Torggata 30, 0183 Oslo",
     "lat": 59.9170016,
     "lng": 10.7531046,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Alt unntatt én rett er halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -374,12 +374,12 @@
     "address": "Waldemar Thranes gate 63, 0173 Oslo",
     "lat": 59.9276448,
     "lng": 10.7489461,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -401,12 +401,12 @@
     "address": "Trondheimsveien 10, 0560 Oslo",
     "lat": 59.9197558,
     "lng": 10.7635425,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -427,12 +427,12 @@
     "address": "Norbygata 56, 0187 Oslo",
     "lat": 59.9130137,
     "lng": 10.7655942,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -453,12 +453,12 @@
     "address": "Seilduksgata 5C, 0553 Oslo",
     "lat": 59.9254238,
     "lng": 10.7569925,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -479,12 +479,12 @@
     "address": "Tjuvholmen allé 2, 0252 Oslo",
     "lat": 59.9089744,
     "lng": 10.723378,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -557,12 +557,12 @@
     "address": "Møllergata 10, 0179 Oslo",
     "lat": 59.9143638,
     "lng": 10.7469584,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -584,12 +584,12 @@
     "address": "Grønland 5, 0188 Oslo",
     "lat": 59.9130556,
     "lng": 10.7597222,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -689,12 +689,12 @@
     "address": "Grønland 12B, 0188 Oslo",
     "lat": 59.9131854,
     "lng": 10.7604482,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -741,12 +741,12 @@
     "address": "Breigata 12, 0187 Oslo",
     "lat": 59.9138553,
     "lng": 10.7622184,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -768,12 +768,12 @@
     "address": "Frognerveien 9B, 0257 Oslo",
     "lat": 59.9163858,
     "lng": 10.7157018,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -794,12 +794,12 @@
     "address": "Bygdøy allé 65, 0265 Oslo",
     "lat": 59.9189547,
     "lng": 10.7026785,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Alt er halal bortsett fra and og reinsdyr.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -820,12 +820,12 @@
     "address": "Bergensgata 4, 0468 Oslo",
     "lat": 59.9401216,
     "lng": 10.7589519,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -872,12 +872,12 @@
     "address": "Jens Bjelkes gate 82, 0578 Oslo",
     "lat": 59.9125255,
     "lng": 10.7745513,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -924,12 +924,12 @@
     "address": "Majorstuveien 41A, 0367 Oslo",
     "lat": 59.928082,
     "lng": 10.7156409,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -950,12 +950,12 @@
     "address": "Tøyengata 29A, 0578 Oslo",
     "lat": 59.9142087,
     "lng": 10.7680423,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -976,12 +976,12 @@
     "address": "Møllergata 8, 0179 Oslo",
     "lat": 59.9141362,
     "lng": 10.7468876,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1002,12 +1002,12 @@
     "address": "Nordre gate 24, 0551 Oslo",
     "lat": 59.9211603,
     "lng": 10.758499,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1028,12 +1028,12 @@
     "address": "Smalgangen 31, 0188 Oslo",
     "lat": 59.9122048,
     "lng": 10.7603045,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1106,12 +1106,12 @@
     "address": "Vulkan 7, 0178 Oslo",
     "lat": 59.9225201,
     "lng": 10.7519057,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1132,12 +1132,12 @@
     "address": "Bogstadveien 66A, 0366 Oslo",
     "lat": 59.9286678,
     "lng": 10.7155393,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1158,12 +1158,12 @@
     "address": "Maridalsveien 154B, 0461 Oslo",
     "lat": 59.9376755,
     "lng": 10.7561237,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1184,12 +1184,12 @@
     "address": "Mandalls gate 2P, 0190 Oslo",
     "lat": 59.912257,
     "lng": 10.763879,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1211,12 +1211,12 @@
     "address": "Grønland 14, 0188 Oslo",
     "lat": 59.913063,
     "lng": 10.7612391,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1263,12 +1263,12 @@
     "address": "Trondheimsveien 14A, 0560 Oslo",
     "lat": 59.9196552,
     "lng": 10.7647706,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1289,12 +1289,12 @@
     "address": "Arendalsgata 14, 0463 Oslo",
     "lat": 59.9378605,
     "lng": 10.7546939,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1342,12 +1342,12 @@
     "address": "Thereses gate 51E, 0354 Oslo",
     "lat": 59.926012,
     "lng": 10.7305283,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1472,12 +1472,12 @@
     "address": "Karl Johans gate 18C, 0159 Oslo",
     "lat": 59.9126911,
     "lng": 10.7417146,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1498,12 +1498,12 @@
     "address": "Waldemar Thranes gate 63, 0173 Oslo",
     "lat": 59.9277584,
     "lng": 10.7490842,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1524,12 +1524,12 @@
     "address": "Hegdehaugsveien 32B, 0352 Oslo",
     "lat": 59.9220391,
     "lng": 10.7265697,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1550,12 +1550,12 @@
     "address": "Platous gate 2C, 0190 Oslo",
     "lat": 59.913106,
     "lng": 10.7667391,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1576,12 +1576,12 @@
     "address": "Pilestredet 63D, 0350 Oslo",
     "lat": 59.9241905,
     "lng": 10.7310743,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1602,12 +1602,12 @@
     "address": "Kjelsåsveien 18, 0488 Oslo",
     "lat": 59.9442797,
     "lng": 10.7863393,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1628,12 +1628,12 @@
     "address": "Strømsveien 25A, 0658 Oslo",
     "lat": 59.9086746,
     "lng": 10.7870328,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1654,12 +1654,12 @@
     "address": "Grønland 22, 0188 Oslo",
     "lat": 59.9129637,
     "lng": 10.7617648,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1680,12 +1680,12 @@
     "address": "Trondheimsveien 12, 0560 Oslo",
     "lat": 59.9194951,
     "lng": 10.7645103,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1707,12 +1707,12 @@
     "address": "Smalgangen 43, 0188 Oslo",
     "lat": 59.9124912,
     "lng": 10.7616621,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1734,12 +1734,12 @@
     "address": "Tollbugata 15, 0152 Oslo",
     "lat": 59.910431,
     "lng": 10.7445836,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1760,12 +1760,12 @@
     "address": "Torggata 16B, 0181 Oslo",
     "lat": 59.915909,
     "lng": 10.7508451,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Deler av menyen er ikke halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1812,12 +1812,12 @@
     "address": "Trondheimsveien 154, 0570 Oslo",
     "lat": 59.9289422,
     "lng": 10.7773444,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1838,12 +1838,12 @@
     "address": "Storgata 39, 0182 Oslo",
     "lat": 59.9150766,
     "lng": 10.7545541,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1864,12 +1864,12 @@
     "address": "Storgata 32, 0184 Oslo",
     "lat": 59.9143632,
     "lng": 10.7534684,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1890,12 +1890,12 @@
     "address": "Platous gate 6, 0190 Oslo",
     "lat": 59.9124127,
     "lng": 10.7664275,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1916,12 +1916,12 @@
     "address": "Thorvald Meyers gate 64, 0552 Oslo",
     "lat": 59.9213746,
     "lng": 10.7599479,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1942,12 +1942,12 @@
     "address": "Torshovgata 7, 0476 Oslo",
     "lat": 59.9336756,
     "lng": 10.7638522,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1969,12 +1969,12 @@
     "address": "Torshovgata 1, 0476 Oslo",
     "lat": 59.9340065,
     "lng": 10.7619235,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -1995,12 +1995,12 @@
     "address": "Munkedamsveien 59, 0270 Oslo",
     "lat": 59.9111706,
     "lng": 10.720909,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Kun kylling og biff er halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2047,12 +2047,12 @@
     "address": "Brugata 3A, 0181 Oslo",
     "lat": 59.9144887,
     "lng": 10.7537409,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2073,12 +2073,12 @@
     "address": "Smalgangen 1, 0188 Oslo",
     "lat": 59.9124214,
     "lng": 10.758934,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2099,12 +2099,12 @@
     "address": "Trondheimsveien 159, 0570 Oslo",
     "lat": 59.9313216,
     "lng": 10.7786177,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Deler av menyen er ikke halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2125,12 +2125,12 @@
     "address": "Hovinveien 39, 0661 Oslo",
     "lat": 59.9199623,
     "lng": 10.7910591,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2151,12 +2151,12 @@
     "address": "Thorvald Meyers gate 78C, 0550 Oslo",
     "lat": 59.9187783,
     "lng": 10.7597068,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2177,12 +2177,12 @@
     "address": "Trondheimsveien 8, 0560 Oslo",
     "lat": 59.919313,
     "lng": 10.7636865,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2206,12 +2206,12 @@
     "address": "Glads vei 20, 0489 Oslo",
     "lat": 59.9514311,
     "lng": 10.7862463,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2234,12 +2234,12 @@
     "address": "Kolstadgata 22, 0652 Oslo",
     "lat": 59.9139188,
     "lng": 10.7742365,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2262,12 +2262,12 @@
     "address": "Storgata 23, 0184 Oslo",
     "lat": 59.9139098,
     "lng": 10.7509146,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2291,12 +2291,12 @@
     "address": "Thorvald Meyers gate, Oslo",
     "lat": 59.9246235,
     "lng": 10.7595057,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2318,12 +2318,12 @@
     "address": "Karl Johans gate 13C, 0154 Oslo",
     "lat": 59.9125137,
     "lng": 10.7449018,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2346,12 +2346,12 @@
     "address": "Majorstuveien 36, 0367 Oslo",
     "lat": 59.9279058,
     "lng": 10.7153187,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2374,12 +2374,12 @@
     "address": "Parkveien 13, 0350 Oslo",
     "lat": 59.9218591,
     "lng": 10.7302303,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2403,12 +2403,12 @@
     "address": "Stovner Senter 3, 0985 Oslo",
     "lat": 59.9608841,
     "lng": 10.9250495,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2430,12 +2430,12 @@
     "address": "Munkedamsveien 29, 0250 Oslo",
     "lat": 59.9121807,
     "lng": 10.7266173,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2458,12 +2458,12 @@
     "address": "Frognerveien 9C, 0257 Oslo",
     "lat": 59.9164698,
     "lng": 10.7148602,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2487,12 +2487,12 @@
     "address": "Stortingsgata 8, 0161 Oslo",
     "lat": 59.9129338,
     "lng": 10.7376659,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Halal-retter finnes, men spør i disken.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2515,12 +2515,12 @@
     "address": "Olaf Ryes plass 3, 0552 Oslo",
     "lat": 59.9221686,
     "lng": 10.7575107,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2543,12 +2543,12 @@
     "address": "Herslebs gate 4A, 0561 Oslo",
     "lat": 59.9195845,
     "lng": 10.7621648,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2571,12 +2571,12 @@
     "address": "Waldemar Thranes gate 65A, 0173 Oslo",
     "lat": 59.9278145,
     "lng": 10.7492828,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2599,12 +2599,12 @@
     "address": "Grønlandsleiret 61C, 0190 Oslo",
     "lat": 59.9094935,
     "lng": 10.768148,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2628,12 +2628,12 @@
     "address": "",
     "lat": 59.9072256,
     "lng": 10.7821824,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2656,12 +2656,12 @@
     "address": "Nydalen allé 1, 0484 Oslo",
     "lat": 59.9484551,
     "lng": 10.7667854,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2685,12 +2685,12 @@
     "address": "Skovveien 8, 0257 Oslo",
     "lat": 59.9168326,
     "lng": 10.7156607,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2712,12 +2712,12 @@
     "address": "Grønlandsleiret 77, 0190 Oslo",
     "lat": 59.9092915,
     "lng": 10.7682397,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2740,12 +2740,12 @@
     "address": "Lindeberg, Oslo",
     "lat": 59.9328075,
     "lng": 10.8813347,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2769,12 +2769,12 @@
     "address": "Sørkedalsveien 10, 0369 Oslo",
     "lat": 59.9301469,
     "lng": 10.7100218,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2798,12 +2798,12 @@
     "address": "Frysjaveien 42, 0884 Oslo",
     "lat": 59.9651633,
     "lng": 10.7712941,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2827,12 +2827,12 @@
     "address": "Fredensborgveien 27A, 0177 Oslo",
     "lat": 59.9190288,
     "lng": 10.7481463,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2856,12 +2856,12 @@
     "address": "Grorud senter, Oslo",
     "lat": 59.9601112,
     "lng": 10.8816619,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2885,12 +2885,12 @@
     "address": "Holmlia senter, Oslo",
     "lat": 59.8349117,
     "lng": 10.7954484,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2914,12 +2914,12 @@
     "address": "Tore Hals Mejdells vei 5, 0752 Oslo",
     "lat": 59.9466309,
     "lng": 10.6432933,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2942,12 +2942,12 @@
     "address": "Osterhaus' gate 12, 0183 Oslo",
     "lat": 59.9167436,
     "lng": 10.7534918,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal mat. Serverer alkoholholdig drikke.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -2972,12 +2972,12 @@
     "address": "Stovner Senter 3, 0985 Oslo",
     "lat": 59.9615019,
     "lng": 10.9247479,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3001,12 +3001,12 @@
     "address": "Nedre Kalbakkvei 4, 0950 Oslo",
     "lat": 59.9520219,
     "lng": 10.8671813,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3031,12 +3031,12 @@
     "address": "",
     "lat": 59.9166376,
     "lng": 10.7572312,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3060,12 +3060,12 @@
     "address": "Grønland 30, 0188 Oslo",
     "lat": 59.912937,
     "lng": 10.7630866,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3090,12 +3090,12 @@
     "address": "Storgata 8, 0155 Oslo",
     "lat": 59.9130585,
     "lng": 10.7490172,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3119,12 +3119,12 @@
     "address": "Lørenveien 44B, 0585 Oslo",
     "lat": 59.9307372,
     "lng": 10.7935132,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3148,12 +3148,12 @@
     "address": "Kirkeveien 51, 0368 Oslo",
     "lat": 59.927681,
     "lng": 10.713806,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3176,12 +3176,12 @@
     "address": "Klingenberggata 4, 0161 Oslo",
     "lat": 59.913714,
     "lng": 10.7337427,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Deler av menyen er ikke halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3204,12 +3204,12 @@
     "address": "Skårersletta 78, 1473 Lørenskog",
     "lat": 59.9191509,
     "lng": 10.9558753,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3232,12 +3232,12 @@
     "address": "Engene 4, 3015 Drammen",
     "lat": 59.7441618,
     "lng": 10.2063756,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3259,12 +3259,12 @@
     "address": "Torgeir Vraas plass 1, 3044 Drammen",
     "lat": 59.7394334,
     "lng": 10.2011446,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3287,12 +3287,12 @@
     "address": "Trondheimsvegen 55, 2050 Jessheim",
     "lat": 60.1387344,
     "lng": 11.1743939,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3316,12 +3316,12 @@
     "address": "Fjellsveien 4, 3035 Drammen",
     "lat": 59.7159866,
     "lng": 10.2216761,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3342,12 +3342,12 @@
     "address": "Innherredsveien 14, 7014 Trondheim",
     "lat": 63.4333464,
     "lng": 10.4109657,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3372,12 +3372,12 @@
     "address": "Idrettsveien 6, 1400 Ski",
     "lat": 59.7199165,
     "lng": 10.8373316,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3400,12 +3400,12 @@
     "address": "Rådhusgata 4, 1811 Askim",
     "lat": 59.5827372,
     "lng": 11.1663704,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3427,12 +3427,12 @@
     "address": "Griffenfelds gate 3, 3045 Drammen",
     "lat": 59.7395038,
     "lng": 10.1982919,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3454,12 +3454,12 @@
     "address": "Strømsveien 67, 2010 Strømmen",
     "lat": 59.948719,
     "lng": 11.0106534,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3483,12 +3483,12 @@
     "address": "Pellygata 72C, 1706 Sarpsborg",
     "lat": 59.2834521,
     "lng": 11.1134211,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3541,12 +3541,12 @@
     "address": "Moss sentrum",
     "lat": 59.4354516,
     "lng": 10.6624114,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3570,12 +3570,12 @@
     "address": "Konnerudgata 4, 3045 Drammen",
     "lat": 59.7394905,
     "lng": 10.1983105,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3599,12 +3599,12 @@
     "address": "Gamleveien 88, 1461 Lørenskog",
     "lat": 59.9194144,
     "lng": 10.9542601,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3626,12 +3626,12 @@
     "address": "Storgata 35, 2000 Lillestrøm",
     "lat": 59.9587902,
     "lng": 11.0493909,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Kun burgerne er halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3653,12 +3653,12 @@
     "address": "Strømsveien 60, 2010 Strømmen",
     "lat": 59.9466132,
     "lng": 11.0088557,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3680,12 +3680,12 @@
     "address": "Strømsveien 62, 2010 Strømmen",
     "lat": 59.9467404,
     "lng": 11.009293,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3709,12 +3709,12 @@
     "address": "Skårersletta 11, 1473 Lørenskog",
     "lat": 59.9272856,
     "lng": 10.9531406,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3737,12 +3737,12 @@
     "address": "Farmanns gate 13, 1607 Fredrikstad",
     "lat": 59.2140756,
     "lng": 10.9350778,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3793,12 +3793,12 @@
     "address": "Trondheimsveien 4A, 0560 Oslo",
     "lat": 59.9191312,
     "lng": 10.7626409,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3821,12 +3821,12 @@
     "address": "Stovner Senter 3, 0985 Oslo",
     "lat": 59.9614907,
     "lng": 10.9241876,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3848,12 +3848,12 @@
     "address": "Grefsenveien 57, 0487 Oslo",
     "lat": 59.9453591,
     "lng": 10.7805438,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3876,12 +3876,12 @@
     "address": "",
     "lat": 59.9204236,
     "lng": 10.7338008,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3905,12 +3905,12 @@
     "address": "Pilestredet 55, 0350 Oslo",
     "lat": 59.9228733,
     "lng": 10.7317632,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3933,12 +3933,12 @@
     "address": "Trondheimsveien 391, 0953 Oslo",
     "lat": 59.9519667,
     "lng": 10.867836,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3961,12 +3961,12 @@
     "address": "",
     "lat": 59.942292,
     "lng": 10.7700761,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -3989,12 +3989,12 @@
     "address": "",
     "lat": 59.9284323,
     "lng": 10.7163828,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4017,12 +4017,12 @@
     "address": "",
     "lat": 59.8978273,
     "lng": 10.8143917,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4045,12 +4045,12 @@
     "address": "",
     "lat": 59.9295045,
     "lng": 10.77836,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4073,12 +4073,12 @@
     "address": "",
     "lat": 59.9197493,
     "lng": 10.7591113,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4101,12 +4101,12 @@
     "address": "",
     "lat": 59.913834,
     "lng": 10.8411569,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4129,12 +4129,12 @@
     "address": "",
     "lat": 59.9440671,
     "lng": 10.8329289,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4157,12 +4157,12 @@
     "address": "",
     "lat": 59.9275241,
     "lng": 10.9578656,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4185,12 +4185,12 @@
     "address": "",
     "lat": 59.9448761,
     "lng": 10.9507642,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4213,12 +4213,12 @@
     "address": "",
     "lat": 59.833591,
     "lng": 10.8070918,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4241,12 +4241,12 @@
     "address": "",
     "lat": 59.7394298,
     "lng": 10.7707396,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4269,12 +4269,12 @@
     "address": "",
     "lat": 59.956804,
     "lng": 11.0479881,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4296,12 +4296,12 @@
     "address": "Trondheimsveien 154, 0570 Oslo",
     "lat": 59.9289898,
     "lng": 10.7776808,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4324,12 +4324,12 @@
     "address": "Konghellegata 8, 0570 Oslo",
     "lat": 59.9295804,
     "lng": 10.7787801,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4353,12 +4353,12 @@
     "address": "Vogts gate 39, 0474 Oslo",
     "lat": 59.933259,
     "lng": 10.7635259,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4383,12 +4383,12 @@
     "address": "Storgata 45, 0182 Oslo",
     "lat": 59.915536,
     "lng": 10.7557989,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4413,12 +4413,12 @@
     "address": "",
     "lat": 59.8358459,
     "lng": 10.8419199,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4442,12 +4442,12 @@
     "address": "",
     "lat": 59.9803346,
     "lng": 10.9709299,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4476,7 +4476,7 @@
       {
         "type": "uavklart",
         "kilde": null,
-        "tekst": "Må sjekkes – uavklart inntil videre.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4499,12 +4499,12 @@
     "address": "Frognerveien 9B, 0257 Oslo",
     "lat": 59.9164535,
     "lng": 10.7154395,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4526,12 +4526,12 @@
     "address": "Brugata 10, 0186 Oslo",
     "lat": 59.9140065,
     "lng": 10.7548278,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4555,12 +4555,12 @@
     "address": "",
     "lat": 59.921445,
     "lng": 10.7320871,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4583,12 +4583,12 @@
     "address": "Åkebergveien 24, 0650 Oslo",
     "lat": 59.9111167,
     "lng": 10.7725601,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4611,12 +4611,12 @@
     "address": "Kirkegata 6, 2000 Lillestrøm",
     "lat": 59.9544085,
     "lng": 11.0447154,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4639,12 +4639,12 @@
     "address": "Torgveien 2, 1400 Ski",
     "lat": 59.7191,
     "lng": 10.8370028,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4667,12 +4667,12 @@
     "address": "",
     "lat": 59.764357,
     "lng": 10.8516863,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4695,12 +4695,12 @@
     "address": "",
     "lat": 59.6593977,
     "lng": 10.6299598,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Menyen er halal, men stedet serverer også svin.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4722,12 +4722,12 @@
     "address": "Storo Storsenter, 0485 Oslo",
     "lat": 59.9466279,
     "lng": 10.7754258,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4749,12 +4749,12 @@
     "address": "Arendalsgata 3, 0463 Oslo",
     "lat": 59.9374795,
     "lng": 10.7553634,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4776,12 +4776,12 @@
     "address": "Nedre Prinsdals vei 76, 1263 Oslo",
     "lat": 59.8330053,
     "lng": 10.8085708,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4803,12 +4803,12 @@
     "address": "Sørengkaia 165, 0194 Oslo",
     "lat": 59.9017624,
     "lng": 10.7512488,
-    "halalStatus": "delvis",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "delvis",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Alt er halal bortsett fra svinerettene.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4831,12 +4831,12 @@
     "address": "Fridtjof Nansens plass 9, 0160 Oslo",
     "lat": 59.9120276,
     "lng": 10.7352331,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4858,12 +4858,12 @@
     "address": "Stenersgata 10, 0184 Oslo",
     "lat": 59.91321,
     "lng": 10.7524949,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4887,12 +4887,12 @@
     "address": "St. Olavs gate 43, 4306 Sandnes",
     "lat": 58.8529,
     "lng": 5.7332,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4915,12 +4915,12 @@
     "address": "Pedersgata 12, 4013 Stavanger",
     "lat": 58.9711,
     "lng": 5.7369,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4943,12 +4943,12 @@
     "address": "Lakkegata 71, 0562 Oslo",
     "lat": 59.9189,
     "lng": 10.7633,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],
@@ -4970,12 +4970,12 @@
     "address": "Thorvald Meyers gate 56A, 0552 Oslo",
     "lat": 59.9238,
     "lng": 10.7589,
-    "halalStatus": "verifisert",
+    "halalStatus": "uavklart",
     "verification": [
       {
-        "type": "bekreftet",
+        "type": "uavklart",
         "kilde": null,
-        "tekst": "Registrert som helt halal.",
+        "tekst": "Halal-status er ikke bekreftet ennå.",
         "dato": null
       }
     ],

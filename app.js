@@ -244,6 +244,9 @@ function osloNow() {
   return osloSvar;
 }
 // Utvalgte steder
+// Skrudd av inntil videre. Sett til true for å hente siden fram igjen i menyene og i Spørsmål og svar.
+const UTVALGTE_PA = false;
+if (UTVALGTE_PA) document.documentElement.classList.add('med-utvalgte');
 const ROTATION_DAYS = 5;
 const HIGHLIGHT_COUNT = 5;
 const HIGHLIGHT_SEED = 20260829;
@@ -410,6 +413,16 @@ function applyStrict() {
   STATUS_ORDER.forEach(st => { layerOn[st] = t.indexOf(st) >= 0; });
 }
 const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
+// Trinnene i Halal-status som har noe å vise. Står alle steder med samme status, er bare «Alle» igjen,
+// og da skjules filteret. Ellers ville «Kun verifisert» gitt et tomt kart.
+function finnesStatus(st) { return HALAL_SPOTS.some(function (s) { return s.halalStatus === st; }); }
+function strictValg() {
+  const valg = [];
+  if (finnesStatus('verifisert')) valg.push(['0', 'Verifisert']);
+  if (finnesStatus('delvis')) valg.push(['1', '+ Delvis']);
+  valg.push(['2', 'Alle']);
+  return valg;
+}
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 // Sporing
@@ -796,7 +809,7 @@ function byggHurtigrad() {
   const scroll = rad.scrollLeft;
   rad.innerHTML = '';
 
-  brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
+  if (finnesStatus('verifisert')) brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
   const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade']];
@@ -889,10 +902,11 @@ function tegnFilterark(antall) {
     : null;
   const rull = k.scrollTop;
 
+  const trinn = strictValg();
   k.innerHTML =
-    '<section class="fa-del" data-del="status"><h3>' + T('Halal-status') + '</h3>' +
-      segment('Halal-status', [['0', 'Verifisert'], ['1', '+ Delvis'], ['2', 'Alle']], String(strict), 'strict') +
-      '<p class="fa-note">' + esc(T(strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' +
+    (trinn.length > 1 ? '<section class="fa-del" data-del="status"><h3>' + T('Halal-status') + '</h3>' +
+      segment('Halal-status', trinn, String(strict), 'strict') +
+      '<p class="fa-note">' + esc(T(strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' : '') +
     '<section class="fa-del" data-del="alkohol"><div class="fa-rad"><div><h3>' + T('Uten alkohol') + '</h3>' +
       '<p>' + T('Skjul steder som serverer alkohol') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Uten alkohol') + '" aria-checked="' + (el('fAlkohol').value === 'uten') + '" data-bryter="alkohol"></button></div></section>' +
@@ -1907,6 +1921,7 @@ function wireInfo() {
 function openInfo(section, appTekst) {
   // Støtt oss er tatt ut av appen inntil videre
   if (APP && section === 'stott') return;
+  if (!UTVALGTE_PA && section === 'utvalgte') return;
   // på nettsiden vises appens utgave av teksten bare når lenken ber om det
   document.documentElement.classList.toggle('app-tekst', appTekst === true);
   lastFocus = document.activeElement;
@@ -2147,7 +2162,7 @@ function tegnPcFilter() {
   // to av/på-knapper: Kun verifisert og Uten alkohol, som på mobil
   const utenAlkohol = el('fAlkohol').value === 'uten';
   const status =
-    '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"><span>' + T('Kun verifisert') + '</span></button>' +
+    (finnesStatus('verifisert') ? '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"><span>' + T('Kun verifisert') + '</span></button>' : '') +
     '<button type="button" class="pc-valgknapp" data-pc="alkohol" aria-pressed="' + utenAlkohol + '" aria-label="' + T('Uten kjent alkoholservering') + '"><span>' + T('Uten alkohol') + '</span></button>';
 
   const sort = el('fSort').value;

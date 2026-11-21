@@ -692,6 +692,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 /* Støtt oss er tatt ut av appen inntil videre: fanen, raden øverst i Mer, vinduet og knappene på PC.
    Nettsiden har Støtt oss som før. */
 .i-app .fane-stott, .i-app .mer-stott, .i-app .skuff-stott, .i-app .pc-stott, .i-app .info-section[data-section="stott"] { display: none !important; }
+/* Utvalgte steder er skrudd av inntil videre. Bryteren står i app.js (UTVALGTE_PA) */
+html:not(.med-utvalgte) .skuff-utv, html:not(.med-utvalgte) .mer-utv, html:not(.med-utvalgte) .faq-utv { display: none !important; }
 /* I appen: Støtt oss er ute, Nær meg er inne, så fanelinja har fortsatt seks faner */
 /* tekst som bare gjelder nettsiden, eller bare appen */
 html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-nett { display: none !important; }
@@ -1134,7 +1136,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
   </div>
   <ul class="pc-skuff-liste">
     <li><button type="button" data-side="stott" class="skuff-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
-    <li><button type="button" data-side="utvalgte" data-t>Utvalgte steder</button></li>
+    <li><button type="button" data-side="utvalgte" class="skuff-utv" data-t>Utvalgte steder</button></li>
     <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
     <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
     <li><button type="button" data-side="faq" data-t>FAQ</button></li>
@@ -1442,7 +1444,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
               <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på pris.</p>
             </div>
           </details>
-          <details class="faq">
+          <details class="faq faq-utv">
             <summary>Hva er «Utvalgte steder»?</summary>
             <div class="faq-svar">
               <p>Fem steder fra kartet som vises fram om gangen. Utvalget byttes hver femte dag, er likt for alle og går etter tur gjennom hele lista.</p>
@@ -1518,7 +1520,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
               <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
             </div>
           </details>
-          <details class="faq">
+          <details class="faq faq-utv">
             <summary>What are “Featured places”?</summary>
             <div class="faq-svar">
               <p>Five places from the map shown at a time. The selection changes every fifth day, is the same for everyone and goes through the whole list in turn.</p>
@@ -1612,7 +1614,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
     </header>
     <ul class="mer-liste">
       <li><button type="button" data-mer="stott" class="mer-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
-      <li><button type="button" data-mer="utvalgte" data-t>Utvalgte steder</button></li>
+      <li><button type="button" data-mer="utvalgte" class="mer-utv" data-t>Utvalgte steder</button></li>
       <li><button type="button" data-mer="tips" data-t>Tips oss om et sted</button></li>
       <li><button type="button" data-mer="feil" data-t>Si ifra om feil</button></li>
       <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
@@ -1630,6 +1632,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=6e41a760"></script>
+<script src="app.js?v=a7415e49"></script>
 </body>
 </html>
