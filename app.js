@@ -413,16 +413,10 @@ function applyStrict() {
   STATUS_ORDER.forEach(st => { layerOn[st] = t.indexOf(st) >= 0; });
 }
 const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
-// Trinnene i Halal-status som har noe å vise. Står alle steder med samme status, er bare «Alle» igjen,
-// og da skjules filteret. Ellers ville «Kun verifisert» gitt et tomt kart.
+// Et trinn i Halal-status som ikke har noen steder å vise ennå. Knappen står der, men gjør ingenting
+// før stedene er bekreftet. Ellers ville «Kun verifisert» gitt et tomt kart.
 function finnesStatus(st) { return HALAL_SPOTS.some(function (s) { return s.halalStatus === st; }); }
-function strictValg() {
-  const valg = [];
-  if (finnesStatus('verifisert')) valg.push(['0', 'Verifisert']);
-  if (finnesStatus('delvis')) valg.push(['1', '+ Delvis']);
-  valg.push(['2', 'Alle']);
-  return valg;
-}
+function trinnTomt(trinn) { return !STRICT_STEPS[trinn].tillat.some(finnesStatus); }
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 // Sporing
@@ -801,6 +795,7 @@ function byggHurtigrad() {
     b.className = 'hbrikke' + (valg.satt ? ' satt' : '');
     if (valg.trykket !== undefined) b.setAttribute('aria-pressed', String(valg.trykket));
     if (valg.etikett) b.setAttribute('aria-label', valg.etikett);
+    if (valg.av) b.setAttribute('aria-disabled', 'true');
     b.dataset.hurtig = valg.hurtig;
     b.innerHTML = html;
     b.addEventListener('click', valg.klikk);
@@ -809,7 +804,8 @@ function byggHurtigrad() {
   const scroll = rad.scrollLeft;
   rad.innerHTML = '';
 
-  if (finnesStatus('verifisert')) brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, klikk: function () {
+  brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, av: trinnTomt(0), klikk: function () {
+    if (trinnTomt(0)) return;
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
   const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade']];
@@ -875,9 +871,9 @@ function velgEn(id, verdi) {
 
 function tegnFilterark(antall) {
   const k = el('faKropp');
-  const segment = function (navn, valg, aktiv, klikk) {
+  const segment = function (navn, valg, aktiv, klikk, av) {
     return '<div class="segment" role="radiogroup" aria-label="' + esc(T(navn)) + '">' + valg.map(function (v) {
-      return '<button type="button" role="radio" aria-checked="' + (v[0] === aktiv) + '" data-v="' + esc(v[0]) + '" data-seg="' + klikk + '">' + esc(T(v[1])) + '</button>';
+      return '<button type="button" role="radio" aria-checked="' + (v[0] === aktiv) + '"' + (av && av(v[0]) ? ' aria-disabled="true"' : '') + ' data-v="' + esc(v[0]) + '" data-seg="' + klikk + '">' + esc(T(v[1])) + '</button>';
     }).join('') + '</div>';
   };
   const brikker = function (id, del, verdier, antall) {
@@ -902,11 +898,10 @@ function tegnFilterark(antall) {
     : null;
   const rull = k.scrollTop;
 
-  const trinn = strictValg();
   k.innerHTML =
-    (trinn.length > 1 ? '<section class="fa-del" data-del="status"><h3>' + T('Halal-status') + '</h3>' +
-      segment('Halal-status', trinn, String(strict), 'strict') +
-      '<p class="fa-note">' + esc(T(strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' : '') +
+    '<section class="fa-del" data-del="status"><h3>' + T('Halal-status') + '</h3>' +
+      segment('Halal-status', [['0', 'Verifisert'], ['1', '+ Delvis'], ['2', 'Alle']], String(strict), 'strict', function (v) { return trinnTomt(+v); }) +
+      '<p class="fa-note">' + esc(T(strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' +
     '<section class="fa-del" data-del="alkohol"><div class="fa-rad"><div><h3>' + T('Uten alkohol') + '</h3>' +
       '<p>' + T('Skjul steder som serverer alkohol') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Uten alkohol') + '" aria-checked="' + (el('fAlkohol').value === 'uten') + '" data-bryter="alkohol"></button></div></section>' +
@@ -974,7 +969,7 @@ function wireMobilskall() {
     if (b.dataset.velg) velgEn(b.dataset.velg, b.dataset.v);
     else if (b.dataset.flere) { faVisAlle[b.dataset.flere] = !faVisAlle[b.dataset.flere]; oppdaterSkall(); }
     else if (b.dataset.bryter === 'alkohol') { el('fAlkohol').value = el('fAlkohol').value ? '' : 'uten'; track('filter_ark', { filter: 'fAlkohol' }); render(); }
-    else if (b.dataset.seg === 'strict') { strict = +b.dataset.v; applyStrict(); track('strenghet', { trinn: STRICT_STEPS[strict].label }); render(); }
+    else if (b.dataset.seg === 'strict') { if (trinnTomt(+b.dataset.v)) return; strict = +b.dataset.v; applyStrict(); track('strenghet', { trinn: STRICT_STEPS[strict].label }); render(); }
     else if (b.dataset.seg) {
       el(b.dataset.seg).value = b.dataset.v;
       if (b.dataset.seg === 'fSort' && b.dataset.v === 'avstand' && !userLoc) locateUser();
@@ -2162,7 +2157,7 @@ function tegnPcFilter() {
   // to av/på-knapper: Kun verifisert og Uten alkohol, som på mobil
   const utenAlkohol = el('fAlkohol').value === 'uten';
   const status =
-    (finnesStatus('verifisert') ? '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"><span>' + T('Kun verifisert') + '</span></button>' : '') +
+    '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"' + (trinnTomt(0) ? ' aria-disabled="true"' : '') + '><span>' + T('Kun verifisert') + '</span></button>' +
     '<button type="button" class="pc-valgknapp" data-pc="alkohol" aria-pressed="' + utenAlkohol + '" aria-label="' + T('Uten kjent alkoholservering') + '"><span>' + T('Uten alkohol') + '</span></button>';
 
   const sort = el('fSort').value;
@@ -2379,6 +2374,7 @@ function wirePc() {
     const b = e.target.closest('button');
     if (!b) return;
     if (b.dataset.pc === 'verifisert') {
+      if (trinnTomt(0)) return;
       strict = strict === 0 ? 2 : 0; applyStrict();
       track('hurtigfilter', { filter: 'kun_verifisert' });
       render(); foelgFilter();
