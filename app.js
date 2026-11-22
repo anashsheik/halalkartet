@@ -24,11 +24,11 @@ const APP = window.HalalNative || null;
 if (APP) document.documentElement.classList.add('i-app');
 
 // Språk: norsk er grunnspråket, engelsk slås opp her. Nøkkelen er den norske teksten.
-// Nettsiden starter på norsk. Appen følger språket på telefonen til du velger selv.
+// Nettsiden og appen starter på norsk. Engelsk får man ved å velge det selv, og valget huskes.
 const SPRAK_NOKKEL = 'halalkartet-sprak';
 let sprak = (function () {
   try { const valgt = localStorage.getItem(SPRAK_NOKKEL); if (valgt === 'en' || valgt === 'nb') return valgt; } catch (e) {}
-  return APP && !/^(nb|nn|no)\b/i.test(navigator.language || 'nb') ? 'en' : 'nb';
+  return 'nb';
 })();
 const MANGLER = new Set();
 const ENGELSK = {
@@ -100,6 +100,8 @@ const ENGELSK = {
   'Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.': 'Could not find your location. Check that the browser has access to location.',
   'Halalkartet har ikke tilgang til posisjonen din. Trykk her for å åpne Innstillinger.': 'Halalkartet does not have access to your location. Tap here to open Settings.',
   'Stedstjenester er slått av på telefonen. Slå dem på i Innstillinger for å se steder nær deg.': 'Location Services are turned off on your phone. Turn them on in Settings to see places near you.',
+  'Posisjon er slått av på telefonen. Slå den på i Innstillinger for å se steder nær deg.': 'Location is turned off on your phone. Turn it on in Settings to see places near you.',
+  'Ingen steder er bekreftet ennå. Vi kontakter alle stedene nå.': 'No places are confirmed yet. We are contacting every place now.',
   'Fant ikke posisjonen din akkurat nå. Prøv igjen om litt.': 'Could not find your location right now. Try again in a moment.',
   // skjemaene
   'Vi er i startfasen og bygger kartet sammen med dere. Tips oss om en restaurant du mener er halal, så sjekker vi den.': 'We are just getting started and are building the map together with you. Tell us about a restaurant you believe is halal, and we will check it.',
@@ -417,6 +419,8 @@ const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
 // før stedene er bekreftet. Ellers ville «Kun verifisert» gitt et tomt kart.
 function finnesStatus(st) { return HALAL_SPOTS.some(function (s) { return s.halalStatus === st; }); }
 function trinnTomt(trinn) { return !STRICT_STEPS[trinn].tillat.some(finnesStatus); }
+// Trykker man på et slikt trinn, forklarer en beskjed i 2 sekunder hvorfor ingenting skjer
+function trinnTomtBeskjed() { toast(T('Ingen steder er bekreftet ennå. Vi kontakter alle stedene nå.'), null, 2000); }
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 // Sporing
@@ -528,7 +532,7 @@ function initApp() {
     .forEach(c => el('fCuisine').add(new Option(c, c)));
 
   HALAL_SPOTS.forEach(s => {
-    const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false) });
+    const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.halalStatus, false, s.name) });
     m.on('click', () => {
       setActive(s.id, false);
       if (erMobil()) etterKortet(function () { holdPunktFritt(s.id); });
@@ -671,12 +675,14 @@ const PINMERKE = { verifisert: 'حلال', delvis: '!', uavklart: '?' };
 // Rund pinne med kniv og gaffel og et lite merke i hjørnet, på mobil og PC. Valgt sted blir større, med gullkant og navnet under.
 function makeIcon(status, stor, navn) {
   const st = STATUS[status];
+  // navnet og statusen står skjult i pinnen, så en skjermleser kan lese dem opp. Synlig er de bare på den valgte pinnen.
+  const lest = navn ? '<span class="vh">' + esc(navn + ', ' + T(st.label)) + '</span>' : '';
   return L.divIcon({
     className: '', iconSize: stor ? [50, 58] : [34, 40], iconAnchor: stor ? [25, 57] : [17, 39],
     html: '<div class="rpin ' + st.pin + (stor ? ' stor' : '') + '" data-s="' + status + '">' +
       '<span class="rpin-sirkel">' + BESTIKK + '</span>' +
-      '<span class="rpin-merke" aria-hidden="true">' + PINMERKE[status] + '</span></div>' +
-      (stor && navn ? '<span class="rpin-navn">' + esc(navn) + '</span>' : '')
+      '<span class="rpin-merke" aria-hidden="true">' + PINMERKE[status] + '</span>' + (stor ? '' : lest) + '</div>' +
+      (stor && navn ? '<span class="rpin-navn">' + esc(navn) + '</span><span class="vh">, ' + esc(T(st.label)) + '</span>' : '')
   });
 }
 // Minikartet på stedssiden: en gullprikk med mørk ring
@@ -805,7 +811,7 @@ function byggHurtigrad() {
   rad.innerHTML = '';
 
   brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, av: trinnTomt(0), klikk: function () {
-    if (trinnTomt(0)) return;
+    if (trinnTomt(0)) { trinnTomtBeskjed(); return; }
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
   const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade']];
@@ -969,7 +975,7 @@ function wireMobilskall() {
     if (b.dataset.velg) velgEn(b.dataset.velg, b.dataset.v);
     else if (b.dataset.flere) { faVisAlle[b.dataset.flere] = !faVisAlle[b.dataset.flere]; oppdaterSkall(); }
     else if (b.dataset.bryter === 'alkohol') { el('fAlkohol').value = el('fAlkohol').value ? '' : 'uten'; track('filter_ark', { filter: 'fAlkohol' }); render(); }
-    else if (b.dataset.seg === 'strict') { if (trinnTomt(+b.dataset.v)) return; strict = +b.dataset.v; applyStrict(); track('strenghet', { trinn: STRICT_STEPS[strict].label }); render(); }
+    else if (b.dataset.seg === 'strict') { if (trinnTomt(+b.dataset.v)) { trinnTomtBeskjed(); return; } strict = +b.dataset.v; applyStrict(); track('strenghet', { trinn: STRICT_STEPS[strict].label }); render(); }
     else if (b.dataset.seg) {
       el(b.dataset.seg).value = b.dataset.v;
       if (b.dataset.seg === 'fSort' && b.dataset.v === 'avstand' && !userLoc) locateUser();
@@ -1370,6 +1376,20 @@ function lukkDetalj(fraHistorikk) {
   detaljFra = null;
 }
 
+// Tilbakeknappen på Android. Lukker det som ligger øverst, og svarer true når noe ble lukket.
+// Svarer den false, er det bare kartet igjen, og da legger telefonen appen ned.
+function tilbakeKnapp() {
+  if (el('infoScrim').classList.contains('open')) { closeInfo(); return true; }
+  if (!el('filterark').hidden) { lukkFilterark(); return true; }
+  if (el('mer') && !el('mer').hidden) { lukkMer(); return true; }
+  if (el('pcSkuff') && !el('pcSkuff').hidden) { lukkSkuff(); return true; }
+  if (!el('detalj').hidden) { lukkDetalj(); return true; }
+  if (fane === 'lagret') { settFane('utforsk'); return true; }
+  if (visning === 'liste') { settVisning('kart'); return true; }
+  if (activeId) { setActive(null); return true; }
+  return false;
+}
+
 // Mer
 function apneMer() {
   const m = el('mer');
@@ -1614,7 +1634,7 @@ function setActive(id, fromList) {
   const forrige = activeId && byId(activeId);
   if (forrige && markers[forrige.id]) {
     const m = markers[forrige.id];
-    m.setIcon(makeIcon(forrige.halalStatus, false));
+    m.setIcon(makeIcon(forrige.halalStatus, false, forrige.name));
     m.setZIndexOffset(0);
     if (forrige.id !== id) { map.removeLayer(m); if (vises(forrige)) klynge.addLayer(m); }
   }
@@ -1796,7 +1816,8 @@ function shareSpot(s) {
 
 let toastTimer = null;
 // handling: det som skjer når man trykker på meldingen. Da blir den stående lenger.
-function toast(msg, handling) {
+// ms: hvor lenge beskjeden står. Uten den står en vanlig beskjed i 2,6 sekunder, og en man kan trykke på, i 6.
+function toast(msg, handling, ms) {
   let t = el('toast');
   if (!t) {
     t = document.createElement('div');
@@ -1808,7 +1829,7 @@ function toast(msg, handling) {
   t.classList.toggle('trykk', !!handling);
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function () { t.classList.remove('show'); }, handling ? 6000 : 2600);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, ms || (handling ? 6000 : 2600));
 }
 
 // Tastatur
@@ -1877,7 +1898,8 @@ function locateUser() {
     // appen vet hvorfor det ikke gikk, og kan sende deg rett til Innstillinger
     const grunn = APP && feil ? feil.grunn : null;
     if (grunn === 'nektet') toast(T('Halalkartet har ikke tilgang til posisjonen din. Trykk her for å åpne Innstillinger.'), APP.innstillinger);
-    else if (grunn === 'av') toast(T('Stedstjenester er slått av på telefonen. Slå dem på i Innstillinger for å se steder nær deg.'));
+    else if (grunn === 'av') toast(T(APP.plattform === 'android' ? 'Posisjon er slått av på telefonen. Slå den på i Innstillinger for å se steder nær deg.'
+      : 'Stedstjenester er slått av på telefonen. Slå dem på i Innstillinger for å se steder nær deg.'));
     else if (APP) toast(T('Fant ikke posisjonen din akkurat nå. Prøv igjen om litt.'));
     else toast(T('Fant ikke posisjonen din. Sjekk at nettleseren har tilgang til posisjon.'));
   };
@@ -2049,7 +2071,7 @@ function sendSkjema(f, btn, onOk) {
   const kontakt = String(data.get('kontakt') || '').trim();
   // da kan vi svare rett fra e-posten
   if (kontakt.indexOf('@') > 0) data.set('_replyto', kontakt);
-  if (APP) data.set('sendt fra', 'iPhone-appen');
+  if (APP) data.set('sendt fra', APP.plattform === 'android' ? 'Android-appen' : 'iPhone-appen');
   const body = new URLSearchParams(data).toString();
   btn.disabled = true; btn.textContent = T('Sender');
   fetch(SKJEMA_ENDEPUNKT, {
@@ -2374,7 +2396,7 @@ function wirePc() {
     const b = e.target.closest('button');
     if (!b) return;
     if (b.dataset.pc === 'verifisert') {
-      if (trinnTomt(0)) return;
+      if (trinnTomt(0)) { trinnTomtBeskjed(); return; }
       strict = strict === 0 ? 2 : 0; applyStrict();
       track('hurtigfilter', { filter: 'kun_verifisert' });
       render(); foelgFilter();
