@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://plausible.io; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://tile.openstreetmap.org https://cdnjs.cloudflare.com; connect-src 'self' https://plausible.io https://tiles.openfreemap.org https://formspree.io; worker-src blob:; child-src blob:; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://plausible.io; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://halalkartet.no https://tile.openstreetmap.org https://cdnjs.cloudflare.com; connect-src 'self' https://plausible.io https://tiles.openfreemap.org https://formspree.io; worker-src blob:; child-src blob:; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -236,7 +236,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .info-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 25px; font-weight: 600; margin: 0 0 12px; color: var(--ink); }
 .info-section h3 { font-size: 13.5px; font-weight: 700; margin: 17px 0 4px; color: var(--ink); }
 .info-section p { font-size: 14px; line-height: 1.62; color: #3c4640; margin: 0 0 11px; }
-.info-section a { color: var(--cert); font-weight: 600; }
+.info-section a { color: var(--emerald); font-weight: 600; }
 .info-section .muted { font-size: 12px; color: var(--ink-soft); }
 .kf { margin-top: 2px; }
 .kf-hp { position: absolute; left: -9999px; }
@@ -245,7 +245,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 .kf-field textarea { resize: vertical; min-height: 92px; }
 .kf-field input:focus, .kf-field textarea:focus { outline: none; border-color: var(--cert); box-shadow: 0 0 0 3px rgba(46,125,79,.15); }
 .kf-opt { font-weight: 500; color: var(--ink-soft); font-size: 11px; }
-.kf-req { font-weight: 600; color: #a86412; font-size: 11px; }
+.kf-req { font-weight: 600; color: #8F500E; font-size: 11px; }
 .kf-send { margin-top: 2px; padding: 11px 22px; font: inherit; font-weight: 700; font-size: 13.5px; color: #fff; background: #0E3D2C; border: 0; border-radius: 10px; cursor: pointer; }
 .kf-send:hover { background: #0b3324; }
 .kf-send:disabled { opacity: .6; cursor: default; }
@@ -370,14 +370,14 @@ body { font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); backgro
 button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: none) {
   .knapp, .dknapp, .d-rund, .hjerte, .filterknapp, .fane button, .hbrikke, .fa-brikker button, .fa-pris button, .segment button, .fa-vis,
-  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .kf-send, .fa-null, .fa-lukk, .d-lenke, .tider-lenke, .topp-merke, .d-merke {
+  .vis-kart, .nearme, .bunn-liste, .mer-liste button, .kf-send, .fa-null, .fa-lukk, .d-lenke, .tider-lenke, .topp-merke {
     transition: transform .12s var(--ease-out), opacity .12s var(--ease-out);
   }
   .knapp:active, .dknapp:active, .d-rund:active, .hjerte:active, .filterknapp:active, .fa-brikker button:active, .fa-pris button:active,
   .fa-vis:active, .nearme:active, .kf-send:active { transform: scale(.96); transition-duration: 0s; }
   body.vis-liste:not(.fane-lagret) .vis-kart:active { transform: translateX(-50%) scale(.96); transition-duration: 0s; }
   .fane button:active, .hbrikke:active, .segment button:active, .bunn-liste:active, .mer-liste button:active, .fa-null:active, .fa-lukk:active,
-  .d-lenke:active, .tider-lenke:active, .topp-merke:active, .d-merke:active { opacity: .55; transition-duration: 0s; }
+  .d-lenke:active, .tider-lenke:active, .topp-merke:active { opacity: .55; transition-duration: 0s; }
   .lkort:active { background: rgba(14,61,44,.06); }
 }
 .lkort .hjerte svg { width: 26px; height: 26px; }
@@ -391,7 +391,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .detalj.rullet .d-topp { background: var(--emerald); box-shadow: 0 4px 16px rgba(9,28,20,.25); }
 .d-topp > * { pointer-events: auto; }
 .d-luft { flex: 1; }
-.d-merke { pointer-events: auto; display: grid; place-items: center; min-width: 46px; height: 46px; margin-left: 2px; border-radius: 12px; font: 700 25px/1 'Amiri', serif; color: var(--gold); direction: rtl; text-decoration: none; }
 .d-rund { width: 46px; height: 46px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; background: rgba(9,30,21,.55); color: #fff; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; }
 .hjerte.d-rund { color: #fff; }
 .d-hero { padding: calc(env(safe-area-inset-top, 0px) + 112px) 20px 24px; background: var(--emerald) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23C8A253' stroke-opacity='.22' stroke-width='1.2'%3E%3Crect x='24' y='24' width='24' height='24'/%3E%3Crect x='24' y='24' width='24' height='24' transform='rotate(45 36 36)'/%3E%3Cpath d='M0 36h19M53 36h19M36 0v19M36 53v19'/%3E%3C/g%3E%3C/svg%3E") repeat; background-size: 72px 72px; color: var(--ivory); }
@@ -421,7 +420,6 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 .d-om { padding: 22px; border-radius: 20px; background: #EEE7D7; }
 .d-om-hode { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
 .d-om h3 { margin: 0; font: 600 27px/1.1 'Cormorant Garamond', serif; color: var(--emerald); }
-.d-ar { font: 700 34px/1 'Amiri', serif; color: var(--gull-tekst); }
 .d-om p { margin: 0 0 8px; font-size: 17px; line-height: 1.5; color: var(--kort-tekst); }
 .d-om .d-forbehold { font-size: 14px; color: #5B5546; }
 .d-om-fot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 10px; margin-top: 10px; }
@@ -575,7 +573,7 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 
   .info-scrim { z-index: 2100; align-items: flex-start; padding: 70px 20px 30px; background: rgba(36,56,46,.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .info-card { max-width: 680px; max-height: calc(100vh - 100px); border-radius: 20px; background: #EDE7DA; box-shadow: 0 30px 80px rgba(6,20,14,.35); }
-  .info-head { position: relative; justify-content: center; height: 64px; padding: 0 70px; background: var(--emerald); }
+  .info-head { position: relative; flex: none; justify-content: center; height: 64px; padding: 0 70px; background: var(--emerald); }
   .info-tabs { display: none; }
   .info-brand { display: block; font: 700 32px/1 'Amiri', serif; color: var(--gold); }
   .info-close { position: absolute; top: 50%; right: 16px; width: 44px; height: 44px; margin-top: -22px; padding: 0; color: #fff; font-size: 32px; font-weight: 300; }
@@ -828,10 +826,9 @@ html:not(.i-app):not(.app-tekst) .kun-app, .i-app .kun-nett, .app-tekst .kun-net
   html:lang(en) .fa-del[data-del="sorter"] .segment button { flex: 1 1 auto; padding: 0 6px; font-size: 15px; }
 }
 
-/* Smale skjermer (320 punkter): tittelen i statusboksen får plass på én linje ved siden av حلال */
+/* Smale skjermer (320 punkter): tittelen i statusboksen får plass på én linje */
 @media (max-width: 340px) {
   .d-om h3 { font-size: 23px; }
-  .d-ar { font-size: 28px; }
 }
 
 /* ===== Kommentarer 20. november 2026 ===== */
@@ -988,7 +985,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
 /* Logoen حلال litt større på mobil */
 @media (max-width: 720px) {
   .sokemerke { font-size: 31px; }
-  .d-merke { font-size: 31px; min-width: 52px; }
   .info-brand { font-size: 33px; }
 }
 
@@ -1072,6 +1068,74 @@ html:not(.i-app) #faneNaer { display: none !important; }
 
 /* Utvalgte steder på de smaleste telefonene: delene av linja under navnet kan brytes inni seg, så prisen ikke klippes bort */
 @media (max-width: 340px) { .utv-topp .utv-meta { font-size: 13.5px; } .utv-topp .fakta > span > * { white-space: normal; } }
+/* Runde 22. november
+   Kun verifisert mens ingen steder er bekreftet: samme tekstfarge som før, men klokke og stiplet strek i stedet for heltrukken */
+.hbrikke.venter { box-shadow: none; background: linear-gradient(90deg, rgba(242,236,222,.55) 55%, transparent 0) left bottom / 7px 2px repeat-x; }
+.hbrikke.venter svg.klokke { display: block; color: var(--gold); }
+.segment button.venter { display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: var(--kort-dempet); background: repeating-linear-gradient(-45deg, transparent 0 6px, rgba(14,61,44,.05) 6px 12px); }
+.segment button.venter .klokke { flex: none; color: var(--gull-tekst); }
+.pc-valgknapp.venter span { border-bottom-style: dashed; border-color: #B9AE95; }
+.pc-valgknapp.venter .klokke { flex: none; color: var(--gull-tekst); }
+.toast-ikon { display: inline-block; margin-right: 8px; vertical-align: -3px; color: var(--gold); }
+.toast-ikon svg { display: block; }
+
+/* «Vi kontakter alle stedene nå.» øverst i lista */
+.fremdrift { margin: 0; }
+.fr-note { display: flex; gap: 8px; align-items: flex-start; margin: 0; font-size: 14px; line-height: 1.4; color: var(--kort-dempet); }
+.fr-note .klokke, .fr-note svg { flex: none; margin-top: 1px; color: var(--gull-tekst); }
+.fr-liste { padding: 12px 0 14px; border-bottom: 1px solid var(--kort-strek); }
+.fr-pc { padding: 12px 22px 14px; border-bottom: 1px solid var(--kort-strek); }
+
+/* logoene stedene har sendt oss, i samme flis som forbokstaven. Logoen fyller hele flisa, uten hvit kant. */
+.mono-logo { overflow: hidden; background: transparent; }
+.mono-logo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Stedssiden: logoen fyller hele toppen i stedet for mønsteret. Et mørkt slør over logoen
+   holder navnet, avstanden og stempelet lesbare uansett farger i logoen (minst 4,5:1 mot hvit tekst). */
+.d-hero.har-logo::before { background: none; }
+.d-hero-logo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; }
+.d-hero.har-logo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(6,26,18,.5) 0%, rgba(6,26,18,.66) 45%, rgba(6,26,18,.9) 100%); }
+
+/* stedssiden: Bekreftet av stedet */
+.d-bekreftet { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; align-items: start; margin: 6px 0 12px; padding: 14px 16px; border-radius: 14px; background: #FFFDF8; box-shadow: inset 0 0 0 1px #D9CFB8; }
+.d-bekreftet > svg { width: 32px; height: 32px; fill: var(--emerald); }
+.d-bekreftet h4 { margin: 2px 0 2px; font-size: 15px; font-weight: 800; color: var(--emerald); }
+.d-bekreftet p { margin: 0; font-size: 15px; line-height: 1.45; color: var(--kort-tekst); }
+.d-bekreftet p + p { color: #5B5546; }
+.d-eier { margin: 10px 0 0; }
+
+/* eiersiden */
+.info-section .eier-h { margin: 24px 0 10px; font: 600 23px/1.2 'Cormorant Garamond', serif; color: var(--emerald); }
+.eier-steg { margin: 0 0 4px; padding-left: 22px; }
+.eier-steg li { margin-bottom: 6px; line-height: 1.5; }
+.kf-valg { margin: 0 0 14px; padding: 0; border: 0; }
+.kf-valg legend { margin-bottom: 4px; padding: 0; font-size: 13px; font-weight: 700; color: var(--ink); }
+.kf-valg label, .kf-samtykke { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; color: var(--ink); cursor: pointer; }
+.kf-valg input, .kf-samtykke input { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--emerald); }
+.kf-samtykke { align-items: flex-start; margin: 4px 0 14px; padding: 6px 0; line-height: 1.45; }
+.kf-samtykke input { margin-top: 1px; }
+#eierForm :focus-visible, #eierSend:focus-visible, #eierOk:focus-visible { outline: 3px solid var(--gull-tekst); outline-offset: 2px; box-shadow: none; }
+.kf-hjelp { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; line-height: 1.45; color: var(--ink-soft); }
+.eier-send { min-height: 48px; }
+.kf-sok { position: relative; }
+.kf-treff { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% - 6px); margin: 0; padding: 6px; list-style: none; max-height: 300px; overflow-y: auto; border: 1px solid #CFC5AE; border-radius: 12px; background: #FFFDF8; box-shadow: 0 14px 34px rgba(9,28,20,.18); }
+.kf-treff li { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; border-radius: 8px; font-size: 15px; font-weight: 500; color: var(--ink); cursor: pointer; }
+.kf-treff li b { font-weight: 800; color: var(--emerald); }
+.kf-treff li small { font-size: 14px; color: var(--ink-soft); }
+.kf-treff li[aria-selected="true"], .kf-treff li:hover { background: #EFE8D8; }
+.kf-treff li.kf-treff-nytt { border-top: 1px solid var(--kort-strek); border-radius: 0 0 8px 8px; color: var(--emerald); font-weight: 700; }
+.kf-sok input[aria-invalid="true"] { border-color: #B3261E; }
+.kf-fil { margin: 0 0 14px; }
+.kf-fil-tittel { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--ink); }
+.kf-fil-boks { position: relative; display: grid; justify-items: center; gap: 4px; min-height: 104px; padding: 16px 14px; box-sizing: border-box; border: 2px dashed #8C7E5E; border-radius: 12px; background: #FFFDF8; color: var(--emerald); text-align: center; cursor: pointer; }
+.kf-fil-boks:hover { background: #FBF6EA; }
+.kf-fil-boks:focus-within { outline: 3px solid var(--gull-tekst); outline-offset: 2px; }
+.kf-fil-boks input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.kf-fil-tekst { font-size: 15px; font-weight: 700; overflow-wrap: anywhere; }
+.kf-fil-boks small { font-size: 13px; color: var(--ink-soft); }
+.kf-fil-boks.valgt { border-style: solid; border-color: var(--emerald); }
+.kf-fil-fjern { min-height: 44px; margin-top: 4px; padding: 0; border: 0; background: none; color: var(--emerald); font: 700 14px 'Manrope', sans-serif; text-decoration: underline; cursor: pointer; }
+.eier-personvern { margin-top: 12px; font-size: 13px; color: var(--ink-soft); }
 </style>
   <link rel="icon" type="image/svg+xml" href="halal_kartet_logo.svg">
   <link rel="apple-touch-icon" href="hjemskjerm_logo.png">
@@ -1138,6 +1202,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
     <li><button type="button" data-side="stott" class="skuff-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
     <li><button type="button" data-side="utvalgte" class="skuff-utv" data-t>Utvalgte steder</button></li>
     <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
+    <li><button type="button" data-side="eier" data-t>Er du eier?</button></li>
     <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
     <li><button type="button" data-side="faq" data-t>FAQ</button></li>
     <li><button type="button" data-side="personvern" data-t>Personvern</button></li>
@@ -1302,9 +1367,96 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <p class="tips-rules" data-t>Vennligst ikke send oss steder som ikke har noe halal på menyen, eller rene vegetar- og veganrestauranter.</p>
         </div>
       </section>
+      <section class="info-section" data-section="eier">
+        <h2 data-t>Er du eier?</h2>
+        <p data-t>Halalkartet viser hvor du finner halal mat i Norge, og hvor sikker halalstatusen er. Nå ber vi alle stedene på kartet om å bekrefte statusen sin selv. Det tar to minutter og er gratis.</p>
+        <h3 class="eier-h" data-t>Merkene på kartet</h3>
+        <ul class="faq-farger eier-merker" id="eierMerker"></ul>
+        <h3 class="eier-h" data-t>Slik gjør du</h3>
+        <ol class="eier-steg">
+          <li data-t>Fyll ut skjemaet under.</li>
+          <li data-t>Vi går gjennom svaret og tar kontakt hvis noe er uklart.</li>
+          <li data-t>Stedet får riktig merke, og stedssiden viser hvem som bekreftet og når. Verifiserte steder får et klistremerke til vinduet.</li>
+        </ol>
+        <h3 class="eier-h" id="eierSkjemaTittel" data-t>Bekreft halalstatusen</h3>
+        <form name="eier" method="POST" id="eierForm" class="kf" aria-labelledby="eierSkjemaTittel">
+          <input type="hidden" name="form-name" value="eier">
+          <input type="hidden" name="_subject" value="Et sted bekrefter halalstatusen">
+          <input type="hidden" name="sted_navn" value="">
+          <p class="kf-hp"><label>La dette feltet stå tomt <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <div class="kf-field kf-sok">
+            <label for="eierStedSok"><span data-t>Stedet</span> <span class="kf-req" data-t>påkrevd</span></label>
+            <input type="text" id="eierStedSok" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="eierStedListe" aria-describedby="eierStedFeil" autocomplete="off" spellcheck="false" placeholder="Skriv navnet på stedet" data-ta="placeholder">
+            <input type="hidden" name="sted" id="eierSted" value="">
+            <ul class="kf-treff" id="eierStedListe" role="listbox" aria-label="Steder" data-ta="aria-label" hidden></ul>
+            <p class="kf-err" id="eierStedFeil" hidden data-t>Skriv navnet og velg stedet fra lista.</p>
+          </div>
+          <label class="kf-field" id="eierNytt" hidden><span data-t>Skriv hele navnet og adressen på stedet</span> <span class="kf-req" data-t>påkrevd</span>
+            <input type="text" name="nytt_sted" autocomplete="off">
+          </label>
+          <label class="kf-field"><span data-t>Navnet ditt</span> <span class="kf-req" data-t>påkrevd</span>
+            <input type="text" name="navn" required autocomplete="name">
+          </label>
+          <label class="kf-field"><span data-t>Rollen din</span> <span class="kf-req" data-t>påkrevd</span>
+            <select name="rolle" class="kf-select" required>
+              <option value="" data-t>Velg en</option>
+              <option value="Eier" data-t>Eier</option>
+              <option value="Daglig leder" data-t>Daglig leder</option>
+              <option value="Ansatt" data-t>Ansatt</option>
+              <option value="Annet" data-t>Annet</option>
+            </select>
+          </label>
+          <label class="kf-field"><span data-t>E-post</span> <span class="kf-req" data-t>påkrevd</span>
+            <input type="email" name="kontakt" required autocomplete="email">
+          </label>
+          <label class="kf-field"><span data-t>Telefon</span> <span class="kf-opt" data-t>frivillig</span>
+            <input type="tel" name="telefon" autocomplete="tel" inputmode="tel">
+            <small class="kf-hjelp" data-t>Du trenger ikke ta med +47.</small>
+          </label>
+          <fieldset class="kf-valg">
+            <legend><span data-t>Hvor mye av maten er halal?</span> <span class="kf-req" data-t>påkrevd</span></legend>
+            <label><input type="radio" name="status" value="All maten er halal" required> <span data-t>All maten er halal</span></label>
+            <label><input type="radio" name="status" value="Deler av menyen er halal"> <span data-t>Deler av menyen er halal</span></label>
+            <label><input type="radio" name="status" value="Ingenting er halal"> <span data-t>Ingenting er halal</span></label>
+          </fieldset>
+          <label class="kf-field" id="eierDelvis" hidden><span data-t>Hva er ikke halal?</span> <span class="kf-opt" data-t>frivillig</span>
+            <textarea name="ikke_halal" rows="2"></textarea>
+          </label>
+          <label class="kf-field"><span data-t>Hvordan sikrer dere at kjøttet er halal?</span> <span class="kf-opt" data-t>frivillig</span>
+            <textarea name="hvordan" rows="2" placeholder="Leverandør, slakteri eller sertifikat" data-ta="placeholder"></textarea>
+          </label>
+          <fieldset class="kf-valg">
+            <legend><span data-t>Serverer dere alkohol?</span> <span class="kf-req" data-t>påkrevd</span></legend>
+            <label><input type="radio" name="alkohol" value="Nei" required> <span data-t>Nei</span></label>
+            <label><input type="radio" name="alkohol" value="Ja"> <span data-t>Ja</span></label>
+          </fieldset>
+          <label class="kf-field"><span data-t>Lenke til logoen</span> <span class="kf-opt" data-t>frivillig</span>
+            <input type="url" name="logo" inputmode="url" placeholder="https://" autocomplete="off">
+            <small class="kf-hjelp kun-nett" data-t>Lim inn en lenke her, last opp fila under, eller svar på e-posten fra oss med logoen som vedlegg. Helst kvadratisk, PNG eller SVG. Vi bruker bare logoer stedet har sendt oss selv.</small>
+            <small class="kf-hjelp kun-app" data-t>Lim inn en lenke her, eller svar på e-posten fra oss med logoen som vedlegg. Helst kvadratisk, PNG eller SVG. Vi bruker bare logoer stedet har sendt oss selv.</small>
+          </label>
+          <div class="kf-fil kun-nett">
+            <p class="kf-fil-tittel"><span data-t>Last opp logoen</span> <span class="kf-opt" data-t>frivillig</span></p>
+            <label class="kf-fil-boks">
+              <input type="file" name="logofil" id="eierLogo" accept=".png,.svg,image/png,image/svg+xml" aria-describedby="eierFilKrav">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+              <span class="kf-fil-tekst" id="eierFilTekst" data-t>Velg en PNG- eller SVG-fil</span>
+              <small id="eierFilKrav" data-t>Bare PNG eller SVG, høyst 5 MB</small>
+            </label>
+            <button type="button" class="kf-fil-fjern" id="eierFilFjern" hidden data-t>Fjern fila</button>
+            <p class="kf-err" id="eierFilFeil" role="alert" hidden></p>
+          </div>
+          <label class="kf-samtykke"><input type="checkbox" name="samtykke" value="Ja" required> <span data-t>Jeg bekrefter at opplysningene stemmer, og at Halalkartet kan vise rollen min og datoen på stedssiden.</span></label>
+        </form>
+        <button type="submit" form="eierForm" class="kf-send eier-send" id="eierSend" data-t>Send bekreftelsen</button>
+        <p class="kf-ok" id="eierOk" tabindex="-1" hidden data-t>Takk! Vi går gjennom svaret og oppdaterer stedet på kartet. Er noe uklart, tar vi kontakt.</p>
+        <p class="kf-err" id="eierOkLogo" hidden data-t>Logoen kom ikke med. Svar på e-posten fra oss med logoen som vedlegg.</p>
+        <p class="eier-personvern" data-t>Vi bruker opplysningene bare til å oppdatere stedet og til å kontakte deg om det.</p>
+      </section>
       <section class="info-section" data-section="kontakt">
         <h2 id="kontaktTittel">Kontakt oss</h2>
         <p id="kontaktIntro">Har du et tips om et sted, funnet en feil, eller vil du bare si hva du synes, så hører vi gjerne fra deg. Fyll ut skjemaet under.</p>
+        <p data-th="kontaktEpost">Du kan også skrive til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
         <p data-t>Navn og hvor du kommer fra er frivillig, men det hjelper oss mye. Skriver du inn telefon eller e-post, kan vi komme tilbake til deg.</p>
         <form name="tilbakemelding" method="POST" id="kontaktForm" class="kf">
           <input type="hidden" name="form-name" value="tilbakemelding">
@@ -1345,9 +1497,11 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <h3>Veibeskrivelse</h3>
           <p class="kun-nett">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste i en ny fane med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
           <p class="kun-app">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste utenfor Halalkartet med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
-          <h3>Skjemaene</h3>
-          <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, gi oss beskjed, så gjør vi det.</p>
+          <h3>Skjemaene og e-post</h3>
+          <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, skriv til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, så gjør vi det.</p>
+          <p>Bekrefter du halalstatusen for et sted, får vi navnet ditt, rollen din, e-post, telefon hvis du oppgir det, svarene dine og logoen hvis du sender den. På stedssiden viser vi bare rollen din, datoen og logoen. Navnet ditt vises ikke.</p>
           <p>Skjemaene sendes gjennom en skjematjeneste som videresender dem til oss på e-post. Den tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
+          <p>Skriver du til oss på e-post, får vi adressen din og det du skriver, og vi bruker det på samme måte. E-posten vår ligger hos en e-postleverandør.</p>
           <h3>Kart og drift</h3>
           <p class="kun-nett">Siden ligger hos en leverandør av nettsidedrift, og kartet og kartbiblioteket hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere siden og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
           <p class="kun-app">Appen henter oppdaterte steder fra halalkartet.no, og kartet hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere stedene og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
@@ -1370,9 +1524,11 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <h3>Directions</h3>
           <p class="kun-nett">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens in a new tab with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
           <p class="kun-app">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens outside Halalkartet with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
-          <h3>The forms</h3>
-          <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, let us know and we will.</p>
+          <h3>The forms and email</h3>
+          <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, email us at <a href="mailto:post@halalkartet.no">post@halalkartet.no</a> and we will.</p>
+          <p>If you confirm the halal status for a place, we receive your name, your role, email, phone if you give it, your answers and the logo if you send it. On the place page we only show your role, the date and the logo. Your name is not shown.</p>
           <p>The forms are sent through a form service that forwards them to us by email. It keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
+          <p>If you email us, we receive your address and what you write, and we use it in the same way. Our email is hosted by an email provider.</p>
           <h3>Map and hosting</h3>
           <p class="kun-nett">The site is hosted by a web hosting provider, and the map and map library are loaded from external map providers. These services may see technical details such as IP address in order to deliver the site and the map. We do not share personal data with anyone for advertising or sale.</p>
           <p class="kun-app">The app fetches updated places from halalkartet.no, and the map is loaded from external map providers. These services may see technical details such as IP address in order to deliver the places and the map. We do not share personal data with anyone for advertising or sale.</p>
@@ -1441,7 +1597,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <details class="faq">
             <summary>Hva betyr dollartegnene?</summary>
             <div class="faq-svar">
-              <p>De viser omtrentlig prisnivå. $ er rimelig, $$ er middels, og $$$ er dyrere. Du kan filtrere på pris.</p>
+              <p>De viser omtrent hva et måltid koster for én person. $ er opptil 100 kr, $$ er opptil 300 kr, og $$$ er over 300 kr. Du kan filtrere på pris.</p>
             </div>
           </details>
           <details class="faq faq-utv">
@@ -1517,7 +1673,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <details class="faq">
             <summary>What do the dollar signs mean?</summary>
             <div class="faq-svar">
-              <p>They show the approximate price level. $ is inexpensive, $$ is moderate, and $$$ is pricier. You can filter by price.</p>
+              <p>They show roughly what a meal costs for one person. $ is up to 100 kr, $$ is up to 300 kr, and $$$ is over 300 kr. You can filter by price.</p>
             </div>
           </details>
           <details class="faq faq-utv">
@@ -1616,6 +1772,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
       <li><button type="button" data-mer="stott" class="mer-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
       <li><button type="button" data-mer="utvalgte" class="mer-utv" data-t>Utvalgte steder</button></li>
       <li><button type="button" data-mer="tips" data-t>Tips oss om et sted</button></li>
+      <li><button type="button" data-mer="eier" data-t>Er du eier?</button></li>
       <li><button type="button" data-mer="feil" data-t>Si ifra om feil</button></li>
       <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
       <li><button type="button" data-mer="personvern" data-t>Personvern</button></li>
@@ -1632,6 +1789,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=61b73acb"></script>
+<script src="app.js?v=08fb3241"></script>
 </body>
 </html>
