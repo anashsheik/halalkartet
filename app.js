@@ -146,11 +146,46 @@ const ENGELSK = {
   'Stilig sted med vin og indiske retter.': 'Stylish place with wine and Indian dishes.', 'Klassisk thaimat i uformelle omgivelser.': 'Classic Thai food in a casual setting.',
   'Uformelt sted for indiske spesialiteter.': 'Casual place for Indian specialities.', 'Elegant restaurant for biff og vin.': 'Elegant restaurant for steak and wine.',
   'Trendy matområde med global mat og DJ-er.': 'Trendy food hall with global food and DJs.', 'Restaurant med tradisjonell koreansk mat.': 'Restaurant serving traditional Korean food.',
-  'Restaurant med nordindiske spesialiteter.': 'Restaurant with North Indian specialities.'
+  'Restaurant med nordindiske spesialiteter.': 'Restaurant with North Indian specialities.',
+  // ventebeskjeden
+  'Vi kontakter alle stedene nå.': 'We are contacting every place now.', 'Vi kontakter resten av stedene nå.': 'We are contacting the rest of the places now.',
+  'Bekreftet av stedet': 'Confirmed by the place', 'Eier': 'Owner', 'Daglig leder': 'Manager', 'Ansatt': 'Staff', 'Annet': 'Other',
+  // eiersiden
+  'Eier du stedet? Bekreft halalstatusen': 'Do you own this place? Confirm the halal status', 'Er du eier?': 'Do you own a place?',
+  'Halalkartet viser hvor du finner halal mat i Norge, og hvor sikker halalstatusen er. Nå ber vi alle stedene på kartet om å bekrefte statusen sin selv. Det tar to minutter og er gratis.':
+    'Halalkartet shows where to find halal food in Norway, and how certain the halal status is. We are now asking every place on the map to confirm its own status. It takes two minutes and is free.',
+  'Merkene på kartet': 'The marks on the map', 'Slik gjør du': 'How it works', 'Bekreft halalstatusen': 'Confirm the halal status',
+  'Verifisert halal.': 'Verified halal.', 'Stedet har bekreftet at all maten er halal.': 'The place has confirmed that all the food is halal.',
+  'Delvis halal.': 'Partly halal.', 'Deler av menyen er halal. Stedssiden sier hva som gjelder.': 'Part of the menu is halal. The place page says which part.',
+  'Uavklart.': 'Unconfirmed.', 'Statusen er ikke bekreftet ennå. Her står alle stedene i dag.': 'The status is not confirmed yet. Every place is here today.',
+  'Fyll ut skjemaet under.': 'Fill in the form below.', 'Vi går gjennom svaret og tar kontakt hvis noe er uklart.': 'We go through your answer and get in touch if anything is unclear.',
+  'Stedet får riktig merke, og stedssiden viser hvem som bekreftet og når. Verifiserte steder får et klistremerke til vinduet.':
+    'The place gets the right mark, and its page shows who confirmed it and when. Verified places get a sticker for the window.',
+  'Stedet': 'The place', 'Velg stedet ditt': 'Choose your place', 'Stedet står ikke på kartet (annet)': 'The place is not on the map (other)', 'Skriv hele navnet og adressen på stedet': 'Write the full name and address of the place',
+  'Navnet ditt': 'Your name', 'Rollen din': 'Your role', 'Velg en': 'Choose one',
+  'E-post': 'Email', 'Hvor mye av maten er halal?': 'How much of the food is halal?', 'All maten er halal': 'All the food is halal',
+  'Deler av menyen er halal': 'Part of the menu is halal', 'Ingenting er halal': 'None of it is halal', 'Hva er ikke halal?': 'What is not halal?',
+  'Hvordan sikrer dere at kjøttet er halal?': 'How do you make sure the meat is halal?', 'Leverandør, slakteri eller sertifikat': 'Supplier, slaughterhouse or certificate',
+  'Serverer dere alkohol?': 'Do you serve alcohol?', 'Ja': 'Yes', 'Nei': 'No', 'Lenke til logoen': 'Link to your logo',
+  'Lim inn en lenke her, last opp fila under, eller svar på e-posten fra oss med logoen som vedlegg. Helst kvadratisk, PNG eller SVG. Vi bruker bare logoer stedet har sendt oss selv.':
+    'Paste a link here, upload the file below, or reply to our email with the logo attached. Square if possible, PNG or SVG. We only use logos the place has sent us itself.',
+  'Jeg bekrefter at opplysningene stemmer, og at Halalkartet kan vise rollen min og datoen på stedssiden.':
+    'I confirm that the information is correct, and that Halalkartet may show my role and the date on the place page.',
+  'Send bekreftelsen': 'Send confirmation',
+  'Du trenger ikke ta med +47.': 'You do not need to include +47.', 'Skriv navnet på stedet': 'Type the name of the place', 'Skriv navnet og velg stedet fra lista.': 'Type the name and choose the place from the list.',
+  'Last opp logoen': 'Upload your logo', 'Velg en PNG- eller SVG-fil': 'Choose a PNG or SVG file', 'Bare PNG eller SVG, høyst 5 MB': 'PNG or SVG only, up to 5 MB',
+  'Fjern fila': 'Remove file', 'Fila må være PNG eller SVG.': 'The file must be PNG or SVG.', 'Fila er større enn 5 MB.': 'The file is larger than 5 MB.',
+  'Logoen kom ikke med. Svar på e-posten fra oss med logoen som vedlegg.': 'The logo did not come through. Please reply to our email with the logo attached.',
+  'Takk! Vi går gjennom svaret og oppdaterer stedet på kartet. Er noe uklart, tar vi kontakt.': 'Thank you! We will go through your answer and update the place on the map. If anything is unclear, we will get in touch.',
+  'Vi bruker opplysningene bare til å oppdatere stedet og til å kontakte deg om det.': 'We only use this information to update the place and to contact you about it.',
+  'Lim inn en lenke her, eller svar på e-posten fra oss med logoen som vedlegg. Helst kvadratisk, PNG eller SVG. Vi bruker bare logoer stedet har sendt oss selv.':
+    'Paste a link here, or reply to our email with the logo attached. Square if possible, PNG or SVG. We only use logos the place has sent us itself.',
+  'Statusen er ikke bekreftet ennå.': 'The status is not confirmed yet.'
 };
 // tekster med markup, slått opp med en egen nøkkel
 const ENGELSK_HTML = {
-  tipsLead: 'We would most like restaurants and other places to eat in <strong>the big cities</strong>, but you are also welcome to suggest a place anywhere in the country.'
+  tipsLead: 'We would most like restaurants and other places to eat in <strong>the big cities</strong>, but you are also welcome to suggest a place anywhere in the country.',
+  kontaktEpost: 'You can also email us at <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.'
 };
 function T(nb, verdier) {
   let s = nb;
@@ -419,8 +454,19 @@ const alleStatuser = () => STATUS_ORDER.every(st => layerOn[st]);
 // før stedene er bekreftet. Ellers ville «Kun verifisert» gitt et tomt kart.
 function finnesStatus(st) { return HALAL_SPOTS.some(function (s) { return s.halalStatus === st; }); }
 function trinnTomt(trinn) { return !STRICT_STEPS[trinn].tillat.some(finnesStatus); }
-// Trykker man på et slikt trinn, forklarer en beskjed i 2 sekunder hvorfor ingenting skjer
-function trinnTomtBeskjed() { toast(T('Ingen steder er bekreftet ennå. Vi kontakter alle stedene nå.'), null, 2000); }
+// Trykker man på et slikt trinn, forklarer en beskjed hvorfor ingenting skjer. Klokka foran sier «kommer», ikke «feil»,
+// og beskjeden står i 4 sekunder, så de tolv ordene rekker å bli lest.
+function trinnTomtBeskjed() { toast(T('Ingen steder er bekreftet ennå. Vi kontakter alle stedene nå.'), null, 4000, IKON.klokke); }
+// Steder som har bekreftet statusen sin selv: alle som ikke lenger står som uavklart
+function antallBekreftet() { return HALAL_SPOTS.filter(function (s) { return s.halalStatus !== 'uavklart'; }).length; }
+// Beskjeden øverst i lista og i PC-lista så lenge noen steder ikke har bekreftet statusen sin.
+// Tallet og stolpen vises ikke til brukerne.
+function fremdriftHtml(hvor) {
+  const n = antallBekreftet(), tot = HALAL_SPOTS.length;
+  if (n >= tot) return '';
+  return '<div class="fremdrift fr-' + hvor + '"><p class="fr-note">' + IKON.klokke + '<span>' +
+    esc(T(n ? 'Vi kontakter resten av stedene nå.' : 'Vi kontakter alle stedene nå.')) + '</span></p></div>';
+}
 const byId = id => HALAL_SPOTS.find(s => s.id === id);
 
 // Sporing
@@ -573,6 +619,7 @@ function initApp() {
   wireContactForm();
   wireStott();
   wireTipsForm();
+  wireEierForm();
   merkSkjemaUtenMottak();
   wirePopupActions();
   wireShortcuts();
@@ -789,7 +836,8 @@ function antallAktive() {
 const IKON = {
   hake:   '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7.5"/></svg>',
   pil:    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
-  x:      '<svg class="x" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+  x:      '<svg class="x" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  klokke: '<svg class="klokke" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>'
 };
 
 function byggHurtigrad() {
@@ -798,7 +846,7 @@ function byggHurtigrad() {
   const brikke = function (html, valg) {
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'hbrikke' + (valg.satt ? ' satt' : '');
+    b.className = 'hbrikke' + (valg.satt ? ' satt' : '') + (valg.av ? ' venter' : '');
     if (valg.trykket !== undefined) b.setAttribute('aria-pressed', String(valg.trykket));
     if (valg.etikett) b.setAttribute('aria-label', valg.etikett);
     if (valg.av) b.setAttribute('aria-disabled', 'true');
@@ -810,8 +858,8 @@ function byggHurtigrad() {
   const scroll = rad.scrollLeft;
   rad.innerHTML = '';
 
-  brikke(IKON.hake + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, av: trinnTomt(0), klikk: function () {
-    if (trinnTomt(0)) { trinnTomtBeskjed(); return; }
+  brikke((trinnTomt(0) ? IKON.klokke : IKON.hake) + esc(T('Kun verifisert')), { hurtig: 'verifisert', trykket: strict === 0, av: trinnTomt(0), klikk: function () {
+    if (trinnTomt(0)) { trinnTomtBeskjed(); track('hurtigfilter_venter'); return; }
     strict = strict === 0 ? 2 : 0; applyStrict(); track('hurtigfilter', { filter: 'kun_verifisert' }); render();
   } });
   const felt = [['fCuisine', kjokkenOrd(), 'kjokken'], ['fPrice', 'Pris', 'pris'], ['fBydel', 'Område', 'omrade']];
@@ -879,7 +927,8 @@ function tegnFilterark(antall) {
   const k = el('faKropp');
   const segment = function (navn, valg, aktiv, klikk, av) {
     return '<div class="segment" role="radiogroup" aria-label="' + esc(T(navn)) + '">' + valg.map(function (v) {
-      return '<button type="button" role="radio" aria-checked="' + (v[0] === aktiv) + '"' + (av && av(v[0]) ? ' aria-disabled="true"' : '') + ' data-v="' + esc(v[0]) + '" data-seg="' + klikk + '">' + esc(T(v[1])) + '</button>';
+      const venter = av && av(v[0]);
+      return '<button type="button" role="radio" aria-checked="' + (v[0] === aktiv) + '"' + (venter ? ' aria-disabled="true" class="venter"' : '') + ' data-v="' + esc(v[0]) + '" data-seg="' + klikk + '">' + (venter ? IKON.klokke : '') + esc(T(v[1])) + '</button>';
     }).join('') + '</div>';
   };
   const brikker = function (id, del, verdier, antall) {
@@ -907,7 +956,7 @@ function tegnFilterark(antall) {
   k.innerHTML =
     '<section class="fa-del" data-del="status"><h3>' + T('Halal-status') + '</h3>' +
       segment('Halal-status', [['0', 'Verifisert'], ['1', '+ Delvis'], ['2', 'Alle']], String(strict), 'strict', function (v) { return trinnTomt(+v); }) +
-      '<p class="fa-note">' + esc(T(strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' +
+      '<p class="fa-note">' + esc(T(trinnTomt(0) ? 'Vi kontakter alle stedene nå.' : strict >= 0 ? STRICT_STEPS[strict].note : 'Et eget utvalg av statuser.')) + '</p></section>' +
     '<section class="fa-del" data-del="alkohol"><div class="fa-rad"><div><h3>' + T('Uten alkohol') + '</h3>' +
       '<p>' + T('Skjul steder som serverer alkohol') + '</p></div>' +
       '<button type="button" class="bryter" role="switch" aria-label="' + T('Uten alkohol') + '" aria-checked="' + (el('fAlkohol').value === 'uten') + '" data-bryter="alkohol"></button></div></section>' +
@@ -1055,10 +1104,27 @@ function skjold(s, medTekst) {
 }
 // Flisa følger statusen: mørk med gull bokstav for verifiserte steder, lys for de andre.
 // I lista er alle fliser like (noyt), så lista ikke sier noe om statusen.
+// Logoen er den stedet selv har sendt oss, lagt i mappa logoer/ og oppgitt som "logo" i spots.json.
+// Mangler den, eller kan den ikke lastes, står forbokstaven der i stedet.
+function logoSti(s) {
+  if (typeof s.logo !== 'string' || !/^logoer\/[a-z0-9][a-z0-9._-]*\.(png|jpe?g|webp|svg)$/i.test(s.logo)) return '';
+  // appen henter stedene ferske fra halalkartet.no, så logoene hentes derfra også
+  return APP ? 'https://halalkartet.no/' + s.logo : s.logo;
+}
 function monogram(s, noyt) {
   const m = /[A-Za-zÀ-ÿÆØÅæøå0-9]/.exec(s.name);
-  return '<span class="mono ' + (noyt || s.halalStatus === 'verifisert' ? 'mono-mork' : 'mono-lys') + '"' + (noyt ? '' : ' data-s="' + esc(s.halalStatus) + '"') + ' aria-hidden="true">' + (m ? m[0].toUpperCase() : '?') + '</span>';
+  const kls = noyt || s.halalStatus === 'verifisert' ? 'mono-mork' : 'mono-lys', bokstav = m ? m[0].toUpperCase() : '?';
+  const logo = logoSti(s);
+  if (logo) return '<span class="mono mono-logo" data-bokstav="' + esc(bokstav) + '" data-kls="' + kls + '" aria-hidden="true"><img src="' + esc(logo) + '" alt="" loading="lazy" decoding="async"></span>';
+  return '<span class="mono ' + kls + '"' + (noyt ? '' : ' data-s="' + esc(s.halalStatus) + '"') + ' aria-hidden="true">' + bokstav + '</span>';
 }
+// En logo som ikke lastes, byttes med forbokstaven. På stedssiden kommer mønsteret tilbake.
+document.addEventListener('error', function (e) {
+  const img = e.target, boks = img && img.parentNode;
+  if (!img || img.tagName !== 'IMG' || !boks || !boks.classList) return;
+  if (boks.classList.contains('mono-logo')) { boks.className = 'mono ' + (boks.dataset.kls || 'mono-mork'); boks.textContent = boks.dataset.bokstav || '?'; }
+  else if (img.classList.contains('d-hero-logo')) { boks.classList.remove('har-logo'); img.remove(); }
+}, true);
 // Åpningstidene vises ikke i appen. Lenken åpner stedet i Google Maps, der står tidene restauranten selv har lagt inn.
 function tiderUrl(s) {
   return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + ', ' + (s.address || s.bydel));
@@ -1144,7 +1210,7 @@ function tegnListe() {
           '<button type="button" class="knapp" data-tom="tips">' + T('Tips oss om et sted') + '</button></div>';
     return;
   }
-  boks.innerHTML = liste.map(function (s, i) { return listekortHtml(s, i); }).join('');
+  boks.innerHTML = (lagretVis ? '' : fremdriftHtml('liste')) + liste.map(function (s, i) { return listekortHtml(s, i); }).join('');
 }
 
 // Kortet i bunnarket
@@ -1294,8 +1360,18 @@ function detaljHtml(s) {
   const bevis = s.halalStatus === 'verifisert' && !medAlkohol ? '' : '<div class="d-vet"><h4>' + T('Dette vet vi') + '</h4>' +
     (punkter.length ? '<ul>' + punkter.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>'
       : '<p>' + T('Vi har ikke skrevet ned hvordan statusen er bekreftet ennå.') + '</p>') + '</div>';
-  const d = dagerSiden(s.lastVerified);
-  const naar = d === null ? T('Ikke bekreftet med dato') : T('Sist bekreftet {d}', { d: fmtDato(s.lastVerified) }) + (d > 180 ? T(', over et halvår siden') : '');
+  // Stedet har selv bekreftet statusen: rollen til den som bekreftet, og når. Navnet vises ikke.
+  const bek = s.confirmed && typeof s.confirmed === 'object' && fmtDato(s.confirmed.date) ? s.confirmed : null;
+  let bekreftet = '';
+  if (bek) {
+    const hvem = bek.role ? esc(T(bek.role)) : '';
+    bekreftet = '<div class="d-bekreftet">' + MERKE_V +
+      '<div><h4>' + T('Bekreftet av stedet') + '</h4>' + (hvem ? '<p>' + hvem + '</p>' : '') +
+      '<p><time datetime="' + esc(bek.date) + '">' + fmtDato(bek.date) + '</time></p></div></div>';
+  }
+  const sist = s.lastVerified || (bek && bek.date) || null;
+  const d = dagerSiden(sist);
+  const naar = d === null ? T('Ikke bekreftet med dato') : T('Sist bekreftet {d}', { d: fmtDato(sist) }) + (d > 180 ? T(', over et halvår siden') : '');
 
   const rad = function (navn, verdi) { return '<div><dt>' + T(navn) + '</dt><dd>' + verdi + '</dd></div>'; };
   const rader = [
@@ -1310,9 +1386,10 @@ function detaljHtml(s) {
       '<span class="d-luft"></span>' +
       '<button type="button" class="d-rund d-del" data-act="del" data-id="' + esc(s.id) + '" aria-label="' + esc(T('Del {navn}', { navn: s.name })) + '">' + IKON2.del + '<span>' + T('Del') + '</span></button>' +
       hjerte(s, 'd-rund') +
-      '<a class="d-merke" href="./" aria-label="' + T('Halalkartet, start på nytt') + '">حلال</a>' +
     '</div>' +
-    '<header class="d-hero har-stempel">' +
+    '<header class="d-hero har-stempel' + (logoSti(s) ? ' har-logo' : '') + '">' +
+      // Har stedet sendt oss logoen sin, fyller den hele toppen i stedet for mønsteret til Halalkartet.
+      (logoSti(s) ? '<img class="d-hero-logo" src="' + esc(logoSti(s)) + '" alt="" decoding="async">' : '') +
       stempel('side', s.halalStatus) +
       '<h2 id="detaljNavn">' + esc(s.name) + '</h2>' +
       '<p class="d-meta">' + metaTekst(s) + '</p>' +
@@ -1321,9 +1398,9 @@ function detaljHtml(s) {
       '<div class="d-knapper k' + knapper.length + '">' + knapper.join('') + '</div>' +
       '<section class="d-om" aria-labelledby="dOmTittel">' +
         '<div class="d-om-hode"><h3 id="dOmTittel">' + T('Om halal-statusen') + '</h3>' +
-          (s.halalStatus === 'verifisert' ? '<span class="d-ar" aria-hidden="true">حلال</span>' : '<span class="d-om-status">' + skjold(s) + '</span>') + '</div>' +
+          (s.halalStatus === 'verifisert' ? '' : '<span class="d-om-status">' + skjold(s) + '</span>') + '</div>' +
         (s.halalStatus !== 'verifisert' ? '<p class="d-status-setning" data-s="' + esc(s.halalStatus) + '">' + T('Denne restauranten er') + ' <strong>' + T(s.halalStatus === 'delvis' ? 'delvis halal' : 'uavklart') + '</strong>.</p>' : '') +
-        bevis +
+        bekreftet + bevis +
         '<p class="d-forbehold">' + T('Halalkartet sertifiserer ikke selv.') + '</p>' +
         '<div class="d-om-fot"><span class="d-naar">' + naar + '</span><button type="button" class="d-lenke" data-faq>' + T('Hva betyr statusene?') + '</button></div>' +
       '</section>' +
@@ -1332,6 +1409,7 @@ function detaljHtml(s) {
         kartLenker(s) + '</div>' +
       '<div class="d-feil"><div><h3>' + T('Ser du noe som er feil?') + '</h3><p>' + T('Si ifra, så sjekker vi stedet på nytt.') + '</p></div>' +
         '<button type="button" class="knapp" data-sifra="' + esc(s.id) + '">' + T('Si ifra!') + '</button></div>' +
+      '<p class="d-eier"><button type="button" class="d-lenke" data-eier="' + esc(s.id) + '">' + T('Eier du stedet? Bekreft halalstatusen') + '</button></p>' +
     '</div>';
 }
 function tegnDetaljKart(s) {
@@ -1463,6 +1541,8 @@ function wireMobil() {
     if (t.closest('[data-faq]')) { openInfo('faq'); el('infoScrim').classList.add('over-side'); return; }
     const utv = t.closest('[data-utvalgt]');
     if (utv) { closeInfo(); lukkMer(); lukkSkuff(); setActive(utv.dataset.utvalgt, true); return; }
+    const eier = t.closest('[data-eier]');
+    if (eier) { const id = eier.dataset.eier; lukkDetalj(); setTimeout(function () { apneEier(id); }, 60); return; }
     const sifra = t.closest('[data-sifra]');
     if (sifra) {
       const sted = byId(sifra.dataset.sifra);
@@ -1721,9 +1801,14 @@ function visPopup(id, ferdig) {
 const INFOLENKER = {
   'personvern': ['personvern'], 'vilkar': ['vilkar'], 'faq': ['faq'], 'om': ['om'], 'kontakt': ['kontakt'], 'tips': ['tips'],
   'privacy': ['personvern', 'en'], 'terms': ['vilkar', 'en'], 'about': ['om', 'en'], 'contact': ['kontakt', 'en'],
-  'personvern-app': ['personvern', '', true], 'privacy-app': ['personvern', 'en', true]
+  'personvern-app': ['personvern', '', true], 'privacy-app': ['personvern', 'en', true],
+  'eier': ['eier'], 'owner': ['eier', 'en']
 };
-function infolenke(id) { return Object.prototype.hasOwnProperty.call(INFOLENKER, id) ? INFOLENKER[id] : null; }
+// #eier/gazakjokken åpner eiersiden med stedet valgt. Den lenken står i e-posten til hvert sted.
+function infolenke(id) {
+  id = String(id || '').split('/')[0];
+  return Object.prototype.hasOwnProperty.call(INFOLENKER, id) ? INFOLENKER[id] : null;
+}
 function applyHash() {
   let id = '';
   try { id = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { return false; }
@@ -1731,6 +1816,7 @@ function applyHash() {
   const side = infolenke(id);
   if (side) {
     if (side[1] === 'en' && sprak !== 'en') byttSprak();
+    if (side[0] === 'eier') { apneEier(id.split('/')[1] || ''); return true; }
     openInfo(side[0], side[2] === true);
     return true;
   }
@@ -1817,14 +1903,15 @@ function shareSpot(s) {
 let toastTimer = null;
 // handling: det som skjer når man trykker på meldingen. Da blir den stående lenger.
 // ms: hvor lenge beskjeden står. Uten den står en vanlig beskjed i 2,6 sekunder, og en man kan trykke på, i 6.
-function toast(msg, handling, ms) {
+// ikon: et lite ikon foran teksten, for eksempel klokka når noe ikke er klart ennå.
+function toast(msg, handling, ms, ikon) {
   let t = el('toast');
   if (!t) {
     t = document.createElement('div');
     t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status');
     document.body.appendChild(t);
   }
-  t.textContent = msg;
+  if (ikon) t.innerHTML = '<span class="toast-ikon">' + ikon + '</span>' + esc(msg); else t.textContent = msg;
   t.onclick = handling || null;
   t.classList.toggle('trykk', !!handling);
   t.classList.add('show');
@@ -1944,6 +2031,7 @@ function openInfo(section, appTekst) {
   lastFocus = document.activeElement;
   track('apnet_side', { side: section });
   if (!el('tipsOk').hidden) nyttTips();
+  if (!el('eierOk').hidden) nyEier();
   el('kontaktOk').hidden = true;
   el('infoScrim').classList.add('open');
   showInfo(section);
@@ -1972,6 +2060,7 @@ function showInfo(section) {
     el('kontaktTittel').dataset.feil = feil ? 'ja' : 'nei';
   }
   if (section === 'stott') tegnStott();
+  if (section === 'eier') tegnEier();
   if (section === 'utvalgte') tegnUtvalgte();
   document.querySelectorAll('.info-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === section));
   document.querySelectorAll('.info-section').forEach(x => x.classList.toggle('active', x.dataset.section === section));
@@ -2100,6 +2189,175 @@ function sendSkjema(f, btn, onOk) {
     .then(function () { btn.disabled = false; btn.textContent = opprinnelig; });
 }
 
+// Eiersiden: merkene forklart og skjemaet der stedet bekrefter statusen og sender logoen
+function tegnEier() {
+  const merker = el('eierMerker');
+  if (merker) merker.innerHTML = [
+    ['verifisert', 'Verifisert halal.', 'Stedet har bekreftet at all maten er halal.'],
+    ['delvis', 'Delvis halal.', 'Deler av menyen er halal. Stedssiden sier hva som gjelder.'],
+    // «Her står alle stedene i dag» stemmer bare så lenge ingen steder er bekreftet
+    ['uavklart', 'Uavklart.', antallBekreftet() ? 'Statusen er ikke bekreftet ennå.' : 'Statusen er ikke bekreftet ennå. Her står alle stedene i dag.']
+  ].map(function (m) { return '<li>' + skjold({ halalStatus: m[0] }) + '<span><b>' + T(m[1]) + '</b> ' + T(m[2]) + '</span></li>'; }).join('');
+  if (!el('eierOk').hidden) return;
+  // etter et språkbytte følger «står ikke på kartet» språket, og boksen viser fortsatt navnet på fila som er valgt
+  if (el('eierSted').value === 'nytt') el('eierStedSok').value = T('Stedet står ikke på kartet (annet)');
+  visEierFil();
+  oppdaterEierFelt();
+}
+// Tar fram eierskjemaet igjen etter en sendt bekreftelse, så en eier med flere steder kan bekrefte det neste.
+// reset() tømmer ikke det skjulte feltet med stedet, så det tømmes her.
+function nyEier() {
+  el('eierOk').hidden = true;
+  el('eierOkLogo').hidden = true;
+  el('eierForm').hidden = false;
+  el('eierSend').hidden = false;
+  el('eierSted').value = '';
+  el('eierStedSok').value = '';
+  oppdaterEierFelt();
+}
+function apneEier(id) {
+  openInfo('eier');
+  if (id && byId(id)) velgEierSted(id);
+}
+// Søket etter stedet: man skriver «gaz», og «Gazakjøkken (Sentrum)» kommer straks. Piltaster, Enter og Esc virker.
+const stedTekst = s => s.name + ' (' + s.bydel + ')';
+function velgEierSted(id) {
+  const s = id === 'nytt' ? null : byId(id);
+  el('eierSted').value = id;
+  el('eierStedSok').value = s ? stedTekst(s) : T('Stedet står ikke på kartet (annet)');
+  el('eierStedSok').removeAttribute('aria-invalid');
+  el('eierStedFeil').hidden = true;
+  lukkEierTreff();
+  oppdaterEierFelt();
+  // står ikke stedet på kartet, skriver de hele navnet i feltet rett under
+  if (id === 'nytt') el('eierForm').nytt_sted.focus();
+}
+function lukkEierTreff() {
+  el('eierStedListe').hidden = true;
+  el('eierStedSok').setAttribute('aria-expanded', 'false');
+  el('eierStedSok').removeAttribute('aria-activedescendant');
+}
+function visEierTreff() {
+  const sok = el('eierStedSok'), q = foldeTegn(sok.value.trim()), liste = el('eierStedListe');
+  if (!q) { lukkEierTreff(); return; }
+  const treff = HALAL_SPOTS.map(function (s) { const n = foldeTegn(s.name), i = n.indexOf(q); return { s: s, i: i, ord: i === 0 || /[\s-]/.test(n.charAt(i - 1)) }; })
+    .filter(function (x) { return x.i >= 0; })
+    .sort(function (a, b) { return (b.i === 0) - (a.i === 0) || b.ord - a.ord || a.s.name.localeCompare(b.s.name, 'nb'); })
+    .slice(0, 8);
+  liste.innerHTML = treff.map(function (x, n) {
+    const navn = x.s.name;
+    return '<li role="option" id="eierTreff' + n + '" data-id="' + esc(x.s.id) + '" aria-selected="false">' +
+      '<span>' + esc(navn.slice(0, x.i)) + '<b>' + esc(navn.slice(x.i, x.i + q.length)) + '</b>' + esc(navn.slice(x.i + q.length)) + '</span> ' +
+      '<small>(' + esc(x.s.bydel) + ')</small></li>';
+  }).join('') + '<li role="option" id="eierTreffNytt" class="kf-treff-nytt" data-id="nytt" aria-selected="false">' + T('Stedet står ikke på kartet (annet)') + '</li>';
+  liste.hidden = false;
+  sok.setAttribute('aria-expanded', 'true');
+}
+function flyttEierTreff(steg) {
+  const valg = Array.from(el('eierStedListe').querySelectorAll('[role="option"]'));
+  if (!valg.length) return;
+  let i = valg.findIndex(function (o) { return o.getAttribute('aria-selected') === 'true'; });
+  i = (i + steg + valg.length) % valg.length;
+  valg.forEach(function (o, n) { o.setAttribute('aria-selected', String(n === i)); });
+  el('eierStedSok').setAttribute('aria-activedescendant', valg[i].id);
+  valg[i].scrollIntoView({ block: 'nearest' });
+}
+// Feltene som bare trengs for noen svar: navn og adresse når stedet ikke står på kartet, og hva som ikke er halal
+function oppdaterEierFelt() {
+  const f = el('eierForm');
+  if (!f) return;
+  const nytt = f.sted.value === 'nytt';
+  el('eierNytt').hidden = !nytt;
+  f.nytt_sted.required = nytt;
+  const status = f.querySelector('input[name="status"]:checked');
+  el('eierDelvis').hidden = !(status && status.value === 'Deler av menyen er halal');
+}
+// Logoen: bare PNG eller SVG, høyst 5 MB. Navnet på fila står i boksen når den er valgt.
+const LOGO_MAKS = 5 * 1024 * 1024;
+function visEierFil(feil) {
+  const inn = el('eierLogo'), fil = inn && inn.files && inn.files[0];
+  el('eierFilTekst').textContent = fil ? fil.name : T('Velg en PNG- eller SVG-fil');
+  inn.closest('.kf-fil-boks').classList.toggle('valgt', !!fil);
+  el('eierFilFjern').hidden = !fil;
+  el('eierFilFeil').hidden = !feil;
+  el('eierFilFeil').textContent = feil || '';
+}
+function sjekkEierFil() {
+  const inn = el('eierLogo'), fil = inn.files && inn.files[0];
+  if (!fil) { visEierFil(); return; }
+  const riktig = /\.(png|svg)$/i.test(fil.name) && (!fil.type || fil.type === 'image/png' || fil.type === 'image/svg+xml');
+  const feil = !riktig ? T('Fila må være PNG eller SVG.') : fil.size > LOGO_MAKS ? T('Fila er større enn 5 MB.') : '';
+  if (feil) inn.value = '';
+  visEierFil(feil);
+}
+// Uten logo går skjemaet som vanlig tekst. Filfeltet slås av mens svaret pakkes, så det ikke kommer med som tom tekst.
+function utenFil(send) { const inn = el('eierLogo'); inn.value = ''; inn.disabled = true; try { send(); } finally { inn.disabled = false; } }
+// Med en logo sendes skjemaet som multipart. Formspree tar bare imot filer på betalte planer.
+// Avvises det, sendes svaret på nytt uten fila, og stedet blir bedt om å sende logoen på e-post.
+function sendEier(f, btn, onOk) {
+  const fil = el('eierLogo').files && el('eierLogo').files[0];
+  if (!fil || !SKJEMA_ENDEPUNKT) { utenFil(function () { sendSkjema(f, btn, onOk); }); return; }
+  const data = new FormData(f);
+  const kontakt = String(data.get('kontakt') || '').trim();
+  if (kontakt.indexOf('@') > 0) data.set('_replyto', kontakt);
+  if (APP) data.set('sendt fra', APP.plattform === 'android' ? 'Android-appen' : 'iPhone-appen');
+  const opprinnelig = btn.textContent;
+  btn.disabled = true; btn.textContent = T('Sender');
+  fetch(SKJEMA_ENDEPUNKT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      btn.disabled = false; btn.textContent = opprinnelig;
+      f.reset(); visEierFil(); onOk(false);
+    })
+    .catch(function (e) {
+      console.warn('[Halalkartet] Logoen ble ikke tatt imot, sender svaret uten fila.', e);
+      btn.disabled = false; btn.textContent = opprinnelig;
+      el('eierLogo').value = ''; visEierFil();
+      utenFil(function () { sendSkjema(f, btn, function () { onOk(true); }); });
+    });
+}
+function wireEierForm() {
+  const f = el('eierForm');
+  if (!f) return;
+  const sok = el('eierStedSok'), liste = el('eierStedListe');
+  sok.addEventListener('input', function () { el('eierSted').value = ''; oppdaterEierFelt(); visEierTreff(); });
+  sok.addEventListener('focus', function () { if (!el('eierSted').value) visEierTreff(); });
+  sok.addEventListener('blur', function () { setTimeout(lukkEierTreff, 150); });
+  sok.addEventListener('keydown', function (e) {
+    const apen = !liste.hidden;
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (!apen) visEierTreff(); flyttEierTreff(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (apen) flyttEierTreff(-1); }
+    else if (e.key === 'Enter' && apen) {
+      const valgt = liste.querySelector('[aria-selected="true"]') || (liste.children.length === 2 ? liste.firstElementChild : null);
+      if (valgt) { e.preventDefault(); velgEierSted(valgt.dataset.id); }
+    }
+    else if (e.key === 'Escape' && apen) { e.preventDefault(); e.stopPropagation(); lukkEierTreff(); }
+  });
+  liste.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  liste.addEventListener('click', function (e) { const o = e.target.closest('[role="option"]'); if (o) velgEierSted(o.dataset.id); });
+  f.addEventListener('change', oppdaterEierFelt);
+  el('eierLogo').addEventListener('change', sjekkEierFil);
+  el('eierFilFjern').addEventListener('click', function () { el('eierLogo').value = ''; visEierFil(); el('eierLogo').focus(); });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!f.sted.value) {
+      sok.setAttribute('aria-invalid', 'true');
+      el('eierStedFeil').hidden = false;
+      sok.focus();
+      return;
+    }
+    f.sted_navn.value = f.sted.value === 'nytt' ? f.nytt_sted.value : sok.value;
+    sendEier(f, el('eierSend'), function (utenLogo) {
+      track('eier_sendt', { logo: utenLogo ? 'nei' : 'ja' });
+      f.hidden = true;
+      el('eierSend').hidden = true;
+      el('eierOk').hidden = false;
+      el('eierOkLogo').hidden = !utenLogo;
+      el('eierOk').focus();
+    });
+  });
+}
+
 // Tipsskjema
 function wireTipsForm() {
   const f = el('tipsForm');
@@ -2179,7 +2437,7 @@ function tegnPcFilter() {
   // to av/på-knapper: Kun verifisert og Uten alkohol, som på mobil
   const utenAlkohol = el('fAlkohol').value === 'uten';
   const status =
-    '<button type="button" class="pc-valgknapp" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"' + (trinnTomt(0) ? ' aria-disabled="true"' : '') + '><span>' + T('Kun verifisert') + '</span></button>' +
+    '<button type="button" class="pc-valgknapp' + (trinnTomt(0) ? ' venter' : '') + '" data-pc="verifisert" aria-pressed="' + (strict === 0) + '"' + (trinnTomt(0) ? ' aria-disabled="true"' : '') + '>' + (trinnTomt(0) ? IKON.klokke : '') + '<span>' + T('Kun verifisert') + '</span></button>' +
     '<button type="button" class="pc-valgknapp" data-pc="alkohol" aria-pressed="' + utenAlkohol + '" aria-label="' + T('Uten kjent alkoholservering') + '"><span>' + T('Uten alkohol') + '</span></button>';
 
   const sort = el('fSort').value;
@@ -2311,6 +2569,8 @@ function tegnPcListe() {
   } else {
     html = pcRader(liste);
   }
+  // fremdriften øverst i lista, så lenge det ikke er Lagret som vises
+  if (!pcVisLagret && liste.length) html = fremdriftHtml('pc') + html;
   boks.innerHTML = html;
   boks.scrollTop = rull;
 }
