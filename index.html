@@ -690,6 +690,8 @@ button, a, select, label, .hbrikke { touch-action: manipulation; -webkit-tap-hig
 /* Støtt oss er tatt ut av appen inntil videre: fanen, raden øverst i Mer, vinduet og knappene på PC.
    Nettsiden har Støtt oss som før. */
 .i-app .fane-stott, .i-app .mer-stott, .i-app .skuff-stott, .i-app .pc-stott, .i-app .info-section[data-section="stott"] { display: none !important; }
+/* eiersiden er bare på nettsiden, med lenken halalkartet.no/#erdueier */
+.i-app .info-section[data-section="eier"] { display: none !important; }
 /* Utvalgte steder er skrudd av inntil videre. Bryteren står i app.js (UTVALGTE_PA) */
 html:not(.med-utvalgte) .skuff-utv, html:not(.med-utvalgte) .mer-utv, html:not(.med-utvalgte) .faq-utv { display: none !important; }
 /* I appen: Støtt oss er ute, Nær meg er inne, så fanelinja har fortsatt seks faner */
@@ -1003,6 +1005,29 @@ html:not(.i-app) #faneNaer { display: none !important; }
   .mer-liste button::after { width: 11px; height: 11px; border-top-width: 3px; border-right-width: 3px; border-radius: 1px; margin-right: 3px; }
 }
 
+/* Mer-arket: pilene hopper én gang til høyre hver gang arket åpnes, én rad etter den andre */
+@keyframes mer-hopp {
+  0%, 100% { transform: rotate(45deg); }
+  35% { transform: translateX(6px) rotate(45deg); }
+  62% { transform: translateX(-1px) rotate(45deg); }
+  82% { transform: translateX(2px) rotate(45deg); }
+}
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+  .mer.apen .mer-liste button::after { animation: mer-hopp .5s cubic-bezier(.3,.6,.4,1) both; }
+  .mer.apen .mer-liste li:nth-child(1) button::after { animation-delay: 200ms; }
+  .mer.apen .mer-liste li:nth-child(2) button::after { animation-delay: 245ms; }
+  .mer.apen .mer-liste li:nth-child(3) button::after { animation-delay: 290ms; }
+  .mer.apen .mer-liste li:nth-child(4) button::after { animation-delay: 335ms; }
+  .mer.apen .mer-liste li:nth-child(5) button::after { animation-delay: 380ms; }
+  .mer.apen .mer-liste li:nth-child(6) button::after { animation-delay: 425ms; }
+  .mer.apen .mer-liste li:nth-child(7) button::after { animation-delay: 470ms; }
+  .mer.apen .mer-liste li:nth-child(8) button::after { animation-delay: 515ms; }
+  .mer.apen .mer-liste li:nth-child(9) button::after { animation-delay: 560ms; }
+  .mer.apen .mer-liste li:nth-child(10) button::after { animation-delay: 605ms; }
+  .mer.apen .mer-liste li:nth-child(11) button::after { animation-delay: 650ms; }
+  .mer.apen .mer-liste li:nth-child(12) button::after { animation-delay: 695ms; }
+}
+
 /* Linja nederst: «Vis liste» i samme størrelse som «Utforsk andre steder», og teksten til venstre på én linje */
 @media (max-width: 720px) {
   .i-app .bunn-liste { min-height: 40px; margin-right: -8px; gap: 3px; font-size: 14px; }
@@ -1202,7 +1227,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
     <li><button type="button" data-side="stott" class="skuff-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
     <li><button type="button" data-side="utvalgte" class="skuff-utv" data-t>Utvalgte steder</button></li>
     <li><button type="button" data-side="tips" data-t>Tips oss om et sted</button></li>
-    <li><button type="button" data-side="eier" data-t>Er du eier?</button></li>
     <li><button type="button" data-side="feil" data-t>Si ifra om feil</button></li>
     <li><button type="button" data-side="faq" data-t>FAQ</button></li>
     <li><button type="button" data-side="personvern" data-t>Personvern</button></li>
@@ -1310,23 +1334,35 @@ html:not(.i-app) #faneNaer { display: none !important; }
       <section class="info-section active" data-section="om">
         <div data-sprak="nb">
           <h2>Om oss</h2>
-          <p>Halalkartet er et lite prosjekt laget for å gjøre det enklere å finne halal mat over hele Norge. Tanken er enkel. Er du ute med venner og blir sulten, eller har du lyst til å prøve et nytt sted, så viser kartet deg hvor du kan spise og hvor sikker halalstatusen er.</p>
-          <p>Fargene på kartet forteller deg hvor trygg maten er.</p>
-          <p><span class="info-badge" style="background:#2E7D4F"></span> Grønn betyr at stedet er bekreftet hundre prosent halal.<br>
-             <span class="info-badge" style="background:#D9600F"></span> Oransje betyr at deler av menyen ikke er halal.<br>
-             <span class="info-badge" style="background:#636B67"></span> Grå betyr at vi ikke har rukket å bekrefte halalstatusen ennå. Det betyr ikke at stedet ikke er halal, bare at du bør sjekke selv.</p>
+          <p>Halalkartet viser hvor du kan spise halal i Norge, og hvor sikker halalstatusen er på hvert sted.</p>
+          <p>Vi er et lite prosjekt med en enkel tanke. Er du ute med venner og blir sulten, eller vil du prøve noe nytt, skal du raskt finne et sted å spise og vite hva du kan forvente.</p>
+          <h3>Slik leser du kartet</h3>
+          <p><span class="info-badge" style="background:#2E7D4F"></span> <b>Grønn:</b> maten er bekreftet halal.<br>
+             <span class="info-badge" style="background:#D9600F"></span> <b>Oransje:</b> deler av menyen er ikke halal. Kortet for stedet sier hva.<br>
+             <span class="info-badge" style="background:#636B67"></span> <b>Grå:</b> vi har ikke bekreftet statusen ennå. Det betyr ikke at stedet ikke er halal, bare at du bør sjekke selv.</p>
           <p>Pinnene har også tegn: حلال, utropstegn og spørsmålstegn. Da ser du forskjell selv om du ikke skiller fargene.</p>
-          <p>De fleste stedene er foreløpig i Oslo, men kartet dekker hele landet, og vi legger til flere steder og byer hele tiden. Har du et tips eller en rettelse, setter vi stor pris på at du sier fra.</p>
+          <h3>Slik sjekker vi stedene</h3>
+          <p>Vi ser etter et synlig sertifikat, spør personalet og ser om stedet er godt kjent for å være halal. Når vi har sjekket et sted, står kilden og datoen på stedet. Halalkartet sertifiserer ikke selv, så er du i tvil, spør stedet.</p>
+          <h3>Hvor vi er</h3>
+          <p>Kartet dekker hele Norge. De fleste stedene er foreløpig i Oslo, men vi har også steder i blant annet Bergen og Drammen, og legger til flere hele tiden.</p>
+          <h3>Bli med</h3>
+          <p>Kartet blir bedre når flere hjelper til. Tips oss om et sted du kjenner, eller si ifra hvis noe er feil. Du når oss også på <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>About us</h2>
-          <p>Halalkartet is a small project made to make it easier to find halal food across Norway. The idea is simple. If you are out with friends and get hungry, or want to try somewhere new, the map shows you where you can eat and how certain the halal status is.</p>
-          <p>The colours on the map tell you how safe the food is.</p>
-          <p><span class="info-badge" style="background:#2E7D4F"></span> Green means the place is confirmed one hundred percent halal.<br>
-             <span class="info-badge" style="background:#D9600F"></span> Orange means parts of the menu are not halal.<br>
-             <span class="info-badge" style="background:#636B67"></span> Grey means we have not yet confirmed the halal status. It does not mean the place is not halal, only that you should check for yourself.</p>
+          <p>Halalkartet shows where you can eat halal in Norway, and how certain the halal status is at each place.</p>
+          <p>We are a small project with a simple idea. If you are out with friends and get hungry, or want to try something new, you should quickly find a place to eat and know what to expect.</p>
+          <h3>How to read the map</h3>
+          <p><span class="info-badge" style="background:#2E7D4F"></span> <b>Green:</b> the food is confirmed halal.<br>
+             <span class="info-badge" style="background:#D9600F"></span> <b>Orange:</b> parts of the menu are not halal. The card for the place says which.<br>
+             <span class="info-badge" style="background:#636B67"></span> <b>Grey:</b> we have not confirmed the status yet. It does not mean the place is not halal, only that you should check for yourself.</p>
           <p>The pins also have symbols: حلال, an exclamation mark and a question mark. That way you can tell them apart even if you cannot tell the colours apart.</p>
-          <p>Most places are in Oslo for now, but the map covers the whole country, and we keep adding more places and cities. If you have a tip or a correction, we really appreciate you letting us know.</p>
+          <h3>How we check places</h3>
+          <p>We look for a visible certificate, ask the staff and see whether the place is well known for being halal. When we have checked a place, the source and the date are shown on it. Halalkartet does not certify places itself, so if in doubt, ask the place.</p>
+          <h3>Where we are</h3>
+          <p>The map covers all of Norway. Most places are in Oslo for now, but we also have places in Bergen and Drammen, among others, and keep adding more.</p>
+          <h3>Get involved</h3>
+          <p>The map gets better when more people help. Suggest a place you know, or let us know if something is wrong. You can also reach us at <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
         </div>
       </section>
       <section class="info-section" data-section="tips">
@@ -1482,77 +1518,95 @@ html:not(.i-app) #faneNaer { display: none !important; }
       <section class="info-section" data-section="personvern">
         <div data-sprak="nb">
           <h2>Personvern</h2>
-          <p class="kun-nett">Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker siden.</p>
-          <p class="kun-app">Halalkartet er laget for å respektere personvernet ditt. Her forklarer vi kort hva som skjer med data når du bruker appen.</p>
-          <h3>Ingen konto og ingen sporing</h3>
-          <p class="kun-nett">Du trenger ingen konto for å bruke Halalkartet. Vi bruker ingen sporingscookies og viser ingen reklame.</p>
-          <p class="kun-app">Du trenger ingen konto for å bruke Halalkartet. Appen sporer deg ikke, teller ikke hva du gjør og viser ingen reklame. Fra appbutikken får vi bare samlede tall, som hvor mange som har lastet ned appen.</p>
-          <h3 class="kun-app">Lagret på telefonen</h3>
-          <p class="kun-app">Stedene du lagrer og språket du velger, lagres bare på telefonen din. Sletter du appen, slettes de også.</p>
-          <h3 class="kun-nett">Besøksstatistikk</h3>
-          <p class="kun-nett">Vi teller besøk med en tjeneste for besøkstelling som har servere i EU. Den bruker ingen informasjonskapsler, lagrer ingenting i nettleseren din og lagrer ikke IP-adressen din. Vi ser hvilke sider som åpnes, hvilket nettsted du eventuelt kom fra, land, nettleser og hvilke knapper og filtre som brukes. Ikke det du søker på, og ikke det du skriver i skjemaene. Tallene er samlet, og vi kan ikke se hvem du er.</p>
-          <h3>Posisjon</h3>
-          <p class="kun-nett">Trykker du på Nær meg, spør nettleseren om posisjonen din for å vise steder i nærheten. Posisjonen brukes bare i nettleseren din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
-          <p class="kun-app">Trykker du på Nær meg, spør telefonen om appen kan bruke posisjonen din for å vise steder i nærheten. Posisjonen brukes bare på telefonen din der og da. Den lagres ikke, og den sendes ikke til oss.</p>
-          <h3>Veibeskrivelse</h3>
-          <p class="kun-nett">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste i en ny fane med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
-          <p class="kun-app">Trykker du på Veibeskrivelse, Åpningstider, Apple Kart eller Google Maps, åpnes en karttjeneste utenfor Halalkartet med navnet og adressen til stedet. Da gjelder den tjenestens egne vilkår og personvernregler, ikke våre.</p>
-          <h3>Skjemaene og e-post</h3>
-          <p>Sender du inn et tips eller en melding, får vi det du skriver, altså navn hvis du oppgir det, hvor du kommer fra, telefon eller e-post, og selve meldingen. Vi bruker det bare for å svare deg og for å gjøre kartet bedre, og vi deler det ikke med andre. Vil du at vi sletter en henvendelse du har sendt, skriv til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, så gjør vi det.</p>
-          <p>Bekrefter du halalstatusen for et sted, får vi navnet ditt, rollen din, e-post, telefon hvis du oppgir det, svarene dine og logoen hvis du sender den. På stedssiden viser vi bare rollen din, datoen og logoen. Navnet ditt vises ikke.</p>
-          <p>Skjemaene sendes gjennom en skjematjeneste som videresender dem til oss på e-post. Den tar vare på innsendingene en begrenset tid for at de skal komme fram, og ser tekniske opplysninger som IP-adresse for å stoppe spam.</p>
-          <p>Skriver du til oss på e-post, får vi adressen din og det du skriver, og vi bruker det på samme måte. E-posten vår ligger hos en e-postleverandør.</p>
-          <h3>Kart og drift</h3>
-          <p class="kun-nett">Siden ligger hos en leverandør av nettsidedrift, og kartet og kartbiblioteket hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere siden og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
-          <p class="kun-app">Appen henter oppdaterte steder fra halalkartet.no, og kartet hentes fra eksterne kartleverandører. Disse tjenestene kan se tekniske opplysninger som IP-adresse for å levere stedene og kartet. Vi deler ingen personopplysninger med noen for reklame eller salg.</p>
+          <p class="kun-nett">Kort fortalt: Du trenger ingen konto, vi bruker ingen informasjonskapsler til sporing, og utenom samlede besøkstall får vi bare det du selv sender oss.</p>
+          <p class="kun-app">Kort fortalt: Du trenger ingen konto, appen sporer deg ikke, og vi får bare det du selv sender oss.</p>
+          <h3>Hvem som har ansvaret</h3>
+          <p>Halalkartet er behandlingsansvarlig. Spørsmål om personvern sender du til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+          <h3>Hva vi behandler, og hvorfor</h3>
+          <p><b>Det du sender oss.</b> Sender du et tips, en melding eller en e-post, får vi det du skriver. Vi bruker det til å svare deg og til å holde kartet riktig.</p>
+          <p class="kun-nett"><b>Bekreftelser fra eiere.</b> Bekrefter du halalstatusen for et sted, får vi svarene og kontaktopplysningene du fyller inn. På stedet viser vi bare rollen din, datoen og logoen, ikke navnet ditt.</p>
+          <p class="kun-nett"><b>Besøkstelling.</b> Vi teller besøk uten informasjonskapsler og uten å lagre IP-adressen din. Vi ser bare samlede tall og kan ikke se hvem du er.</p>
+          <p class="kun-nett"><b>Tekniske opplysninger.</b> Når siden og kartet lastes, ser tjenestene som leverer dem IP-adressen din. Det trengs for å levere innholdet.</p>
+          <p class="kun-app"><b>Tekniske opplysninger.</b> Når appen henter kartet og oppdaterte steder, ser tjenestene som leverer dem IP-adressen din. Det trengs for å levere innholdet.</p>
+          <p>Grunnlaget er vår berettigede interesse i å svare deg, holde kartet riktig og levere tjenesten (personvernforordningen artikkel 6 nr. 1 bokstav f). Det er frivillig å sende oss noe, men uten kontaktopplysninger kan vi ikke svare deg.</p>
+          <h3>Posisjon og det som lagres hos deg</h3>
+          <p class="kun-nett">Trykker du på Nær meg, bruker nettleseren posisjonen din til å vise steder i nærheten. Posisjonen blir i nettleseren og sendes ikke til oss. Stedene du lagrer og språket du velger, lagres bare i nettleseren din.</p>
+          <p class="kun-app">Trykker du på Nær meg, bruker appen posisjonen din til å vise steder i nærheten. Posisjonen blir på telefonen og sendes ikke til oss. Stedene du lagrer og språket du velger, lagres bare på telefonen. Sletter du appen, slettes de også.</p>
+          <h3>Hvem som får opplysningene</h3>
+          <p class="kun-nett">Vi selger ikke opplysninger og deler dem ikke med noen for reklame. Noen leverandører behandler dem på våre vegne: en vertstjeneste for nettsiden, en skjematjeneste, en e-postleverandør, en tjeneste for besøkstelling med servere i EU, og tjenester som leverer kart, skrifter og kodebiblioteker.</p>
+          <p class="kun-app">Vi selger ikke opplysninger og deler dem ikke med noen for reklame. Noen leverandører behandler dem på våre vegne: en vertstjeneste for halalkartet.no, der appen henter oppdaterte steder, en skjematjeneste, en e-postleverandør og tjenester som leverer kartet.</p>
+          <p>Noen av leverandørene holder til i USA. Da skjer overføringen etter reglene i personvernforordningen, med rammeverket for personvern mellom EU og USA eller EUs standard personvernbestemmelser.</p>
+          <h3>Hvor lenge vi tar vare på dem</h3>
+          <p>Meldinger og tips sletter vi når saken er ferdig, og senest etter tolv måneder.<span class="kun-nett"> En bekreftelse fra en eier tar vi vare på så lenge stedet står på kartet med den statusen, fordi den er kilden til statusen.</span> Tekniske logger hos leverandørene slettes etter deres egne rutiner.</p>
+          <h3>Rettighetene dine</h3>
+          <p>Du kan be om innsyn i opplysningene vi har om deg, og be oss rette eller slette dem. Du kan også protestere mot at vi bruker dem, eller be oss begrense bruken. Skriv til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, så svarer vi innen en måned. Mener du at vi bruker opplysningene i strid med reglene, kan du klage til Datatilsynet.</p>
           <p class="muted">Sist oppdatert november 2026.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
           <h2>Privacy</h2>
-          <p class="kun-nett">Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the site.</p>
-          <p class="kun-app">Halalkartet is made to respect your privacy. Here we briefly explain what happens to data when you use the app.</p>
-          <h3>No account and no tracking</h3>
-          <p class="kun-nett">You do not need an account to use Halalkartet. We use no tracking cookies and show no ads.</p>
-          <p class="kun-app">You do not need an account to use Halalkartet. The app does not track you, does not count what you do and shows no ads. From the app store we only get aggregated numbers, such as how many people have downloaded the app.</p>
-          <h3 class="kun-app">Stored on your phone</h3>
-          <p class="kun-app">The places you save and the language you choose are only stored on your phone. If you delete the app, they are deleted too.</p>
-          <h3 class="kun-nett">Visitor statistics</h3>
-          <p class="kun-nett">We count visits with a visitor counting service that has servers in the EU. It uses no cookies, stores nothing in your browser and does not store your IP address. We see which pages are opened, which website you came from, if any, country, browser and which buttons and filters are used. Not what you search for, and not what you write in the forms. The numbers are aggregated, and we cannot see who you are.</p>
-          <h3>Location</h3>
-          <p class="kun-nett">If you tap Near me, the browser asks for your location to show places nearby. The location is only used in your browser there and then. It is not stored, and it is not sent to us.</p>
-          <p class="kun-app">If you tap Near me, your phone asks whether the app may use your location to show places nearby. The location is only used on your phone there and then. It is not stored, and it is not sent to us.</p>
-          <h3>Directions</h3>
-          <p class="kun-nett">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens in a new tab with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
-          <p class="kun-app">If you tap Directions, Opening hours, Apple Maps or Google Maps, a map service opens outside Halalkartet with the name and address of the place. That service’s own terms and privacy rules then apply, not ours.</p>
-          <h3>The forms and email</h3>
-          <p>If you send us a tip or a message, we receive what you write: your name if you give it, where you are from, phone or email, and the message itself. We only use it to reply to you and to improve the map, and we do not share it with anyone. If you want us to delete something you have sent, email us at <a href="mailto:post@halalkartet.no">post@halalkartet.no</a> and we will.</p>
-          <p>If you confirm the halal status for a place, we receive your name, your role, email, phone if you give it, your answers and the logo if you send it. On the place page we only show your role, the date and the logo. Your name is not shown.</p>
-          <p>The forms are sent through a form service that forwards them to us by email. It keeps submissions for a limited time so they arrive, and sees technical details such as IP address to stop spam.</p>
-          <p>If you email us, we receive your address and what you write, and we use it in the same way. Our email is hosted by an email provider.</p>
-          <h3>Map and hosting</h3>
-          <p class="kun-nett">The site is hosted by a web hosting provider, and the map and map library are loaded from external map providers. These services may see technical details such as IP address in order to deliver the site and the map. We do not share personal data with anyone for advertising or sale.</p>
-          <p class="kun-app">The app fetches updated places from halalkartet.no, and the map is loaded from external map providers. These services may see technical details such as IP address in order to deliver the places and the map. We do not share personal data with anyone for advertising or sale.</p>
+          <p class="kun-nett">In short: You do not need an account, we use no cookies for tracking, and apart from aggregated visitor numbers we only get what you send us yourself.</p>
+          <p class="kun-app">In short: You do not need an account, the app does not track you, and we only get what you send us yourself.</p>
+          <h3>Who is responsible</h3>
+          <p>Halalkartet is the data controller. Send questions about privacy to <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+          <h3>What we process, and why</h3>
+          <p><b>What you send us.</b> If you send a tip, a message or an email, we receive what you write. We use it to reply to you and to keep the map accurate.</p>
+          <p class="kun-nett"><b>Confirmations from owners.</b> If you confirm the halal status for a place, we receive the answers and contact details you fill in. On the place we only show your role, the date and the logo, not your name.</p>
+          <p class="kun-nett"><b>Visitor counting.</b> We count visits without cookies and without storing your IP address. We only see aggregated numbers and cannot see who you are.</p>
+          <p class="kun-nett"><b>Technical details.</b> When the site and the map load, the services that deliver them see your IP address. This is needed to deliver the content.</p>
+          <p class="kun-app"><b>Technical details.</b> When the app fetches the map and updated places, the services that deliver them see your IP address. This is needed to deliver the content.</p>
+          <p>The legal basis is our legitimate interest in replying to you, keeping the map accurate and delivering the service (Article 6(1)(f) of the General Data Protection Regulation). Sending us anything is voluntary, but without contact details we cannot reply to you.</p>
+          <h3>Location and what is stored on your device</h3>
+          <p class="kun-nett">If you tap Near me, the browser uses your location to show places nearby. The location stays in the browser and is not sent to us. The places you save and the language you choose are only stored in your browser.</p>
+          <p class="kun-app">If you tap Near me, the app uses your location to show places nearby. The location stays on your phone and is not sent to us. The places you save and the language you choose are only stored on your phone. If you delete the app, they are deleted too.</p>
+          <h3>Who receives the data</h3>
+          <p class="kun-nett">We do not sell data and do not share it with anyone for advertising. Some providers process it on our behalf: a hosting service for the site, a form service, an email provider, a visitor counting service with servers in the EU, and services that deliver the map, fonts and code libraries.</p>
+          <p class="kun-app">We do not sell data and do not share it with anyone for advertising. Some providers process it on our behalf: a hosting service for halalkartet.no, where the app fetches updated places, a form service, an email provider and services that deliver the map.</p>
+          <p>Some of the providers are based in the United States. Transfers then follow the rules of the General Data Protection Regulation, under the EU–US Data Privacy Framework or the EU standard contractual clauses.</p>
+          <h3>How long we keep it</h3>
+          <p>We delete messages and tips when the matter is closed, and no later than after twelve months.<span class="kun-nett"> We keep a confirmation from an owner for as long as the place is on the map with that status, because it is the source of the status.</span> Technical logs at the providers are deleted according to their own routines.</p>
+          <h3>Your rights</h3>
+          <p>You can ask for access to the data we hold about you, and ask us to correct or delete it. You can also object to our use of it, or ask us to restrict it. Write to <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, and we will reply within one month. If you believe we use the data in breach of the rules, you can complain to the Norwegian Data Protection Authority (Datatilsynet).</p>
           <p class="muted">Last updated November 2026.</p>
         </div>
       </section>
       <section class="info-section" data-section="vilkar">
         <div data-sprak="nb">
-          <h2>Vilkår og betingelser</h2>
-          <p>Halalkartet er en gratis informasjonstjeneste, og vi tilbyr den slik den er.</p>
-          <p>Vi gjør vårt beste for at informasjonen skal stemme, men vi kan ikke garantere at halalstatus, åpningstider, adresser eller andre detaljer alltid er riktige eller oppdaterte. Dette gjelder spesielt steder som er merket grå eller oransje.</p>
-          <p>Om et sted faktisk er halal er til slutt ditt eget ansvar. Er du i tvil, bør du sjekke direkte med stedet før du spiser. Du bruker kartet på eget ansvar, og vi tar ikke ansvar for feil eller mangler.</p>
+          <h2>Vilkår for bruk</h2>
+          <p>Disse vilkårene gjelder når du bruker Halalkartet, på nettsiden og i appen. Når du bruker Halalkartet, godtar du dem.</p>
+          <h3>Tjenesten</h3>
+          <p>Halalkartet er en gratis oversikt over steder som serverer halal mat. Vi tilbyr den slik den er, og kan endre eller fjerne innhold og funksjoner uten varsel.</p>
+          <h3>Halalstatusen er veiledende</h3>
+          <p>Vi sjekker stedene så godt vi kan, men vi sertifiserer ikke selv. Halalstatus, åpningstider, priser og adresser kan endre seg uten at vi får vite det, særlig på steder som er merket grå eller oransje. Om et sted er halal, må du til slutt vurdere selv. Er du i tvil, spør stedet før du spiser.</p>
+          <h3>Ansvar</h3>
+          <p>Du bruker Halalkartet på eget ansvar. Så langt loven tillater det, er vi ikke ansvarlige for tap eller skade som følge av feil eller mangler i informasjonen.</p>
+          <h3>Det du sender oss</h3>
+          <p>Det du sender oss, skal være riktig så langt du vet. Vi kan bruke det til å oppdatere og forbedre kartet.<span class="kun-nett"> Sender du en logo, bekrefter du at stedet eier den eller har lov til å bruke den, og at vi kan vise den på kartet.</span></p>
+          <h3>Rettigheter</h3>
           <p>Navnet Halalkartet, oversikten over stedene, tekstene, designet og koden tilhører Halalkartet og er vernet av åndsverkloven, også som database. Du kan gjerne bruke kartet og dele lenker til det. Du kan ikke kopiere oversikten, designet eller koden, helt eller delvis, til en annen tjeneste uten skriftlig tillatelse fra oss.</p>
-          <p>Innhold og funksjoner kan endres uten varsel. Når du bruker Halalkartet, godtar du disse vilkårene.</p>
-          <p class="muted">Sist oppdatert oktober 2026.</p>
+          <h3>Lenker til andre tjenester</h3>
+          <p>Fra et sted kan du åpne andre tjenester, som karttjenester for veibeskrivelse og åpningstider. Der gjelder deres egne vilkår og personvernregler.</p>
+          <h3>Endringer og lovvalg</h3>
+          <p>Vi kan endre vilkårene, og den nyeste utgaven står alltid her. Vilkårene følger norsk lov. Spørsmål sender du til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+          <p class="muted">Sist oppdatert november 2026.</p>
         </div>
         <div data-sprak="en" lang="en" hidden>
-          <h2>Terms and conditions</h2>
-          <p>Halalkartet is a free information service, and we provide it as it is.</p>
-          <p>We do our best to keep the information accurate, but we cannot guarantee that halal status, opening hours, addresses or other details are always correct or up to date. This applies especially to places marked grey or orange.</p>
-          <p>Whether a place is actually halal is ultimately your own responsibility. If in doubt, check directly with the place before you eat. You use the map at your own risk, and we are not responsible for errors or omissions.</p>
+          <h2>Terms of use</h2>
+          <p>These terms apply when you use Halalkartet, on the website and in the app. By using Halalkartet, you accept them.</p>
+          <h3>The service</h3>
+          <p>Halalkartet is a free overview of places that serve halal food. We provide it as it is, and may change or remove content and features without notice.</p>
+          <h3>The halal status is a guide</h3>
+          <p>We check places as well as we can, but we do not certify them ourselves. Halal status, opening hours, prices and addresses can change without us knowing, especially for places marked grey or orange. Whether a place is halal is ultimately for you to judge. If in doubt, ask the place before you eat.</p>
+          <h3>Liability</h3>
+          <p>You use Halalkartet at your own risk. To the extent the law allows, we are not liable for loss or damage caused by errors or omissions in the information.</p>
+          <h3>What you send us</h3>
+          <p>What you send us should be correct as far as you know. We may use it to update and improve the map.<span class="kun-nett"> If you send a logo, you confirm that the place owns it or may use it, and that we may show it on the map.</span></p>
+          <h3>Rights</h3>
           <p>The name Halalkartet, the list of places, the texts, the design and the code belong to Halalkartet and are protected by Norwegian copyright law, including as a database. You are welcome to use the map and share links to it. You may not copy the list, the design or the code, in whole or in part, into another service without our written permission.</p>
-          <p>Content and features may change without notice. By using Halalkartet, you accept these terms.</p>
-          <p class="muted">Last updated October 2026.</p>
+          <h3>Links to other services</h3>
+          <p>From a place you can open other services, such as map services for directions and opening hours. Their own terms and privacy rules apply there.</p>
+          <h3>Changes and governing law</h3>
+          <p>We may change these terms, and the latest version is always here. The terms are governed by Norwegian law. Send questions to <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+          <p class="muted">Last updated November 2026.</p>
         </div>
       </section>
       <section class="info-section" data-section="faq">
@@ -1572,7 +1626,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <details class="faq">
             <summary>Hvordan vet dere at et sted er halal?</summary>
             <div class="faq-svar">
-              <p>Vi sjekker hvert sted så godt vi kan. Vi ser etter et synlig sertifikat, spør personalet, og ser om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
+              <p>Vi sjekker hvert sted så godt vi kan. Vi ser etter et synlig sertifikat, spør personalet og ser om stedet er godt kjent for å være halal. Er vi usikre, merker vi stedet grått.</p>
               <p><b>Halalkartet sertifiserer ikke selv.</b> Vi viser kilden, datoen og hvem som sa det, så du kan vurdere selv. Står det ingen dato på et sted, har vi ikke bekreftet det ennå.</p>
             </div>
           </details>
@@ -1580,14 +1634,28 @@ html:not(.i-app) #faneNaer { display: none !important; }
             <summary>Hvilke steder kommer med på kartet?</summary>
             <div class="faq-svar">
               <ul class="faq-punkter">
-                <li><b>Halal mat og svin på samme meny:</b> stedet kommer med som delvis halal og merkes oransje. Kortet sier hva som ikke er halal.</li>
-                <li><b>Bare deler av menyen er halal:</b> det samme gjelder. Stedet merkes oransje, og kortet sier hva som gjelder.</li>
-                <li><b>Halal mat, men alkohol å drikke:</b> stedet kan merkes halal når alkoholen ikke brukes i maten. Kortet har da en tydelig merknad.</li>
-                <li><b>Ingenting halal på menyen:</b> stedet kommer ikke med.</li>
+                <li><b>Alt på menyen er halal:</b> stedet merkes grønt når vi har bekreftet det.</li>
+                <li><b>Halal mat, men alkohol å drikke:</b> stedet kan merkes grønt når alkoholen ikke brukes i maten. Kortet har da en tydelig merknad.</li>
+                <li><b>Noe på menyen er ikke halal:</b> for eksempel svin. Stedet merkes oransje, og kortet sier hva som ikke er halal.</li>
+                <li><b>Ingenting halal på menyen:</b> stedet kommer ikke med. Det gjør heller ikke rene vegetar- og veganrestauranter.</li>
               </ul>
             </div>
           </details>
           <h3 class="faq-gruppe">Slik bruker du kartet</h3>
+          <details class="faq">
+            <summary>Hvordan finner jeg steder nær meg?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Trykk på Nær meg. På mobilen er det knappen med pilen til høyre på kartet. Nettleseren spør først om lov til å bruke posisjonen din. Posisjonen blir i nettleseren og sendes ikke til oss.</p>
+              <p class="kun-app">Trykk på Nær meg nederst på skjermen. Første gang spør telefonen om appen kan bruke posisjonen din. Posisjonen blir på telefonen og sendes ikke til oss.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Hvordan lagrer jeg et sted?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Åpne stedet og trykk Lagre. Du finner det igjen under Lagret. Lista ligger bare i nettleseren din, så den følger ikke med til andre enheter.</p>
+              <p class="kun-app">Åpne stedet og trykk Lagre. Du finner det igjen under Lagret. Lista ligger bare på telefonen din, så den følger ikke med til andre enheter.</p>
+            </div>
+          </details>
           <details class="faq">
             <summary>Hvor finner jeg åpningstidene?</summary>
             <div class="faq-svar">
@@ -1612,10 +1680,18 @@ html:not(.i-app) #faneNaer { display: none !important; }
               <p>Ja. Åpne stedet og trykk Del. Da får du en lenke som åpner kartet rett på det stedet.</p>
             </div>
           </details>
+          <h3 class="faq-gruppe">Bidra</h3>
           <details class="faq">
             <summary>Kan jeg foreslå et sted eller melde fra om en feil?</summary>
             <div class="faq-svar">
-              <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> for å foreslå et sted. Ser du en feil, trykker du <em>Si ifra</em> på stedet.</p>
+              <p>Ja, og det setter vi stor pris på. Trykk <em>Tips oss</em> for å foreslå et sted. Ser du en feil, trykker du <em>Si ifra</em> på stedet. Du kan også skrive til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>Jeg eier et sted på kartet. Hvordan bekrefter jeg halalstatusen?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Gå til <a href="#erdueier">halalkartet.no/#erdueier</a> og fyll ut skjemaet. Vi går gjennom svaret og oppdaterer stedet. Du kan også skrive til <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+              <p class="kun-app">Skriv til oss på <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, så sender vi deg en lenke der du kan bekrefte halalstatusen.</p>
             </div>
           </details>
           <h3 class="faq-gruppe">Om Halalkartet</h3>
@@ -1628,7 +1704,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <details class="faq">
             <summary>Koster det noe?</summary>
             <div class="faq-svar">
-              <p>Nei. Halalkartet er helt gratis å bruke.</p>
+              <p>Nei. Halalkartet er gratis å bruke, uten konto og uten reklame.</p>
             </div>
           </details>
         </div>
@@ -1656,14 +1732,28 @@ html:not(.i-app) #faneNaer { display: none !important; }
             <summary>Which places are included on the map?</summary>
             <div class="faq-svar">
               <ul class="faq-punkter">
-                <li><b>Halal food and pork on the same menu:</b> the place is included as partly halal and marked orange. The card says what is not halal.</li>
-                <li><b>Only parts of the menu are halal:</b> the same applies. The place is marked orange, and the card says what applies.</li>
-                <li><b>Halal food, but alcohol to drink:</b> the place can be marked halal when the alcohol is not used in the food. The card then has a clear note.</li>
-                <li><b>Nothing halal on the menu:</b> the place is not included.</li>
+                <li><b>Everything on the menu is halal:</b> the place is marked green once we have confirmed it.</li>
+                <li><b>Halal food, but alcohol to drink:</b> the place can be marked green when the alcohol is not used in the food. The card then has a clear note.</li>
+                <li><b>Some of the menu is not halal:</b> for example pork. The place is marked orange, and the card says what is not halal.</li>
+                <li><b>Nothing halal on the menu:</b> the place is not included. Neither are purely vegetarian and vegan restaurants.</li>
               </ul>
             </div>
           </details>
           <h3 class="faq-gruppe">Using the map</h3>
+          <details class="faq">
+            <summary>How do I find places near me?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Tap Near me. On a phone, it is the button with the arrow on the right of the map. The browser first asks for permission to use your location. The location stays in the browser and is not sent to us.</p>
+              <p class="kun-app">Tap Near me at the bottom of the screen. The first time, your phone asks whether the app may use your location. The location stays on your phone and is not sent to us.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>How do I save a place?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Open the place and tap Save. You will find it again under Saved. The list is only stored in your browser, so it does not follow you to other devices.</p>
+              <p class="kun-app">Open the place and tap Save. You will find it again under Saved. The list is only stored on your phone, so it does not follow you to other devices.</p>
+            </div>
+          </details>
           <details class="faq">
             <summary>Where do I find the opening hours?</summary>
             <div class="faq-svar">
@@ -1688,10 +1778,18 @@ html:not(.i-app) #faneNaer { display: none !important; }
               <p>Yes. Open the place and tap Share. You get a link that opens the map right on that place.</p>
             </div>
           </details>
+          <h3 class="faq-gruppe">Get involved</h3>
           <details class="faq">
             <summary>Can I suggest a place or report an error?</summary>
             <div class="faq-svar">
-              <p>Yes, and we really appreciate it. Tap <em>Suggest a place</em> to suggest one. If you see an error, tap <em>Report</em> on the place.</p>
+              <p>Yes, and we really appreciate it. Tap <em>Suggest a place</em> to suggest one. If you see an error, tap <em>Report</em> on the place. You can also write to <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+            </div>
+          </details>
+          <details class="faq">
+            <summary>I own a place on the map. How do I confirm the halal status?</summary>
+            <div class="faq-svar">
+              <p class="kun-nett">Go to <a href="#erdueier">halalkartet.no/#erdueier</a> and fill in the form. We review the answer and update the place. You can also write to <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>.</p>
+              <p class="kun-app">Write to us at <a href="mailto:post@halalkartet.no">post@halalkartet.no</a>, and we will send you a link where you can confirm the halal status.</p>
             </div>
           </details>
           <h3 class="faq-gruppe">About Halalkartet</h3>
@@ -1704,7 +1802,7 @@ html:not(.i-app) #faneNaer { display: none !important; }
           <details class="faq">
             <summary>Does it cost anything?</summary>
             <div class="faq-svar">
-              <p>No. Halalkartet is completely free to use.</p>
+              <p>No. Halalkartet is free to use, with no account and no ads.</p>
             </div>
           </details>
         </div>
@@ -1772,7 +1870,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
       <li><button type="button" data-mer="stott" class="mer-stott"><span data-t>Støtt oss</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13s-4.5-2.7-4.5-6A2.6 2.6 0 0112 5.6 2.6 2.6 0 0116.5 7c0 3.3-4.5 6-4.5 6z"/><path d="M4 15c2 0 3 1.5 5 1.5h4a1.5 1.5 0 010 3H8M4 21h10l6-4"/></svg></button></li>
       <li><button type="button" data-mer="utvalgte" class="mer-utv" data-t>Utvalgte steder</button></li>
       <li><button type="button" data-mer="tips" data-t>Tips oss om et sted</button></li>
-      <li><button type="button" data-mer="eier" data-t>Er du eier?</button></li>
       <li><button type="button" data-mer="feil" data-t>Si ifra om feil</button></li>
       <li><button type="button" data-mer="faq" data-t>Ofte stilte spørsmål</button></li>
       <li><button type="button" data-mer="personvern" data-t>Personvern</button></li>
@@ -1789,6 +1886,6 @@ html:not(.i-app) #faneNaer { display: none !important; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
-<script src="app.js?v=08fb3241"></script>
+<script src="app.js?v=6024f840"></script>
 </body>
 </html>
