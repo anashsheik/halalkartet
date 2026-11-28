@@ -1409,7 +1409,8 @@ function detaljHtml(s) {
         kartLenker(s) + '</div>' +
       '<div class="d-feil"><div><h3>' + T('Ser du noe som er feil?') + '</h3><p>' + T('Si ifra, så sjekker vi stedet på nytt.') + '</p></div>' +
         '<button type="button" class="knapp" data-sifra="' + esc(s.id) + '">' + T('Si ifra!') + '</button></div>' +
-      '<p class="d-eier"><button type="button" class="d-lenke" data-eier="' + esc(s.id) + '">' + T('Eier du stedet? Bekreft halalstatusen') + '</button></p>' +
+      // eiersiden er bare på nettsiden
+      (APP ? '' : '<p class="d-eier"><button type="button" class="d-lenke" data-eier="' + esc(s.id) + '">' + T('Eier du stedet? Bekreft halalstatusen') + '</button></p>') +
     '</div>';
 }
 function tegnDetaljKart(s) {
@@ -1802,9 +1803,10 @@ const INFOLENKER = {
   'personvern': ['personvern'], 'vilkar': ['vilkar'], 'faq': ['faq'], 'om': ['om'], 'kontakt': ['kontakt'], 'tips': ['tips'],
   'privacy': ['personvern', 'en'], 'terms': ['vilkar', 'en'], 'about': ['om', 'en'], 'contact': ['kontakt', 'en'],
   'personvern-app': ['personvern', '', true], 'privacy-app': ['personvern', 'en', true],
-  'eier': ['eier'], 'owner': ['eier', 'en']
+  'eier': ['eier'], 'erdueier': ['eier'], 'owner': ['eier', 'en']
 };
-// #eier/gazakjokken åpner eiersiden med stedet valgt. Den lenken står i e-posten til hvert sted.
+// Eiersiden står ikke i menyene. Eiere får lenken halalkartet.no/#erdueier på e-post, og #eier/gazakjokken
+// (eller #erdueier/gazakjokken) åpner den med stedet valgt. I appen finnes ikke eiersiden.
 function infolenke(id) {
   id = String(id || '').split('/')[0];
   return Object.prototype.hasOwnProperty.call(INFOLENKER, id) ? INFOLENKER[id] : null;
@@ -1816,7 +1818,7 @@ function applyHash() {
   const side = infolenke(id);
   if (side) {
     if (side[1] === 'en' && sprak !== 'en') byttSprak();
-    if (side[0] === 'eier') { apneEier(id.split('/')[1] || ''); return true; }
+    if (side[0] === 'eier') { if (APP) return false; apneEier(id.split('/')[1] || ''); return true; }
     openInfo(side[0], side[2] === true);
     return true;
   }
